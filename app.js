@@ -65,6 +65,12 @@ app.get('/server/:serverID/:channelID', (req, res) => {
     res.status(200).sendFile(web + '/views/server.html');
 });
 
+app.get('*', (req, res) => {
+    log(req);
+
+    res.status(200).sendFile(web + '/404.html');
+});
+
 app.listen(port, () => {
     console.clear();
     console.info(`Listening on port ${port}`);
