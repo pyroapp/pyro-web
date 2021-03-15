@@ -6,5 +6,27 @@
       "**/.*",
       "**/node_modules/**"
     ]
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/login/",
+      "destination": "/views/login.html"
+    },
+    {
+      "source": "/signup/",
+      "destination": "/views/signup.html"
+    },
+    {
+      "source": "/forgotpassword/",
+      "destination": "/views/forgotpassword.html"
+    },
+    {
+      "source": "/unabletoregister/",
+      "destination": "/views/unabletoregiste.html"
+    },
+    {
+      "source": "/",
+      "destination": "/views/home.html"
+    },
+  ]
 }
