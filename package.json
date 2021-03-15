@@ -1,0 +1,17 @@
+{
+  "name": "djs",
+  "version": "1.0.0",
+  "description": "A simple Discord clone using HTML, CSS, JavaScript and NodeJS",
+  "main": "app.js",
+  "scripts": {
+    "start": "node-dev app.js"
+  },
+  "author": "Cooper Beltrami",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-dev": "^6.4.0"
+  }
+}
