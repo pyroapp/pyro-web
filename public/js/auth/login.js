@@ -38,7 +38,7 @@ document.getElementById('emailField').addEventListener('keyup', event => {
 /**
  *  
  */
-function login() {
+async function login() {
     const button = document.getElementById('loginButton');
     const values = validateInputs([
         'email', 'password'
@@ -49,32 +49,26 @@ function login() {
     showButtonLoader(button);
     disableButton(button);
 
-    firebase.auth().signInWithEmailAndPassword(
-        values.email,
-        values.password
-    ).then(user => {
-        if (!user.emailVerified) {
-            firebase.auth().signOut();
+    const user = await signinUser(values.email, values.password);
+
+    if (!AUTH_CODES[user]) {
+        if (user.emailVerified) {
+            redirect('/direct/@me/test/');
+        } else {
+            signout();
             showLabelError('emailLabel', 'Please verify your email address.');
     
             hideButtonLoader(button);
             enableButton(button);
-    
-            return;
         }
-    
-        hideButtonLoader(button);
-        enableButton(button);
-    
-        redirect('/direct/@me/test');
-    }).catch(error => {
-        if (error.code === 'auth/wrong-password') {
-            showLabelError('passwordLabel', AUTH_CODES[error.code]);
+    } else {
+        if (user === 'auth/wrong-password') {
+            showLabelError('passwordLabel', AUTH_CODES[user]);
         } else {
-            showLabelError('emailLabel', AUTH_CODES[error.code]);
+            showLabelError('emailLabel', AUTH_CODES[user]);
         }
 
         hideButtonLoader(button);
         enableButton(button);
-    });
+    }
 }

@@ -33,8 +33,28 @@ function redirect(path) {
  * 
  * @returns 
  */
+function getTime() {
+    return Date.now();
+}
+
+
+/**
+ * 
+ * @returns 
+ */
 function getYear() {
     return new Date().getFullYear();
+}
+
+
+/**
+ * 
+ * @param {*} min 
+ * @param {*} max 
+ * @returns 
+ */
+function generateRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 

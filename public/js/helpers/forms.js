@@ -155,7 +155,7 @@ function validateInputs(ids) {
         }
 
         // Invalid email address
-        if (type === 'email' && !validateInputs(element.value)) {
+        if (type === 'email' && !validateEmail(element.value)) {
             showInputError(id + 'Field');
             showLabelError(id + 'Label', 'Email address is invalid.');
 

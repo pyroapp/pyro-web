@@ -46,22 +46,7 @@ document.getElementById('signupButton').addEventListener('click', () => {
 /**
  * 
  */
-function signup() {
-    const button = document.getElementById('signupButton');
-    const values = validateInputs([
-        'email', 'username', 'password'
-    ]);
-
-    if (!values) return;
-
-    
-}
-
-
-/**
- * 
- */
-function loadYearsBorn() {
+ function loadYearsBorn() {
     const dropdown = document.getElementById('bornDropdown');
     const endDate = getYear() - AGE_LIMIT;
     
@@ -71,4 +56,40 @@ function loadYearsBorn() {
             <option value="${year}">${year}</option>
         `;
     }
+}
+
+
+/**
+ * 
+ */
+async function signup() {
+    const button = document.getElementById('signupButton');
+    const values = validateInputs([
+        'email', 'username', 'password'
+    ]);
+
+    if (!values) return;
+
+    showButtonLoader(button);
+    disableButton(button);
+
+    const user = await createUser(values.email, values.password);
+
+    if (!AUTH_CODES[user]) {
+        const profile = {
+            email: values.email,
+            password: values.password,
+            
+        };
+
+        await dbProfile(profile, user.uid);
+        await sendEmailVerification();
+
+        redirect('/verifyemail/');
+    } else {
+        showLabelError('emailLabel', AUTH_CODES[user]);
+    }
+
+    hideButtonLoader(button);
+    enableButton(button);
 }

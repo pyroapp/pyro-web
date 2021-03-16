@@ -10,23 +10,23 @@
   "rewrites": [
     {
       "source": "/login/",
-      "destination": "/views/login.html"
+      "destination": "/views/auth/login.html"
     },
     {
       "source": "/signup/",
-      "destination": "/views/signup.html"
+      "destination": "/views/auth/signup.html"
     },
     {
       "source": "/forgotpassword/",
-      "destination": "/views/forgotpassword.html"
+      "destination": "/views/auth/forgotpassword.html"
     },
     {
       "source": "/unabletoregister/",
-      "destination": "/views/unabletoregiste.html"
+      "destination": "/views/auth/unabletoregister.html"
     },
     {
       "source": "/",
       "destination": "/views/home.html"
-    },
+    }
   ]
 }
