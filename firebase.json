@@ -12,19 +12,19 @@
 				"destination": "/views/home.html"
 			},
       {
-				"source": "/login/",
+				"source": "/login",
 				"destination": "/views/auth/login.html"
 			},
       {
-				"source": "/signup/",
+				"source": "/signup",
 				"destination": "/views/auth/signup.html"
 			},
       {
-				"source": "/verifyemail/",
+				"source": "/verifyemail",
 				"destination": "/views/auth/verifyemail.html"
 			},
       {
-				"source": "/forgotpassword/",
+				"source": "/forgotpassword",
 				"destination": "/views/auth/forgotpassword.html"
 			}
 		]
