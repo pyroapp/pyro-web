@@ -1,32 +1,16 @@
 {
-  "hosting": {
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "/login/",
-        "destination": "/views/auth/login.html"
-      },
-      {
-        "source": "/signup/",
-        "destination": "/views/auth/signup.html"
-      },
-      {
-        "source": "/forgotpassword/",
-        "destination": "/views/auth/forgotpassword.html"
-      },
-      {
-        "source": "/unabletoregister/",
-        "destination": "/views/auth/unabletoregister.html"
-      },
-      {
-        "source": "/",
-        "destination": "/views/home.html"
-      }
-    ]
-  }
+	"hosting": {
+		"public": "public",
+		"ignore": [
+			"firebase.json",
+			"**/.*",
+			"**/node_modules/**",
+		],
+		"rewrites": [
+			{
+				"source": "/",
+				"destination": "/views/home.html"
+			}
+		]
+	}
 }
