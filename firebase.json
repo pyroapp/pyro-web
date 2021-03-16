@@ -4,12 +4,28 @@
 		"ignore": [
 			"firebase.json",
 			"**/.*",
-			"**/node_modules/**",
+			"**/node_modules/**"
 		],
 		"rewrites": [
 			{
 				"source": "/",
 				"destination": "/views/home.html"
+			},
+      {
+				"source": "/login/",
+				"destination": "/views/auth/login.html"
+			},
+      {
+				"source": "/signup/",
+				"destination": "/views/auth/signup.html"
+			},
+      {
+				"source": "/verifyemail/",
+				"destination": "/views/auth/verifyemail.html"
+			},
+      {
+				"source": "/forgotpassword/",
+				"destination": "/views/auth/forgotpassword.html"
 			}
 		]
 	}
