@@ -41,34 +41,16 @@ app.get('/signup', (req, res) => {
     res.status(200).sendFile(web + '/views/auth/signup.html');
 });
 
-app.get('/verifyemail', (req, res) => {
-    log(req);
-
-    res.status(200).sendFile(web + '/views/auth/verifyemail.html');
-});
-
 app.get('/forgotpassword', (req, res) => {
     log(req);
 
     res.status(200).sendFile(web + '/views/auth/forgotpassword.html');
 });
 
-app.get('/unabletoregister', (req, res) => {
+app.get('/channels/@me', (req, res) => {
     log(req);
 
-    res.status(200).sendFile(web + '/views/auth/unabletoregister.html');
-});
-
-app.get('/direct/:userID/:recipientID', (req, res) => {
-    log(req);
-
-    res.status(200).sendFile(web + '/views/direct.html');
-});
-
-app.get('/server/:serverID/:channelID', (req, res) => {
-    log(req);
-
-    res.status(200).sendFile(web + '/views/server.html');
+    res.status(200).sendFile(web + '/views/me.html');
 });
 
 app.get('*', (req, res) => {

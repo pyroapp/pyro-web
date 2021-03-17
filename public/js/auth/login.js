@@ -49,23 +49,18 @@ async function login() {
     showButtonLoader(button);
     disableButton(button);
 
-    const user = await signinUser(values.email, values.password);
-
-    if (!AUTH_CODES[user]) {
-        if (user.emailVerified) {
-            redirect('/direct/@me/test/');
+    try {
+        await firebase.auth().signInWithEmailAndPassword(
+            values.email, values.password
+        );
+            
+        redirect('/channels/@me');
+    } catch (error) {
+        if (error.code === 'auth/wrong-password') {
+            showLabelError('passwordLabel', AUTH_CODES[error.code]);
+            showInputError('passwordField');
         } else {
-            signout();
-            showLabelError('emailLabel', 'Please verify your email address.');
-    
-            hideButtonLoader(button);
-            enableButton(button);
-        }
-    } else {
-        if (user === 'auth/wrong-password') {
-            showLabelError('passwordLabel', AUTH_CODES[user]);
-        } else {
-            showLabelError('emailLabel', AUTH_CODES[user]);
+            showLabelError('emailLabel', AUTH_CODES[error.code]);
         }
 
         hideButtonLoader(button);

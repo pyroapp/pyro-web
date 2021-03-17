@@ -68,3 +68,27 @@ function generateRandom(min, max) {
     
     return pattern.test(String(email).toLowerCase());
 }
+
+
+/**
+ * 
+ * @param {*} num 
+ * @param {*} len 
+ */
+function pad(num, len) {
+    let pad = '';
+
+    for (i = 0; i < len; i++) {
+        pad += '0';
+    }
+
+    return (pad + num).slice(-len);
+}
+
+
+/**
+ * 
+ * @param {*} ms 
+ * @returns 
+ */
+const delay = ms => new Promise(res => setTimeout(res, ms));

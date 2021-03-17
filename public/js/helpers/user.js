@@ -16,7 +16,7 @@
  * @param {*} name 
  */
  async function setDisplayName(name) {
-    await firebase.auth().updateProfile({
+    await firebase.auth().currentUser.updateProfile({
         displayName: name
     });
 }
@@ -27,28 +27,25 @@
  * @param {*} url 
  */
 async function setPhotoURL(url) {
-    await firebase.auth().updateProfile({
+    await firebase.auth().currentUser.updateProfile({
         photoURL: url
     });
 }
 
 
-/**
- * 
- * @param {*} url 
- */
-async function uploadAvatar(url) {
-    
+async function sendEmailVerification() {
+    await firebase.auth().currentUser.sendEmailVerification();
 }
 
 
 /**
  * 
+ * @returns 
  */
-async function sendEmailVerification() {
+function isEmailVerified() {
     const user = firebase.auth().currentUser;
 
-    await user.sendEmailVerification();
+    return user.emailVerified;
 }
 
 
@@ -74,12 +71,38 @@ function generateAvatar() {
 
 /**
  * 
+ * @returns
+ */
+async function generateDiscriminator() {
+    let valid = false;
+    let discriminator = 0;
+
+    const ref = firebase.database().ref('/users/');
+
+    do {
+        discriminator = generateRandom(0, 9999);
+
+        const query = await (
+            await ref.orderByChild('discriminator').equalTo(discriminator).once('value')
+        ).val();
+    
+        if (!query) valid = true;
+    } while (valid === false);
+
+    discriminator = pad(discriminator, 4);
+
+    return discriminator;
+}
+
+
+/**
+ * 
  * @param {*} profile 
  * @param {*} uid 
  */
 async function dbProfile(profile, uid) {
-    await firebase.database().ref(`/users/${uid}/`).set({
-        profile
+    await firebase.database().ref(`/users/${uid}`).set({
+        ...profile
     });
 }
 
@@ -94,37 +117,21 @@ async function signout() {
 
 /**
  * 
- * @param {*} email 
- * @param {*} password 
  * @returns 
  */
-async function createUser(email, password) {
-    try {
-        const user = await firebase.auth().createUserWithEmailAndPassword(
-            email, password
-        );
+async function getProfile() {
+    const user = firebase.auth().currentUser;
 
-        return user;
-    } catch (error) {
-        return error.code;
-    }
-}
-
-
-/**
- * 
- * @param {*} email 
- * @param {*} password 
- * @returns 
- */
-async function signinUser(email, password) {
-    try {
-        const user = await firebase.auth().signInWithEmailAndPassword(
-            email, password
-        );
-
-        return user;
-    } catch (error) {
-        return error.code;
+    return {
+        email: user.email,
+        username: user.displayName,
+        uid: user.uid,
+        avatar: user.photoURL,
+        emailVerified: user.emailVerified,
+        creationTime: user.metadata.creationTime,
+        lastSignInTime: user.metadata.lastSignInTime,
+        phoneNumber: user.phoneNumber,
+        provider: user.providerData,
+        refreshToken: user.refreshToken
     }
 }

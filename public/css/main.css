@@ -3911,7 +3911,7 @@
 
 .input-cIJ7To.focused-1mmYsC,
 .input-cIJ7To:focus {
-	border-color: #7289da
+	border-color: #7289da;
 }
 
 .input-cIJ7To.error-2O5WFJ {
@@ -3957,17 +3957,17 @@
 }
 
 .inputPrefix-2VAOGg {
-	font-size: 16px;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	position: absolute;
-	height: 40px;
-	padding-top: 10px;
-	padding-left: 20px;
-	line-height: normal;
-	color: var(--text-muted)
+	font-size: 20px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    height: 40px;
+    padding-top: 2px;
+    padding-left: 16px;
+    line-height: normal;
+    color: var(--text-muted);
 }
 
 .theme-dark .inputPrefix-2VAOGg {
@@ -6123,7 +6123,7 @@ body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	background: transparent
+	background: transparent;
 }
 
 p {

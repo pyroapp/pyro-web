@@ -42,7 +42,7 @@
                             </svg>
                         </a>
                         <div class="mobileButtonContainer-3I8xXw">
-                            <a class="button-195cDm buttonWhite-18r1SC buttonSmall-2bnF7I gtm-click-class-login-button button-1x6X9g mobileAppButton-2dMGaq" href="/login">Login</a>
+                            <a class="button-195cDm buttonWhite-18r1SC buttonSmall-2bnF7I gtm-click-class-login-button button-1x6X9g mobileAppButton-2dMGaq" id="loginButtonMobile" href="/login">Login</a>
                         </div>
                     </nav>
                 </header>
@@ -64,7 +64,7 @@
                             <a class="link-1bIkeG link-oDO0Ir" href="/suppoort">Support</a>
                         </div>
                         <div class="appButton-2wSXh-">
-                            <a class="button-195cDm buttonWhite-18r1SC buttonSmall-2bnF7I gtm-click-class-login-button button-1x6X9g" href="/login">Login</a>
+                            <a class="button-195cDm buttonWhite-18r1SC buttonSmall-2bnF7I gtm-click-class-login-button button-1x6X9g" id="loginButtonDesktop" href="/login">Login</a>
                         </div>
                     </nav>
                 </header>
@@ -337,5 +337,14 @@
                 </div>
             </div>
         </div>
+
+        <!-- Firebase Core SDK -->
+		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+
+		<!-- Firebase Libraries -->
+		<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+
+        <script src="/js/firebase/config.js"></script>
+        <script src="/js/home/auth.js"></script>
     </body>
 </html>

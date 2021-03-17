@@ -73,23 +73,48 @@ async function signup() {
     showButtonLoader(button);
     disableButton(button);
 
-    const user = await createUser(values.email, values.password);
+    if (values.username.includes('#')) {
+        showLabelError('usernameLabel', 'Hash symbols are not allowed.');
+        showInputError('usernameField');
 
-    if (!AUTH_CODES[user]) {
-        const profile = {
-            email: values.email,
-            password: values.password,
-            
-        };
+        hideButtonLoader(button);
+        enableButton(button);
 
-        await dbProfile(profile, user.uid);
-        await sendEmailVerification();
-
-        redirect('/verifyemail/');
-    } else {
-        showLabelError('emailLabel', AUTH_CODES[user]);
+        return;
     }
 
-    hideButtonLoader(button);
-    enableButton(button);
+    try {
+        const user = await firebase.auth().createUserWithEmailAndPassword(
+            values.email, values.password
+        );
+
+        const discriminator = await generateDiscriminator();
+        const avatarURL = generateAvatar();
+        const creationTime = getTime();
+        const fullUsername = values.username + '#' + discriminator
+
+        await dbProfile({
+            email: values.email,
+            username: values.username,
+            discriminator: discriminator,
+            full_username: fullUsername,
+            avatar: avatarURL,
+            account_creation: creationTime,
+        }, user.user.uid);
+
+        await sendEmailVerification();
+        await setDisplayName(fullUsername);
+        await setPhotoURL(avatarURL);
+
+        redirect('/channels/@me');
+    } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+            showInputError('emailField');
+        }
+
+        showLabelError('emailLabel', AUTH_CODES[error.code]);
+
+        hideButtonLoader(button);
+        enableButton(button);
+    }
 }
