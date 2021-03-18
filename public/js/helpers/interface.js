@@ -40,6 +40,10 @@ function showInteractiveBanner(message, buttonText, buttonEvent) {
 }
 
 
+/**
+ * 
+ * @returns 
+ */
 function generateDidYouKnowMessage() {
     const index = generateRandom(0, DID_YOU_KNOW.length - 1);
 
@@ -47,6 +51,9 @@ function generateDidYouKnowMessage() {
 }
 
 
+/**
+ * 
+ */
 function showPageLoader() {
     const loader = document.getElementById('pageLoader');
 
@@ -78,8 +85,59 @@ function showPageLoader() {
 }
 
 
+/**
+ * 
+ */
 function hidePageLoader() {
     const loader = document.getElementById('pageLoader');
 
     loader.innerHTML = '';
+}
+
+
+/**
+ * 
+ * @param {*} heading 
+ * @param {*} message 
+ * @param {*} buttonText 
+ * @param {*} buttonEvent 
+ */
+function showBasicModal(heading, message, buttonText, buttonEvent) {
+    const modal = document.getElementById('modal');
+
+    if (modal.childNodes.length) return;
+
+    modal.innerHTML += `
+        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+        <div class="layer-2KE1M9 fadeIn-efi30">
+            <div class="focusLock-Ns3yie">
+                <div class="container-14fypd root-1gCeng small-3iVZYw fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
+                    <div class="form-26zE04">
+                        <div class="content-1LAB8Z modalContent-1T1Tix thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 8px;">
+                            <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyCenter-3D2jYp alignStretch-DpGPf3 noWrap-3jynv6 content-dfabe7" style="flex: 1 1 auto;">
+                                <h2 class="colorStandard-2KCXvj size14-e6ZScH h2-2gWE-o title-3sZWYQ defaultColor-1_ajX0 title-18-Ds0 marginBottom20-32qID7 marginTop8-1DLZ1n">${heading}</h2>
+                                <div class="colorStandard-2KCXvj size16-1P40sf body-Mj9Oxz">${message}</div>
+                            </div>
+                            <div style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 20px;"></div>
+                        </div>
+                        <div class="flex-1xMQg5 flex-1O1GKY horizontalReverse-2eTKWD horizontalReverse-3tRjY7 flex-1O1GKY directionRowReverse-m8IjIq justifyBetween-2tTqYu alignStretch-DpGPf3 wrap-ZIn9Iy footer-2gL1pp" style="flex: 0 0 auto;">
+                            <button type="submit" onclick="${buttonEvent}" class="primaryButton-2BsGPp button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeXlarge-2yFAlZ grow-q77ONN">
+                                <div class="contents-18-Yxp">${buttonText}</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+
+/**
+ * 
+ */
+function hideModals() {
+    const modal = document.getElementById('modal');
+
+    modal.innerHTML = '';
 }

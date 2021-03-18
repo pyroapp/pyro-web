@@ -27,7 +27,7 @@ firebase.auth().onAuthStateChanged(async user => {
         }
 
         await showMiniProfile();
-        await delay(2000);
+        // await delay(2000);
     }
 
     hidePageLoader();

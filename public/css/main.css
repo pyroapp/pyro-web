@@ -79183,3 +79183,69 @@ html .invoiceCancelRow-3mYhFX {
 .dataOfBirthSelect-fF4y52:first-child {
 	margin-left: 0;
 }
+
+.fadeIn-dk023d {
+	animation: fadeInBackdrop ease 0.1s;
+	-webkit-animation: fadeInBackdrop ease 0.1s;
+	-moz-animation: fadeInBackdrop ease 0.1s;
+	-o-animation: fadeInBackdrop ease 0.1s;
+	-ms-animation: fadeInBackdrop ease 0.1s;
+}
+
+@keyframes fadeInBackdrop {
+	0% {opacity:0;}
+	100% {opacity:0.85;}
+}
+
+@-moz-keyframes fadeInBackdrop {
+	0% {opacity:0;}
+	100% {opacity:0.85;}
+}
+
+@-webkit-keyframes fadeInBackdrop {
+	0% {opacity:0;}
+	100% {opacity:0.85;}
+}
+
+@-o-keyframes fadeInBackdrop {
+	0% {opacity:0;}
+	100% {opacity:0.85;}
+}
+
+@-ms-keyframes fadeInBackdrop {
+	0% {opacity:0;}
+	100% {opacity:0.85;}
+}
+
+.fadeIn-efi30 {
+	animation: fadeIn ease 0.1s;
+	-webkit-animation: fadeIn ease 0.1s;
+	-moz-animation: fadeIn ease 0.1s;
+	-o-animation: fadeIn ease 0.1s;
+	-ms-animation: fadeIn ease 0.1s;
+}
+
+@keyframes fadeIn {
+	0% {opacity:0;}
+	100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+	0% {opacity:0;}
+	100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+	0% {opacity:0;}
+	100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+	0% {opacity:0;}
+	100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+	0% {opacity:0;}
+	100% {opacity:1;}
+}

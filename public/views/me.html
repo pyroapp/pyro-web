@@ -541,19 +541,17 @@
                                                 </div>
                                             </section>
                                             <div class="tabBody-3YRQ8W">
-                                                <div class="peopleColumn-29fq28" role="tabpanel" id="ADD_FRIEND-tab">
+                                                <div class="peopleColumn-29fq28">
                                                     <div class="sectionHeader-20RGqu">
                                                         <div class="addInputWrapper-1BOZ3d">
                                                             <h2 class="header-1-dBpZ">Add Friend</h2>
-                                                            <div class="description-1EvxpH">You can add a friend with their Discord Tag. It's cAsE sEnSitIvE!</div>
-                                                            <div>
-                                                                <form class="wrapper-1cBijl">
-                                                                    <input class="addFriendInput-4bcerK" placeholder="Enter a Username#0000" maxlength="37">
-                                                                    <div class="addFriendHint-3Y70FX"></div>
-                                                                    <button type="submit" disabled="" class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeSmall-2cSMqn grow-q77ONN">
-                                                                        <div class="contents-18-Yxp">Send Friend Request</div>
-                                                                    </button>
-                                                                </form>
+                                                            <div class="description-1EvxpH" id="addFriendLabel">You can add a friend with their Discord Tag. It's cAsE sEnSitIvE!</div>
+                                                            <div class="wrapper-1cBijl">
+                                                                <input class="addFriendInput-4bcerK" placeholder="Enter a Username#0000" maxlength="37" max="37" min="5" id="addFriendField">
+                                                                <div class="addFriendHint-3Y70FX"></div>
+                                                                <button type="submit" disabled class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeSmall-2cSMqn grow-q77ONN" id="addFriendButton">
+                                                                    <div class="contents-18-Yxp">Send Friend Request</div>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -622,7 +620,7 @@
             <div class="popouts-2bnG9Z"></div>
             <div></div>
             <div></div>
-            <div class="layerContainer-yqaFcK"></div>
+            <div class="layerContainer-yqaFcK" id="modal"></div>
             <div style="position: fixed; opacity: 0; pointer-events: none;"></div>
         </div>
 
@@ -646,5 +644,6 @@
 		
         <script src="/js/me/auth.js"></script>
         <script src="/js/me/interface.js"></script>
+        <script src="/js/me/friends.js"></script>
     </body>
 </html>

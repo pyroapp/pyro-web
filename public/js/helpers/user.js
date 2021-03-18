@@ -35,6 +35,14 @@ async function setPhotoURL(url) {
 
 async function sendEmailVerification() {
     await firebase.auth().currentUser.sendEmailVerification();
+    const { email } = await getProfile();
+
+    showBasicModal(
+        'Verification Email',
+        `We have sent you a new verification email to <strong>${email}</strong>, please check both your inbox and spam folder.`,
+        'Okay',
+        'hideModals()'
+    );
 }
 
 
@@ -134,4 +142,18 @@ async function getProfile() {
         provider: user.providerData,
         refreshToken: user.refreshToken
     }
+}
+
+
+/**
+ * 
+ * @param {*} username
+ * @returns 
+ */
+async function getUserByFullUsername(username) {
+    const user = await (
+        await firebase.database().ref('/users/').orderByChild('full_username').equalTo(username).once('value')
+    ).val();
+
+    return user;
 }
