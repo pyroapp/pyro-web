@@ -102,7 +102,13 @@ function showButtonLoader(element) {
  * @param {*} element 
  */
 function hideButtonLoader(element) {
-    element.innerHTML = `<div class="contents-18-Yxp">Login</div>`;
+    const children = element.childNodes[0];
+
+    if (children) {
+        const buttonContents = element.querySelectorAll('.contents-18-Yxp')[0];
+        
+        element.innerHTML = `<div class="contents-18-Yxp">${buttonContents.innerText}</div>`;
+    }
 }
 
 
@@ -144,20 +150,11 @@ function validateInputs(ids) {
     // Check each input
     ids.forEach(id => {
         const element = document.getElementById(id + 'Field');
-        const type = element.getAttribute('type');
 
         // Field is empty
         if (!element.value) {
             showInputError(id + 'Field');
             showLabelError(id + 'Label', 'This field is required.');
-
-            return;
-        }
-
-        // Invalid email address
-        if (type === 'email' && !validateEmail(element.value)) {
-            showInputError(id + 'Field');
-            showLabelError(id + 'Label', 'Email address is invalid.');
 
             return;
         }

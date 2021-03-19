@@ -79185,11 +79185,11 @@ html .invoiceCancelRow-3mYhFX {
 }
 
 .fadeIn-dk023d {
-	animation: fadeInBackdrop ease 0.1s;
-	-webkit-animation: fadeInBackdrop ease 0.1s;
-	-moz-animation: fadeInBackdrop ease 0.1s;
-	-o-animation: fadeInBackdrop ease 0.1s;
-	-ms-animation: fadeInBackdrop ease 0.1s;
+	animation: fadeInBackdrop ease 0.15s;
+	-webkit-animation: fadeInBackdrop ease 0.15s;
+	-moz-animation: fadeInBackdrop ease 0.15s;
+	-o-animation: fadeInBackdrop ease 0.15s;
+	-ms-animation: fadeInBackdrop ease 0.15s;
 }
 
 @keyframes fadeInBackdrop {
@@ -79218,11 +79218,11 @@ html .invoiceCancelRow-3mYhFX {
 }
 
 .fadeIn-efi30 {
-	animation: fadeIn ease 0.1s;
-	-webkit-animation: fadeIn ease 0.1s;
-	-moz-animation: fadeIn ease 0.1s;
-	-o-animation: fadeIn ease 0.1s;
-	-ms-animation: fadeIn ease 0.1s;
+	animation: fadeIn ease 0.15s;
+	-webkit-animation: fadeIn ease 0.15s;
+	-moz-animation: fadeIn ease 0.15s;
+	-o-animation: fadeIn ease 0.15s;
+	-ms-animation: fadeIn ease 0.15s;
 }
 
 @keyframes fadeIn {
@@ -79248,4 +79248,70 @@ html .invoiceCancelRow-3mYhFX {
 @-ms-keyframes fadeIn {
 	0% {opacity:0;}
 	100% {opacity:1;}
+}
+
+.fadeOut-efi30 {
+	animation: fadeOut ease 0.15s;
+	-webkit-animation: fadeOut ease 0.15s;
+	-moz-animation: fadeOut ease 0.15s;
+	-o-animation: fadeOut ease 0.15s;
+	-ms-animation: fadeOut ease 0.15s;
+}
+
+@keyframes fadeOut {
+	0% {opacity:1;}
+	100% {opacity:0;}
+}
+
+@-moz-keyframes fadeOut {
+	0% {opacity:1;}
+	100% {opacity:0;}
+}
+
+@-webkit-keyframes fadeOut {
+	0% {opacity:1;}
+	100% {opacity:0;}
+}
+
+@-o-keyframes fadeOut {
+	0% {opacity:1;}
+	100% {opacity:0;}
+}
+
+@-ms-keyframes fadeOut {
+	0% {opacity:1;}
+	100% {opacity:0;}
+}
+
+.fadeOut-dk023d {
+	animation: fadeOutBackdrop ease 0.15s;
+	-webkit-animation: fadeOutBackdrop ease 0.15s;
+	-moz-animation: fadeOutBackdrop ease 0.15s;
+	-o-animation: fadeOutBackdrop ease 0.15s;
+	-ms-animation: fadeOutBackdrop ease 0.15s;
+}
+
+@keyframes fadeOutBackdrop {
+	0% {opacity:0.85;}
+	100% {opacity:0;}
+}
+
+@-moz-keyframes fadeOutBackdrop {
+	0% {opacity:0.85;}
+	100% {opacity:0;}
+}
+
+@-webkit-keyframes fadeOutBackdrop {
+	0% {opacity:0.85;}
+	100% {opacity:0;}
+}
+
+@-o-keyframes fadeOutBackdrop {
+	0% {opacity:0.85;}
+	100% {opacity:0;}
+}
+
+@-ms-keyframes fadeOutBackdrop {
+	0% {opacity:0.85;}
+	100% {opacity:0;}
 }

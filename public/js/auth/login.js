@@ -59,9 +59,14 @@ async function login() {
         if (error.code === 'auth/wrong-password') {
             showLabelError('passwordLabel', AUTH_CODES[error.code]);
             showInputError('passwordField');
+        } else if (error.code === 'auth/invalid-email') {
+            showLabelError('emailLabel', AUTH_CODES[error.code]);
+            showInputError('emailField');
         } else {
             showLabelError('emailLabel', AUTH_CODES[error.code]);
         }
+
+        console.log(error.code);
 
         hideButtonLoader(button);
         enableButton(button);

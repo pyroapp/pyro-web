@@ -110,9 +110,13 @@ async function signup() {
     } catch (error) {
         if (error.code === 'auth/email-already-in-use') {
             showInputError('emailField');
+        } else if (error.code === 'auth/email-invalid') {
+            showInputError('emailField');
         }
 
         showLabelError('emailLabel', AUTH_CODES[error.code]);
+
+        console.log(error.code);
 
         hideButtonLoader(button);
         enableButton(button);

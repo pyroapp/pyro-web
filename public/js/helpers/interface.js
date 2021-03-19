@@ -103,7 +103,7 @@ function hidePageLoader() {
  * @param {*} buttonEvent 
  */
 function showBasicModal(heading, message, buttonText, buttonEvent) {
-    const modal = document.getElementById('modal');
+    const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
     if (modal.childNodes.length) return;
 
@@ -136,8 +136,18 @@ function showBasicModal(heading, message, buttonText, buttonEvent) {
 /**
  * 
  */
-function hideModals() {
-    const modal = document.getElementById('modal');
+async function hideModals() {
+    const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
+    
+    if (!modal.childNodes.length) return;
+    
+    const container = document.querySelectorAll('.fadeIn-efi30')[0];
+    const background = document.querySelectorAll('.fadeIn-dk023d')[0];
+
+    container.classList.add('fadeOut-efi30');
+    background.classList.add('fadeOut-dk023d');
+    
+    await delay(100);
 
     modal.innerHTML = '';
 }
