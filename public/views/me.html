@@ -393,9 +393,11 @@
                                     <div class="notice-3bPHh- colorDefault-22HBa0" id="banner"></div>
                                     <div class="content-98HsJk">
                                         <div class="sidebar-2K8pFh hasNotice-1XRy4h">
-                                            <nav class="privateChannels-1nO12o" aria-label="Private channels">
-                                                <div class="searchBar-6Kv8R2"><button type="button" class="searchBarComponent-32dTOx">Find or start a conversation</button></div>
-                                                <div class="scroller-1JbKMe thin-1ybCId scrollerBase-289Jih fade-2kXiP2" role="list" tabindex="0" id="private-channels" data-jump-section="global" style="overflow: hidden scroll; padding-right: 0px;">
+                                            <nav class="privateChannels-1nO12o">
+                                                <div class="searchBar-6Kv8R2">
+                                                    <button class="searchBarComponent-32dTOx">Find or start a conversation</button>
+                                                </div>
+                                                <div class="scroller-1JbKMe thin-1ybCId scrollerBase-289Jih fade-2kXiP2" style="overflow: hidden scroll; padding-right: 0px;">
                                                     <div class="content-3YMskv" style="height: 528px;">
                                                         <div style="height: 8px;"></div>
                                                         <a class="channel-2QD9_O container-2Pjhx- selected-aXhQR6 " role="listitem" aria-setsize="3" aria-posinset="1" id="private-channels-0" tabindex="-1" href="/channels/@me">
@@ -423,50 +425,31 @@
                                                                 </svg>
                                                             </div>
                                                         </h2>
-                                                        <svg width="184" height="428" viewBox="0 0 184 428" class="empty-388osJ">
-                                                            <rect x="40" y="6" width="144" height="20" rx="10"></rect>
-                                                            <circle cx="16" cy="16" r="16"></circle>
-                                                            <rect x="40" y="50" width="144" height="20" rx="10" opacity="0.9"></rect>
-                                                            <circle cx="16" cy="60" r="16" opacity="0.9"></circle>
-                                                            <rect x="40" y="94" width="144" height="20" rx="10" opacity="0.8"></rect>
-                                                            <circle cx="16" cy="104" r="16" opacity="0.8"></circle>
-                                                            <rect x="40" y="138" width="144" height="20" rx="10" opacity="0.7"></rect>
-                                                            <circle cx="16" cy="148" r="16" opacity="0.7"></circle>
-                                                            <rect x="40" y="182" width="144" height="20" rx="10" opacity="0.6"></rect>
-                                                            <circle cx="16" cy="192" r="16" opacity="0.6"></circle>
-                                                            <rect x="40" y="226" width="144" height="20" rx="10" opacity="0.5"></rect>
-                                                            <circle cx="16" cy="236" r="16" opacity="0.5"></circle>
-                                                            <rect x="40" y="270" width="144" height="20" rx="10" opacity="0.4"></rect>
-                                                            <circle cx="16" cy="280" r="16" opacity="0.4"></circle>
-                                                            <rect x="40" y="314" width="144" height="20" rx="10" opacity="0.3"></rect>
-                                                            <circle cx="16" cy="324" r="16" opacity="0.3"></circle>
-                                                            <rect x="40" y="358" width="144" height="20" rx="10" opacity="0.2"></rect>
-                                                            <circle cx="16" cy="368" r="16" opacity="0.2"></circle>
-                                                            <rect x="40" y="402" width="144" height="20" rx="10" opacity="0.1"></rect>
-                                                            <circle cx="16" cy="412" r="16" opacity="0.1"></circle>
-                                                        </svg>
+                                                        <div id="privateChannelsList"></div>
                                                     </div>
                                                 </div>
                                             </nav>
-                                            <section class="panels-j1Uci_" aria-label="User area">
+                                            <section class="panels-j1Uci_">
                                                 <div class="wrapper-24pKcD"></div>
                                                 <div class="container-3baos1">
-                                                    <div class="avatarWrapper-2yR4wp" aria-controls="popout_19" aria-expanded="false" aria-label="Set Status" role="button" tabindex="0">
-                                                        <div class="avatar-SmRMf2 wrapper-3t9DeA" role="img" aria-label="djsclone, Online" aria-hidden="false" style="width: 32px; height: 32px;">
-                                                            <svg width="40" height="32" viewBox="0 0 40 32" class="mask-1l8v16 svg-2V3M55" aria-hidden="true">
-                                                                <foreignObject x="0" y="0" width="32" height="32" mask="url(#svg-mask-avatar-status-round-32)"><img id="avatarImage" class="avatar-VxgULZ"></foreignObject>
-                                                                <rect width="10" height="10" x="22" y="22" fill="#43b581" mask="url(#svg-mask-status-online)" class="pointerEvents-2zdfdO"></rect>
+                                                    <div class="avatarWrapper-2yR4wp">
+                                                        <div class="avatar-SmRMf2 wrapper-3t9DeA" style="width: 32px; height: 32px;">
+                                                            <svg width="40" height="32" viewBox="0 0 40 32" class="mask-1l8v16 svg-2V3M55">
+                                                                <foreignObject x="0" y="0" width="32" height="32" mask="url(#svg-mask-avatar-status-round-32)">
+                                                                    <img id="avatarImage" class="avatar-VxgULZ">
+                                                                </foreignObject>
+                                                                <rect id="userStatus" width="10" height="10" x="22" y="22" class="pointerEvents-2zdfdO" mask="url(#svg-mask-status-online)" fill="#43b581"></rect>
                                                             </svg>
                                                         </div>
                                                     </div>
-                                                    <div class="nameTag-3uD-yy canCopy-2VBT7N" aria-label="Click to copy username" role="button" tabindex="0">
+                                                    <div class="nameTag-3uD-yy canCopy-2VBT7N">
                                                         <div class="colorStandard-2KCXvj size14-e6ZScH usernameContainer-1fp4nu">
                                                             <div class="size14-e6ZScH title-eS5yk3" id="usernameLabel"></div>
                                                         </div>
                                                         <div class="size12-3cLvbJ subtext-3CDbHg" id="discriminatorLabel"></div>
                                                     </div>
                                                     <div class="flex-1xMQg5 flex-1O1GKY horizontal-1ae9ci horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6" style="flex: 0 1 auto;">
-                                                        <button aria-label="Mute" role="switch" aria-checked="true" type="button" class="button-14-BFJ enabled-2cQ-u7 button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN">
+                                                        <button aria-label="Mute" class="button-14-BFJ enabled-2cQ-u7 button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN">
                                                             <div class="contents-18-Yxp">
                                                                 <svg aria-hidden="false" width="20" height="20" viewBox="0 0 24 24">
                                                                     <path d="M6.7 11H5C5 12.19 5.34 13.3 5.9 14.28L7.13 13.05C6.86 12.43 6.7 11.74 6.7 11Z" fill="currentColor"></path>

@@ -88,8 +88,12 @@ function showPageLoader() {
 /**
  * 
  */
-function hidePageLoader() {
+async function hidePageLoader() {
     const loader = document.getElementById('pageLoader');
+
+    loader.classList.add('fadeOut-efi30');
+
+    await delay(100);
 
     loader.innerHTML = '';
 }

@@ -10,11 +10,24 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
+
 window.onload = () => {
     const didyouknow = document.getElementById('didYouKnowLabel');
 
     didyouknow.innerText = generateDidYouKnowMessage();
 }
+
+
+window.onunload = () => {
+    updateUserPresence('offline');
+};
+
+
+document.onvisibilitychange = async () => {
+    await delay(2000);
+    updateUserPresence();
+};
+
 
 firebase.auth().onAuthStateChanged(async user => {
     if (user) {
@@ -26,8 +39,10 @@ firebase.auth().onAuthStateChanged(async user => {
             );
         }
 
+        await updateUserPresence('online');
         await showMiniProfile();
-        await delay(LOAD_WAIT_TIME);
+        await loadPrivateChannels();
+        await delay(LOADING_TIMEOUT);
     }
 
     hidePageLoader();
@@ -38,19 +53,13 @@ firebase.auth().onAuthStateChanged(async user => {
  * 
  */
 async function showMiniProfile() {
-    const {
-        username,
-        avatar
-    } = await getProfile();
-
-    const name = username.split('#')[0];
-    const discriminator = username.split('#')[1];
+    const { username, discriminator } = await getProfile();
 
     const usernameLabel = document.getElementById('usernameLabel');
     const discriminatorLabel = document.getElementById('discriminatorLabel');
     const avatarImage = document.getElementById('avatarImage');
 
-    usernameLabel.innerText = name;
+    usernameLabel.innerText = username;
     discriminatorLabel.innerText = '#' + discriminator;
-    avatarImage.setAttribute('src', avatar);
+    avatarImage.setAttribute('src', getAvatar());
 }

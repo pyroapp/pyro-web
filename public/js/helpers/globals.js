@@ -13,7 +13,11 @@
 
 const AGE_LIMIT = 13;
 const DOB_START_YEAR = 1921;
-const LOAD_WAIT_TIME = 0;
+const LOADING_TIMEOUT = 0;
+const ACTIVITY_TIMEOUT = 3000;
+const IDLE_TIMEOUT = 5000;
+
+const AVATAR_PATH = 'https://firebasestorage.googleapis.com/v0/b/djs-clone.appspot.com/o/avatars%2F';
 
 const AUTH_CODES = {
     'auth/claims-too-large': 'Claim size exceeds 1000 bytes.',

@@ -89,22 +89,20 @@ async function signup() {
         );
 
         const discriminator = await generateDiscriminator();
-        const avatarURL = generateAvatar();
         const creationTime = getTime();
-        const fullUsername = values.username + '#' + discriminator
+        const fullUsername = values.username + '#' + discriminator;
 
         await dbProfile({
             email: values.email,
             username: values.username,
             discriminator: discriminator,
             full_username: fullUsername,
-            avatar: avatarURL,
             account_creation: creationTime,
         }, user.user.uid);
 
         await sendEmailVerification();
         await setDisplayName(fullUsername);
-        await setPhotoURL(avatarURL);
+        await uploadDefaultAvatar();
 
         redirect('/channels/@me');
     } catch (error) {

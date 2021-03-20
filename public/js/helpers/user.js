@@ -13,6 +13,64 @@
 
 /**
  * 
+ * @param {*} overrideStatus 
+ */
+async function updateUserPresence(overrideStatus) {
+    const { uid } = firebase.auth().currentUser;
+    let status = 'online';
+
+    if (overrideStatus) {
+        status = overrideStatus;
+    } else {
+        if (document.visibilityState === 'hidden') {
+            status = 'idle';
+        }
+    }
+
+    const userStatus = document.getElementById('userStatus');
+    const colours = {
+        online: '#43B581',
+        idle: '#FAA61A',
+        dnd: '#F04747',
+        offline: '#747F8D',
+    };
+
+    userStatus.setAttribute('fill', colours[status]);
+    userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
+
+    await firebase.database().ref(`/presence/`).update({
+        [uid]: status
+    });
+}
+
+
+/**
+ * 
+ * @param {*} uid 
+ * @param {*} status 
+ * @returns 
+ */
+function setPrivateChannelStatus(uid, status) {
+    if (!status) return;
+
+    // TODO: When friend is removed, socket is not disposed.
+    const channel = document.getElementById(uid); 
+    const userStatus = channel.querySelectorAll('.userStatus')[0];
+
+    const colours = {
+        online: '#43B581',
+        idle: '#FAA61A',
+        dnd: '#F04747',
+        offline: '#747F8D',
+    };
+
+    userStatus.setAttribute('fill', colours[status]);
+    userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
+}
+
+
+/**
+ * 
  * @param {*} name 
  */
  async function setDisplayName(name) {
@@ -22,22 +80,11 @@
 }
 
 
-/**
- * 
- * @param {*} url 
- */
-async function setPhotoURL(url) {
-    await firebase.auth().currentUser.updateProfile({
-        photoURL: url
-    });
-}
-
-
 async function sendEmailVerification(showModal) {
     await firebase.auth().currentUser.sendEmailVerification();
 
     if (showModal) {
-        const { email } = await getProfile();
+        const { email } = firebase.auth().currentUser;
 
         showBasicModal(
             'Verification Email',
@@ -62,21 +109,34 @@ function isEmailVerified() {
 
 /**
  * 
+ */
+async function uploadDefaultAvatar() {
+    const { uid } = firebase.auth().currentUser;
+
+    // Generate a random colour for the profile picture
+    const avatars = ['blue', 'green', 'yellow', 'red'];
+    const index = generateRandom(0, avatars.length - 1);
+    const path = `/img/avatar_${avatars[index]}.png`;
+
+    // Get image into blob format for upload
+    const blob = await (await fetch(path)).blob();
+
+    // Upload image to Firebase Storage
+    await firebase.storage().ref(`avatars/${uid}.gif`).put(blob);
+}
+
+
+/**
+ * 
+ * @param {*} userId
  * @returns 
  */
-function generateAvatar() {
-    const base = 'https://firebasestorage.googleapis.com/v0/b/djs-clone.appspot.com/o/';
-    const defaultAvatars = [
-        'avatar_blue',
-        'avatar_green',
-        'avatar_yellow',
-        'avatar_red'
-    ];
+function getAvatar(userId) {
+    let { uid } = firebase.auth().currentUser;
+    
+    if (userId) uid = userId;
 
-    const index = generateRandom(0, defaultAvatars.length - 1);
-    const avatar = defaultAvatars[index];
-
-    return base + `cdn%2Fmedia%2Favatars%2F${avatar}.png?alt=media`;
+    return `${AVATAR_PATH}${uid}.gif?alt=media`;
 }
 
 
@@ -130,21 +190,14 @@ async function signout() {
  * 
  * @returns 
  */
-function getProfile() {
-    const user = firebase.auth().currentUser;
+async function getProfile() {
+    const { uid } = firebase.auth().currentUser;
 
-    return {
-        email: user.email,
-        username: user.displayName,
-        uid: user.uid,
-        avatar: user.photoURL,
-        emailVerified: user.emailVerified,
-        creationTime: user.metadata.creationTime,
-        lastSignInTime: user.metadata.lastSignInTime,
-        phoneNumber: user.phoneNumber,
-        provider: user.providerData,
-        refreshToken: user.refreshToken
-    }
+    const profile = await (
+        await firebase.database().ref(`/users/${uid}`).once('value')
+    ).val();
+
+    return profile;
 }
 
 
@@ -175,9 +228,24 @@ async function isFriend(username) {
     const { uid } = firebase.auth().currentUser;
     const friendUID = Object.keys(user)[0];
 
-    const friended = await (
+    const isFriended = await (
         await firebase.database().ref(`/friends/${uid}/${friendUID}/username/`).once('value')
     ).val();
 
-    return friended;
+    return isFriended;
+}
+
+
+/**
+ * 
+ * @returns 
+ */
+async function getFriends() {
+    const { uid } = firebase.auth().currentUser;
+
+    const friends = await (
+        (await firebase.database().ref(`/friends/${uid}`).once('value'))
+    ).val();
+
+    return friends;
 }
