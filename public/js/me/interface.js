@@ -22,12 +22,12 @@ firebase.auth().onAuthStateChanged(async user => {
             showInteractiveBanner(
                 'Please check your email and follow the instructions to verify your account.',
                 'Resend',
-                'sendEmailVerification()'
+                'sendEmailVerification(true)'
             );
         }
 
         await showMiniProfile();
-        await delay(2000);
+        await delay(LOAD_WAIT_TIME);
     }
 
     hidePageLoader();

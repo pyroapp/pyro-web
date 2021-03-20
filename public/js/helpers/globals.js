@@ -13,6 +13,7 @@
 
 const AGE_LIMIT = 13;
 const DOB_START_YEAR = 1921;
+const LOAD_WAIT_TIME = 0;
 
 const AUTH_CODES = {
     'auth/claims-too-large': 'Claim size exceeds 1000 bytes.',

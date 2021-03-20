@@ -46,6 +46,7 @@ async function addFriendInit() {
     const split = input.value.split('#');
 
     showButtonLoader(button);
+    disableButton(button);
 
     if (split.length > 2) {
         label.classList.add('error-3T-E-_');
@@ -61,7 +62,7 @@ async function addFriendInit() {
 
     } else {
         const user = await getUserByFullUsername(input.value);
-
+        
         // Back to default
         label.innerText = 'You can add a friend with their Discord Tag. It\'s cAsE sEnSitIvE!';
         label.classList.remove('error-3T-E-_');
@@ -75,15 +76,24 @@ async function addFriendInit() {
                 'hideModals()'
             );
         } else {
-            await addFriend(user);
+            const {
+                failed,
+                message
+            } = await addFriend(user);
 
-            label.classList.add('success-t0oxXf');
-            label.innerHTML = `Success! Your friend request to <strong>${input.value}</strong> was sent.`;
+            if (failed) {
+                label.classList.add('error-3T-E-_');
+            } else {
+                label.classList.add('success-t0oxXf');
+            }
+
+            label.innerHTML = message;
             input.value = '';
-            button.setAttribute('disabled', '');
         }
     }
 
+
+    enableButton(button);
     hideButtonLoader(button);
 }
 
@@ -93,14 +103,65 @@ async function addFriendInit() {
  * @param {*} user 
  */
 async function addFriend(user) {
-    const uid = firebase.auth().currentUser.uid;
-    const friendUID = user.key;
+    const { uid } = firebase.auth().currentUser;
+    const friendUID = Object.keys(user)[0];
 
     const {
-        avatar,
-        discriminator,
-        username,
-    } = user;
+        avatar: friendAvatar,
+        discriminator: friendDiscriminator,
+        username: friendUsername
+    } = user[friendUID];
 
-    // await firebase.database().ref(`/friends/${}/`);
+    const friendFullUsername = friendUsername + '#' + friendDiscriminator;
+
+    if (await isFriend(friendFullUsername)) {
+        return {
+            failed: true,
+            message: `You have already friended ${friendUsername}.`
+        };
+    }
+
+    const addedFriendTime = getTime();
+
+    try {
+        // TODO: Add friend request, other person must accept the request.
+
+        // Add friend to current account
+        await firebase.database().ref(`/friends/${uid}/`).update({
+            [friendUID]: {
+                avatar: friendAvatar,
+                discriminator: friendDiscriminator,
+                username: friendUsername,
+                friends_since: addedFriendTime
+            }
+        });
+
+        // Add current user to friends account
+        const {
+            avatar,
+            username,
+        } = getProfile();
+
+        const discriminator = username.split('#')[1];
+
+        await firebase.database().ref(`/friends/${friendUID}/`).update({
+            [uid]: {
+                avatar: avatar,
+                discriminator: discriminator,
+                username: username,
+                friends_since: addedFriendTime
+            }
+        });
+
+        return {
+            failed: false,
+            message: `Success! You added <strong>${friendUsername}</strong> as a friend.`
+        };
+    } catch (error) {
+        console.error(error);
+        return {
+            failed: true,
+            message: `Unexpected Error! Failed to add <strong>${friendUsername}</strong> as a friend.`
+        };
+    }
 }

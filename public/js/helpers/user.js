@@ -33,16 +33,19 @@ async function setPhotoURL(url) {
 }
 
 
-async function sendEmailVerification() {
+async function sendEmailVerification(showModal) {
     await firebase.auth().currentUser.sendEmailVerification();
-    const { email } = await getProfile();
 
-    showBasicModal(
-        'Verification Email',
-        `We have sent you a new verification email to <strong>${email}</strong>, please check both your inbox and spam folder.`,
-        'Okay',
-        'hideModals()'
-    );
+    if (showModal) {
+        const { email } = await getProfile();
+
+        showBasicModal(
+            'Verification Email',
+            `We have sent you a new verification email to <strong>${email}</strong>, please check both your inbox and spam folder.`,
+            'Okay',
+            'hideModals()'
+        );
+    }
 }
 
 
@@ -127,7 +130,7 @@ async function signout() {
  * 
  * @returns 
  */
-async function getProfile() {
+function getProfile() {
     const user = firebase.auth().currentUser;
 
     return {
@@ -156,4 +159,25 @@ async function getUserByFullUsername(username) {
     ).val();
 
     return user;
+}
+
+
+/**
+ * 
+ * @param {*} username 
+ * @returns 
+ */
+async function isFriend(username) {
+    const user = await getUserByFullUsername(username);
+
+    if (!user) return false;
+
+    const { uid } = firebase.auth().currentUser;
+    const friendUID = Object.keys(user)[0];
+
+    const friended = await (
+        await firebase.database().ref(`/friends/${uid}/${friendUID}/username/`).once('value')
+    ).val();
+
+    return friended;
 }

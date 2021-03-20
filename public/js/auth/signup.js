@@ -116,7 +116,7 @@ async function signup() {
 
         showLabelError('emailLabel', AUTH_CODES[error.code]);
 
-        console.log(error.code);
+        console.error(error);
 
         hideButtonLoader(button);
         enableButton(button);
