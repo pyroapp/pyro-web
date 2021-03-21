@@ -19,13 +19,13 @@ window.onload = () => {
 
 
 window.onunload = () => {
-    updateUserPresence('offline');
+    setStatus('offline');
 };
 
 
 document.onvisibilitychange = async () => {
-    await delay(2000);
-    updateUserPresence();
+    await delay(IDLE_TIMEOUT);
+    setAutomaticStatus();
 };
 
 
@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged(async user => {
             );
         }
 
-        await updateUserPresence('online');
+        await setAutomaticStatus('online');
         await showMiniProfile();
         await loadPrivateChannels();
         await delay(LOADING_TIMEOUT);

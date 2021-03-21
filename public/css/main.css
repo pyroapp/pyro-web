@@ -16093,6 +16093,11 @@ img[alt] {
 	cursor:pointer
 }
 
+.item-1tOPte:hover {
+	background-color:#5c6fb1;
+	color:#fff
+}
+
 .item-1tOPte.hideInteraction-1iHO1O {
 	cursor:default
 }
@@ -66283,7 +66288,8 @@ html .tabBadge-3smxHS {
 }
 
 .status-1fhblQ {
-	grid-area:status span 2
+	grid-area:status span 2;
+	line-height: normal;
 }
 
 .icon-1IxfJ2 {

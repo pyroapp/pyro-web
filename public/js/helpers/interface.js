@@ -109,9 +109,7 @@ async function hidePageLoader() {
 function showBasicModal(heading, message, buttonText, buttonEvent) {
     const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
-    if (modal.childNodes.length) return;
-
-    modal.innerHTML += `
+    modal.innerHTML = `
         <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
         <div class="layer-2KE1M9 fadeIn-efi30">
             <div class="focusLock-Ns3yie">
@@ -154,4 +152,80 @@ async function hideModals() {
     await delay(100);
 
     modal.innerHTML = '';
+}
+
+
+/**
+ * 
+ */
+function showStatusPicker() {
+    const layerContainer = document.querySelectorAll('.layerContainer-yqaFcK')[0];
+
+    if (layerContainer.childNodes.length) return hideStatusPicker();
+
+    layerContainer.innerHTML = `
+        <div style="width: 100%; height: 100%;" onclick="hideStatusPicker()"><div>
+        <div id="statusPicker" class="layer-v9HyYc" style="position: absolute; left: 80px; bottom: 57.3193px;">
+            <div class="animatorTop-2Y7x2r scale-3iLZhb didRender-33z1u8">
+                <div class="menu-3sdvDG styleFixed-sX-yHV">
+                    <div class="scroller-3BxosC thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll;">
+                        <div class="item-1tOPte colorDefault-2K3EoJ" onclick="manualSetStatus('online')">
+                            <div class="statusItem-33LqPf">
+                                <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
+                                    <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-online)">
+                                        <div class="status-1AY8sU" style="background-color: rgb(67, 181, 129);"></div>
+                                    </foreignObject>
+                                </svg>
+                                <div class="status-1fhblQ">Online</div>
+                            </div>
+                        </div>
+                        <div role="separator" class="separator-2I32lJ"></div>
+                        <div class="item-1tOPte colorDefault-2K3EoJ" onclick="manualSetStatus('idle')">
+                            <div class="statusItem-33LqPf">
+                                <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
+                                    <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-idle)">
+                                        <div class="status-1AY8sU" style="background-color: rgb(250, 166, 26);"></div>
+                                    </foreignObject>
+                                </svg>
+                                <div class="status-1fhblQ">Idle</div>
+                            </div>
+                        </div>
+                        <div class="item-1tOPte colorDefault-2K3EoJ" onclick="manualSetStatus('dnd')">
+                            <div class="statusItem-33LqPf">
+                                <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
+                                    <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-dnd)">
+                                        <div class="status-1AY8sU" style="background-color: rgb(240, 71, 71);"></div>
+                                    </foreignObject>
+                                </svg>
+                                <div class="status-1fhblQ">Do Not Disturb</div>
+                                <div class="description-2L932D">You will not receive any desktop notifications.</div>
+                            </div>
+                        </div>
+                        <div class="item-1tOPte colorDefault-2K3EoJ" onclick="manualSetStatus('offline')">
+                            <div class="statusItem-33LqPf">
+                                <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
+                                    <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-offline)"> 
+                                        <div class="status-1AY8sU" style="background-color: rgb(116, 127, 141);"></div>
+                                    </foreignObject>
+                                </svg>
+                                <div class="status-1fhblQ">Invisible</div>
+                                <div class="description-2L932D">You will not appear online, but will have full access to all of Discord.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+
+
+/**
+ * 
+ */
+async function hideStatusPicker() {
+    const layerContainer = document.querySelectorAll('.layerContainer-yqaFcK')[0];
+
+    layerContainer.innerHTML = '';
 }

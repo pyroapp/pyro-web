@@ -15,8 +15,13 @@
  * 
  * @param {*} overrideStatus 
  */
-async function updateUserPresence(overrideStatus) {
-    const { uid } = firebase.auth().currentUser;
+async function setAutomaticStatus(overrideStatus) {
+
+    // If user has manual status set, don't automatically set one
+    if (window.localStorage.getItem('manual_status')) {
+        return setStatus(window.localStorage.getItem('manual_status'));
+    };
+    
     let status = 'online';
 
     if (overrideStatus) {
@@ -26,6 +31,13 @@ async function updateUserPresence(overrideStatus) {
             status = 'idle';
         }
     }
+
+    setStatus(status);
+}
+
+
+async function setStatus(status) {
+    const { uid } = firebase.auth().currentUser;
 
     const userStatus = document.getElementById('userStatus');
     const colours = {
@@ -41,6 +53,22 @@ async function updateUserPresence(overrideStatus) {
     await firebase.database().ref(`/presence/`).update({
         [uid]: status
     });
+}
+
+
+/**
+ * 
+ * @param {*} status 
+ */
+function manualSetStatus(status) {
+    setStatus(status);
+
+    // If user selects online status, clear existing manual status
+    if (status === 'online') {
+        window.localStorage.removeItem('manual_status');
+    } else {
+        window.localStorage.setItem('manual_status', status);
+    }
 }
 
 

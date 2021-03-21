@@ -119,6 +119,16 @@ async function addFriend(user) {
         };
     }
 
+    // Make sure you are not adding yourself
+    const { displayName } = firebase.auth().currentUser;
+
+    if (friendFullUsername === displayName) {
+        return {
+            failed: true,
+            message: 'You cannot add yourself as a friend.'
+        }
+    }
+
     const addedFriendTime = getTime();
 
     try {
@@ -164,6 +174,10 @@ async function loadPrivateChannels() {
     const { uid } = firebase.auth().currentUser;
 
     await firebase.database().ref(`/friends/${uid}`).on('value', async friends => {
+        const friendsList = document.getElementById('privateChannelsList');
+
+        friendsList.innerHTML = ''; // Clear out existing values
+
         if (!friends.val()) return loadPlaceholderFriends();
 
         for (friendUID in friends.val()) {
@@ -173,11 +187,6 @@ async function loadPrivateChannels() {
             } = friends.val()[friendUID];
 
             addPrivateChannel(friendUID, username, discriminator);
-
-            // Set realtime status
-            await firebase.database().ref(`/presence/${friendUID}`).on('value', presence => {
-                setPrivateChannelStatus(friendUID, presence.val());
-            });
         }
     });
 }
@@ -192,7 +201,10 @@ async function loadPrivateChannels() {
 function addPrivateChannel(uid, username, discriminator) {
     const friendsList = document.getElementById('privateChannelsList');
 
-    if (friendsList.querySelectorAll('svg')[0]) friendsList.innerHTML = '';
+    // Set realtime status
+    firebase.database().ref(`/presence/${uid}`).on('value', presence => {
+        setPrivateChannelStatus(uid, presence.val());
+    });
 
     friendsList.innerHTML += `
         <a class="channel-2QD9_O container-2Pjhx- clickable-1JJAn8" id="${uid}" full_username="${username}#${discriminator}" onclick="changeChannel(this)">
