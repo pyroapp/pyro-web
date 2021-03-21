@@ -53,6 +53,12 @@ app.get('/channels/@me', (req, res) => {
     res.status(200).sendFile(web + '/views/me.html');
 });
 
+app.get('/channels/@me/:channelId', (req, res) => {
+    log(req);
+
+    res.status(200).sendFile(web + '/views/me.html');
+});
+
 app.get('*', (req, res) => {
     log(req);
 

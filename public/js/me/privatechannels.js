@@ -23,7 +23,7 @@
     // This get all channels when first run, after that it only gets added channels
     ref.on('child_added', async channel => {
         const channelId = channel.key;
-        const item = await firebase.database().ref(`/private/${channelId}/`).once('value');
+        const item = await firebase.database().ref(`/private/${channelId}/details/`).once('value');
 
         const channelsList = document.getElementById('privateChannelsList');
         const placeholder = document.getElementById('privateChannelPlaceholder');
@@ -42,6 +42,7 @@
         const channelId = channel.key;
 
         removePrivateChannel(channelId);
+        // TODO removeChannelHeader(channelId);
     });
 }
 
@@ -67,14 +68,42 @@ async function createPrivateChannel(channel, channelId) {
 
     const uid = Object.keys(channel.users)[0];
     addPrivateChannel(channelId, uid);
+    addChannelHeader(channelId);
 
     await firebase.database().ref(`/presence/${uid}/`).on('value', status => {
         setPrivateChannelStatus(channelId, status.val());
+        setHeaderStatus(channelId, status.val());
     });
 
     await firebase.database().ref(`/users/${uid}/username/`).on('value', username => {
         setPrivateChannelUsername(channelId, username.val());
+        setHeaderUsername(channelId, username.val());
     });
+}
+
+
+/**
+ * 
+ * @param {*} uid 
+ * @param {*} status 
+ * @returns 
+ */
+ function setPrivateChannelStatus(channelId, status) {
+    if (!status) return;
+
+    // TODO: When friend is removed, socket is not disposed.
+    const channel = document.getElementById(channelId);
+    const userStatus = channel.querySelectorAll('.userStatus')[0];
+
+    const colours = {
+        online: '#43B581',
+        idle: '#FAA61A',
+        dnd: '#F04747',
+        offline: '#747F8D',
+    };
+
+    userStatus.setAttribute('fill', colours[status]);
+    userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
 }
 
 
@@ -86,9 +115,8 @@ async function createPrivateChannel(channel, channelId) {
 function setPrivateChannelUsername(channelId, username) {
     const channel = document.getElementById(channelId);
 
-    channel.querySelectorAll('.name-uJV0GL')[0].innerHTML = `
-        <div class="overflow-WK9Ogt">${username}</div>
-    `;
+    channel.setAttribute('ptitle', `@${username}`);
+    channel.querySelectorAll('.overflow-WK9Ogt')[0].innerText = username;
 
     channel.classList.remove('hidden');
 }
@@ -136,7 +164,9 @@ function addPrivateChannel(channelId, uid) {
             </div>
             <div class="content-3QAtGj">
                 <div class="nameAndDecorators-5FJ2dg">
-                    <div class="name-uJV0GL"></div>
+                    <div class="name-uJV0GL">
+                        <div class="overflow-WK9Ogt"></div>
+                    </div>
                 </div>
                 <div class="subText-1KtqkB"></div>
             </div>
@@ -150,7 +180,7 @@ function addPrivateChannel(channelId, uid) {
         </div>
     `;
 
-    channelsList.insertAdjacentElement('afterbegin', a);
+    channelsList.insertAdjacentElement('beforebegin', a);
 }
 
 
@@ -214,17 +244,25 @@ function selectChannel(channelId) {
  * @param {*} channelId 
  */
 function changeChannel(channel) {
-    const channelId = channel.id;
-    const friendUID = channel.uid;
+    const id = channel.id;
+
+    let path = `/channels/@me/${id}`;
+    let title = channel.getAttribute('ptitle');
+
+    if (id === 'friendsChannel') {
+        path = '/channels/@me/';
+        title = 'Discord';
+
+        showChannelHeader('friends');
+    } else {
+        showChannelHeader(id);
+    }
 
     deselectAll();
-    selectChannel(channelId);
+    selectChannel(id);
 
-    const privateMessagesPath = `/channels/@me/${channelId}`;
-    const privateMessagesTitle = `@Username`;
-
-    window.history.pushState(privateMessagesPath, privateMessagesTitle, privateMessagesPath);
-    document.title = privateMessagesTitle;
+    window.history.pushState(path, title, path);
+    document.title = title;
 
     // Check if direct messages page already exists in the DOM, it not,
     // add a new page, loading all the content required
