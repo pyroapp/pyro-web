@@ -79,21 +79,25 @@ function manualSetStatus(status) {
  * @returns 
  */
 function setPrivateChannelStatus(uid, status) {
-    if (!status) return;
+    try {
+        if (!status) return;
 
-    // TODO: When friend is removed, socket is not disposed.
-    const channel = document.getElementById(uid); 
-    const userStatus = channel.querySelectorAll('.userStatus')[0];
+        // TODO: When friend is removed, socket is not disposed.
+        const channel = document.getElementById(uid); 
+        const userStatus = channel.querySelectorAll('.userStatus')[0];
 
-    const colours = {
-        online: '#43B581',
-        idle: '#FAA61A',
-        dnd: '#F04747',
-        offline: '#747F8D',
-    };
+        const colours = {
+            online: '#43B581',
+            idle: '#FAA61A',
+            dnd: '#F04747',
+            offline: '#747F8D',
+        };
 
-    userStatus.setAttribute('fill', colours[status]);
-    userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
+        userStatus.setAttribute('fill', colours[status]);
+        userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
+    } catch (error) {
+        
+    }
 }
 
 

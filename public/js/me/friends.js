@@ -173,10 +173,8 @@ async function addFriend(user) {
 async function loadPrivateChannels() {
     const { uid } = firebase.auth().currentUser;
 
-    await firebase.database().ref(`/friends/${uid}`).on('value', async friends => {
-        const friendsList = document.getElementById('privateChannelsList');
-
-        friendsList.innerHTML = ''; // Clear out existing values
+    firebase.database().ref(`/friends/${uid}`).on('value', friends => {
+        document.getElementById('privateChannelsList').innerHTML = '';
 
         if (!friends.val()) return loadPlaceholderFriends();
 
@@ -184,7 +182,7 @@ async function loadPrivateChannels() {
             const {
                 username,
                 discriminator,
-            } = friends.val()[friendUID];
+            } = friends.val()[friendUID];  
 
             addPrivateChannel(friendUID, username, discriminator);
         }
@@ -203,44 +201,45 @@ function addPrivateChannel(uid, username, discriminator) {
 
     // Set realtime status
     firebase.database().ref(`/presence/${uid}`).on('value', presence => {
-        setPrivateChannelStatus(uid, presence.val());
-    });
-
-    friendsList.innerHTML += `
-        <a class="channel-2QD9_O container-2Pjhx- clickable-1JJAn8" id="${uid}" full_username="${username}#${discriminator}" onclick="changeChannel(this)">
-            <div class="layout-2DM8Md">
-                <div class="avatar-3uk_u9">
-                    <div class="wrapper-3t9DeA" style="width: 32px; height: 32px;">
-                        <svg width="40" height="32" viewBox="0 0 40 32" class="mask-1l8v16 svg-2V3M55">
-                            <mask id="1e790872-400c-4750-815a-1afdbe1cdf12" width="32" height="32">
-                                <circle cx="16" cy="16" r="16" fill="white"></circle>
-                                <rect color="black" x="19" y="19" width="16" height="16" rx="8" ry="8"></rect>
-                            </mask>
-                            <foreignObject x="0" y="0" width="32" height="32" mask="url(#1e790872-400c-4750-815a-1afdbe1cdf12)">
-                                <img src="${getAvatar(uid)}" class="avatar-VxgULZ">
-                            </foreignObject>
-                            <rect class="userStatus" x="22" y="22" width="10" height="10" class="pointerEvents-2zdfdO" fill="#43B581" mask="url(#svg-mask-status-online)"></rect>
-                        </svg>
-                    </div>
-                </div>
-                <div class="content-3QAtGj">
-                    <div class="nameAndDecorators-5FJ2dg">
-                        <div class="name-uJV0GL">
-                            <div class="overflow-WK9Ogt">${username}</div>
+        friendsList.innerHTML += `
+            <a class="channel-2QD9_O container-2Pjhx- clickable-1JJAn8" id="${uid}" full_username="${username}#${discriminator}" onclick="changeChannel(this)">
+                <div class="layout-2DM8Md">
+                    <div class="avatar-3uk_u9">
+                        <div class="wrapper-3t9DeA" style="width: 32px; height: 32px;">
+                            <svg width="40" height="32" viewBox="0 0 40 32" class="mask-1l8v16 svg-2V3M55">
+                                <mask id="1e790872-400c-4750-815a-1afdbe1cdf12" width="32" height="32">
+                                    <circle cx="16" cy="16" r="16" fill="white"></circle>
+                                    <rect color="black" x="19" y="19" width="16" height="16" rx="8" ry="8"></rect>
+                                </mask>
+                                <foreignObject x="0" y="0" width="32" height="32" mask="url(#1e790872-400c-4750-815a-1afdbe1cdf12)">
+                                    <img src="${getAvatar(uid)}" class="avatar-VxgULZ">
+                                </foreignObject>
+                                <rect class="userStatus" x="22" y="22" width="10" height="10" class="pointerEvents-2zdfdO" fill="#43B581" mask="url(#svg-mask-status-online)"></rect>
+                            </svg>
                         </div>
                     </div>
-                    <div class="subText-1KtqkB"></div>
-                </div>
-                <div class="children-gzQq2t">
-                    <div class="closeButton-2GCmT5" onclick="deletePrivateChannel(uid)">
-                        <svg class="closeIcon-rycxaQ" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path>
-                        </svg>
+                    <div class="content-3QAtGj">
+                        <div class="nameAndDecorators-5FJ2dg">
+                            <div class="name-uJV0GL">
+                                <div class="overflow-WK9Ogt">${username}</div>
+                            </div>
+                        </div>
+                        <div class="subText-1KtqkB"></div>
+                    </div>
+                    <div class="children-gzQq2t">
+                        <div class="closeButton-2GCmT5" onclick="deletePrivateChannel(uid)">
+                            <svg class="closeIcon-rycxaQ" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path>
+                            </svg>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </a>
-    `;
+            </a>
+        `;
+
+        setPrivateChannelStatus(uid, presence.val());
+
+    });
 }
 
 
