@@ -79321,3 +79321,7 @@ html .invoiceCancelRow-3mYhFX {
 	0% {opacity:0.85;}
 	100% {opacity:0;}
 }
+
+.hidden {
+	display: none;
+}

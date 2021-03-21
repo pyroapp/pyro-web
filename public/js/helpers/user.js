@@ -78,26 +78,22 @@ function manualSetStatus(status) {
  * @param {*} status 
  * @returns 
  */
-function setPrivateChannelStatus(uid, status) {
-    try {
-        if (!status) return;
+function setPrivateChannelStatus(channelId, status) {
+    if (!status) return;
 
-        // TODO: When friend is removed, socket is not disposed.
-        const channel = document.getElementById(uid); 
-        const userStatus = channel.querySelectorAll('.userStatus')[0];
+    // TODO: When friend is removed, socket is not disposed.
+    const channel = document.getElementById(channelId); 
+    const userStatus = channel.querySelectorAll('.userStatus')[0];
 
-        const colours = {
-            online: '#43B581',
-            idle: '#FAA61A',
-            dnd: '#F04747',
-            offline: '#747F8D',
-        };
+    const colours = {
+        online: '#43B581',
+        idle: '#FAA61A',
+        dnd: '#F04747',
+        offline: '#747F8D',
+    };
 
-        userStatus.setAttribute('fill', colours[status]);
-        userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
-    } catch (error) {
-        
-    }
+    userStatus.setAttribute('fill', colours[status]);
+    userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
 }
 
 
@@ -200,18 +196,6 @@ async function generateDiscriminator() {
 
 /**
  * 
- * @param {*} profile 
- * @param {*} uid 
- */
-async function dbProfile(profile, uid) {
-    await firebase.database().ref(`/users/${uid}`).set({
-        ...profile
-    });
-}
-
-
-/**
- * 
  */
 async function signout() {
     await firebase.auth().signOut();
@@ -261,23 +245,8 @@ async function isFriend(username) {
     const friendUID = Object.keys(user)[0];
 
     const isFriended = await (
-        await firebase.database().ref(`/friends/${uid}/${friendUID}/username/`).once('value')
+        await firebase.database().ref(`/friends/${uid}/${friendUID}/`).once('value')
     ).val();
 
     return isFriended;
-}
-
-
-/**
- * 
- * @returns 
- */
-async function getFriends() {
-    const { uid } = firebase.auth().currentUser;
-
-    const friends = await (
-        (await firebase.database().ref(`/friends/${uid}`).once('value'))
-    ).val();
-
-    return friends;
 }

@@ -89,16 +89,14 @@ async function signup() {
         );
 
         const discriminator = await generateDiscriminator();
-        const creationTime = getTime();
         const fullUsername = values.username + '#' + discriminator;
 
-        await dbProfile({
+        await firebase.database().ref(`/users/${user.user.uid}/`).set({
             email: values.email,
             username: values.username,
             discriminator: discriminator,
             full_username: fullUsername,
-            account_creation: creationTime,
-        }, user.user.uid);
+        });
 
         await sendEmailVerification();
         await setDisplayName(fullUsername);
