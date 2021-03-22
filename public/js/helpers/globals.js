@@ -40,6 +40,14 @@ const AUTH_CODES = {
     'auth/too-many-requests': 'Slow down! You are being rate limited.'
 };
 
+const STATUS_COLOURS = {
+    online: '#43B581',
+    idle: '#FAA61A',
+    dnd: '#F04747',
+    offline: '#747F8D',
+    streaming: '#563490',
+};
+
 const DID_YOU_KNOW = [
     'Our mascot, Wumpus, was originally created as a mascot with no friends :(',
     'Discord was almost called Wyvern before we picked our name. Not too proud of that one.',

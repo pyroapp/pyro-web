@@ -38,10 +38,12 @@ firebase.auth().onAuthStateChanged(async user => {
                 'sendEmailVerification(true)'
             );
         }
+        
+        loadPrivateChannels();
 
         await setAutomaticStatus('online');
         await showMiniProfile();
-        await loadPrivateChannels();
+
         await delay(LOADING_TIMEOUT);
     }
 
@@ -62,4 +64,6 @@ async function showMiniProfile() {
     usernameLabel.innerText = username;
     discriminatorLabel.innerText = '#' + discriminator;
     avatarImage.setAttribute('src', getAvatar());
+
+    await setDisplayName(username + '#' + discriminator);
 }

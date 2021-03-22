@@ -101,62 +101,6 @@ async function hidePageLoader() {
 
 /**
  * 
- * @param {*} heading 
- * @param {*} message 
- * @param {*} buttonText 
- * @param {*} buttonEvent 
- */
-function showBasicModal(heading, message, buttonText, buttonEvent) {
-    const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
-
-    modal.innerHTML = `
-        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
-        <div class="layer-2KE1M9 fadeIn-efi30">
-            <div class="focusLock-Ns3yie">
-                <div class="container-14fypd root-1gCeng small-3iVZYw fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
-                    <div class="form-26zE04">
-                        <div class="content-1LAB8Z modalContent-1T1Tix thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 8px;">
-                            <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyCenter-3D2jYp alignStretch-DpGPf3 noWrap-3jynv6 content-dfabe7" style="flex: 1 1 auto;">
-                                <h2 class="colorStandard-2KCXvj size14-e6ZScH h2-2gWE-o title-3sZWYQ defaultColor-1_ajX0 title-18-Ds0 marginBottom20-32qID7 marginTop8-1DLZ1n">${heading}</h2>
-                                <div class="colorStandard-2KCXvj size16-1P40sf body-Mj9Oxz">${message}</div>
-                            </div>
-                            <div style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 20px;"></div>
-                        </div>
-                        <div class="flex-1xMQg5 flex-1O1GKY horizontalReverse-2eTKWD horizontalReverse-3tRjY7 flex-1O1GKY directionRowReverse-m8IjIq justifyBetween-2tTqYu alignStretch-DpGPf3 wrap-ZIn9Iy footer-2gL1pp" style="flex: 0 0 auto;">
-                            <button type="submit" onclick="${buttonEvent}" class="primaryButton-2BsGPp button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeXlarge-2yFAlZ grow-q77ONN">
-                                <div class="contents-18-Yxp">${buttonText}</div>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-
-/**
- * 
- */
-async function hideModals() {
-    const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
-    
-    if (!modal.childNodes.length) return;
-    
-    const container = document.querySelectorAll('.fadeIn-efi30')[0];
-    const background = document.querySelectorAll('.fadeIn-dk023d')[0];
-
-    container.classList.add('fadeOut-efi30');
-    background.classList.add('fadeOut-dk023d');
-    
-    await delay(100);
-
-    modal.innerHTML = '';
-}
-
-
-/**
- * 
  */
 function showStatusPicker() {
     const layerContainer = document.querySelectorAll('.layerContainer-yqaFcK')[0];
@@ -210,6 +154,13 @@ function showStatusPicker() {
                                 </svg>
                                 <div class="status-1fhblQ">Invisible</div>
                                 <div class="description-2L932D">You will not appear online, but will have full access to all of Discord.</div>
+                            </div>
+                        </div>
+                        <div role="separator" class="separator-2I32lJ hidden"></div>
+                        <div class="item-1tOPte colorDefault-2K3EoJ hidden" onclick="showCustomStatusModal()">
+                            <div class="statusItem-33LqPf">
+                                <div class="customEmojiPlaceholder-37iZ_j customEmoji-2_2FwB"></div>
+                                <div class="status-1fhblQ">Set a custom status</div>
                             </div>
                         </div>
                     </div>

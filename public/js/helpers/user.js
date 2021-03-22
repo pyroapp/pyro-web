@@ -40,14 +40,11 @@ async function setStatus(status) {
     const { uid } = firebase.auth().currentUser;
 
     const userStatus = document.getElementById('userStatus');
-    const colours = {
-        online: '#43B581',
-        idle: '#FAA61A',
-        dnd: '#F04747',
-        offline: '#747F8D',
-    };
 
-    userStatus.setAttribute('fill', colours[status]);
+    // Ask user what they are streaming.
+    if (status === 'streaming') showStreamingStatusModal();
+
+    userStatus.setAttribute('fill', STATUS_COLOURS[status]);
     userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
 
     await firebase.database().ref(`/presence/`).update({
@@ -70,6 +67,25 @@ function manualSetStatus(status) {
         window.localStorage.setItem('manual_status', status);
     }
 }
+
+
+/**
+ * 
+ */
+async function setCustomStatus() {
+    const input = document.getElementById('customStatusInput');
+
+    if (!input.value) return;
+    
+    
+
+    hideModals();
+}
+
+
+function clearCustomStatus() {
+
+} 
 
 
 /**

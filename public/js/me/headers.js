@@ -122,14 +122,7 @@ function setHeaderStatus(channelId, status) {
     const header = document.getElementById(`header-${channelId}`);
     const userStatus = header.querySelectorAll('.userStatus')[0];
 
-    const colours = {
-        online: '#43B581',
-        idle: '#FAA61A',
-        dnd: '#F04747',
-        offline: '#747F8D',
-    };
-
-    userStatus.setAttribute('fill', colours[status]);
+    userStatus.setAttribute('fill', STATUS_COLOURS[status]);
     userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
 }
 
@@ -138,7 +131,7 @@ function setHeaderStatus(channelId, status) {
  * 
  * @param {*} channelId 
  */
-function showChannelHeader(channelId) {
+function selectChannelHeader(channelId) {
     const headers = document.querySelectorAll('.header-fj033');
 
     headers.forEach(header => {

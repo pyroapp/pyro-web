@@ -14,7 +14,7 @@
 /**
  * 
  */
- async function loadPrivateChannels() {
+function loadPrivateChannels() {
     const { uid } = firebase.auth().currentUser;
     const ref = firebase.database().ref(`/users/${uid}/private/`);
 
@@ -23,27 +23,40 @@
     // This get all channels when first run, after that it only gets added channels
     ref.on('child_added', async channel => {
         const channelId = channel.key;
-        const item = await firebase.database().ref(`/private/${channelId}/details/`).once('value');
 
-        const channelsList = document.getElementById('privateChannelsList');
-        const placeholder = document.getElementById('privateChannelPlaceholder');
-
-        if (placeholder) channelsList.removeChild(placeholder);
-
-        // Determine if it is a group chat or not
-        if (item.val().type === 'dm') {
-            createPrivateChannel(item.val(), channelId);
-        } else {
-            createPrivateGroupChannel(item.val(), channelId);
+        if (channel.val() === 1) {
+            privateChannelCreationHandler(channelId);
         }
     });
 
-    ref.on('child_removed', channel => {
+    ref.on('child_changed', channel => {
         const channelId = channel.key;
-
-        removePrivateChannel(channelId);
-        // TODO removeChannelHeader(channelId);
+    
+        if (channel.val() === 1) {
+            privateChannelCreationHandler(channelId);
+        }
     });
+}
+
+
+/**
+ * 
+ * @param {*} channelId 
+ */
+async function privateChannelCreationHandler(channelId) {
+    const item = await firebase.database().ref(`/private/${channelId}/details/`).once('value');
+
+    const channelsList = document.getElementById('privateChannelsList');
+    const placeholder = document.getElementById('privateChannelPlaceholder');
+
+    if (placeholder) channelsList.removeChild(placeholder);
+
+    // Determine if it is a group chat or not
+    if (item.val().type === 'dm') {
+        createPrivateChannel(item.val(), channelId);
+    } else {
+        createPrivateGroupChannel(item.val(), channelId);
+    }
 }
 
 
@@ -69,6 +82,7 @@ async function createPrivateChannel(channel, channelId) {
     const uid = Object.keys(channel.users)[0];
     addPrivateChannel(channelId, uid);
     addChannelHeader(channelId);
+    addPrivateChat(channelId);
 
     await firebase.database().ref(`/presence/${uid}/`).on('value', status => {
         setPrivateChannelStatus(channelId, status.val());
@@ -95,14 +109,7 @@ async function createPrivateChannel(channel, channelId) {
     const channel = document.getElementById(channelId);
     const userStatus = channel.querySelectorAll('.userStatus')[0];
 
-    const colours = {
-        online: '#43B581',
-        idle: '#FAA61A',
-        dnd: '#F04747',
-        offline: '#747F8D',
-    };
-
-    userStatus.setAttribute('fill', colours[status]);
+    userStatus.setAttribute('fill', STATUS_COLOURS[status]);
     userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
 }
 
@@ -126,11 +133,40 @@ function setPrivateChannelUsername(channelId, username) {
  * 
  * @param {*} channelId 
  */
-function removePrivateChannel(channelId) {
+async function removePrivateChannel(channelId) {
     const channelList = document.getElementById('privateChannelsList');
     const channel = document.getElementById(channelId);
 
     channelList.removeChild(channel);
+}
+
+
+/**
+ * 
+ * @param {*} channelId 
+ */
+async function closePrivateChannel(channelId) {
+    const { uid } = firebase.auth().currentUser;
+
+    await firebase.database().ref(`/users/${uid}/private/`).update({
+        [channelId]: 0
+    });
+
+    removePrivateChannel(channelId);
+
+    // Determine if the selected user is being removed,
+    // select the first user in the list.
+    const channelList = document.getElementById('privateChannelsList');
+
+    if (channelList.childElementCount > 0) {
+        const firstChannelId = channelList.children[0].id;
+
+        selectChannel(firstChannelId);
+        selectChannelHeader(firstChannelId);
+    } else {
+        selectChannel('friendsChannel');
+        selectChannelHeader('friends');
+    }
 }
 
 
@@ -170,8 +206,8 @@ function addPrivateChannel(channelId, uid) {
                 </div>
                 <div class="subText-1KtqkB"></div>
             </div>
-            <div class="children-gzQq2t hidden">
-                <div class="closeButton-2GCmT5" onclick="deletePrivateChannel(uid)">
+            <div class="children-gzQq2t">
+                <div class="closeButton-2GCmT5">
                     <svg class="closeIcon-rycxaQ" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path>
                     </svg>
@@ -180,7 +216,13 @@ function addPrivateChannel(channelId, uid) {
         </div>
     `;
 
-    channelsList.insertAdjacentElement('beforebegin', a);
+    channelsList.appendChild(a);
+
+    const closeButton = a.querySelectorAll('.closeButton-2GCmT5')[0];
+    
+    closeButton.onclick = () => {
+        closePrivateChannel(channelId);
+    };
 }
 
 
@@ -253,9 +295,9 @@ function changeChannel(channel) {
         path = '/channels/@me/';
         title = 'Discord';
 
-        showChannelHeader('friends');
+        selectChannelHeader('friends');
     } else {
-        showChannelHeader(id);
+        selectChannelHeader(id);
     }
 
     deselectAll();
