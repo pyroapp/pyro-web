@@ -52,7 +52,7 @@
  */
 async function hideModals() {
     const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
-    
+
     if (!modal.childNodes.length) return;
     
     const container = document.querySelectorAll('.fadeIn-efi30')[0];
@@ -61,7 +61,7 @@ async function hideModals() {
     container.classList.add('fadeOut-efi30');
     background.classList.add('fadeOut-dk023d');
     
-    await delay(100);
+    await delay(80);
 
     modal.innerHTML = '';
 }
@@ -101,7 +101,7 @@ function showCustomStatusModal() {
                                 </div>
                             </div>
                         </div>
-                        <div aria-hidden="true" style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 0px;"></div>
+                        <div style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 0px;"></div>
                     </div>
                     <div class="flex-1xMQg5 flex-1O1GKY horizontalReverse-2eTKWD horizontalReverse-3tRjY7 flex-1O1GKY directionRowReverse-m8IjIq justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 footer-2gL1pp" style="flex: 0 0 auto;">
                         <button class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeMedium-1AC_Sl grow-q77ONN" onclick="saveCustomStatus()">
@@ -115,8 +115,4 @@ function showCustomStatusModal() {
             </div>
         </div>
     `;
-}
-
-function showStreamingStatusModal() {
-
 }
