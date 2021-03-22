@@ -15,7 +15,7 @@ const AGE_LIMIT = 13;
 const DOB_START_YEAR = 1921;
 const LOADING_TIMEOUT = 1000;
 const ACTIVITY_TIMEOUT = 3000;
-const IDLE_TIMEOUT = 3000;
+const IDLE_TIMEOUT = 10000;
 
 const AVATAR_PATH = 'https://firebasestorage.googleapis.com/v0/b/djs-clone.appspot.com/o/avatars%2F';
 
