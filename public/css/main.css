@@ -2169,7 +2169,8 @@
 	width: 52px;
 	height: 24px;
 	min-width: 52px;
-	min-height: 24px
+	min-height: 24px;
+	padding-top: 4px;
 }
 
 .sizeSmall-2cSMqn {
@@ -32785,7 +32786,7 @@ html .progress-GjyFoQ {
 }
 
 .textAreaSlate-1ZzRVj {
-	padding:0
+	padding-top: 0px
 }
 
 .textAreaWithoutAttachmentButton-qiaiTB {

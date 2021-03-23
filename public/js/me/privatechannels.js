@@ -81,8 +81,7 @@ async function createPrivateChannel(channel, channelId) {
 
     const uid = Object.keys(channel.users)[0];
     addPrivateChannel(channelId, uid);
-    addChannelHeader(channelId);
-    addPrivateChat(channelId);
+    addChat(channelId, uid);
 
     await firebase.database().ref(`/presence/${uid}/`).on('value', status => {
         setPrivateChannelStatus(channelId, status.val());
@@ -106,7 +105,7 @@ async function createPrivateChannel(channel, channelId) {
     if (!status) return;
 
     // TODO: When friend is removed, socket is not disposed.
-    const channel = document.getElementById(channelId);
+    const channel = document.getElementById('privatechannel-' + channelId);
     const userStatus = channel.querySelectorAll('.userStatus')[0];
 
     userStatus.setAttribute('fill', STATUS_COLOURS[status]);
@@ -120,7 +119,7 @@ async function createPrivateChannel(channel, channelId) {
  * @param {*} username 
  */
 function setPrivateChannelUsername(channelId, username) {
-    const channel = document.getElementById(channelId);
+    const channel = document.getElementById('privatechannel-' + channelId);
 
     channel.setAttribute('ptitle', `@${username}`);
     channel.querySelectorAll('.overflow-WK9Ogt')[0].innerText = username;
@@ -135,7 +134,7 @@ function setPrivateChannelUsername(channelId, username) {
  */
 async function removePrivateChannel(channelId) {
     const channelList = document.getElementById('privateChannelsList');
-    const channel = document.getElementById(channelId);
+    const channel = document.getElementById('privatechannel-' + channelId);
 
     channelList.removeChild(channel);
 }
@@ -159,13 +158,13 @@ async function closePrivateChannel(channelId) {
     const channelList = document.getElementById('privateChannelsList');
 
     if (channelList.childElementCount > 0) {
-        const firstChannelId = channelList.children[0].id;
+        const firstChannelId = channelList.children[0].id.replace('privatechannel-', '');
 
-        selectChannel(firstChannelId);
-        selectChannelHeader(firstChannelId);
+        selectPrivateChannel(firstChannelId);
+        selectMainBody(firstChannelId);
     } else {
-        selectChannel('friendsChannel');
-        selectChannelHeader('friends');
+        selectPrivateChannel('friendsChannel');
+        selectMainBody('friends');
     }
 }
 
@@ -179,7 +178,7 @@ function addPrivateChannel(channelId, uid) {
 
     const a = document.createElement('a');
     a.classList = 'channel-2QD9_O container-2Pjhx- clickable-1JJAn8 hidden fadeIn-efi30';
-    a.id = channelId;
+    a.id = 'privatechannel-' + channelId;
     a.setAttribute('uid', uid);
     a.setAttribute('onclick', 'changeChannel(this)');
     a.innerHTML = `
@@ -274,8 +273,8 @@ function deselectAll() {
 /**
  * 
  */
-function selectChannel(channelId) {
-    const channel = document.getElementById(channelId);
+function selectPrivateChannel(id) {
+    const channel = document.getElementById('privatechannel-' + id);
 
     channel.classList.add('selected-aXhQR6');
 }
@@ -286,26 +285,20 @@ function selectChannel(channelId) {
  * @param {*} channelId 
  */
 function changeChannel(channel) {
-    const id = channel.id;
+    const id = channel.id.replace('privatechannel-', '');
 
     let path = `/channels/@me/${id}`;
     let title = channel.getAttribute('ptitle');
 
-    if (id === 'friendsChannel') {
+    if (id === 'friends') {
         path = '/channels/@me/';
         title = 'Discord';
-
-        selectChannelHeader('friends');
-    } else {
-        selectChannelHeader(id);
     }
 
     deselectAll();
-    selectChannel(id);
+    selectMainBody(id);
+    selectPrivateChannel(id);
 
     window.history.pushState(path, title, path);
     document.title = title;
-
-    // Check if direct messages page already exists in the DOM, it not,
-    // add a new page, loading all the content required
 }

@@ -103,11 +103,11 @@ async function hidePageLoader() {
  * 
  */
 function showStatusPicker() {
-    const layerContainer = document.querySelectorAll('.layerContainer-yqaFcK')[0];
+    const container = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
-    if (layerContainer.childElementCount > 0) return hideStatusPicker();
+    if (container.childElementCount > 0) return hideStatusPicker();
 
-    layerContainer.innerHTML = `
+    container.innerHTML = `
         <div class="statusPicker-rj932">
             <div style="width: 100%; height: 100%;" onclick="hideStatusPicker()"><div>
             <div id="statusPicker" class="layer-v9HyYc" style="position: absolute; left: 80px; bottom: 57.3193px;">

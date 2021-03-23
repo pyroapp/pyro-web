@@ -400,7 +400,7 @@
                                                 <div class="scroller-1JbKMe thin-1ybCId scrollerBase-289Jih fade-2kXiP2" style="overflow: hidden scroll; padding-right: 0px;" onclick="hideStatusPicker()">
                                                     <div class="content-3YMskv" style="height: 528px;">
                                                         <div style="height: 8px;"></div>
-                                                        <a class="channel-2QD9_O container-2Pjhx- selected-aXhQR6" onclick="changeChannel(this)" id="friendsChannel">
+                                                        <a class="channel-2QD9_O container-2Pjhx- selected-aXhQR6" onclick="changeChannel(this)" id="privatechannel-friends">
                                                             <div class="layout-2DM8Md">
                                                                 <div class="avatar-3uk_u9">
                                                                     <svg class="linkButtonIcon-Mlm5d6" width="16" height="16" viewBox="0 0 24 24">
@@ -479,9 +479,9 @@
                                                 </div>
                                             </section>
                                         </div>
-                                        <div class="container-1D34oG" onclick="hideStatusPicker()">
-                                            <div id="channelHeaders">
-                                                <section class="container-1r6BKw themed-ANHk51 header-fj033" id="header-friends">
+                                        <div class="container-1D34oG" id="main-body" onclick="hideStatusPicker()">
+                                            <div id="friends" class="mainBody-f3wd0" style="height: 100%">
+                                                <section class="container-1r6BKw themed-ANHk51 header-fj033">
                                                     <div class="children-19S4PO">
                                                         <div class="iconWrapper-2OrFZ1">
                                                             <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24">
@@ -526,41 +526,41 @@
                                                         </a>
                                                     </div>
                                                 </section>
-                                            </div>
-                                            <div class="tabBody-3YRQ8W">
-                                                <div class="peopleColumn-29fq28">
-                                                    <div class="sectionHeader-20RGqu">
-                                                        <div class="addInputWrapper-1BOZ3d">
-                                                            <h2 class="header-1-dBpZ">Add Friend</h2>
-                                                            <div class="description-1EvxpH" id="addFriendLabel">You can add a friend with their Discord Tag. It's cAsE sEnSitIvE!</div>
-                                                            <div class="wrapper-1cBijl">
-                                                                <input class="addFriendInput-4bcerK" placeholder="Enter a Username#0000" maxlength="37" max="37" min="5" id="addFriendField">
-                                                                <div class="addFriendHint-3Y70FX"></div>
-                                                                <button type="submit" disabled class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeSmall-2cSMqn grow-q77ONN" id="addFriendButton">
-                                                                    <div class="contents-18-Yxp">Add Friend</div>
-                                                                </button>
+                                                <div class="tabBody-3YRQ8W">
+                                                    <div class="peopleColumn-29fq28">
+                                                        <div class="sectionHeader-20RGqu">
+                                                            <div class="addInputWrapper-1BOZ3d">
+                                                                <h2 class="header-1-dBpZ">Add Friend</h2>
+                                                                <div class="description-1EvxpH" id="addFriendLabel">You can add a friend with their Discord Tag. It's cAsE sEnSitIvE!</div>
+                                                                <div class="wrapper-1cBijl">
+                                                                    <input class="addFriendInput-4bcerK" placeholder="Enter a Username#0000" maxlength="37" max="37" min="5" id="addFriendField">
+                                                                    <div class="addFriendHint-3Y70FX"></div>
+                                                                    <button type="submit" disabled class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeSmall-2cSMqn grow-q77ONN" id="addFriendButton">
+                                                                        <div class="contents-18-Yxp">Add Friend</div>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="emptyState-2i1-FW">
-                                                        <div class="friendsEmpty-1K9B4k" style="opacity: 1;">
-                                                            <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyCenter-3D2jYp alignCenter-1dQNNs noWrap-3jynv6 wrapper-r-6rrt" style="flex: 1 1 auto;">
-                                                                <div class="image-1GzsFd marginBottom40-2vIwTv" style="flex: 0 1 auto; width: 376px; height: 162px; background-image: url(&quot;/img/b5eb2f7d6b3f8cc9b60be4a5dcf28015.svg&quot;);"></div>
-                                                                <div class="flexChild-faoVW3" direction="vertical-V37hAW flex-1O1GKY directionColumn-35P_nr" style="flex: 0 1 auto;">
-                                                                    <div class="text-GwUZgS marginTop8-1DLZ1n">Wumpus is waiting on friends. You don’t have to though!</div>
+                                                        <div class="emptyState-2i1-FW">
+                                                            <div class="friendsEmpty-1K9B4k" style="opacity: 1;">
+                                                                <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyCenter-3D2jYp alignCenter-1dQNNs noWrap-3jynv6 wrapper-r-6rrt" style="flex: 1 1 auto;">
+                                                                    <div class="image-1GzsFd marginBottom40-2vIwTv" style="flex: 0 1 auto; width: 376px; height: 162px; background-image: url('/img/b5eb2f7d6b3f8cc9b60be4a5dcf28015.svg');"></div>
+                                                                    <div class="flexChild-faoVW3" direction="vertical-V37hAW flex-1O1GKY directionColumn-35P_nr" style="flex: 0 1 auto;">
+                                                                        <div class="text-GwUZgS marginTop8-1DLZ1n">Wumpus is waiting on friends. You don’t have to though!</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="nowPlayingColumn-2sl4cE">
-                                                    <div class="nowPlayingScroller-2XrVUt thin-1ybCId scrollerBase-289Jih" dir="ltr" style="overflow: hidden scroll; padding-right: 8px;">
-                                                        <h3 class="header-13Cw0- base-1x0h_U size12-3cLvbJ">Active Now</h3>
-                                                        <div class="emptyCard-1RJw8n">
-                                                            <h5 class="emptyHeader-3lmLcs base-1x0h_U size16-1P40sf">It's quiet for now...</h5>
-                                                            <div class="size14-e6ZScH emptyText-2zjpZr">When a friend starts an activity—like playing a game or hanging out on voice—we’ll show it here!</div>
+                                                    <div class="nowPlayingColumn-2sl4cE">
+                                                        <div class="nowPlayingScroller-2XrVUt thin-1ybCId scrollerBase-289Jih" dir="ltr" style="overflow: hidden scroll; padding-right: 8px;">
+                                                            <h3 class="header-13Cw0- base-1x0h_U size12-3cLvbJ">Active Now</h3>
+                                                            <div class="emptyCard-1RJw8n">
+                                                                <h5 class="emptyHeader-3lmLcs base-1x0h_U size16-1P40sf">It's quiet for now...</h5>
+                                                                <div class="size14-e6ZScH emptyText-2zjpZr">When a friend starts an activity—like playing a game or hanging out on voice—we’ll show it here!</div>
+                                                            </div>
+                                                            <div aria-hidden="true" style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 16px;"></div>
                                                         </div>
-                                                        <div aria-hidden="true" style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 16px;"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -568,13 +568,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="pictureInPicture-3VocJq"></div>
-                    <div class="indicator-1afSc8" data-tutorial-id="direct-messages" style="left: 259.997px; top: 41.5486px;">
-                        <div class="animationContainer-C1kDfz notAnimating-2EIRej">
-                            <div class="innerCircle-2Tsscg notAnimating-2EIRej"></div>
-                            <div class="outerCircle-2K0c82 notAnimating-2EIRej"></div>
                         </div>
                     </div>
                 </div>
@@ -604,9 +597,6 @@
                     </div>
                 </div>
             </div>
-            <div class="popouts-2bnG9Z"></div>
-            <div></div>
-            <div></div>
             <div class="layerContainer-yqaFcK"></div>
         </div>
 
@@ -633,7 +623,6 @@
         <script src="/js/me/interface.js"></script>
         <script src="/js/me/friends.js"></script>
         <script src="/js/me/privatechannels.js"></script>
-        <script src="/js/me/headers.js"></script>
         <script src="/js/me/chats.js"></script>
     </body>
 </html>
