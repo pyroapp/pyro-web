@@ -92,3 +92,15 @@ function pad(num, len) {
  * @returns 
  */
 const delay = ms => new Promise(res => setTimeout(res, ms));
+
+
+/**
+ * 
+ * @returns 
+ */
+function generateId() {
+    const time = moment().format('DDMMYYhhmmss');
+    const random = pad(generateRandom(0, 9999), 4);
+
+    return `${time}${random}`;
+}

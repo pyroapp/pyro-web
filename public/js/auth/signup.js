@@ -91,11 +91,13 @@ async function signup() {
         const discriminator = await generateDiscriminator();
         const fullUsername = values.username + '#' + discriminator;
 
-        await firebase.database().ref(`/users/${user.user.uid}/`).set({
-            email: values.email,
-            username: values.username,
-            discriminator: discriminator,
-            full_username: fullUsername,
+        await firebase.firestore().collection('users').doc(user.user.uid).set({
+            profile: {
+                email: values.email,
+                username: values.username,
+                discriminator: discriminator,
+                full_username: fullUsername,
+            }
         });
 
         await sendEmailVerification();

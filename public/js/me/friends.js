@@ -144,7 +144,7 @@ async function addFriend(user) {
         // TODO: add the same friend, a check might needed
 
         // Create private message channel
-        const privateId = firebase.database().ref('/private/').push().key;
+        const privateId = generateId();
 
         await firebase.database().ref(`/private/${privateId}/details/`).update({
             users: {

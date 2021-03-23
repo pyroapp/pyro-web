@@ -202,7 +202,7 @@ function addChat(channelId, uid) {
 
 /**
  * 
- * @param {*} channelId 
+ * @param {*} id 
  * @param {*} username 
  */
  function setHeaderUsername(id, username) {
@@ -215,6 +215,12 @@ function addChat(channelId, uid) {
 }
 
 
+/**
+ * 
+ * @param {*} id 
+ * @param {*} status 
+ * @returns 
+ */
 function setHeaderStatus(id, status) {
     if (!status) return;
 

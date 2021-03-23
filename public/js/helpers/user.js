@@ -161,6 +161,19 @@ function getAvatar(userId) {
 
 /**
  * 
+ * @param {*} discriminator 
+ * @returns 
+ */
+async function doesDiscriminatorExist(discriminator) {
+    const snapshot = await firebase.firestore().collection('users')
+        .where('profile.discriminator', '==', discriminator).get();
+
+    console.log(snapshot.exists);
+}
+
+
+/**
+ * 
  * @returns
  */
 async function generateDiscriminator() {
@@ -183,6 +196,21 @@ async function generateDiscriminator() {
 
     return discriminator;
 }
+
+
+
+//! ----------------------------------------------------------------------------------------------------
+
+async function getUserByFullUsernameFirestore(username) {
+    const snapshot = await firebase.firestore().collection('users').where('profile.full_username', '==', username).get()
+
+    snapshot.forEach(user => {
+        console.log(user.data());
+    });
+}
+
+//! ----------------------------------------------------------------------------------------------------
+
 
 
 /**

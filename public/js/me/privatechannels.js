@@ -157,15 +157,14 @@ async function closePrivateChannel(channelId) {
     // select the first user in the list.
     const channelList = document.getElementById('privateChannelsList');
 
-    if (channelList.childElementCount > 0) {
-        const firstChannelId = channelList.children[0].id.replace('privatechannel-', '');
+    let id = 'friends';
 
-        selectPrivateChannel(firstChannelId);
-        selectMainBody(firstChannelId);
-    } else {
-        selectPrivateChannel('friendsChannel');
-        selectMainBody('friends');
+    if (channelList.childElementCount > 0) {
+        id = channelList.children[0].id.replace('privatechannel-', '');
     }
+
+    selectPrivateChannel(id);
+    selectMainBody(id);
 }
 
 
