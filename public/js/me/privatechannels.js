@@ -16,24 +16,24 @@
  */
 function loadPrivateChannels() {
     const { uid } = firebase.auth().currentUser;
-    const ref = firebase.database().ref(`/users/${uid}/private/`);
+
+    const ref = firebase.firestore().collection('sub_priv_channels').doc(uid);
 
     addPrivateChannelPlaceholder();
 
-    // This get all channels when first run, after that it only gets added channels
-    ref.on('child_added', async channel => {
-        const channelId = channel.key;
+    ref.onSnapshot(privChannels => {
+        if (!privChannels.data()) return;
 
-        if (channel.val() === 1) {
-            privateChannelCreationHandler(channelId);
-        }
-    });
+        for (channelId in privChannels.data()) {
+            const isOpen = privChannels.data()[channelId];
 
-    ref.on('child_changed', channel => {
-        const channelId = channel.key;
-    
-        if (channel.val() === 1) {
-            privateChannelCreationHandler(channelId);
+            if (!isOpen) return; // Channel is closed
+
+            const privateChannel = document.getElementById(`privatechannel-${channelId}`);
+
+            console.log(channelId, privateChannel);
+
+            if (!privateChannel) privateChannelCreationHandler(channelId);
         }
     });
 }
@@ -44,18 +44,20 @@ function loadPrivateChannels() {
  * @param {*} channelId 
  */
 async function privateChannelCreationHandler(channelId) {
-    const item = await firebase.database().ref(`/private/${channelId}/details/`).once('value');
-
     const channelsList = document.getElementById('privateChannelsList');
     const placeholder = document.getElementById('privateChannelPlaceholder');
 
     if (placeholder) channelsList.removeChild(placeholder);
 
+    const { details, type} = await (
+        await firebase.firestore().collection('priv_channels').doc(channelId).get()
+    ).data();
+
     // Determine if it is a group chat or not
-    if (item.val().type === 'dm') {
-        createPrivateChannel(item.val(), channelId);
+    if (type === 'dm') {
+        createPrivateChannel(details, channelId);
     } else {
-        createPrivateGroupChannel(item.val(), channelId);
+        createPrivateGroupChannel(details, channelId);
     }
 }
 
@@ -74,23 +76,22 @@ function createPrivateGroupChannel(channel, channelId) {
  * @param {*} channel 
  */
 async function createPrivateChannel(channel, channelId) {
+    const { uid } = firebase.auth().currentUser;
+    const localPosition = channel.users.indexOf(uid);
 
-    // Get friends uid
-    const { uid: myUID } = firebase.auth().currentUser;
-    delete channel.users[myUID];
+    channel.users.splice(localPosition, localPosition + 1);
 
-    const uid = Object.keys(channel.users)[0];
-    addPrivateChannel(channelId, uid);
-    addChat(channelId, uid);
+    const friendUID = channel.users[0];
 
-    await firebase.database().ref(`/presence/${uid}/`).on('value', status => {
-        setPrivateChannelStatus(channelId, status.val());
-        setHeaderStatus(channelId, status.val());
-    });
+    addPrivateChannel(channelId, friendUID);
+    addChat(channelId, friendUID);
 
-    await firebase.database().ref(`/users/${uid}/username/`).on('value', username => {
-        setPrivateChannelUsername(channelId, username.val());
-        setHeaderUsername(channelId, username.val());
+    await firebase.firestore().collection('users').doc(friendUID).onSnapshot(data => {
+        setPrivateChannelStatus(channelId, data.data().status.status);
+        setHeaderStatus(channelId, data.data().status.status);
+
+        setPrivateChannelUsername(channelId, data.data().profile.username);
+        setHeaderUsername(channelId, data.data().profile.username);
     });
 }
 
@@ -118,11 +119,13 @@ async function createPrivateChannel(channel, channelId) {
  * @param {*} channelId 
  * @param {*} username 
  */
-function setPrivateChannelUsername(channelId, username) {
+async function setPrivateChannelUsername(channelId, username) {
     const channel = document.getElementById('privatechannel-' + channelId);
 
     channel.setAttribute('ptitle', `@${username}`);
     channel.querySelectorAll('.overflow-WK9Ogt')[0].innerText = username;
+
+    await delay(50);
 
     channel.classList.remove('hidden');
 }
@@ -147,8 +150,8 @@ async function removePrivateChannel(channelId) {
 async function closePrivateChannel(channelId) {
     const { uid } = firebase.auth().currentUser;
 
-    await firebase.database().ref(`/users/${uid}/private/`).update({
-        [channelId]: 0
+    await firebase.firestore().collection('sub_priv_channels').doc(uid).update({
+        [channelId]: false
     });
 
     removePrivateChannel(channelId);

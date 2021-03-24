@@ -103,12 +103,12 @@ async function addFriendInit() {
  */
 async function addFriend(user) {
     const { uid } = firebase.auth().currentUser;
-    const friendUID = Object.keys(user)[0];
 
     const {
+        uid: friendUID,
         discriminator: friendDiscriminator,
         username: friendUsername
-    } = user[friendUID];
+    } = user;
 
     const friendFullUsername = `${friendUsername}#${friendDiscriminator}`;
 
@@ -130,14 +130,17 @@ async function addFriend(user) {
     }
 
     try {
-
         // Create friend database relationship
-        await firebase.database().ref(`/friends/${uid}/`).update({
-            [friendUID]: 1
+        await firebase.firestore().collection('friends').doc(uid).set({
+            [friendUID]: true
+        }, {
+            merge: true
         });
 
-        await firebase.database().ref(`/friends/${friendUID}/`).update({
-            [uid]: 1
+        await firebase.firestore().collection('friends').doc(friendUID).set({
+            [uid]: true
+        }, {
+            merge: true
         });
 
         // TODO: This might wipe out messages if you remove friends and
@@ -146,21 +149,24 @@ async function addFriend(user) {
         // Create private message channel
         const privateId = generateId();
 
-        await firebase.database().ref(`/private/${privateId}/details/`).update({
-            users: {
-                [uid]: 1,
-                [friendUID]: 1,
+        await firebase.firestore().collection('priv_channels').doc(privateId).set({
+            details: {
+                users: [uid, friendUID],
             },
             type: 'dm',
         });
 
         // Add private channel references in each profile
-        await firebase.database().ref(`/users/${uid}/private/`).update({
-            [privateId]: 1
+        await firebase.firestore().collection('sub_priv_channels').doc(uid).set({
+            [privateId]: true
+        }, {
+            merge: true
         });
 
-        await firebase.database().ref(`/users/${friendUID}/private/`).update({
-            [privateId]: 1
+        await firebase.firestore().collection('sub_priv_channels').doc(friendUID).set({
+            [privateId]: true
+        }, {
+            merge: true
         });
 
         return {

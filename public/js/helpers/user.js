@@ -47,9 +47,12 @@ async function setStatus(status) {
     userStatus.setAttribute('fill', STATUS_COLOURS[status]);
     userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
 
-    firebase.firestore().collection('status').doc(uid).set({
-        status: status,
-        custom: null
+    firebase.firestore().collection('users').doc(uid).set({
+        status: {
+            status: status,
+        },
+    }, {
+        merge: true
     });
 }
 
@@ -232,10 +235,13 @@ async function getUserByFullUsername(fullUsername) {
     let snapshot = await ref.where('profile.full_username', '==', fullUsername).get();
 
     snapshot.forEach(user => {
-        snapshot = user.data();
+        snapshot = {
+            ...user.data().profile,
+            uid: user.id,
+        }
     });
 
-    return snapshot.profile || false;
+    return snapshot.uid ? snapshot : false;
 }
 
 
@@ -249,11 +255,8 @@ async function isFriend(username) {
 
     if (!user) return false;
 
-    const { uid } = firebase.auth().currentUser;
-    const friendUID = Object.keys(user)[0];
-
-    const ref = firebase.firestore().collection('users').doc(uid);
-    let snapshot = await ref.where('friends', 'array-contains', friendUID).get();
+    let snapshot = await firebase.firestore().collection('friends')
+        .where(user.uid, '==', true).get();
 
     snapshot.forEach(() => {
         snapshot = true;
