@@ -47,8 +47,9 @@ async function setStatus(status) {
     userStatus.setAttribute('fill', STATUS_COLOURS[status]);
     userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
 
-    await firebase.database().ref(`/presence/`).update({
-        [uid]: status
+    firebase.firestore().collection('status').doc(uid).set({
+        status: status,
+        custom: null
     });
 }
 
@@ -165,10 +166,14 @@ function getAvatar(userId) {
  * @returns 
  */
 async function doesDiscriminatorExist(discriminator) {
-    const snapshot = await firebase.firestore().collection('users')
-        .where('profile.discriminator', '==', discriminator).get();
+    const ref = firebase.firestore().collection('users');
+    let snapshot = await ref.where('profile.discriminator', '==', discriminator).get();
 
-    console.log(snapshot.exists);
+    snapshot.forEach(() => {
+        snapshot = true;
+    });
+
+    return snapshot === true ? true : false;
 }
 
 
@@ -180,14 +185,10 @@ async function generateDiscriminator() {
     let valid = false;
     let discriminator = 0;
 
-    const ref = firebase.database().ref('/users/');
-
     do {
         discriminator = generateRandom(0, 9999);
 
-        const query = await (
-            await ref.orderByChild('discriminator').equalTo(discriminator).once('value')
-        ).val();
+        const query = await doesDiscriminatorExist(discriminator);
     
         if (!query) valid = true;
     } while (valid === false);
@@ -196,21 +197,6 @@ async function generateDiscriminator() {
 
     return discriminator;
 }
-
-
-
-//! ----------------------------------------------------------------------------------------------------
-
-async function getUserByFullUsernameFirestore(username) {
-    const snapshot = await firebase.firestore().collection('users').where('profile.full_username', '==', username).get()
-
-    snapshot.forEach(user => {
-        console.log(user.data());
-    });
-}
-
-//! ----------------------------------------------------------------------------------------------------
-
 
 
 /**
@@ -228,11 +214,11 @@ async function signout() {
 async function getProfile() {
     const { uid } = firebase.auth().currentUser;
 
-    const profile = await (
-        await firebase.database().ref(`/users/${uid}`).once('value')
-    ).val();
+    const user = await (
+        await firebase.firestore().collection('users').doc(uid).get()
+    ).data();
 
-    return profile;
+    return user.profile;
 }
 
 
@@ -241,12 +227,15 @@ async function getProfile() {
  * @param {*} username
  * @returns 
  */
-async function getUserByFullUsername(username) {
-    const user = await (
-        await firebase.database().ref('/users/').orderByChild('full_username').equalTo(username).once('value')
-    ).val();
+async function getUserByFullUsername(fullUsername) {
+    const ref = firebase.firestore().collection('users');
+    let snapshot = await ref.where('profile.full_username', '==', fullUsername).get();
 
-    return user;
+    snapshot.forEach(user => {
+        snapshot = user.data();
+    });
+
+    return snapshot.profile || false;
 }
 
 
@@ -263,9 +252,12 @@ async function isFriend(username) {
     const { uid } = firebase.auth().currentUser;
     const friendUID = Object.keys(user)[0];
 
-    const isFriended = await (
-        await firebase.database().ref(`/friends/${uid}/${friendUID}/`).once('value')
-    ).val();
+    const ref = firebase.firestore().collection('users').doc(uid);
+    let snapshot = await ref.where('friends', 'array-contains', friendUID).get();
 
-    return isFriended;
+    snapshot.forEach(() => {
+        snapshot = true;
+    });
+
+    return snapshot === true ? true : false;
 }

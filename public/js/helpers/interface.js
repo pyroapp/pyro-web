@@ -113,7 +113,7 @@ function showStatusPicker() {
             <div id="statusPicker" class="layer-v9HyYc" style="position: absolute; left: 80px; bottom: 57.3193px;">
                 <div class="animatorTop-2Y7x2r scale-3iLZhb didRender-33z1u8">
                     <div class="menu-3sdvDG styleFixed-sX-yHV">
-                        <div class="scroller-3BxosC thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll;">
+                        <div class="scroller-3BxosC thin-1ybCId scrollerBase-289Jih">
                             <div class="item-1tOPte colorDefault-2K3EoJ" onclick="manualSetStatus('online')">
                                 <div class="statusItem-33LqPf">
                                     <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
