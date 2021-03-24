@@ -251,16 +251,14 @@ async function getUserByFullUsername(fullUsername) {
  * @returns 
  */
 async function isFriend(username) {
+    const { uid } = firebase.auth().currentUser;
     const user = await getUserByFullUsername(username);
 
     if (!user) return false;
 
-    let snapshot = await firebase.firestore().collection('friends')
-        .where(user.uid, '==', true).get();
+    const friends = await (
+        await firebase.firestore().collection('friends').doc(uid).get()
+    ).data();
 
-    snapshot.forEach(() => {
-        snapshot = true;
-    });
-
-    return snapshot === true ? true : false;
+    return friends[user.uid] ? true : false;
 }

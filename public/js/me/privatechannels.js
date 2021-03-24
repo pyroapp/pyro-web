@@ -31,8 +31,6 @@ function loadPrivateChannels() {
 
             const privateChannel = document.getElementById(`privatechannel-${channelId}`);
 
-            console.log(channelId, privateChannel);
-
             if (!privateChannel) privateChannelCreationHandler(channelId);
         }
     });
