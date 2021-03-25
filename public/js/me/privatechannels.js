@@ -180,7 +180,7 @@ function addPrivateChannel(channelId, uid) {
     a.classList = 'channel-2QD9_O container-2Pjhx- clickable-1JJAn8 hidden fadeIn-efi30';
     a.id = 'privatechannel-' + channelId;
     a.setAttribute('uid', uid);
-    a.setAttribute('onclick', 'changeChannel(this)');
+    a.setAttribute('onclick', `changeChannel(${channelId})`);
     a.innerHTML = `
         <div class="layout-2DM8Md">
             <div class="avatar-3uk_u9">
@@ -284,21 +284,22 @@ function selectPrivateChannel(id) {
  * 
  * @param {*} channelId 
  */
-function changeChannel(channel) {
-    const id = channel.id.replace('privatechannel-', '');
-
-    let path = `/channels/@me/${id}`;
-    let title = channel.getAttribute('ptitle');
-
-    if (id === 'friends') {
-        path = '/channels/@me/';
-        title = 'Discord';
+function changeChannel(channelId) {
+    let title = 'Discord';
+    
+    if (channelId === 'friends') {
+        channelId = '';
+    } else {
+        const channel = document.getElementById(`privatechannel-${channelId}`);
+        
+        title = channel.getAttribute('ptitle');
     }
 
-    deselectAll();
-    selectMainBody(id);
-    selectPrivateChannel(id);
+    loadPrivateChannelFromId(channelId);
 
-    window.history.pushState(path, title, path);
-    document.title = title;
+    window.history.pushState(
+        {},
+        title,
+        `/channels/@me/${channelId}`
+    );
 }

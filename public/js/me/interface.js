@@ -20,13 +20,19 @@ window.onload = () => {
 
 window.onunload = () => {
     setStatus('offline');
-};
+}
 
 
 document.onvisibilitychange = async () => {
     await delay(IDLE_TIMEOUT);
     setAutomaticStatus();
-};
+}
+
+
+window.onpopstate = () => {
+    // Event only occurs when user goes back
+    loadPrivateChannelFromId();
+}
 
 
 firebase.auth().onAuthStateChanged(async user => {
@@ -44,11 +50,61 @@ firebase.auth().onAuthStateChanged(async user => {
         await setAutomaticStatus('online');
         await showMiniProfile();
 
+        loadPrivateChannelFromId();
+
         await delay(LOADING_TIMEOUT);
     }
 
     hidePageLoader();
 });
+
+
+/**
+ * 
+ * @param {*} channelId 
+ */
+function loadPrivateChannelFromId(channelId) {
+    if (!channelId) channelId = getPrivateChannelFromURL();
+    
+    // If there is no valid id, load add friends page
+    if (!channelId) channelId = 'friends';
+    
+    const channel = document.getElementById(`privatechannel-${channelId}`);
+
+    // Invalid channel Id
+    if (!channel) {
+        return window.history.pushState(
+            {},
+            'Discord',
+            '/channenls/@me/'
+        );
+    }
+
+    const title = channel.getAttribute('ptitle');
+
+    document.title = title || 'Discord';
+
+    deselectAll();
+    selectPrivateChannel(channelId);
+    selectMainBody(channelId);
+}
+
+
+/**
+ * 
+ * @returns 
+ */
+function getPrivateChannelFromURL() {
+    const path = window.location.pathname.split('/');
+
+    path.filter((value, index) => {
+        if (!value) path.splice(index, index + 1);
+    });
+
+    const privChannelId = path[path.length - 1];
+
+    return isNaN(privChannelId) ? false : privChannelId;
+}
 
 
 /**
