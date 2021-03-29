@@ -30,6 +30,10 @@
 			{
 				"source": "/channels/@me",
 				"destination": "/views/me.html"
+			},
+			{
+				"source": "/channels/@me/**",
+				"destination": "/views/me.html"
 			}
 		]
 	}

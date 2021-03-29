@@ -45,11 +45,13 @@ firebase.auth().onAuthStateChanged(async user => {
             );
         }
         
-        loadPrivateChannels();
-        loadPrivateChannelFromId();
-
+        await initialisePrivateChannelFetch();
         await setAutomaticStatus('online');
         await delay(LOADING_TIMEOUT);
+    
+        //? For some reason this doesn't load correctly unless time
+        //? after the DOM is loaded has elapsed
+        loadPrivateChannelFromId();
     }
 
     hidePageLoader();
@@ -69,7 +71,7 @@ function loadPrivateChannelFromId(channelId) {
     let title = 'Discord';
     let path = '/channels/@me/';
 
-    const privateChannel = document.getElementById(`privatechannel-${channelId}`);
+    const privateChannel = document.getElementById(`private-channel-${channelId}`);
 
     if (privateChannel) {
         title = privateChannel.getAttribute('ptitle');

@@ -112,7 +112,7 @@ function generateId() {
  * @param {*} order 
  * @returns 
  */
-function sortArrayByKey(key, order = 'asc') {
+function sortObjectByKey(key, order = 'asc') {
     return function innerSort(a, b) {
       if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) return 0;
   
@@ -130,3 +130,19 @@ function sortArrayByKey(key, order = 'asc') {
       return ((order === 'desc') ? (comparison * -1) : comparison)
     }
 }
+
+
+/**
+ * 
+ * @returns 
+ */
+ Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};

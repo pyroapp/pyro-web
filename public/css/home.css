@@ -192,7 +192,7 @@
 .score-2BlIQs {
 	position: relative;
 	padding: 20px;
-    font-family: 'Catamaran', Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-family: 'PyroRegular', Helvetica Neue, Helvetica, Arial, sans-serif;
 	font-size: 20px;
 	color: #fff;
 	text-align: left;
@@ -215,7 +215,7 @@
 .gameOverText-JfDmua {
 	text-align: center;
 	width: 100vw;
-	font-family: 'Catamaran', Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-family: 'PyroRegular', Helvetica Neue, Helvetica, Arial, sans-serif;
 	font-size: 20px;
 	color: #fff;
 	line-height: 60px;
@@ -357,7 +357,7 @@
 }
 
 .glitch-1ZnYvx {
-	font-family: 'Catamaran', Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-family: 'PyroRegular', Helvetica Neue, Helvetica, Arial, sans-serif;
 	font-weight: 700;
 	color: rgba(246, 246, 247, .3);
 	font-size: 150px;
@@ -1033,7 +1033,7 @@ a {
 
 body {
 	text-rendering: optimizeLegibility;
-	font-family: 'Catamaran', Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-family: 'PyroRegular', Helvetica Neue, Helvetica, Arial, sans-serif;
 	font-weight: 400;
 	line-height: 1.15
 }

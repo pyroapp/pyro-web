@@ -152,6 +152,7 @@ async function addFriend(user) {
         await firebase.firestore().collection('private_channels').doc(privateId).set({
             users: [uid, friendUID],
             group: false,
+            created: privateId,
         });
 
         // Add private channel references in each profile
