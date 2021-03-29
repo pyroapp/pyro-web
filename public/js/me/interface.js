@@ -46,12 +46,9 @@ firebase.auth().onAuthStateChanged(async user => {
         }
         
         loadPrivateChannels();
-
-        await setAutomaticStatus('online');
-        await showMiniProfile();
-
         loadPrivateChannelFromId();
 
+        await setAutomaticStatus('online');
         await delay(LOADING_TIMEOUT);
     }
 
@@ -63,30 +60,29 @@ firebase.auth().onAuthStateChanged(async user => {
  * 
  * @param {*} channelId 
  */
+let lastPrivateChannelId;
+
 function loadPrivateChannelFromId(channelId) {
     if (!channelId) channelId = getPrivateChannelFromURL();
-    
-    // If there is no valid id, load add friends page
-    if (!channelId) channelId = 'friends';
-    
-    const channel = document.getElementById(`privatechannel-${channelId}`);
+    if (lastPrivateChannelId === channelId) return;
 
-    // Invalid channel Id
-    if (!channel) {
-        return window.history.pushState(
-            {},
-            'Discord',
-            '/channenls/@me/'
-        );
+    let title = 'Discord';
+    let path = '/channels/@me/';
+
+    const privateChannel = document.getElementById(`privatechannel-${channelId}`);
+
+    if (privateChannel) {
+        title = privateChannel.getAttribute('ptitle');
+        path = (channelId === 'friends') ? '/channels/@me/' : `/channels/@me/${channelId}/`;
+    } else {
+        channelId = 'friends';
     }
 
-    const title = channel.getAttribute('ptitle');
-
-    document.title = title || 'Discord';
-
-    deselectAll();
+    window.history.pushState({}, title, path);
     selectPrivateChannel(channelId);
     selectMainBody(channelId);
+
+    lastPrivateChannelId = channelId;
 }
 
 
@@ -104,22 +100,4 @@ function getPrivateChannelFromURL() {
     const privChannelId = path[path.length - 1];
 
     return isNaN(privChannelId) ? false : privChannelId;
-}
-
-
-/**
- * 
- */
-async function showMiniProfile() {
-    const { username, discriminator } = await getProfile();
-
-    const usernameLabel = document.getElementById('usernameLabel');
-    const discriminatorLabel = document.getElementById('discriminatorLabel');
-    const avatarImage = document.getElementById('avatarImage');
-
-    usernameLabel.innerText = username;
-    discriminatorLabel.innerText = '#' + discriminator;
-    avatarImage.setAttribute('src', getAvatar());
-
-    await setDisplayName(username + '#' + discriminator);
 }

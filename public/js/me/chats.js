@@ -11,13 +11,12 @@
 //? ------------------------------------------------------------------------------------
 
 
-
 function addChat(channelId, uid) {
     const div = document.createElement('div');
     div.classList = 'chat-3bRxxu mainBody-f3wd0 hidden';
     div.id = channelId;
     div.innerHTML = `
-        <section class="title-3qD0b- container-1r6BKw themed-ANHk51" id="header-${channelId}">
+        <section class="title-3qD0b- container-1r6BKw themed-ANHk51" id="private-header-${channelId}">
             <div class="children-19S4PO">
                 <div class="iconWrapper-2OrFZ1" >
                     <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24">
@@ -33,22 +32,22 @@ function addChat(channelId, uid) {
                 <div class="spacer-3kEb8l"></div>
             </div>
             <div class="toolbar-1t6TWx">
-                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn">
+                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn hidden">
                     <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M11 5V3C16.515 3 21 7.486 21 13H19C19 8.589 15.411 5 11 5ZM17 13H15C15 10.795 13.206 9 11 9V7C14.309 7 17 9.691 17 13ZM11 11V13H13C13 11.896 12.105 11 11 11ZM14 16H18C18.553 16 19 16.447 19 17V21C19 21.553 18.553 22 18 22H13C6.925 22 2 17.075 2 11V6C2 5.447 2.448 5 3 5H7C7.553 5 8 5.447 8 6V10C8 10.553 7.553 11 7 11H6C6.063 14.938 9 18 13 18V17C13 16.447 13.447 16 14 16Z"></path>
                     </svg>
                 </div>
-                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn">
+                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn hidden">
                     <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M21.526 8.149C21.231 7.966 20.862 7.951 20.553 8.105L18 9.382V7C18 5.897 17.103 5 16 5H4C2.897 5 2 5.897 2 7V17C2 18.104 2.897 19 4 19H16C17.103 19 18 18.104 18 17V14.618L20.553 15.894C20.694 15.965 20.847 16 21 16C21.183 16 21.365 15.949 21.526 15.851C21.82 15.668 22 15.347 22 15V9C22 8.653 21.82 8.332 21.526 8.149Z"></path>
                     </svg>
                 </div>
-                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn">
+                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn hidden">
                     <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M22 12L12.101 2.10101L10.686 3.51401L12.101 4.92901L7.15096 9.87801V9.88001L5.73596 8.46501L4.32196 9.88001L8.56496 14.122L2.90796 19.778L4.32196 21.192L9.97896 15.536L14.222 19.778L15.636 18.364L14.222 16.95L19.171 12H19.172L20.586 13.414L22 12Z"></path>
                     </svg>
                 </div>
-                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn">
+                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn hidden">
                     <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M21 3H24V5H21V8H19V5H16V3H19V0H21V3ZM10 12C12.205 12 14 10.205 14 8C14 5.795 12.205 4 10 4C7.795 4 6 5.795 6 8C6 10.205 7.795 12 10 12ZM10 13C5.289 13 2 15.467 2 19V20H18V19C18 15.467 14.711 13 10 13Z"></path>
                     </svg>
@@ -87,7 +86,7 @@ function addChat(channelId, uid) {
                         </div>
                     </div>
                 </div>
-                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn">
+                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn hidden">
                     <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M19 3H4.99C3.88 3 3.01 3.89 3.01 5L3 19C3 20.1 3.88 21 4.99 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 15H15C15 16.66 13.65 18 12 18C10.35 18 9 16.66 9 15H4.99V5H19V15Z" fill="currentColor"></path>
                     </svg>
@@ -101,10 +100,10 @@ function addChat(channelId, uid) {
                 </a>
             </div>
         </section>
-        <div class="content-yTz4x3" id="chat-${channelId}">
+        <div class="content-yTz4x3" id="private-chat-${channelId}">
             <main class="chatContent-a9vAAp">
                 <div class="messagesWrapper-1sRNjr group-spacing-16">
-                    <div class="scroller-2LSbBU auto-Ge5KZx scrollerBase-289Jih disableScrollAnchor-3V9UtP"mstyle="overflow: hidden scroll; padding-right: 0px;">
+                    <div class="scroller-2LSbBU auto-Ge5KZx scrollerBase-289Jih disableScrollAnchor-3V9UtP" style="overflow: hidden scroll; padding-right: 0px;">
                         <div class="scrollerContent-WzeG7R content-3YMskv">
                             <div class="scrollerInner-2YIMLh">
                                 <div class="container-3RCQyg">
@@ -116,11 +115,11 @@ function addChat(channelId, uid) {
                                         </svg>
                                     </div>
                                     <h1 class="header-3uLluP"></h1>
-                                    <div class="size16-1P40sf description-1sDbzZ">
+                                    <div class="size16-1P40sf description-1sDbzZ introductionMessage">
                                         This is the beginning of your direct message history with <strong></strong>.
                                         <div class="container-1fnzfI">
-                                            <div class="colorHeaderSecondary-3Sp3Ft size14-e6ZScH">No servers in common</div>
-                                            <div class="divider-3yU4s2"></div>
+                                            <div class="colorHeaderSecondary-3Sp3Ft size14-e6ZScH hidden">No friends in common</div>
+                                            <div class="divider-3yU4s2 hidden"></div>
                                             <button type="button" class="action-26D6fg button-38aScr lookFilled-1Gx00P colorPrimary-3b3xI6 sizeTiny-EgeIrh grow-q77ONN">
                                                 <div class="contents-18-Yxp">Remove Friend</div>
                                             </button>
@@ -130,7 +129,8 @@ function addChat(channelId, uid) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="scrollerSpacer-avRLaA empty-6MGttt"></div>
+                                <div id="private-messages-list"></div>
+                                <div class="scrollerSpacer-avRLaA"></div>
                             </div>
                         </div>
                     </div>
@@ -143,7 +143,7 @@ function addChat(channelId, uid) {
                                     <div class="file-input" tabindex="-1" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 0; cursor: pointer;"></div>
                                 </div>
                                 <div class="attachWrapper-2TRKBi hidden">
-                                    <button aria-label="Upload a file or send invites" role="menubutton" aria-controls="popout_8" aria-expanded="false" type="button" class="attachButton-2WznTc attachButton-2dnuIu button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN">
+                                    <button class="attachButton-2WznTc attachButton-2dnuIu button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN">
                                         <div class="contents-18-Yxp attachButtonInner-PQjIyk">
                                             <svg width="24" height="24" viewBox="0 0 24 24">
                                                 <g fill="none" fill-rule="evenodd">
@@ -156,7 +156,7 @@ function addChat(channelId, uid) {
                                 </div>
                                 <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x">
                                     <div class="placeholder-37qJjk fontSize16Padding-3Wk7zP"></div>
-                                    <div data-can-focus="true" data-slate-editor="true" data-key="246" contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP" autocorrect="off" spellcheck="true"data-gramm="false" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word;"></div>
+                                    <div data-can-focus="true" data-slate-editor="true" data-key="246" contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP messageField" autocorrect="off" spellcheck="true"data-gramm="false" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; padding-top: 12px;"></div>
                                 </div>
                             </div>
                                 <div class="buttons-3JBrkn hidden">
@@ -197,6 +197,27 @@ function addChat(channelId, uid) {
     `;
 
     document.getElementById('main-body').appendChild(div);
+
+    // Send message on enter
+    const input = div.querySelectorAll('.messageField')[0];
+
+    input.addEventListener('keypress', event => {
+        if (!event.shiftKey && event.key === 'Enter') {
+            sendPrivateMessage(channelId);
+            event.returnValue = false;
+        }
+    });
+
+    // Plceholder behavior
+    input.addEventListener('input', () => {
+        const placeholder = div.querySelectorAll('.placeholder-37qJjk')[0];
+
+        if (input.innerHTML.length > 0) {
+            placeholder.classList.add('hidden');
+        } else {
+            placeholder.classList.remove('hidden');
+        }
+    });
 }
 
 
@@ -205,7 +226,7 @@ function addChat(channelId, uid) {
  * @param {*} id 
  * @param {*} username 
  */
- function setHeaderUsername(id, username) {
+ function setPrivateHeaderUsername(id, username) {
     const chat = document.getElementById(id);
 
     chat.querySelectorAll('.title-29uC1r')[0].innerText = username;
@@ -221,11 +242,11 @@ function addChat(channelId, uid) {
  * @param {*} status 
  * @returns 
  */
-function setHeaderStatus(id, status) {
+function setPrivateHeaderStatus(id, status) {
     if (!status) return;
 
     // TODO: When friend is removed, socket is not disposed.
-    const header = document.getElementById(`header-${id}`);
+    const header = document.getElementById(`private-header-${id}`);
     const userStatus = header.querySelectorAll('.userStatus')[0];
 
     userStatus.setAttribute('fill', STATUS_COLOURS[status]);

@@ -16,7 +16,6 @@ const FB_PROJECT_ID = 'djs-clone';
 firebase.initializeApp({
         apiKey: "AIzaSyCT4vdQ_eLO6R80th6o8fMOX7PlGOoEkWU",
         authDomain: `${FB_PROJECT_ID}.firebaseapp.com`,
-        databaseURL: `https://${FB_PROJECT_ID}-default-rtdb.europe-west1.firebasedatabase.app`,
         projectId: FB_PROJECT_ID,
         storageBucket: `${FB_PROJECT_ID}.appspot.com`,
         messagingSenderId: "1074341954508",

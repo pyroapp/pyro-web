@@ -147,23 +147,21 @@ async function addFriend(user) {
         // TODO: add the same friend, a check might needed
 
         // Create private message channel
-        const privateId = generateId();
+        const privateId = getTime().toString();
 
-        await firebase.firestore().collection('priv_channels').doc(privateId).set({
-            details: {
-                users: [uid, friendUID],
-            },
-            type: 'dm',
+        await firebase.firestore().collection('private_channels').doc(privateId).set({
+            users: [uid, friendUID],
+            group: false,
         });
 
         // Add private channel references in each profile
-        await firebase.firestore().collection('sub_priv_channels').doc(uid).set({
+        await firebase.firestore().collection('subscribed_private').doc(uid).set({
             [privateId]: true
         }, {
             merge: true
         });
 
-        await firebase.firestore().collection('sub_priv_channels').doc(friendUID).set({
+        await firebase.firestore().collection('subscribed_private').doc(friendUID).set({
             [privateId]: true
         }, {
             merge: true

@@ -32740,7 +32740,7 @@ html .progress-GjyFoQ {
 	font-size:1rem;
 	line-height:1.375rem;
 	width:100%;
-	height:44px;
+	height:100%;
 	min-height:44px;
 	color:var(--text-normal);
 	padding-left:0;
@@ -35710,7 +35710,7 @@ strong {
 	-webkit-box-flex:0;
 	-ms-flex-positive:0;
 	flex-grow:0;
-	border-radius:8px 0 0;
+	/* border-radius:8px 0 0; */
 	-webkit-box-shadow:var(--elevation-low);
 	box-shadow:var(--elevation-low)
 }

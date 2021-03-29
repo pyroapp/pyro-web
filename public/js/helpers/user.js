@@ -155,11 +155,12 @@ async function uploadDefaultAvatar() {
  * @returns 
  */
 function getAvatar(userId) {
+    const path = 'https://firebasestorage.googleapis.com/v0/b/djs-clone.appspot.com/o/avatars%2F';
     let { uid } = firebase.auth().currentUser;
     
     if (userId) uid = userId;
 
-    return `${AVATAR_PATH}${uid}.gif?alt=media`;
+    return `${path}${uid}.gif?alt=media`;
 }
 
 
@@ -212,21 +213,6 @@ async function signout() {
 
 /**
  * 
- * @returns 
- */
-async function getProfile() {
-    const { uid } = firebase.auth().currentUser;
-
-    const user = await (
-        await firebase.firestore().collection('users').doc(uid).get()
-    ).data();
-
-    return user.profile;
-}
-
-
-/**
- * 
  * @param {*} username
  * @returns 
  */
@@ -260,5 +246,6 @@ async function isFriend(username) {
         await firebase.firestore().collection('friends').doc(uid).get()
     ).data();
 
-    return friends[user.uid] ? true : false;
+    if (friends === undefined) return false;
+    return friends;
 }
