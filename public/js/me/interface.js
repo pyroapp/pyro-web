@@ -45,7 +45,7 @@ firebase.auth().onAuthStateChanged(async user => {
             );
         }
         
-        await initialisePrivateChannelFetch();
+        await initialisePrivateChannels();
         await setAutomaticStatus('online');
         await delay(LOADING_TIMEOUT);
     

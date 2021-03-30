@@ -10,15 +10,18 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
-
+// Global Cache
 const CACHED_USERS = {};
+const CACHED_PRIVATE_CHAT_LISTENERS = {};
 
+// Global thresholds
 const AGE_LIMIT = 13;
 const DOB_START_YEAR = 1921;
 const LOADING_TIMEOUT = 1000;
 const ACTIVITY_TIMEOUT = 3000;
 const IDLE_TIMEOUT = 10000;
 
+// Firebase authentication error codes
 const AUTH_CODES = {
     'auth/claims-too-large': 'Claim size exceeds 1000 bytes.',
     'auth/email-already-exists': 'Email already exists.',
@@ -40,6 +43,7 @@ const AUTH_CODES = {
     'auth/too-many-requests': 'Slow down! You are being rate limited.'
 };
 
+// Global user status colours
 const STATUS_COLOURS = {
     online: '#43B581',
     idle: '#FAA61A',
@@ -48,6 +52,7 @@ const STATUS_COLOURS = {
     streaming: '#563490',
 };
 
+// Loading overlay messages
 const DID_YOU_KNOW = [
     'Our mascot, Wumpus, was originally created as a mascot with no friends :(',
     'Discord was almost called Wyvern before we picked our name. Not too proud of that one.',

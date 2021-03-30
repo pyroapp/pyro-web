@@ -122,7 +122,7 @@ function addChat(channelId, uid) {
                                     <h1 class="header-3uLluP"></h1>
                                     <div class="size16-1P40sf description-1sDbzZ introductionMessage">
                                         This is the beginning of your direct message history with <strong></strong>.
-                                        <div class="container-1fnzfI">
+                                        <div class="container-1fnzfI hidden">
                                             <div class="colorHeaderSecondary-3Sp3Ft size14-e6ZScH hidden">No friends in common</div>
                                             <div class="divider-3yU4s2 hidden"></div>
                                             <button type="button" class="action-26D6fg button-38aScr lookFilled-1Gx00P colorPrimary-3b3xI6 sizeTiny-EgeIrh grow-q77ONN">
@@ -134,7 +134,7 @@ function addChat(channelId, uid) {
                                         </div>
                                     </div>
                                 </div>
-                                <div id="private-messages-list"></div>
+                                <div id="private-message-list-${channelId}"></div>
                                 <div class="scrollerSpacer-avRLaA"></div>
                             </div>
                         </div>

@@ -15566,7 +15566,7 @@ img[alt] {
 }
 
 .mouse-mode .wrapper-2a6GCs:hover .timestampVisibleOnHover-2bQeI4 {
-	opacity:1
+	opacity:1;
 }
 
 .username-1A8OIy {
@@ -28258,6 +28258,18 @@ html .progress-GjyFoQ {
 
 .message-2qnXI6 {
 	padding-right:48px!important
+}
+
+.message-2qnXI6:hover {
+	background-color:var(--background-message-hover);
+}
+
+.message-2qnXI6:hover .timestampVisibleOnHover-2bQeI4 {
+	opacity: 1;
+}
+
+.mentioned-xhSam7:hover {
+	background-color:var(--background-mentioned-hover);
 }
 
 .message-2qnXI6.selected-2P5D_Z,

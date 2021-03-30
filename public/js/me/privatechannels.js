@@ -14,44 +14,47 @@
 /**
  * 
  */
-async function initialisePrivateChannelFetch() {
+async function initialisePrivateChannels() {
     const { uid } = firebase.auth().currentUser;
 
     firebase.firestore().collection('subscribed_private').doc(uid).onSnapshot(async channels => {
-        const channelDOM = document.getElementById(``);
         const privateChannels = [];
 
-        if (channelDOM) return; // Channel already exists in the DOM
-        if (!channels.data()) return privateChannels;
+        if (!channels.data()) return;
 
         // Iterate through each channel
         for (channelId in channels.data()) {
-            const channel = channels.data()[channelId];
-            
-            // If the channel is open
-            if (channel) {
+            const channelDOM = document.getElementById(`private-channel-${channelId}`);
 
-                // Get channel info
-                const channelData = await firebase.firestore().collection('private_channels').doc(channelId).get();
-            
-                privateChannels.push({
-                    ...channelData.data(),
-                    id: channelId,
-                });
+            // Make sure channel is not already in the DOM
+            if (!channelDOM) {
+                const channel = channels.data()[channelId];
 
-                // Populate cache with friends data
-                const { uid } = firebase.auth().currentUser;
+                // If the channel is open
+                if (channel) {
 
-                channelData.data().users.forEach(async userId => {
-                    if (uid === userId) return;
-
-                    // Create a listener to get realtime updates on all users
-                    await firebase.firestore().collection('users').doc(userId).onSnapshot(snapshot => {
-                        CACHED_USERS[snapshot.id] = {
-                            ...snapshot.data().profile
-                        };
+                    // Get channel info
+                    const channelData = await firebase.firestore().collection('private_channels').doc(channelId).get();
+                
+                    privateChannels.push({
+                        ...channelData.data(),
+                        id: channelId,
                     });
-                });
+
+                    // Populate cache with friends data
+                    const { uid } = firebase.auth().currentUser;
+
+                    channelData.data().users.forEach(async userId => {
+                        if (uid === userId) return;
+
+                        // Create a listener to get realtime updates on all users
+                        await firebase.firestore().collection('users').doc(userId).onSnapshot(snapshot => {
+                            CACHED_USERS[snapshot.id] = {
+                                ...snapshot.data().profile
+                            };
+                        });
+                    });
+                }   
             }
         }
 
@@ -68,8 +71,6 @@ async function initialisePrivateChannelFetch() {
  * 
  */
 function loadPrivateChannels(channels) {
-    if (!channels) return addPrivateChannelPlaceholder();
-
     channels.forEach(channel => {
         if (channel.group) return; // TODO: Add group support
 
@@ -84,8 +85,6 @@ function loadPrivateChannels(channels) {
         addChat(channel.id, friendUID);
         loadPrivateChannelStatus(friendUID, channel.id);
         loadPrivateChannelUsername(friendUID, channel.id);
-
-        console.log(channel);
     });
 }
 
@@ -198,12 +197,16 @@ async function closePrivateChannel(channelId) {
 /**
  * 
  */
-function deselectAll() {
+function toggleSelectedPrivateChannel(channelId) {
     const elements = document.querySelectorAll('.channel-2QD9_O');
 
     elements.forEach(element => {
         element.classList.remove('selected-aXhQR6');
     });
+
+    const selectChannel = document.getElementById(channelId);
+
+    selectChannel.classList.add('selected-aXhQR6');
 }
 
 
@@ -211,21 +214,23 @@ function deselectAll() {
  * 
  */
 function selectPrivateChannel(id) {
-    const channel = document.getElementById('private-channel-' + id);
+    toggleSelectedPrivateChannel(`private-channel-${id}`);
 
-    deselectAll();
-    channel.classList.add('selected-aXhQR6');
-
-    if (id === 'friends') return;
-    if (channel.getAttribute('message-listener')) return;
-
-    const ref = firebase.firestore().collection('private_messages').doc(id.toString());
+    id = id.toString(); // Not sure why it sometimes returns an int
     
-    ref.onSnapshot(messages => {
-        loadPrivateMessages(messages.data(), messages.id);
+    if (id === 'friends') return; // Don't load messages for friends channel
+    if (CACHED_PRIVATE_CHAT_LISTENERS[id]) return;
+
+    const ref = firebase.firestore().collection('private_messages').doc(id);
+
+    const unsub = ref.onSnapshot(messages => {
+        loadPrivateMessages(messages.data(), id);
     });
 
-    channel.setAttribute('message-listener', true);
+    CACHED_PRIVATE_CHAT_LISTENERS[id] = {
+        Unsubscribe: unsub,
+        Reference: ref,
+    };
 }
 
 
@@ -310,9 +315,7 @@ function selectPrivateChannel(id) {
     channelsList.appendChild(a);
 
     // Close private channel button
-    a.querySelectorAll('.closeButton-2GCmT5').onclick = () => {
+    a.querySelectorAll('.closeButton-2GCmT5')[0].onclick = () => {
         closePrivateChannel(channelId);
     }
-
-    console.log(channelId);
 }

@@ -95,14 +95,37 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 
 
 /**
- * 
+ * 2021-03-30T07:17:14.401Z
  * @returns 
  */
 function generateId() {
-    const time = moment().format('DDMMYYhhmmss');
-    const random = pad(generateRandom(0, 9999), 4);
+    const isoDate = new Date().toISOString();
+    const halves = isoDate.split('T');
 
-    return `${time}${random}`;
+    const date = halves[0].split('-');
+    const time = halves[1].split('.')[0].split(':');
+    const zulu = halves[1].split('.')[1].substring(0, 3);
+    
+    // Hours, Minutes, Seconds, Year, Month, Day, Zulu
+    return `${time.join('')}${date.join('')}${zulu}`;
+}
+
+
+/**
+ * 09473420210330379
+ * @param {*} id 
+ */
+function getTimeFromId(id) {
+    const year = id.substring(6, 10);
+    const month = id.substring(10, 12);
+    const day = id.substring(12, 14);
+    const hours = id.substring(0, 2);
+    const minutes = id.substring(2, 4)
+    const seconds = id.substring(4, 6);
+    const zulu = id.substring(14, 17);
+
+    // Year-Month-DayTHours:Minutes:Seconds.ZuluZ
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${zulu}Z`;
 }
 
 
