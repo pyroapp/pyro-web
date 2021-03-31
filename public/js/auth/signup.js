@@ -73,8 +73,12 @@ async function signup() {
     showButtonLoader(button);
     disableButton(button);
 
-    if (values.username.includes('#')) {
-        showLabelError('usernameLabel', 'Hash symbols are not allowed.');
+    const { email, username, password } = values;
+
+    let invalid = validateUsername(username);
+
+    if (invalid) {
+        showLabelError('usernameLabel', `Username cannot contain "${invalid}"`);
         showInputError('usernameField');
 
         hideButtonLoader(button);
@@ -82,26 +86,24 @@ async function signup() {
 
         return;
     }
-
+    
     try {
-        const user = await firebase.auth().createUserWithEmailAndPassword(
-            values.email, values.password
-        );
-
+        const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
         const discriminator = await generateDiscriminator();
-        const fullUsername = values.username + '#' + discriminator;
 
-        await firebase.firestore().collection('users').doc(user.user.uid).set({
-            profile: {
-                email: values.email,
-                username: values.username,
-                discriminator: discriminator,
-                full_username: fullUsername,
-            }
+        const { user: { uid } } = user;
+
+        await firebase.firestore().collection('users').doc(uid).set({
+            username: username,
+            discriminator: discriminator,
+            mfa_enabled: false,
+            locale: navigator.languages[0] || navigator.language,
+            verified: false,
+            email: email,
+            flags: [],
+            premium_type: null,
         });
 
-        await sendEmailVerification();
-        await setDisplayName(fullUsername);
         await uploadDefaultAvatar();
 
         redirect('/channels/@me');

@@ -48,9 +48,7 @@ async function setStatus(status) {
     userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
 
     firebase.firestore().collection('users').doc(uid).set({
-        status: {
-            status: status,
-        },
+        status: status,
     }, {
         merge: true
     });
@@ -76,63 +74,6 @@ function manualSetStatus(status) {
 /**
  * 
  */
-async function setCustomStatus() {
-    const input = document.getElementById('customStatusInput');
-
-    if (!input.value) return;
-    
-    
-
-    // hideModals();
-}
-
-
-function clearCustomStatus() {
-
-} 
-
-
-/**
- * 
- * @param {*} name 
- */
- async function setDisplayName(name) {
-    await firebase.auth().currentUser.updateProfile({
-        displayName: name
-    });
-}
-
-
-async function sendEmailVerification(showModal) {
-    await firebase.auth().currentUser.sendEmailVerification();
-
-    if (showModal) {
-        const { email } = firebase.auth().currentUser;
-
-        showBasicModal(
-            'Verification Email',
-            `We have sent you a new verification email to <strong>${email}</strong>, please check both your inbox and spam folder.`,
-            'Okay',
-            'hideModals()'
-        );
-    }
-}
-
-
-/**
- * 
- * @returns 
- */
-function isEmailVerified() {
-    const user = firebase.auth().currentUser;
-
-    return user.emailVerified;
-}
-
-
-/**
- * 
- */
 async function uploadDefaultAvatar() {
     const { uid } = firebase.auth().currentUser;
 
@@ -145,7 +86,7 @@ async function uploadDefaultAvatar() {
     const blob = await (await fetch(path)).blob();
 
     // Upload image to Firebase Storage
-    await firebase.storage().ref(`avatars/${uid}.gif`).put(blob);
+    await firebase.storage().ref(`/avatars/${uid}.gif`).put(blob);
 }
 
 

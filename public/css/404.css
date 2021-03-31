@@ -189,7 +189,7 @@
 .score-2BlIQs {
 	position: relative;
 	padding: 20px;
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-size: 20px;
 	color: #fff;
 	text-align: left;
@@ -212,7 +212,7 @@
 .gameOverText-JfDmua {
 	text-align: center;
 	width: 100vw;
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-size: 20px;
 	color: #fff;
 	line-height: 60px;
@@ -354,7 +354,7 @@
 }
 
 .glitch-1ZnYvx {
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 700;
 	color: rgba(246, 246, 247, .3);
 	font-size: 150px;
@@ -1030,7 +1030,7 @@ a {
 
 body {
 	text-rendering: optimizeLegibility;
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 400;
 	line-height: 1.15
 }
@@ -1513,7 +1513,7 @@ section .button.flat-bordered:hover {
 }
 
 .form .SingleSelect * {
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 }
 
 .form .submit-btn {
@@ -4358,7 +4358,7 @@ section .button.flat-bordered:hover {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	border: none;
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 500;
 	cursor: pointer;
 	-webkit-user-select: none;
@@ -4821,7 +4821,7 @@ section .button.flat-bordered:hover {
 	border-style: solid;
 	border-radius: 3px;
 	outline: none;
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: 400;
 	-webkit-transition: background-color .15s ease, border .15s ease;
 	transition: background-color .15s ease, border .15s ease
@@ -5045,7 +5045,7 @@ section .button.flat-bordered:hover {
 	font-size: 16px;
 	font-weight: 400;
 	line-height: 20px;
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	cursor: default
 }
 
@@ -6113,7 +6113,7 @@ section .button.flat-bordered:hover {
 .input-2xha8d {
 	height: 120px;
 	resize: none;
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 }
 
 .input-2xha8d.resizeable-3Dlqvo {
@@ -6518,7 +6518,7 @@ section h3,
 section h4,
 section h5,
 section h6 {
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	color: #4f545c
 }
 
@@ -6565,7 +6565,7 @@ section h6 {
 }
 
 section p {
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 400;
 	color: #737f8d;
 	font-size: 16px;
@@ -7065,7 +7065,7 @@ section h3,
 section h4,
 section h5,
 section h6 {
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	color: #4f545c
 }
 
@@ -7112,7 +7112,7 @@ section h6 {
 }
 
 section p {
-	font-family: 'PyroRegular', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 400;
 	color: #737f8d;
 	font-size: 16px;

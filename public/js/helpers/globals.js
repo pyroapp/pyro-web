@@ -12,7 +12,6 @@
 
 // Global Cache
 const CACHED_USERS = {};
-const CACHED_PRIVATE_CHAT_LISTENERS = {};
 
 // Global thresholds
 const AGE_LIMIT = 13;
@@ -20,6 +19,15 @@ const DOB_START_YEAR = 1921;
 const LOADING_TIMEOUT = 1000;
 const ACTIVITY_TIMEOUT = 3000;
 const IDLE_TIMEOUT = 10000;
+
+// Global user status colours
+const STATUS_COLOURS = {
+    online: '#43B581',
+    idle: '#FAA61A',
+    dnd: '#F04747',
+    offline: '#747F8D',
+    streaming: '#563490',
+};
 
 // Firebase authentication error codes
 const AUTH_CODES = {
@@ -41,15 +49,6 @@ const AUTH_CODES = {
     'auth/invalid-display-name': 'Invalid username.',
     'auth/wrong-password': 'Invalid password.',
     'auth/too-many-requests': 'Slow down! You are being rate limited.'
-};
-
-// Global user status colours
-const STATUS_COLOURS = {
-    online: '#43B581',
-    idle: '#FAA61A',
-    dnd: '#F04747',
-    offline: '#747F8D',
-    streaming: '#563490',
 };
 
 // Loading overlay messages

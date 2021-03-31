@@ -181,3 +181,23 @@ function validateInputs(ids) {
         return;
     }
 }
+
+
+/**
+ * 
+ * @param {*} username
+ * @returns 
+ */
+function validateUsername(username) {
+    const invalid = ['everyone', 'here', '@', '#', ':', '.', "'", "`"];
+
+    let flag;
+
+    invalid.forEach(string => {
+        if (username.includes(string)) {
+            return flag = string; 
+        }
+    });
+
+    return flag;
+}

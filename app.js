@@ -41,12 +41,6 @@ app.get('/signup', (req, res) => {
     res.status(200).sendFile(web + '/views/auth/signup.html');
 });
 
-app.get('/forgotpassword', (req, res) => {
-    log(req);
-
-    res.status(200).sendFile(web + '/views/auth/forgotpassword.html');
-});
-
 app.get('/channels/@me', (req, res) => {
     log(req);
 

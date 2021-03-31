@@ -11,24 +11,3 @@
 //? ------------------------------------------------------------------------------------
 
 
-firebase.auth().onAuthStateChanged(user => {
-    if (!user) return redirect('/login');
-
-    const ref = firebase.firestore().collection('users').doc(user.uid);
-    
-    ref.onSnapshot(data => {
-        const profile = data.data().profile;
-
-        CACHED_USERS[user.uid] = {
-            ...data.data().profile
-        };
-
-        const usernameLabel = document.getElementById('usernameLabel');
-        const discriminatorLabel = document.getElementById('discriminatorLabel');
-        const avatarImage = document.getElementById('avatarImage');
-
-        usernameLabel.innerText = CACHED_USERS[user.uid].username;
-        discriminatorLabel.innerText = '#' + CACHED_USERS[user.uid].discriminator;
-        avatarImage.setAttribute('src', getAvatar());
-    });
-});
