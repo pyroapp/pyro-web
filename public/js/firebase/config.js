@@ -14,11 +14,14 @@
 const FB_PROJECT_ID = 'djs-clone';
 
 firebase.initializeApp({
-        apiKey: "AIzaSyCT4vdQ_eLO6R80th6o8fMOX7PlGOoEkWU",
-        authDomain: `${FB_PROJECT_ID}.firebaseapp.com`,
-        projectId: FB_PROJECT_ID,
-        storageBucket: `${FB_PROJECT_ID}.appspot.com`,
-        messagingSenderId: "1074341954508",
-        appId: "1:1074341954508:web:96d9fc96bd9838fa7b9369",
-        measurementId: "G-RV91QP19VG"
+apiKey: "AIzaSyCT4vdQ_eLO6R80th6o8fMOX7PlGOoEkWU",
+authDomain: `${FB_PROJECT_ID}.firebaseapp.com`,
+projectId: FB_PROJECT_ID,
+storageBucket: `${FB_PROJECT_ID}.appspot.com`,
+messagingSenderId: "1074341954508",
+appId: "1:1074341954508:web:96d9fc96bd9838fa7b9369",
+measurementId: "G-RV91QP19VG"
 });
+
+const firestore = firebase.firstore();
+const auth = firebase.auth();
