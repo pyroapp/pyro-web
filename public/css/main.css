@@ -20100,6 +20100,10 @@ img[alt] {
 	font-weight:400
 }
 
+.markup-2BOw-j img {
+	max-width: 100%;
+}
+
 .markup-2BOw-j a {
 	color:var(--text-link);
 	word-break:break-word;

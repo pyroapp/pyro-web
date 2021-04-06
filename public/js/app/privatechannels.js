@@ -95,7 +95,11 @@ async function loadPrivateChannels() {
                         <div class="overflow-WK9Ogt"></div>
                     </div>
                 </div>
-                <div class="subText-1KtqkB"></div>
+                <div class="subText-1KtqkB">
+                    <div class="activity-525YDR subtext-1RtU34 hidden">
+                        <div class="activityText-OW8WYb lastmessage"></div>
+                    </div>
+                </div>
             </div>
             <div class="children-gzQq2t hidden">
                 <div class="closeButton-2GCmT5">
