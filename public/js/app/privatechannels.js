@@ -1,6 +1,6 @@
 //? ------------------------------------------------------------------------------------
 //?
-//?  /me/privatechannels.js
+//?  /app/privatechannels.js
 //?  Pyro Chat
 //?
 //?  Developed by Robolab LLC

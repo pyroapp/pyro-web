@@ -1,6 +1,6 @@
 //? ------------------------------------------------------------------------------------
 //?
-//?  /me/authentication.js
+//?  /app/authentication.js
 //?  Pyro Chat
 //?
 //?  Developed by Robolab LLC
