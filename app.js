@@ -32,25 +32,25 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
     log(req);
 
-    res.status(200).sendFile(web + '/views/auth/login.html');
+    res.status(200).sendFile(web + '/views/login.html');
 });
 
 app.get('/signup', (req, res) => {
     log(req);
 
-    res.status(200).sendFile(web + '/views/auth/signup.html');
+    res.status(200).sendFile(web + '/views/signup.html');
 });
 
-app.get('/channels/@me', (req, res) => {
+app.get('/channels/:guildId/', (req, res) => {
     log(req);
 
-    res.status(200).sendFile(web + '/views/me.html');
+    res.status(200).sendFile(web + '/views/app.html');
 });
 
-app.get('/channels/@me/:channelId', (req, res) => {
+app.get('/channels/:guildId/:channelId', (req, res) => {
     log(req);
 
-    res.status(200).sendFile(web + '/views/me.html');
+    res.status(200).sendFile(web + '/views/app.html');
 });
 
 app.get('*', (req, res) => {
