@@ -1,17 +1,15 @@
 //? ------------------------------------------------------------------------------------
 //?
 //?  /me/friends.js
-//?  Discord JS
+//?  Pyro Chat
 //?
-//?  Developed by Cooper Beltrami
-//?
-//?  Project built using designs, graphics and other assets developed by Discord Inc.
-//?  Copyright (c) 2021 Cooper Beltrami and Discord Inc. All Rights Reserved
+//?  Developed by Robolab LLC
+//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
 
-document.getElementById('addFriendField').addEventListener('input', event => {
+document.getElementById('addFriendField').oninput = event => {
     const button = document.getElementById('addFriendButton');
     const value = event.target.value;
 
@@ -20,31 +18,23 @@ document.getElementById('addFriendField').addEventListener('input', event => {
     } else {
         button.setAttribute('disabled', '');
     }
-});
+}
 
 
-document.getElementById('addFriendField').addEventListener('keyup', event => {
+document.getElementById('addFriendField').onkeyup = event => {
     const value = event.target.value;
 
-    if (event.key === 'Enter' && value) addFriendInit();
-});
+    if (event.key === 'Enter' && value) _addFriendHandler();
+}
 
 
-document.getElementById('addFriendButton').addEventListener('click', () => {
-    addFriendInit();
-}); 
-
-
-/**
- * 
- */
-async function addFriendInit() {
-    const button = document.getElementById('addFriendButton');
+async function _addFriendHandler() {
     const input = document.getElementById('addFriendField');
+    const button = document.getElementById('addFriendButton');
     const label = document.getElementById('addFriendLabel');
 
     const split = input.value.split('#');
-
+    
     showButtonLoader(button);
     disableButton(button);
 
@@ -61,7 +51,7 @@ async function addFriendInit() {
         label.innerText = 'Hm, didn\'t work. Double check that the capitalisation, spelling, any spaces, and numbers are correct.';
 
     } else {
-        const user = await getUserByFullUsername(input.value);
+        const user = await getUser(split[0], split[1]);
         
         // Back to default
         label.innerText = 'You can add a friend with their Discord Tag. It\'s cAsE sEnSitIvE!';
@@ -90,39 +80,37 @@ async function addFriendInit() {
             input.value = '';
         }
     }
-
-
+    
     enableButton(button);
     hideButtonLoader(button);
 }
 
 
-/**
- * 
- * @param {*} user 
- */
 async function addFriend(user) {
     const { uid } = firebase.auth().currentUser;
-
     const {
-        uid: friendUID,
-        discriminator: friendDiscriminator,
-        username: friendUsername
+        uid: f_uid,
+        discriminator: f_discriminator,
+        username: f_username
     } = user;
 
-    const friendFullUsername = `${friendUsername}#${friendDiscriminator}`;
+    const friended = await isFriend(f_username, f_discriminator);
 
-    if (await isFriend(friendFullUsername)) {
+    // Make sure you haven't already friended user
+    if (friended) {
         return {
             failed: true,
-            message: `You have already friended ${friendUsername}.`
+            message: `You have already friended ${f_username}`,
         };
     }
 
-    // Make sure you are not adding yourself
-    const { displayName } = firebase.auth().currentUser;
+    // Make sure you are not friending yourself
+    const {
+        username: l_username,
+        discriminator: l_discriminator
+    } = CACHED_USERS[uid]
 
-    if (friendFullUsername === displayName) {
+    if (l_username === f_username && l_discriminator === f_discriminator) {
         return {
             failed: true,
             message: 'You cannot add yourself as a friend.'
@@ -132,51 +120,40 @@ async function addFriend(user) {
     try {
         // Create friend database relationship
         await firebase.firestore().collection('friends').doc(uid).set({
-            [friendUID]: true
+            [f_uid]: {
+                type: 'FRIEND'
+            }
         }, {
             merge: true
         });
 
-        await firebase.firestore().collection('friends').doc(friendUID).set({
-            [uid]: true
+        await firebase.firestore().collection('friends').doc(f_uid).set({
+            [uid]: {
+                type: 'FRIEND'
+            }
         }, {
             merge: true
         });
 
-        // TODO: This might wipe out messages if you remove friends and
-        // TODO: add the same friend, a check might needed
+        // Create private message channnel
+        const privateId = generateId();
 
-        // Create private message channel
-        const privateId = getTime().toString();
-
-        await firebase.firestore().collection('private_channels').doc(privateId).set({
-            users: [uid, friendUID],
-            group: false,
-            created: privateId,
-        });
-
-        // Add private channel references in each profile
-        await firebase.firestore().collection('subscribed_private').doc(uid).set({
-            [privateId]: true
-        }, {
-            merge: true
-        });
-
-        await firebase.firestore().collection('subscribed_private').doc(friendUID).set({
-            [privateId]: true
-        }, {
-            merge: true
+        await firebase.firestore().collection('channels').doc(privateId).set({
+            last_message_id: null,
+            type: 'DM',
+            recipients: [uid, f_uid],
+            users: [uid, f_uid],
+            created: getTime(),
         });
 
         return {
             failed: false,
-            message: `Success! You added <strong>${friendUsername}</strong> as a friend.`
-        };
-    } catch (error) {
-        console.error(error);
+            message: `Success! You added <strong>${f_username}</strong> as a friend.`
+        }
+    } catch (e) {
         return {
             failed: true,
-            message: `Unexpected Error! Failed to add <strong>${friendUsername}</strong> as a friend.`
-        };
+            message: `Unexpected Error! Failed to add <strong>${f_username}</strong> as a friend.`
+        }
     }
 }

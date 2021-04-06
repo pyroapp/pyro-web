@@ -26,7 +26,7 @@ app.use('/', express.static(web));
 app.get('/', (req, res) => {
     log(req);
 
-    res.status(200).sendFile(web + '/views/home.html');
+    res.status(200).sendFile(web + '/views/landing.html');
 });
 
 app.get('/login', (req, res) => {
@@ -39,12 +39,6 @@ app.get('/signup', (req, res) => {
     log(req);
 
     res.status(200).sendFile(web + '/views/auth/signup.html');
-});
-
-app.get('/forgotpassword', (req, res) => {
-    log(req);
-
-    res.status(200).sendFile(web + '/views/auth/forgotpassword.html');
 });
 
 app.get('/channels/@me', (req, res) => {

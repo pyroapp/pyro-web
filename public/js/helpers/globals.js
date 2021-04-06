@@ -1,12 +1,10 @@
 //? ------------------------------------------------------------------------------------
 //?
 //?  /helpers/globals.js
-//?  Discord JS
+//?  Pyro Chat
 //?
-//?  Developed by Cooper Beltrami
-//?
-//?  Project built using designs, graphics and other assets developed by Discord Inc.
-//?  Copyright (c) 2021 Cooper Beltrami and Discord Inc. All Rights Reserved
+//?  Developed by Robolab LLC
+//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
@@ -19,7 +17,16 @@ const AGE_LIMIT = 13;
 const DOB_START_YEAR = 1921;
 const LOADING_TIMEOUT = 1000;
 const ACTIVITY_TIMEOUT = 3000;
-const IDLE_TIMEOUT = 10000;
+const IDLE_TIMEOUT = 5000;
+
+// Global user status colours
+const STATUS_COLOURS = {
+    online: '#43B581',
+    idle: '#FAA61A',
+    dnd: '#F04747',
+    offline: '#747F8D',
+    streaming: '#563490',
+};
 
 // Firebase authentication error codes
 const AUTH_CODES = {
@@ -41,15 +48,6 @@ const AUTH_CODES = {
     'auth/invalid-display-name': 'Invalid username.',
     'auth/wrong-password': 'Invalid password.',
     'auth/too-many-requests': 'Slow down! You are being rate limited.'
-};
-
-// Global user status colours
-const STATUS_COLOURS = {
-    online: '#43B581',
-    idle: '#FAA61A',
-    dnd: '#F04747',
-    offline: '#747F8D',
-    streaming: '#563490',
 };
 
 // Loading overlay messages

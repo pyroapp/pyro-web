@@ -1,12 +1,10 @@
 //? ------------------------------------------------------------------------------------
 //?
 //?  /me/messages.js
-//?  Discord JS
+//?  Pyro Chat
 //?
-//?  Developed by Cooper Beltrami
-//?
-//?  Project built using designs, graphics and other assets developed by Discord Inc.
-//?  Copyright (c) 2021 Cooper Beltrami and Discord Inc. All Rights Reserved
+//?  Developed by Robolab LLC
+//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
@@ -15,24 +13,27 @@
  * 
  * @param {*} channelId 
  */
-function sendPrivateMessage(channelId) {
-    const channel = document.getElementById(channelId);
+function sendPrivateMessage(channel_id) {
+    const channel = document.getElementById(channel_id);
     const input = channel.querySelectorAll('.messageField')[0];
     const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
 
     const message = input.innerHTML;
 
     const { uid } = firebase.auth().currentUser;
-    const ref = firebase.firestore().collection('private_messages').doc(channelId);
+    const ref = firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(generateId());
 
     ref.set({
-        [generateId()]: {
-            author: uid,
-            content: message,
-            timestamp: new Date().toISOString(),
-        }
-    }, {
-        merge: true
+        attachments: [],
+        author: uid,
+        channel_id: channel_id,
+        content: message,
+        edited_timestamp: null,
+        mention_everyone: false,
+        mention_roles: [],
+        mentions: [],
+        pinned: false,
+        timestamp: new Date().toISOString(),
     });
 
     // Remove all child node content
@@ -46,79 +47,76 @@ function sendPrivateMessage(channelId) {
 
 /**
  * 
- * @param {*} messages 
- * @param {*} channelId 
- * @returns 
-*/
-let lastMessage = { author: null };
+ * @param {*} channel_id 
+ */
+let lastMessage = {
+    author: null
+};
 
-function loadPrivateMessages(messages, channelId) {
-    const messageArray = [];
+async function loadPrivateMessages(channel_id) {
+    const ref = firebase.firestore().collection('channels').doc(channel_id).collection('messages');
 
-    if (!messages) return;
+    const listener = await ref.where('channel_id', '==', channel_id).orderBy('timestamp').limit(50).onSnapshot(snapshot => {
+        if (snapshot.empty) return;
 
-    for (messageId in messages) {
-        const messageDOM = document.getElementById(`private-message-${messageId}`);
+        snapshot.docChanges().forEach(change => {
+            const { type, doc: message } = change;
 
-        // If message doesn't already exist in the DOM
-        if (!messageDOM) {
+            if (type === 'added') {
+                const { content, author, timestamp } = message.data();
+                const { username } = CACHED_USERS[author];
 
-            messageArray.push({
-                ...messages[messageId],
-                id: messageId,
-            });   
-        }
-    }
+                const isToday = moment(timestamp).isSame(moment(), "day");
+                const isYesterday = moment(timestamp).isSame(moment().subtract(1, 'day'), "day");
 
-    // Sort messages by timestamp
-    messageArray.sort(sortObjectByKey('timestamp'));
+                let formattedTime = moment(timestamp).format('dd/mm/yy');
+                let messageClass = 'groupStart-23k01U';
 
-    messageArray.forEach(message => {
-        const { content, author, timestamp } = message;
-        const { username } = CACHED_USERS[author];
+                if (isToday) formattedTime = 'Today at ' + moment(timestamp).format('hh:mm A');
+                if (isYesterday) formattedTime = 'Yesterday at ' + moment(timestamp).format('hh:mm A');
 
-        const isToday = moment(timestamp).isSame(moment(), "day");
-        const isYesterday = moment(timestamp).isSame(moment().subtract(1, 'day'), "day");
+                if (lastMessage.author == author) {
+                    formattedTime = moment(timestamp).format('hh:mm A');
+                    messageClass = '';
+                }
 
-        let formattedTime = moment(timestamp).format('dd/mm/yy');
-        let messageClass = 'groupStart-23k01U';
+                const div = document.createElement('div');
 
-        if (isToday) formattedTime = 'Today at ' + moment(timestamp).format('hh:mm A');
-        if (isYesterday) formattedTime = 'Yesterday at ' + moment(timestamp).format('hh:mm A');
+                div.className = 'message-2qnXI6 cozyMessage-3V1Y8y wrapper-2a6GCs cozy-3raOZG zalgo-jN1Ica ' + messageClass;
+                div.id = `private-message-${message.id}`;
+                div.setAttribute('channel', channel_id);
 
-        if (lastMessage.author == author) {
-            formattedTime = moment(timestamp).format('hh:mm A');
-            messageClass = '';
-        }
+                if (lastMessage.author === author) {
+                    div.innerHTML = `
+                        <div class="contents-2mQqc9">
+                            <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${formattedTime}<i class="separator-2nZzUB"></i></span>
+                            <div class="markup-2BOw-j messageContent-2qWWxC">${content}</div>
+                        </div>
+                    `.trim();
+                } else {
+                    div.innerHTML = `
+                        <div class="contents-2mQqc9">
+                            <img src="${getAvatar(author)}" class="avatar-1BDn8e clickable-1bVtEA">
+                            <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span></span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${formattedTime}</span></span></h2>
+                            <div class="markup-2BOw-j messageContent-2qWWxC">${content}</div>
+                        </div>
+                    `;
+                }
 
-        const div = document.createElement('div');
+                lastMessage = message.data();
 
-        div.className = 'message-2qnXI6 cozyMessage-3V1Y8y wrapper-2a6GCs cozy-3raOZG zalgo-jN1Ica ' + messageClass;
-        div.id = `private-message-${message.id}`;
-        div.setAttribute('channel', channelId);
+                const privateMessageList = document.getElementById(`private-message-list-${channel_id}`);
 
-        if (lastMessage.author === author) {
-            div.innerHTML = `
-                <div class="contents-2mQqc9">
-                    <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${formattedTime}<i class="separator-2nZzUB"></i></span>
-                    <div class="markup-2BOw-j messageContent-2qWWxC">${content}</div>
-                </div>
-            `.trim();
-        } else {
-            div.innerHTML = `
-                <div class="contents-2mQqc9">
-                    <img src="${getAvatar(author)}" class="avatar-1BDn8e clickable-1bVtEA">
-                    <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span></span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${formattedTime}</span></span></h2>
-                    <div class="markup-2BOw-j messageContent-2qWWxC">${content}</div>
-                </div>
-            `;
-        }
+                privateMessageList.appendChild(div);
+                div.scrollIntoView();
 
-        lastMessage = message;
-
-        const privateMessageList = document.getElementById(`private-message-list-${channelId}`);
-
-        privateMessageList.appendChild(div);
-        div.scrollIntoView();
+                return;
+            }
+        });
     });
+
+    CACHED_PRIVATE_CHAT_LISTENERS[channel_id] = {
+        Unsubscribe: listener,
+        Reference: ref,
+    };
 }

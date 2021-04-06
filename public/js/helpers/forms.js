@@ -1,12 +1,10 @@
 //? ------------------------------------------------------------------------------------
 //?
 //?  /helpers/forms.js
-//?  Discord JS
+//?  Pyro Chat
 //?
-//?  Developed by Cooper Beltrami
-//?
-//?  Project built using designs, graphics and other assets developed by Discord Inc.
-//?  Copyright (c) 2021 Cooper Beltrami and Discord Inc. All Rights Reserved
+//?  Developed by Robolab LLC
+//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
@@ -180,4 +178,24 @@ function validateInputs(ids) {
     } else {
         return;
     }
+}
+
+
+/**
+ * 
+ * @param {*} username
+ * @returns 
+ */
+function validateUsername(username) {
+    const invalid = ['everyone', 'here', '@', '#', ':', '.', "'", "`"];
+
+    let flag;
+
+    invalid.forEach(string => {
+        if (username.includes(string)) {
+            return flag = string; 
+        }
+    });
+
+    return flag;
 }

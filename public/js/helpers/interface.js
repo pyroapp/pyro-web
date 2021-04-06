@@ -1,12 +1,10 @@
 //? ------------------------------------------------------------------------------------
 //?
 //?  /helpers/interface.js
-//?  Discord JS
+//?  Pyro Chat
 //?
-//?  Developed by Cooper Beltrami
-//?
-//?  Project built using designs, graphics and other assets developed by Discord Inc.
-//?  Copyright (c) 2021 Cooper Beltrami and Discord Inc. All Rights Reserved
+//?  Developed by Robolab LLC
+//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
@@ -114,7 +112,7 @@ function showStatusPicker() {
                 <div class="animatorTop-2Y7x2r scale-3iLZhb didRender-33z1u8">
                     <div class="menu-3sdvDG styleFixed-sX-yHV">
                         <div class="scroller-3BxosC thin-1ybCId scrollerBase-289Jih">
-                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="manualSetStatus('online')">
+                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setStatus('online', false)">
                                 <div class="statusItem-33LqPf">
                                     <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
                                         <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-online)">
@@ -125,7 +123,7 @@ function showStatusPicker() {
                                 </div>
                             </div>
                             <div role="separator" class="separator-2I32lJ"></div>
-                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="manualSetStatus('idle')">
+                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setStatus('idle', true)">
                                 <div class="statusItem-33LqPf">
                                     <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
                                         <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-idle)">
@@ -135,7 +133,7 @@ function showStatusPicker() {
                                     <div class="status-1fhblQ">Idle</div>
                                 </div>
                             </div>
-                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="manualSetStatus('dnd')">
+                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setStatus('dnd', true)">
                                 <div class="statusItem-33LqPf">
                                     <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
                                         <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-dnd)">
@@ -146,7 +144,7 @@ function showStatusPicker() {
                                     <div class="description-2L932D">You will not receive any desktop notifications.</div>
                                 </div>
                             </div>
-                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="manualSetStatus('offline')">
+                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setStatus('offline', true)">
                                 <div class="statusItem-33LqPf">
                                     <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
                                         <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-offline)"> 
@@ -157,8 +155,8 @@ function showStatusPicker() {
                                     <div class="description-2L932D">You will not appear online, but will have full access to all of Discord.</div>
                                 </div>
                             </div>
-                            <div role="separator" class="separator-2I32lJ"></div>
-                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="showCustomStatusModal()">
+                            <div role="separator" class="separator-2I32lJ hidden"></div>
+                            <div class="item-1tOPte colorDefault-2K3EoJ hidden" onclick="showCustomStatusModal()">
                                 <div class="statusItem-33LqPf">
                                     <div class="customEmojiPlaceholder-37iZ_j customEmoji-2_2FwB"></div>
                                     <div class="status-1fhblQ">Set a custom status</div>
@@ -189,3 +187,83 @@ async function hideStatusPicker() {
         container.removeChild(picker);
     } catch (e) {}
 }
+
+
+/**
+ * 
+ */
+ function addPrivateChannelPlaceholder() {
+    const channelsList = document.getElementById('privateChannelsList');
+
+    channelsList.insertAdjacentHTML('afterbegin', `
+        <svg width="184" height="428" viewBox="0 0 184 428" class="empty-388osJ" id="privateChannelPlaceholder">
+            <rect x="40" y="6" width="144" height="20" rx="10"></rect>
+            <circle cx="16" cy="16" r="16"></circle>
+            <rect x="40" y="50" width="144" height="20" rx="10" opacity="0.9"></rect>
+            <circle cx="16" cy="60" r="16" opacity="0.9"></circle>
+            <rect x="40" y="94" width="144" height="20" rx="10" opacity="0.8"></rect>
+            <circle cx="16" cy="104" r="16" opacity="0.8"></circle>
+            <rect x="40" y="138" width="144" height="20" rx="10" opacity="0.7"></rect>
+            <circle cx="16" cy="148" r="16" opacity="0.7"></circle>
+            <rect x="40" y="182" width="144" height="20" rx="10" opacity="0.6"></rect>
+            <circle cx="16" cy="192" r="16" opacity="0.6"></circle>
+            <rect x="40" y="226" width="144" height="20" rx="10" opacity="0.5"></rect>
+            <circle cx="16" cy="236" r="16" opacity="0.5"></circle>
+            <rect x="40" y="270" width="144" height="20" rx="10" opacity="0.4"></rect>
+            <circle cx="16" cy="280" r="16" opacity="0.4"></circle>
+            <rect x="40" y="314" width="144" height="20" rx="10" opacity="0.3"></rect>
+            <circle cx="16" cy="324" r="16" opacity="0.3"></circle>
+            <rect x="40" y="358" width="144" height="20" rx="10" opacity="0.2"></rect>
+            <circle cx="16" cy="368" r="16" opacity="0.2"></circle>
+            <rect x="40" y="402" width="144" height="20" rx="10" opacity="0.1"></rect>
+            <circle cx="16" cy="412" r="16" opacity="0.1"></circle>
+        </svg>
+    `);
+}
+
+
+/**
+ * 
+ * @param {*} channelId 
+ */
+ let lastPrivateChannelId;
+
+ function loadPrivateChannelFromId(channelId) {
+     if (!channelId) channelId = getPrivateChannelFromURL();
+     if (lastPrivateChannelId === channelId) return;
+ 
+     let title = 'Discord';
+     let path = '/channels/@me/';
+ 
+     const privateChannel = document.getElementById(`private-channel-${channelId}`);
+ 
+     if (privateChannel) {
+         title = privateChannel.getAttribute('ptitle');
+         path = (channelId === 'friends') ? '/channels/@me/' : `/channels/@me/${channelId}/`;
+     } else {
+         channelId = 'friends';
+     }
+ 
+     window.history.pushState({}, title, path);
+     selectPrivateChannel(channelId);
+     selectMainBody(channelId);
+ 
+     lastPrivateChannelId = channelId;
+ }
+ 
+ 
+ /**
+  * 
+  * @returns 
+  */
+ function getPrivateChannelFromURL() {
+     const path = window.location.pathname.split('/');
+ 
+     path.filter((value, index) => {
+         if (!value) path.splice(index, index + 1);
+     });
+ 
+     const privChannelId = path[path.length - 1];
+ 
+     return isNaN(privChannelId) ? false : privChannelId;
+ }

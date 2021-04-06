@@ -1,27 +1,25 @@
 //? ------------------------------------------------------------------------------------
 //?
 //?  /me/chats.js
-//?  Discord JS
+//?  Pyro Chat
 //?
-//?  Developed by Cooper Beltrami
-//?
-//?  Project built using designs, graphics and other assets developed by Discord Inc.
-//?  Copyright (c) 2021 Cooper Beltrami and Discord Inc. All Rights Reserved
+//?  Developed by Robolab LLC
+//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
 
 /**
  * 
- * @param {*} channelId 
- * @param {*} uid 
+ * @param {*} channel_id 
+ * @param {*} friend_uid 
  */
-function addChat(channelId, uid) {
+ function addChat(channel_id, friend_uid) {
     const div = document.createElement('div');
     div.classList = 'chat-3bRxxu mainBody-f3wd0 hidden';
-    div.id = channelId;
+    div.id = channel_id;
     div.innerHTML = `
-        <section class="title-3qD0b- container-1r6BKw themed-ANHk51" id="private-header-${channelId}">
+        <section class="title-3qD0b- container-1r6BKw themed-ANHk51" id="private-header-${channel_id}">
             <div class="children-19S4PO">
                 <div class="iconWrapper-2OrFZ1" >
                     <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24">
@@ -105,7 +103,7 @@ function addChat(channelId, uid) {
                 </a>
             </div>
         </section>
-        <div class="content-yTz4x3" id="private-chat-${channelId}">
+        <div class="content-yTz4x3" id="private-chat-${channel_id}">
             <main class="chatContent-a9vAAp">
                 <div class="messagesWrapper-1sRNjr group-spacing-16">
                     <div class="scroller-2LSbBU auto-Ge5KZx scrollerBase-289Jih disableScrollAnchor-3V9UtP" style="overflow: hidden scroll; padding-right: 0px;">
@@ -115,7 +113,7 @@ function addChat(channelId, uid) {
                                     <div class="wrapper-3t9DeA" style="width: 80px; height: 80px;">
                                         <svg width="92" height="80" viewBox="0 0 92 80" class="mask-1l8v16 svg-2V3M55">
                                             <foreignObject x="0" y="0" width="80" height="80" mask="url(#svg-mask-avatar-default)">
-                                                <img class="avatar-VxgULZ" src=${getAvatar(uid)}>
+                                                <img class="avatar-VxgULZ" src=${getAvatar(friend_uid)}>
                                             </foreignObject>
                                         </svg>
                                     </div>
@@ -134,7 +132,7 @@ function addChat(channelId, uid) {
                                         </div>
                                     </div>
                                 </div>
-                                <div id="private-message-list-${channelId}"></div>
+                                <div id="private-message-list-${channel_id}"></div>
                                 <div class="scrollerSpacer-avRLaA"></div>
                             </div>
                         </div>
@@ -188,7 +186,7 @@ function addChat(channelId, uid) {
 
     input.addEventListener('keypress', event => {
         if (!event.shiftKey && event.key === 'Enter') {
-            sendPrivateMessage(channelId);
+            sendPrivateMessage(channel_id);
             event.returnValue = false;
         }
     });
