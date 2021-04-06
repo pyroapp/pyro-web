@@ -56,7 +56,7 @@ let lastMessage = {
 async function loadPrivateMessages(channel_id) {
     const ref = firebase.firestore().collection('channels').doc(channel_id).collection('messages');
 
-    const listener = await ref.where('channel_id', '==', channel_id).orderBy('timestamp').limit(50).onSnapshot(snapshot => {
+    const listener = await ref.where('channel_id', '==', channel_id).orderBy('timestamp').onSnapshot(snapshot => {
         if (snapshot.empty) return;
 
         snapshot.docChanges().forEach(change => {
