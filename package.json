@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node-dev app.js"
   },
-  "author": "Cooper Beltrami",
+  "author": "Cooper, Shoc and Evan",
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.0",

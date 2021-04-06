@@ -1,73 +1,41 @@
 //? ------------------------------------------------------------------------------------
 //?
 //?  /helpers/user.js
-//?  Discord JS
+//?  Pyro Chat
 //?
-//?  Developed by Cooper Beltrami
-//?
-//?  Project built using designs, graphics and other assets developed by Discord Inc.
-//?  Copyright (c) 2021 Cooper Beltrami and Discord Inc. All Rights Reserved
+//?  Developed by Robolab LLC
+//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
 
 /**
  * 
- * @param {*} overrideStatus 
+ * @param {*} status 
+ * @param {*} manual 
  */
-async function setAutomaticStatus(overrideStatus) {
+async function setStatus(status, manual) {
+    const { uid } = firebase.auth().currentUser;
 
-    // If user has manual status set, don't automatically set one
-    if (window.localStorage.getItem('manual_status')) {
-        return setStatus(window.localStorage.getItem('manual_status'));
-    };
-    
-    let status = 'online';
+    // Set automatic status
+    const doc_vis = document.visibilityState;
 
-    if (overrideStatus) {
-        status = overrideStatus;
-    } else {
-        if (document.visibilityState === 'hidden') {
+    if (!manual) {
+        if (doc_vis === 'hidden') {
             status = 'idle';
+        } else if (doc_vis === 'visible') {
+            status = 'online';
         }
     }
 
-    setStatus(status);
-}
-
-
-async function setStatus(status) {
-    const { uid } = firebase.auth().currentUser;
-
-    const userStatus = document.getElementById('userStatus');
-
-    // Ask user what they are streaming.
-    if (status === 'streaming') showStreamingStatusModal();
-
-    userStatus.setAttribute('fill', STATUS_COLOURS[status]);
-    userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
-
     firebase.firestore().collection('users').doc(uid).set({
-        status: status,
+        status: {
+            code: status,
+            manual: manual,
+        },
     }, {
         merge: true
     });
-}
-
-
-/**
- * 
- * @param {*} status 
- */
-function manualSetStatus(status) {
-    setStatus(status);
-
-    // If user selects online status, clear existing manual status
-    if (status === 'online') {
-        window.localStorage.removeItem('manual_status');
-    } else {
-        window.localStorage.setItem('manual_status', status);
-    }
 }
 
 
@@ -146,29 +114,24 @@ async function generateDiscriminator() {
 
 /**
  * 
+ * @param {*} username 
+ * @param {*} discriminator 
  */
-async function signout() {
-    await firebase.auth().signOut();
-}
+async function getUser(username, discriminator) {
+    let snapshot = await firebase.firestore().collection('users')
+        .where('username', '==', username)
+        .where('discriminator', '==', discriminator).get();
 
-
-/**
- * 
- * @param {*} username
- * @returns 
- */
-async function getUserByFullUsername(fullUsername) {
-    const ref = firebase.firestore().collection('users');
-    let snapshot = await ref.where('profile.full_username', '==', fullUsername).get();
+    if (snapshot.empty) return false;
 
     snapshot.forEach(user => {
         snapshot = {
-            ...user.data().profile,
-            uid: user.id,
-        }
+            ...user.data(),
+            uid: user.id
+        };
     });
 
-    return snapshot.uid ? snapshot : false;
+    return snapshot;
 }
 
 
@@ -177,16 +140,15 @@ async function getUserByFullUsername(fullUsername) {
  * @param {*} username 
  * @returns 
  */
-async function isFriend(username) {
+async function isFriend(username, discriminator) {
     const { uid } = firebase.auth().currentUser;
-    const user = await getUserByFullUsername(username);
+    const friend = await getUser(username, discriminator);
 
-    if (!user) return false;
+    if (!friend) return false;
 
-    const friends = await (
-        await firebase.firestore().collection('friends').doc(uid).get()
-    ).data();
+    const snapshot = await firebase.firestore().collection('friends').doc(uid).get();
 
-    if (friends === undefined) return false;
-    return friends;
+    if (snapshot.data()[friend.uid]) return true;
+
+    return false;
 }

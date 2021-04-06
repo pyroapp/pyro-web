@@ -1,12 +1,10 @@
 //? ------------------------------------------------------------------------------------
 //?
 //?  /firebase/config.js
-//?  Discord JS
+//?  Pyro Chat
 //?
-//?  Developed by Cooper Beltrami
-//?
-//?  Project built using designs, graphics and other assets developed by Discord Inc.
-//?  Copyright (c) 2021 Cooper Beltrami and Discord Inc. All Rights Reserved
+//?  Developed by Robolab LLC
+//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
@@ -22,6 +20,3 @@ messagingSenderId: "1074341954508",
 appId: "1:1074341954508:web:96d9fc96bd9838fa7b9369",
 measurementId: "G-RV91QP19VG"
 });
-
-const firestore = firebase.firstore();
-const auth = firebase.auth();
