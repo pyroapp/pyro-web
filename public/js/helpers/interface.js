@@ -224,6 +224,17 @@ async function hideStatusPicker() {
 
 /**
  * 
+ */
+function hidePrivateChannelPlaceholder() {
+    const channelsList = document.getElementById('privateChannelsList');
+    const placeholder = document.getElementById('privateChannelPlaceholder');
+
+    if (placeholder) channelsList.removeChild(placeholder);
+}
+
+
+/**
+ * 
  * @param {*} channelId 
  */
  let lastPrivateChannelId;

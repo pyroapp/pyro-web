@@ -21,14 +21,21 @@ document.getElementById('addFriendField').oninput = event => {
 }
 
 
-document.getElementById('addFriendField').onkeyup = event => {
-    const value = event.target.value;
+document.getElementById('addFriendButton').onclick = () => {
+    const field = document.getElementById('addFriendField');
 
-    if (event.key === 'Enter' && value) _addFriendHandler();
+    if (field.value) addFriendHandler();
 }
 
 
-async function _addFriendHandler() {
+document.getElementById('addFriendField').onkeyup = event => {
+    const value = event.target.value;
+
+    if (event.key === 'Enter' && value) addFriendHandler();
+}
+
+
+async function addFriendHandler() {
     const input = document.getElementById('addFriendField');
     const button = document.getElementById('addFriendButton');
     const label = document.getElementById('addFriendLabel');
@@ -86,6 +93,11 @@ async function _addFriendHandler() {
 }
 
 
+/**
+ * 
+ * @param {*} user 
+ * @returns 
+ */
 async function addFriend(user) {
     const { uid } = firebase.auth().currentUser;
     const {

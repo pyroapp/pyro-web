@@ -25,6 +25,7 @@ async function loadPrivateChannels() {
             const { type, doc: channel } = change;
 
             if (type === 'added') {
+                hidePrivateChannelPlaceholder();
 
                 // Get friend user
                 const { recipients } = channel.data();
@@ -187,9 +188,12 @@ async function selectPrivateChannel(channel_id) {
 async function closePrivateChannel(channel_id) {
     const { uid } = firebase.auth().currentUser;
 
-    await firestore.collection('channels').doc(channel_id).update({
+    await firebase.firestore().collection('channels').doc(channel_id).update({
         recipients: firebase.firestore.FieldValue.arrayRemove(uid)
     });
+
+    // Remove from listener cache
+    delete CACHED_PRIVATE_CHAT_LISTENERS[channel_id];
 
     // Determine if the selected user is being removed,
     // select the first user in the list.

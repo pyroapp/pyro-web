@@ -148,6 +148,7 @@ async function isFriend(username, discriminator) {
 
     const snapshot = await firebase.firestore().collection('friends').doc(uid).get();
 
+    if (!snapshot.data()) return false; // No friends to begin with
     if (snapshot.data()[friend.uid]) return true;
 
     return false;
