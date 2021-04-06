@@ -64,7 +64,7 @@ async function uploadDefaultAvatar() {
  * @returns 
  */
 function getAvatar(userId) {
-    const path = 'https://firebasestorage.googleapis.com/v0/b/djs-clone.appspot.com/o/avatars%2F';
+    const path = 'https://firebasestorage.googleapis.com/v0/b/pyro-chat.appspot.com/o/avatars%2F';
     let { uid } = firebase.auth().currentUser;
     
     if (userId) uid = userId;
