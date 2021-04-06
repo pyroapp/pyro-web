@@ -20,6 +20,8 @@ function sendPrivateMessage(channel_id) {
 
     const message = input.innerHTML;
 
+    if (!message) return;
+
     const { uid } = firebase.auth().currentUser;
     const ref = firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(generateId());
 
