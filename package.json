@@ -1,12 +1,12 @@
 {
-  "name": "djs",
+  "name": "pyro",
   "version": "1.0.0",
-  "description": "A simple Discord clone using HTML, CSS, JavaScript and NodeJS",
+  "description": "Ignite your community",
   "main": "app.js",
   "scripts": {
     "start": "node-dev app.js"
   },
-  "author": "Cooper, Shoc and Evan",
+  "author": "Robolab LLC",
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.0",

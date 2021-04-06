@@ -9,14 +9,12 @@
 //? ------------------------------------------------------------------------------------
 
 
-const FB_PROJECT_ID = 'djs-clone';
-
 firebase.initializeApp({
-apiKey: "AIzaSyCT4vdQ_eLO6R80th6o8fMOX7PlGOoEkWU",
-authDomain: `${FB_PROJECT_ID}.firebaseapp.com`,
-projectId: FB_PROJECT_ID,
-storageBucket: `${FB_PROJECT_ID}.appspot.com`,
-messagingSenderId: "1074341954508",
-appId: "1:1074341954508:web:96d9fc96bd9838fa7b9369",
-measurementId: "G-RV91QP19VG"
+    apiKey: "AIzaSyCw2XgIvCUbUclj4KSSFZ9rwhQAruo3jAc",
+    authDomain: "pyro-chat.firebaseapp.com",
+    projectId: "pyro-chat",
+    storageBucket: "pyro-chat.appspot.com",
+    messagingSenderId: "598431502056",
+    appId: "1:598431502056:web:aac9825304ddf9fbc2435d",
+    measurementId: "G-56W0T7F4YD"
 });
