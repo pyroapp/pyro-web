@@ -58,7 +58,6 @@ let lastMessage = {
 async function loadPrivateMessages(channel_id) {
     const ref = firebase.firestore().collection('channels').doc(channel_id).collection('messages');
     const privateMessageList = document.getElementById(`private-message-list-${channel_id}`);
-    const placeholder = document.getElementById(`private-chat-${channel_id}`).querySelectorAll('.placeholdermessages')[0];
 
     const listener = await ref.where('channel_id', '==', channel_id).orderBy('timestamp').onSnapshot(snapshot => {
         if (snapshot.empty) return;
@@ -115,10 +114,11 @@ async function loadPrivateMessages(channel_id) {
                 return;
             }
         });
-
-        // Hide messages placeholder
-        privateMessageList.removeChild(placeholder);
     });
+
+    const placeholder = document.getElementById(`private-chat-${channel_id}`).querySelectorAll('.placeholdermessages')[0];
+
+    privateMessageList.removeChild(placeholder);
 
     CACHED_PRIVATE_CHAT_LISTENERS[channel_id] = {
         Unsubscribe: listener,
