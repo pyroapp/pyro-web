@@ -10,6 +10,7 @@
 
 // Global Cache
 const CACHED_USERS = {};
+const CACHED_RECIPIENTS = {};
 const CACHED_PRIVATE_CHAT_LISTENERS = {};
 
 // Global thresholds
@@ -50,5 +51,5 @@ const AUTH_CODES = {
 
 // Loading overlay messages
 const DID_YOU_KNOW = [
-    'Well, we dont really have anything big to share to you. In fact, we dont even have fun facts to give you. Its just you, me, and this wonderful loading screen. Props if youve read to here, because that means either Pyro is down or your internet just cannot load Pyro, which is impossible because Pyro was built to run on all network connections. Anyway, come say hi on Twitter or Instagram @theevansong.'
+    'Props if you are reading this, because that means either Pyro is down or your internet just cannot load Pyro, which is impossible because Pyro was built to run on all network connections.'
 ];

@@ -142,3 +142,12 @@ function sortObjectByKey(key, order = 'asc') {
     }
     return this;
 };
+
+
+/**
+ * 
+ * @returns 
+ */
+function isMobile() {
+    return isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}

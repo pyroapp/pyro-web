@@ -28,14 +28,12 @@ async function setStatus(status, manual) {
         }
     }
 
-    firebase.firestore().collection('users').doc(uid).set({
+    firebase.firestore().collection('users').doc(uid).update({
         status: {
             code: status,
             manual: manual,
             offline: false,
         },
-    }, {
-        merge: true
     });
 }
 
