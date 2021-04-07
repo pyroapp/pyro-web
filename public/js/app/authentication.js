@@ -16,7 +16,7 @@ window.onload = () => {
 }
 
 
-window.onunload = async event => {
+window.onunload = async () => {
     const { uid } = firebase.auth().currentUser;
     
     await firebase.firestore().collection('users').doc(uid).update({

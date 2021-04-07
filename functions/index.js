@@ -23,11 +23,7 @@ exports.notifications = functions.firestore.document('/channels/{channelId}/mess
                 icon: `https://firebasestorage.googleapis.com/v0/b/pyro-chat.appspot.com/o/avatars%2F${id}.gif?alt=media`
             },
             data: {
-                channel_id: channel_id,
-                author: {
-                    id: id,
-                    username: username
-                },
+                channel_id: channel_id.toString(),
             },
         };
 
