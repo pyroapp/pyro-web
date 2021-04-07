@@ -16,15 +16,15 @@ window.onload = () => {
 }
 
 
-window.onunload = () => {
+window.onunload = async () => {
     const { uid } = firebase.auth().currentUser;
 
-    firebase.firestore().collection('users').doc(uid).set({
+    await firebase.firestore().collection('users').doc(uid).update({
         status: {
-            offline: true
-        },
-    }, {
-        merge: true
+            offline: true,
+            code: CACHED_USERS[uid].status.code,
+            manual: CACHED_USERS[uid].status.manual,
+        }
     });
 }
 
@@ -69,20 +69,21 @@ firebase.auth().onAuthStateChanged(async user => {
 
         userStatus.setAttribute('fill', STATUS_COLOURS[status.code]);
         userStatus.setAttribute('mask', `url(#svg-mask-status-${status.code})`);
-    });
-
-    await firebase.firestore().collection('users').doc(user.uid).set({
-        status: {
-            offline: false
-        },
-    }, {
-        merge: true
+        
+        firebase.firestore().collection('users').doc(user.uid).update({
+            status: {
+                offline: false,
+                code: CACHED_USERS[user.uid].status.code,
+                manual: CACHED_USERS[user.uid].status.manual,
+            }
+        });
     });
 
     await loadPrivateChannels();
     await delay(LOADING_TIMEOUT);
 
     loadPrivateChannelFromId();
-
     hidePageLoader();
+
+    await enableNotifications();
 });

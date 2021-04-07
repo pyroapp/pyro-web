@@ -25,15 +25,36 @@ function sendPrivateMessage(channel_id) {
     const { uid } = firebase.auth().currentUser;
     const ref = firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(generateId());
 
+    // Format message recipients
+    const recipients = [];
+
+    CACHED_RECIPIENTS[channel_id].forEach(recipient => {
+        if (uid === recipient) return; // Don't add current user
+
+        const { fcm_token, status: { code } } = CACHED_USERS[recipient];
+
+        if (code === 'dnd') return; // Don't send notification
+        if (!fcm_token) return; // User doesn't have notifications enabled
+
+        recipients.push({
+            id: recipient,
+            token: fcm_token,
+        });
+    });
+
     ref.set({
         attachments: [],
-        author: uid,
+        author: {
+            id: uid,
+            username: CACHED_USERS[uid].username
+        },
         channel_id: channel_id,
         content: message,
         edited_timestamp: null,
         mention_everyone: false,
         mention_roles: [],
         mentions: [],
+        recipients: recipients,
         pinned: false,
         timestamp: new Date().toISOString(),
     });
@@ -51,9 +72,7 @@ function sendPrivateMessage(channel_id) {
  * 
  * @param {*} channel_id 
  */
-let lastMessage = {
-    author: null
-};
+let lastMessage = { author: { id: null } };
 
 async function loadPrivateMessages(channel_id) {
     const ref = firebase.firestore().collection('channels').doc(channel_id).collection('messages');
@@ -66,7 +85,7 @@ async function loadPrivateMessages(channel_id) {
             const { type, doc: message } = change;
 
             if (type === 'added') {
-                const { content, author, timestamp } = message.data();
+                const { content, author: { id: author }, timestamp } = message.data();
                 const { username } = CACHED_USERS[author];
 
                 const isToday = moment(timestamp).isSame(moment(), "day");
@@ -78,7 +97,7 @@ async function loadPrivateMessages(channel_id) {
                 if (isToday) formattedTime = 'Today at ' + moment(timestamp).format('hh:mm A');
                 if (isYesterday) formattedTime = 'Yesterday at ' + moment(timestamp).format('hh:mm A');
 
-                if (lastMessage.author == author) {
+                if (lastMessage.author.id == author) {
                     formattedTime = moment(timestamp).format('hh:mm A');
                     messageClass = '';
                 }
@@ -89,7 +108,7 @@ async function loadPrivateMessages(channel_id) {
                 div.id = `private-message-${message.id}`;
                 div.setAttribute('channel', channel_id);
 
-                if (lastMessage.author === author) {
+                if (lastMessage.author.id === author) {
                     div.innerHTML = `
                         <div class="contents-2mQqc9">
                             <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${formattedTime}<i class="separator-2nZzUB"></i></span>

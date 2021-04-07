@@ -15545,6 +15545,7 @@ img[alt] {
 }
 
 .timestampVisibleOnHover-2bQeI4 {
+	transition: ease-in-out 0.15s;
 	opacity:0
 }
 
@@ -20060,7 +20061,7 @@ img[alt] {
 }
 
 .markup-2BOw-j {
-	font-size:0.95rem;
+	font-size: 14px;
 	line-height:1.375rem;
 	white-space:pre-wrap;
 	white-space:break-spaces;
@@ -28228,7 +28229,8 @@ html .progress-GjyFoQ {
 }
 
 .message-2qnXI6 {
-	padding-right:48px!important
+	padding-right:48px!important;
+	transition: ease-in-out 0.15s;
 }
 
 .message-2qnXI6:hover {
@@ -50254,7 +50256,7 @@ strong {
 }
 
 .theme-dark .container-1D34oG {
-	background-color:#36393f
+	background-color: var(--background-primary);
 }
 
 .theme-light .container-1D34oG {
@@ -63002,10 +63004,6 @@ html .invoiceCancelRow-1YYT42 {
 	display:flex;
 	padding:18px 8px 4px 18px;
 	height:40px
-}
-
-.privateChannelsHeaderContainer-3NB1K1:hover {
-	color:var(--interactive-hover)
 }
 
 .privateChannelRecipientsInviteButtonIcon-3A3uTc {

@@ -29,7 +29,9 @@ async function loadPrivateChannels() {
 
                 // Get friend user
                 const { recipients } = channel.data();
-                
+
+                CACHED_RECIPIENTS[channel.id] = recipients;
+
                 recipients.forEach(async recipient => {
                     if (recipient === uid) return;
 
@@ -48,14 +50,6 @@ async function loadPrivateChannels() {
                         setPrivateChannelUsername(channel.id, username);
                     });
                 });
-
-                return;
-            }
-
-            if (type === 'modified') {
-                console.log(channel.data());
-
-                return;
             }
         });
     });
