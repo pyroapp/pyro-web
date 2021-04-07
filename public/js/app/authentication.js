@@ -16,9 +16,9 @@ window.onload = () => {
 }
 
 
-window.onunload = async () => {
+window.onunload = async event => {
     const { uid } = firebase.auth().currentUser;
-
+    
     await firebase.firestore().collection('users').doc(uid).update({
         status: {
             offline: true,

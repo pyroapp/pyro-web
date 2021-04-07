@@ -18,7 +18,7 @@ function sendPrivateMessage(channel_id) {
     const input = channel.querySelectorAll('.messageField')[0];
     const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
 
-    const message = input.innerHTML;
+    const message = input.innerHTML.trim();
 
     if (!message) return;
 
