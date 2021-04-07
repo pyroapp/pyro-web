@@ -3088,6 +3088,7 @@
 .h2-2gWE-o {
 	line-height: 20px;
 	font-weight: 600;
+	text-transform: uppercase
 }
 
 .h2-2gWE-o,
@@ -3109,6 +3110,7 @@
 .h4-AQvcAz,
 .h5-18_1nd {
 	font-weight: 600;
+	text-transform: uppercase
 }
 
 .h5-18_1nd {
@@ -3317,6 +3319,7 @@
 .keybindShortcut-1BD6Z1 {
 	font-size: 12px;
 	line-height: 12px;
+	text-transform: uppercase;
 	font-weight: 600;
 	margin-bottom: 8px;
 	margin-right: 10px;
@@ -3781,6 +3784,7 @@
 
 .title-3Tw-c1 {
 	margin-bottom: 8px;
+	text-transform: uppercase;
 	font-weight: 700;
 	color: var(--interactive-normal)
 }
@@ -4086,6 +4090,7 @@
 }
 
 .header-1X3-pa {
+	text-transform: uppercase
 }
 
 .headerContainer-3HZzq8 {
@@ -4170,6 +4175,7 @@
 
 .title-1ao9Am {
 	font-size: 12px;
+	text-transform: uppercase;
 	font-weight: 700;
 	letter-spacing: .5px
 }
@@ -4354,6 +4360,7 @@
 	-ms-flex-align: center;
 	align-items: center;
 	margin-bottom: 16px;
+	text-transform: uppercase
 }
 
 .infoIcon-1WLE3n,
@@ -4569,6 +4576,7 @@ h4.title-3KTIjF,
 h5.title-3KTIjF,
 h6.title-3KTIjF {
 	font-weight: 600;
+	text-transform: uppercase
 }
 
 h4.title-3KTIjF,
@@ -5571,6 +5579,7 @@ h6.title-3KTIjF {
 
 .downloadApps-wbBFdZ .header-nJMe-Q {
 	text-align: center;
+	text-transform: uppercase;
 	font-weight: 700;
 	font-size: 22px;
 	padding: 20px 0;
@@ -5702,6 +5711,7 @@ h6.title-3KTIjF {
 }
 
 .downloadApps-wbBFdZ .platforms-28Rb-3 .platform-iik236 p {
+	text-transform: uppercase;
 	font-size: 13px;
 	margin: 5px 0;
 	text-align: center;
@@ -6209,18 +6219,18 @@ code {
 .theme-dark {
 	--header-primary:#fff;
 	--header-secondary:#b9bbbe;
-	--text-normal:#E2E2E2;
-	--text-muted:#858D95;
+	--text-normal:#dcddde;
+	--text-muted:#72767d;
 	--text-link:#00b0f4;
-	--channels-default:#858D95;
+	--channels-default:#8e9297;
 	--interactive-normal:#b9bbbe;
 	--interactive-hover:#dcddde;
 	--interactive-active:#fff;
 	--interactive-muted:#4f545c;
-	--background-primary:#1a1a23;
-	--background-secondary:#17171f;
-	--background-secondary-alt:#101015;
-	--background-tertiary:#101015;
+	--background-primary:#36393f;
+	--background-secondary:#2f3136;
+	--background-secondary-alt:#292b2f;
+	--background-tertiary:#202225;
 	--background-accent:#4f545c;
 	--background-floating:#18191c;
 	--background-mobile-primary:#36393f;
@@ -6261,12 +6271,12 @@ code {
 	176,
 	244,
 	0.1);
-	--scrollbar-thin-thumb:#101015;
+	--scrollbar-thin-thumb:#202225;
 	--scrollbar-thin-track:transparent;
-	--scrollbar-auto-thumb:#101015;
-	--scrollbar-auto-track: #23232d;
-	--scrollbar-auto-scrollbar-color-thumb:#101015;
-	--scrollbar-auto-scrollbar-color-track: #23232d;
+	--scrollbar-auto-thumb:#202225;
+	--scrollbar-auto-track:#2e3338;
+	--scrollbar-auto-scrollbar-color-thumb:#202225;
+	--scrollbar-auto-scrollbar-color-track:#2f3136;
 	--elevation-stroke:0 0 0 1px rgba(4,
 	4,
 	5,
@@ -6298,7 +6308,7 @@ code {
 	0,
 	0,
 	0.4);
-	--channeltextarea-background:#101015;
+	--channeltextarea-background:#40444b;
 	--activity-card-background:#202225;
 	--textbox-markdown-syntax:#8e9297;
 	--deprecated-card-bg:rgba(32,
@@ -9651,6 +9661,7 @@ img[alt] {
 	letter-spacing:.4px;
 	text-align:center;
 	border-radius:3px;
+	text-transform:uppercase;
 	font-weight:700
 }
 
@@ -9783,6 +9794,7 @@ img[alt] {
 	letter-spacing:.4px;
 	line-height:14px;
 	text-overflow:ellipsis;
+	text-transform:uppercase;
 	white-space:nowrap
 }
 
@@ -9830,6 +9842,7 @@ img[alt] {
 }
 
 .refundSubHeader-3hp-GM {
+	text-transform:uppercase;
 	margin:20px 0 8px;
 	font-size:12px;
 	font-weight:600
@@ -11667,6 +11680,7 @@ img[alt] {
 
 .planOptionDiscount-cS8uaO {
 	color:#fff;
+	text-transform:uppercase;
 	border-radius:16px;
 	background-color:#43b581;
 	font-size:12px;
@@ -12325,6 +12339,7 @@ img[alt] {
 }
 
 .browserItemText-1h58O0 {
+	text-transform:uppercase;
 	text-align:center;
 	line-height:1.5em;
 	font-weight:500;
@@ -12798,6 +12813,7 @@ img[alt] {
 
 .resultCategoryName-Heu4ue {
 	font-size:10px;
+	text-transform:uppercase;
 	line-height:16px
 }
 
@@ -14458,6 +14474,7 @@ img[alt] {
 }
 
 .uploadModal-2ifh8j .inner-3nWsbo .comment-4IWttf .label-3aiqT2 {
+	text-transform:uppercase;
 	font-size:12px;
 	font-weight:500
 }
@@ -16257,6 +16274,7 @@ img[alt] {
 }
 
 .groupLabel-2t5iuZ {
+	text-transform:uppercase;
 	font-weight:700;
 	font-size:12px;
 	padding-top:4px;
@@ -16541,6 +16559,7 @@ img[alt] {
 
 .botTag-2WPJ74 {
 	font-size:.625rem;
+	text-transform:uppercase;
 	vertical-align:top;
 	display:-webkit-inline-box;
 	display:-ms-inline-flexbox;
@@ -16693,6 +16712,7 @@ img[alt] {
 }
 
 .header-3_S6dz {
+	text-transform:uppercase;
 	font-weight:700;
 	letter-spacing:.6px;
 	margin-bottom:4px
@@ -17181,6 +17201,7 @@ img[alt] {
 }
 
 .streamGame-2odMhn {
+	text-transform:uppercase;
 	color:#72767d;
 	font-size:12px;
 	font-weight:600;
@@ -17634,6 +17655,7 @@ img[alt] {
 	white-space:nowrap;
 	text-overflow:ellipsis;
 	overflow:hidden;
+	text-transform:uppercase;
 	-webkit-box-shadow:inset 0 0 120px rgba(0,
 	0,
 	0,
@@ -17736,6 +17758,7 @@ img[alt] {
 	font-size:15px;
 	color:#fff;
 	text-decoration:none;
+	text-transform:uppercase;
 	cursor:pointer
 }
 
@@ -18208,6 +18231,7 @@ img[alt] {
 }
 
 .emojiHeader-1Mu53U {
+	text-transform:uppercase;
 	margin-bottom:8px
 }
 
@@ -19458,6 +19482,7 @@ img[alt] {
 	line-height:32px;
 	font-weight:500;
 	border-radius:3px;
+	text-transform:uppercase;
 	cursor:pointer
 }
 
@@ -19490,6 +19515,7 @@ img[alt] {
 	font-size:12px;
 	font-weight:500;
 	padding:9px 0;
+	text-transform:uppercase;
 	cursor:pointer;
 	margin:0;
 	color:var(--interactive-normal)
@@ -19829,6 +19855,7 @@ img[alt] {
 	-50%);
 	transform:translate(-50%,
 	-50%);
+	text-transform:uppercase;
 	display:-webkit-box;
 	display:-ms-flexbox;
 	display:flex;
@@ -21202,6 +21229,7 @@ html .progress-GjyFoQ {
 	position:relative;
 	font-weight:600;
 	font-size:13px;
+	text-transform:uppercase;
 	display:block
 }
 
@@ -21248,6 +21276,7 @@ html .progress-GjyFoQ {
 	position:relative;
 	font-weight:600;
 	font-size:13px;
+	text-transform:uppercase;
 	display:block
 }
 
@@ -22682,6 +22711,7 @@ html .progress-GjyFoQ {
 	background-color:#f04747;
 	color:#fff;
 	font-size:9px;
+	text-transform:uppercase;
 	display:-webkit-box;
 	display:-ms-flexbox;
 	display:flex;
@@ -24143,6 +24173,7 @@ html .progress-GjyFoQ {
 }
 
 .header-Hg_qNF {
+	text-transform:uppercase;
 	font-size:12px;
 	line-height:12px;
 	font-weight:700
@@ -25017,6 +25048,7 @@ html .progress-GjyFoQ {
 .headerLabel-3dG4M- {
 	overflow:hidden;
 	text-overflow:ellipsis;
+	text-transform:uppercase;
 	white-space:nowrap;
 	margin-right:8px
 }
@@ -27209,6 +27241,7 @@ html .progress-GjyFoQ {
 }
 
 .transferGuildCardHeader-29rebZ {
+	text-transform:uppercase;
 	font-weight:700;
 	margin-top:16px
 }
@@ -29527,6 +29560,7 @@ html .progress-GjyFoQ {
 .sectionLabel-1pA-5F {
 	margin-bottom:16px;
 	font-weight:700;
+	text-transform:uppercase;
 	color:var(--header-secondary)
 }
 
@@ -29612,6 +29646,7 @@ html .progress-GjyFoQ {
 
 .sectionLabel-1Qi0HG {
 	font-weight:700;
+	text-transform:uppercase;
 	color:var(--header-secondary)
 }
 
@@ -30431,6 +30466,7 @@ html .progress-GjyFoQ {
 
 .contentTitle-2tG_sM {
 	color:var(--interactive-normal);
+	text-transform:uppercase;
 	padding:4px 0
 }
 
@@ -30665,6 +30701,7 @@ html .progress-GjyFoQ {
 }
 
 .optionalHeader-mLQoIx {
+	text-transform:uppercase;
 	margin-left:8px;
 	border-left:1px solid var(--background-modifier-accent);
 	padding-left:8px;
@@ -33192,6 +33229,7 @@ html .progress-GjyFoQ {
 .mentionButton-3710-W {
 	cursor:pointer;
 	font-weight:700;
+	text-transform:uppercase;
 	padding:8px 12px
 }
 
@@ -33284,6 +33322,7 @@ html .progress-GjyFoQ {
 	font-weight:700;
 	padding:0 4px 0 1px;
 	border-radius:0 4px 4px 0;
+	text-transform:uppercase;
 	color:#fff;
 	background-color:#f04747;
 	-webkit-box-sizing:border-box;
@@ -33571,6 +33610,7 @@ html .progress-GjyFoQ {
 	visibility:hidden;
 	font-size:10px;
 	font-weight:700;
+	text-transform:uppercase;
 	line-height:12px;
 	white-space:pre
 }
@@ -35419,6 +35459,7 @@ strong {
 
 .subtitle-2yP_Eh {
 	min-width:48px;
+	text-transform:uppercase;
 	color:var(--text-normal)
 }
 
@@ -35547,6 +35588,7 @@ strong {
 }
 
 .header-3Uqp87 {
+	text-transform:uppercase;
 	margin-bottom:8px
 }
 
@@ -35576,6 +35618,7 @@ strong {
 .channelNameCategory-mxHe-m {
 	font-weight:500;
 	opacity:.3;
+	text-transform:uppercase;
 	font-size:11px
 }
 
@@ -36103,6 +36146,7 @@ strong {
 	font-size:12px;
 	font-weight:700;
 	line-height:16px;
+	text-transform:uppercase;
 	color:var(--channels-default)
 }
 
@@ -37009,6 +37053,7 @@ strong {
 }
 
 .approvalTypeTitle-3JmBVz {
+	text-transform:uppercase;
 	padding:8px;
 	border-radius:8px 8px 0 0
 }
@@ -37424,6 +37469,7 @@ strong {
 }
 
 .header-2jSm1D {
+	text-transform:uppercase;
 	-webkit-box-align:center;
 	-ms-flex-align:center;
 	align-items:center;
@@ -37828,6 +37874,7 @@ strong {
 	padding:10px 20px;
 	border-radius:3px;
 	line-height:29px;
+	text-transform:uppercase;
 	cursor:pointer
 }
 
@@ -38482,6 +38529,7 @@ strong {
 }
 
 .bannedUserModal-3RJCOV .reasonHeader-2etdjy {
+	text-transform:uppercase;
 	font-weight:500
 }
 
@@ -41594,6 +41642,7 @@ strong {
 .regionSelectModal-12e-57 .regionSelectModalHeader-21khC1 {
 	text-align:center;
 	font-weight:700;
+	text-transform:uppercase;
 	color:#7289da;
 	font-size:18px;
 	margin-bottom:23px
@@ -42643,6 +42692,7 @@ strong {
 }
 
 .perkTitle-16qMZu {
+	text-transform:uppercase;
 	font-weight:600
 }
 
@@ -42995,6 +43045,7 @@ strong {
 
 .titleText-1ZIyhl {
 	min-width:0;
+	text-transform:uppercase;
 	font-weight:600;
 	overflow:hidden;
 	white-space:nowrap;
@@ -43446,6 +43497,7 @@ strong {
 
 .titleText-1lbERP {
 	margin-left:8px;
+	text-transform:uppercase;
 	font-weight:600
 }
 
@@ -43921,6 +43973,7 @@ strong {
 .tableTitle-36-jum {
 	font-size:12px;
 	color:var(--header-secondary);
+	text-transform:uppercase;
 	font-weight:700
 }
 
@@ -44221,6 +44274,7 @@ strong {
 	width:100%;
 	padding:8px 0;
 	line-height:18px;
+	text-transform:uppercase;
 	border-color:#2e3757;
 	margin-top:8px
 }
@@ -44477,6 +44531,7 @@ strong {
 	text-overflow:ellipsis;
 	white-space:nowrap;
 	overflow:hidden;
+	text-transform:uppercase;
 	font-size:12px;
 	line-height:16px;
 	font-weight:600;
@@ -45672,6 +45727,7 @@ strong {
 	color:#fff;
 	height:24px;
 	cursor:pointer;
+	text-transform:uppercase;
 	border-radius:12px;
 	pointer-events:auto;
 	-webkit-box-shadow:0 2px 6px rgba(0,
@@ -46083,6 +46139,7 @@ strong {
 }
 
 .channelNotice-1-XFjC.quickswitcher-35bYg4 .btn-11C5_u {
+	text-transform:uppercase;
 	font-weight:500
 }
 
@@ -46341,6 +46398,7 @@ strong {
 
 .step-3ABmgA,
 .subtitle-1cSkax {
+	text-transform:uppercase;
 	font-weight:700
 }
 
@@ -46640,6 +46698,7 @@ strong {
 .resultsGroup-r_nuzN .header-2N-gMV {
 	font-weight:500;
 	font-size:12px;
+	text-transform:uppercase;
 	padding:5px 20px 10px
 }
 
@@ -46853,6 +46912,7 @@ strong {
 
 .searchResultChannelCategory-1l0lSn {
 	position:relative;
+	text-transform:uppercase;
 	font-size:10px;
 	font-weight:600;
 	margin-left:4px;
@@ -47690,6 +47750,7 @@ strong {
 	font-size:12px;
 	font-weight:500;
 	border-radius:3px;
+	text-transform:uppercase;
 	background-color:var(--background-primary);
 	color:#7289da;
 	border:1px solid var(--background-tertiary);
@@ -49734,6 +49795,7 @@ strong {
 .header-1-dBpZ {
 	font-weight:700;
 	font-size:16px;
+	text-transform:uppercase;
 	margin:9px 0;
 	color:var(--header-primary)
 }
@@ -51837,6 +51899,7 @@ a.ctaAnchor-3-8I3v:hover {
 }
 
 .selectorText-2I7fQU {
+	text-transform:uppercase;
 	font-weight:700;
 	color:var(--interactive-normal)
 }
@@ -54069,6 +54132,7 @@ a.ctaAnchor-3-8I3v:hover {
 
 .header-1SPvMo {
 	padding:16px 16px 9px;
+	text-transform:uppercase;
 	font-weight:700;
 	color:var(--interactive-normal)
 }
@@ -54246,6 +54310,7 @@ a.ctaAnchor-3-8I3v:hover {
 .memberListHeader-c-ghag {
 	margin-top:8px;
 	margin-bottom:12px;
+	text-transform:uppercase;
 	font-weight:600
 }
 
@@ -57875,9 +57940,9 @@ a.ctaAnchor-3-8I3v:hover {
 }
 
 .name-uJV0GL {
-	font-size:15px;
+	font-size:16px;
 	line-height: 20px;
-	font-weight:400;
+	font-weight:500;
 	-webkit-box-flex:0;
 	-ms-flex:0 1 auto;
 	flex:0 1 auto
@@ -60961,6 +61026,7 @@ html .invoiceCancelRow-1YYT42 {
 .header-11pEmr {
 	line-height:16px;
 	font-size:12px;
+	text-transform:uppercase;
 	opacity:.6
 }
 
@@ -61139,6 +61205,7 @@ html .invoiceCancelRow-1YYT42 {
 	font-size:14px;
 	font-weight:600;
 	line-height:1.14;
+	text-transform:uppercase;
 	padding-top:20px;
 	margin-bottom:12px
 }
@@ -63326,6 +63393,7 @@ html .tabBadge-3smxHS {
 }
 
 .headerCell-3L6rFG {
+	text-transform:uppercase;
 	border-left:1px solid var(--background-modifier-accent);
 	-webkit-box-sizing:border-box;
 	box-sizing:border-box;
@@ -63761,6 +63829,7 @@ html .tabBadge-3smxHS {
 .text-UALi1A {
 	font-size:10px;
 	line-height:12px;
+	text-transform:uppercase;
 	white-space:nowrap;
 	width:70px;
 	margin-right:0
@@ -63886,6 +63955,7 @@ html .tabBadge-3smxHS {
 	margin-top:4px;
 	font-size:12px;
 	font-weight:500;
+	text-transform:uppercase;
 	color:var(--text-muted)
 }
 
@@ -64085,6 +64155,7 @@ html .tabBadge-3smxHS {
 	letter-spacing:.4px;
 	text-align:center;
 	border-radius:3px;
+	text-transform:uppercase;
 	font-weight:700
 }
 
@@ -65679,8 +65750,8 @@ html .tabBadge-3smxHS {
 
 .wrapper-1BJsBx.selected-bZ3Lue .childWrapper-anI2G9,
 .wrapper-1BJsBx:hover .childWrapper-anI2G9 {
-	color: #1c1c1c;
-	background-color:#FEBE10
+	color:#fff;
+	background-color:#7289da
 }
 
 .acronym-2mOFsV {
@@ -67703,6 +67774,7 @@ html .tabBadge-3smxHS {
 .overlayStatusText-L2IACa {
 	width:100px;
 	margin-right:4px;
+	text-transform:uppercase;
 	font-size:14px;
 	opacity:0
 }
@@ -67927,6 +67999,7 @@ html .tabBadge-3smxHS {
 
 .perksHeading-3oxU3I {
 	text-align:center;
+	text-transform:uppercase;
 	color:var(--text-normal)
 }
 
@@ -68398,6 +68471,7 @@ html .tabBadge-3smxHS {
 
 .subHeader-ySW_oM {
 	color:var(--header-secondary);
+	text-transform:uppercase;
 	margin-bottom:8px
 }
 
@@ -68779,6 +68853,7 @@ html .tabBadge-3smxHS {
 }
 
 .defaultKeybindGroupHeader-3fMhcS {
+	text-transform:uppercase;
 	margin-bottom:24px
 }
 
@@ -69058,6 +69133,7 @@ html .tabBadge-3smxHS {
 	font-size:12px;
 	line-height:16px;
 	font-weight:600;
+	text-transform:uppercase;
 	margin-bottom:4px;
 	color:var(--header-primary)
 }
@@ -69355,6 +69431,7 @@ html .invoiceCancelRow-3mYhFX {
 }
 
 .subSectionHeader-1bsAit {
+	text-transform:uppercase;
 	margin:32px 0 16px;
 	color:var(--header-secondary)
 }
@@ -69622,6 +69699,7 @@ html .invoiceCancelRow-3mYhFX {
 .beta-3smTDE {
 	color:#f04747;
 	font-size:12px;
+	text-transform:uppercase;
 	vertical-align:super
 }
 
@@ -69855,6 +69933,7 @@ html .invoiceCancelRow-3mYhFX {
 .beta-1WAFgA {
 	color:var(--header-secondary);
 	font-size:12px;
+	text-transform:uppercase;
 	margin-left:2px
 }
 
@@ -70190,6 +70269,7 @@ html .invoiceCancelRow-3mYhFX {
 	font-size:10px;
 	line-height:14px;
 	font-weight:600;
+	text-transform:uppercase;
 	margin-top:4px;
 	white-space:nowrap;
 	text-overflow:ellipsis;
@@ -70204,6 +70284,7 @@ html .invoiceCancelRow-3mYhFX {
 
 .header-13MUnb {
 	font-size:12px;
+	text-transform:uppercase;
 	letter-spacing:.025em;
 	font-weight:600;
 	line-height:30px;
@@ -70332,6 +70413,7 @@ html .invoiceCancelRow-3mYhFX {
 	position:relative;
 	-ms-flex-negative:0;
 	flex-shrink:0;
+	text-transform:uppercase;
 	text-align:center;
 	line-height:34px;
 	width:32px;
@@ -70477,6 +70559,7 @@ html .invoiceCancelRow-3mYhFX {
 
 .header-2B7Ri8 {
 	font-weight:600;
+	text-transform:uppercase;
 	text-align:center;
 	padding:12px
 }
@@ -70638,6 +70721,7 @@ html .invoiceCancelRow-3mYhFX {
 }
 
 .header-2C89wJ {
+	text-transform:uppercase;
 	background-color:rgba(115,
 	139,
 	215,
@@ -70995,6 +71079,7 @@ html .invoiceCancelRow-3mYhFX {
 .beta-27QNCS {
 	color:var(--header-secondary);
 	font-size:12px;
+	text-transform:uppercase;
 	margin-left:2px
 }
 
@@ -71442,6 +71527,7 @@ html .invoiceCancelRow-3mYhFX {
 .container-VSDcQc .headerText-3i6A8K {
 	color:var(--header-secondary);
 	font-size:14px;
+	text-transform:uppercase;
 	font-weight:700;
 	padding:0;
 	margin-right:5px
@@ -71539,6 +71625,7 @@ html .invoiceCancelRow-3mYhFX {
 }
 
 .section-sfKw6q {
+	text-transform:uppercase;
 	font-size:11px;
 	font-weight:700
 }
@@ -72780,6 +72867,7 @@ html .invoiceCancelRow-3mYhFX {
 	color:var(--header-secondary);
 	font-size:12px;
 	font-weight:500;
+	text-transform:uppercase;
 	max-width:600px;
 	line-height:16px
 }
@@ -72793,6 +72881,7 @@ html .invoiceCancelRow-3mYhFX {
 	color:#7289da;
 	font-size:12px;
 	font-weight:600;
+	text-transform:uppercase;
 	line-height:16px;
 	margin-bottom:8px
 }
@@ -73347,6 +73436,7 @@ html .invoiceCancelRow-3mYhFX {
 	font-weight:700;
 	font-size:12px;
 	line-height:18px;
+	text-transform:uppercase;
 	margin-bottom:4px
 }
 
@@ -74013,6 +74103,7 @@ html .invoiceCancelRow-3mYhFX {
 
 .activityHeader-1PExlk {
 	color:#fff;
+	text-transform:uppercase;
 	margin-bottom:8px;
 	font-weight:600
 }
@@ -74386,6 +74477,7 @@ html .invoiceCancelRow-3mYhFX {
 	font-size:14px;
 	line-height:16px;
 	margin-top:12px;
+	text-transform:uppercase;
 	color:var(--header-secondary)
 }
 
@@ -76947,6 +77039,7 @@ html .invoiceCancelRow-3mYhFX {
 }
 
 .colorPickerCustom-2CWBn2 .customColorPickerInput-14pB0r .input-GfazGc {
+	text-transform:uppercase;
 	height:24px
 }
 
@@ -77641,6 +77734,7 @@ html .invoiceCancelRow-3mYhFX {
 	font-size:13px;
 	font-weight:500;
 	line-height:1em;
+	text-transform:uppercase;
 	margin:0
 }
 
