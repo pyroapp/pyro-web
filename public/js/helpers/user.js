@@ -32,6 +32,7 @@ async function setStatus(status, manual) {
         status: {
             code: status,
             manual: manual,
+            offline: false,
         },
     }, {
         merge: true
