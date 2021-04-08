@@ -26,8 +26,3 @@ async function enableNotifications() {
         });
     } catch (e) {}
 }
-
-
-firebase.messaging().onMessage(payload => {
-    console.log(payload);
-});

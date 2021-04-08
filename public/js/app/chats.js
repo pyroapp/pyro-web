@@ -133,7 +133,7 @@
                                     </div>
                                 </div>
                                 <div id="private-message-list-${channel_id}">
-                                    <div class="wrapper-3vR61M placeholdermessages" style="height: 4446px;">
+                                    <div class="wrapper-3vR61M placeholdermessages hidden" style="height: 4446px;">
                                         <div class="wrapper-1F5TKx cozy-12kSNU" style="margin-top: 1rem;">
                                             <div class="contents-1R-xLu">
                                                 <div class="avatar-2daVqv" style="opacity: 0.08;"></div>
