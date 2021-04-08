@@ -61,7 +61,7 @@ async function addFriendHandler() {
         const user = await getUser(split[0], split[1]);
         
         // Back to default
-        label.innerText = 'You can add a friend with their Discord Tag. It\'s cAsE sEnSitIvE!';
+        label.innerText = 'You can add a friend with their Pyro Tag. It\'s cAsE sEnSitIvE!';
 
         // Can't find user
         if (!user) {

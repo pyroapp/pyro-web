@@ -13,10 +13,10 @@ firebase.auth().onAuthStateChanged(user => {
         const mobile = document.getElementById('loginButtonMobile');
         const desktop = document.getElementById('loginButtonDesktop');
 
-        desktop.innerText = 'Open Discord';
+        desktop.innerText = 'Open Pyro';
         desktop.setAttribute('href', '/channels/@me');
 
-        mobile.innerText = 'Open Discord';
+        mobile.innerText = 'Open Pyro';
         mobile.setAttribute('href', '/channels/@me');
     }
 });

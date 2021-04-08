@@ -152,7 +152,7 @@ function showStatusPicker() {
                                         </foreignObject>
                                     </svg>
                                     <div class="status-1fhblQ">Invisible</div>
-                                    <div class="description-2L932D">You will not appear online, but will have full access to all of Discord.</div>
+                                    <div class="description-2L932D">You will not appear online, but will have full access to all of Pyro.</div>
                                 </div>
                             </div>
                             <div role="separator" class="separator-2I32lJ hidden"></div>
@@ -243,7 +243,7 @@ function hidePrivateChannelPlaceholder() {
      if (!channelId) channelId = getPrivateChannelFromURL();
      if (lastPrivateChannelId === channelId) return;
  
-     let title = 'Discord';
+     let title = 'Pyro';
      let path = '/channels/@me/';
  
      const privateChannel = document.getElementById(`private-channel-${channelId}`);
