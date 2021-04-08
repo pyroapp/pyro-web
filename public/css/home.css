@@ -1023,8 +1023,8 @@ body {
 }
 
 body {
-	background: #fff;
-	color: #000
+	background: #1a1a23;
+	color: #E2E2E2
 }
 
 a {
@@ -1768,16 +1768,16 @@ section .button.flat-bordered:hover {
 }
 
 :root {
-	--brand: #7289da;
+	--brand: #febe10;
 	--brand-gradient: linear-gradient(90deg, #8ea1e1, #7289da);
 	--greyple: #99aab5;
-	--dark-not-black: #2c2f33;
+	--dark-not-black: #1a1a23;
 	--focus-border: #00b0f4;
 	--status-green: #43b581;
 	--text-link: #00b0f4;
 	--off-white: #f6f6f6;
 	--white: #fff;
-	--not-quite-black: #23272a;
+	--not-quite-black: #101015;
 	--not-quite-black-rgb: 35, 39, 42;
 	--black: #000;
 	--ekko-red: #de2761;
@@ -1786,7 +1786,24 @@ section .button.flat-bordered:hover {
 	--page-gutter: 24px;
 	--section-spacing: 56px
 }
+::-webkit-scrollbar {
+	width: 8px;
+	height: 3px;
+}
 
+::-webkit-scrollbar-track {
+	background-color: #101015;
+}
+
+::-webkit-scrollbar-track-piece {
+	background-color: #1a1a23;
+}
+
+::-webkit-scrollbar-thumb {
+	height: 50px;
+	background-color: #101015;
+	border-radius: 3px;
+}
 @media screen and (min-width:768px) {
 	:root {
 		--num-grid-columns: 8;
@@ -2256,10 +2273,10 @@ section .button.flat-bordered:hover {
 	animation: waveDividerAnimation-2m2aau 20s linear infinite alternate
 }
 
-.animationPaused-2hZ4IO {
-	-webkit-animation-play-state: paused;
-	animation-play-state: paused
-}
+/*.animationPaused-2hZ4IO {*/
+/*	-webkit-animation-play-state: paused;*/
+/*	animation-play-state: paused*/
+/*}*/
 
 @-webkit-keyframes waveDividerAnimation-2m2aau {
 	0% {
@@ -2368,7 +2385,7 @@ section .button.flat-bordered:hover {
 
 .buttonWhite-18r1SC {
 	background-color: #fff;
-	background-color: var(--white);
+	background-color: var(--brand);
 	color: #23272a;
 	color: var(--not-quite-black)
 }
@@ -2380,9 +2397,9 @@ section .button.flat-bordered:hover {
 
 .buttonDark-1kG4vN {
 	background-color: #23272a;
-	background-color: var(--not-quite-black);
+	background-color: var(--brand);
 	color: #fff;
-	color: var(--white)
+	color: var(--not-quite-black)
 }
 
 .buttonDark-1kG4vN:hover {
@@ -12137,8 +12154,7 @@ a:hover .tile-aRqovC {
 }
 
 .description-1K7RzO {
-	color: #23272a;
-	color: var(--not-quite-black);
+	color: #E2E2E2;
 	grid-column: span 4;
 	grid-column: span var(--num-grid-columns)
 }
@@ -12537,8 +12553,8 @@ a:hover .tile-aRqovC {
 }
 
 .heroBackground-3m0TRU {
-	background: -webkit-gradient(linear, left bottom, left top, color-stop(-.45%, #7196ff), color-stop(71.18%, #2a5ee8));
-	background: linear-gradient(0deg, #7196ff -.45%, #2a5ee8 71.18%);
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(-.45%, #17171f), color-stop(71.18%, #101015));
+	background: linear-gradient(0deg, #17171f -.45%, #101015 71.18%);
 	position: relative;
 	overflow: hidden
 }
@@ -12860,13 +12876,11 @@ a:hover .tile-aRqovC {
 }
 
 .greyBackground-2ATEHg {
-	background-color: #f6f6f6;
-	background-color: var(--off-white)
+	background-color: #101015;
 }
 
 .wave-38scNw {
-	color: #f6f6f6;
-	color: var(--off-white)
+	color: #101015;
 }
 
 .invertedWave-2Uzmgv {
