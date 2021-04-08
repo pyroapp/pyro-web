@@ -149,5 +149,5 @@ function sortObjectByKey(key, order = 'asc') {
  * @returns 
  */
 function isMobile() {
-    return isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 }
