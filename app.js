@@ -29,7 +29,7 @@ let pathsfile = fs.readdirSync('./paths').filter(file => file.endsWith('.js'));
 pathsfile.forEach(file => {
     let path = require(`./paths/${file}`);
     
-    switch (path) {
+    switch (path.method) {
         case "get":
             app.get(path.path, (req, res) => {
                 log(req);
