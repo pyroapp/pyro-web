@@ -20,9 +20,39 @@ function log(req) {
 // ------------------------------------------------------------
 const web = __dirname + '/public';
 
+let pathsfile = fs.readdirSync('./paths').filter(file => file.endsWith('.js'));
+
+pathsfile.forEach(file => {
+    let path = require(`./paths/${file}`);
+    
+    switch (path) {
+        case "get":
+            app.get(path.path, (req, res) => {
+                log(req);
+                path.execute(req, res, web);
+            });
+            break;
+        case "post":
+            app.post(path.path, (req, res) => {
+                log(req);
+                path.execute(req, res, web);
+            });
+            break;
+        /*
+        case "type":
+            app.type(path.path, (req, res) => {
+                log(req);
+                path.execute(req, res, web);
+            });
+            break;
+        */
+    };
+});
+
 app.use(cors());
 app.use('/', express.static(web));
 
+/*
 app.get('/', (req, res) => {
     log(req);
 
@@ -52,6 +82,7 @@ app.get('/channels/:guildId/:channelId', (req, res) => {
 
     res.status(200).sendFile(web + '/views/app.html');
 });
+*/
 
 app.get('*', (req, res) => {
     log(req);
