@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const chalk = require('chalk');
+const fs = require("fs");
 
 const app = express();
 const port = 8000;
