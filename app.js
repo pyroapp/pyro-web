@@ -20,6 +20,9 @@ function log(req) {
 // ------------------------------------------------------------
 const web = __dirname + '/public';
 
+app.use(cors());
+app.use('/', express.static(web));
+
 let pathsfile = fs.readdirSync('./paths').filter(file => file.endsWith('.js'));
 
 pathsfile.forEach(file => {
@@ -48,9 +51,6 @@ pathsfile.forEach(file => {
         */
     };
 });
-
-app.use(cors());
-app.use('/', express.static(web));
 
 /*
 app.get('/', (req, res) => {
