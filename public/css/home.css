@@ -2269,8 +2269,8 @@ section .button.flat-bordered:hover {
 }
 
 .wavePath-haxJK1 {
-	-webkit-animation: waveDividerAnimation-2m2aau 20s linear infinite alternate;
-	animation: waveDividerAnimation-2m2aau 20s linear infinite alternate
+	-webkit-animation: waveDividerAnimation-2m2aau 15s linear infinite alternate;
+	animation: waveDividerAnimation-2m2aau 15s linear infinite alternate
 }
 
 /*.animationPaused-2hZ4IO {*/
@@ -2389,21 +2389,23 @@ section .button.flat-bordered:hover {
 	color: #23272a;
 	color: var(--not-quite-black)
 }
-
+.wavePath-haxJK1
 .buttonWhite-18r1SC:hover {
 	color: #7289da;
 	color: var(--brand)
 }
 
 .buttonDark-1kG4vN {
-	background-color: #23272a;
+	background-color: #FEBE10;
 	background-color: var(--brand);
 	color: #fff;
-	color: var(--not-quite-black)
+	color: var(--not-quite-black);
+	transition: all 0.4s ease;
 }
 
 .buttonDark-1kG4vN:hover {
-	background-color: #36393f
+	background-color: #ffd058;
+	letter-spacing: 1px;
 }
 
 .buttonLarge-2j8B-n {
