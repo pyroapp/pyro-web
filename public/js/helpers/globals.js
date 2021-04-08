@@ -14,7 +14,7 @@ const CACHED_RECIPIENTS = {};
 const CACHED_PRIVATE_CHAT_LISTENERS = {};
 
 // Global thresholds
-const LOADING_TIMEOUT = 1000;
+const LOADING_TIMEOUT = 1500;
 const ACTIVITY_TIMEOUT = 3000;
 const IDLE_TIMEOUT = 5000;
 

@@ -81,9 +81,8 @@ firebase.auth().onAuthStateChanged(async user => {
 
     await loadPrivateChannels();
     await delay(LOADING_TIMEOUT);
-
     loadPrivateChannelFromId();
+    await delay(500);
     hidePageLoader();
-
     await enableNotifications();
 });

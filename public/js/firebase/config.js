@@ -21,3 +21,7 @@ firebase.initializeApp({
 
 const analytics = firebase.analytics();
 const messaging = firebase.messaging();
+
+messaging.onMessage(payload => {
+    console.log(payload);
+});
