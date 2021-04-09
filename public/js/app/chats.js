@@ -1139,9 +1139,15 @@
             sendPrivateMessage(channel_id);
             event.returnValue = false;
 
-            let chatdiv = document.getElementById("messagebox");
-
-            chatdiv.style.height = "44px";
+            let chatdiv = document.querySelectorAll(".textArea-12jD-V");
+    
+            if (chatdiv) {
+                if (chatdiv.length !== 0) {
+                    for (let query of chatdiv) {
+                        query.style.height = "44px";
+                    };
+                };
+            };
         }
     });
 
@@ -1156,10 +1162,18 @@
         }
 
         let text = div.querySelectorAll('.messageField')[0];
-        let chatdiv = document.getElementById("messagebox");
-        
         let length = text.childNodes.length == 0 ? 1 : text.childNodes.length;
-        chatdiv.style.height = (33 + (11 * length)) + "px";
+
+        let chatdiv = document.querySelectorAll(".textArea-12jD-V");
+    
+        if (chatdiv) {
+            if (chatdiv.length !== 0) {
+                for (let query of chatdiv) {
+                    query.style.height = (33 + (11 * length)) + "px";
+                    console.log(query.style.height)
+                };
+            };
+        };
     });
 
     input.addEventListener('paste', (e) => {

@@ -73,7 +73,16 @@ function sendPrivateMessage(channel_id) {
  * @param {*} channel_id 
  */
 
-async function loadPrivateMessages(channel_id) {    
+async function loadPrivateMessages(channel_id) {   
+    let chatdiv = document.querySelectorAll(".textArea-12jD-V");
+    
+    if (chatdiv) {
+        if (chatdiv.length !== 0) {
+            for (let query of chatdiv) {
+                query.style.height = "44px";
+            };
+        };
+    }; 
 
     // Retreive the initial 50 messages without a realtime listener
     const msgs = [];
