@@ -1142,7 +1142,7 @@
     });
 
     // Placeholder behavior
-    input.addEventListener('input', () => {
+    input.addEventListener('input', (e) => {
         const placeholder = div.querySelectorAll('.placeholder-37qJjk')[0];
 
         if (input.innerHTML.length > 0) {
@@ -1151,7 +1151,7 @@
             placeholder.classList.remove('hidden');
         }
     });
-  
+
     input.addEventListener('paste', (e) => {
         e.preventDefault();
 
