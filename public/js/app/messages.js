@@ -198,6 +198,7 @@ function createTextLinks_(text) {
     );
 };
 
+//https://stackoverflow.com/questions/6899659/remove-formatting-from-a-contenteditable-div
 function strip(html) {
     let tempDiv = document.createElement("DIV");
     tempDiv.innerHTML = html;
