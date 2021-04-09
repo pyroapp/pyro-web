@@ -1141,7 +1141,7 @@
         }
     });
 
-    // Plceholder behavior
+    // Placeholder behavior
     input.addEventListener('input', () => {
         const placeholder = div.querySelectorAll('.placeholder-37qJjk')[0];
 
@@ -1150,6 +1150,14 @@
         } else {
             placeholder.classList.remove('hidden');
         }
+    });
+  
+    input.addEventListener('paste', (e) => {
+        e.preventDefault();
+
+        let text = (e.originalEvent || e).clipboardData.getData('text/plain');
+
+        document.execCommand("insertHTML", false, text);
     });
 }
 
