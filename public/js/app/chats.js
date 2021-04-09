@@ -1170,7 +1170,6 @@
             if (chatdiv.length !== 0) {
                 for (let query of chatdiv) {
                     query.style.height = (33 + (11 * length)) + "px";
-                    console.log(query.style.height)
                 };
             };
         };
