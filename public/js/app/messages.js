@@ -165,7 +165,7 @@ function loadMessage(message) {
         div.innerHTML = `
             <div class="contents-2mQqc9">
                 <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${formattedTime}<i class="separator-2nZzUB"></i></span>
-                <div class="markup-2BOw-j messageContent-2qWWxC">${createTextLinks_(strip(content))}</div>
+                <div class="markup-2BOw-j messageContent-2qWWxC">${textParser(content)}</div>
             </div>
         `.trim();
     } else {
@@ -173,7 +173,7 @@ function loadMessage(message) {
             <div class="contents-2mQqc9">
                 <img src="${getAvatar(author)}" class="avatar-1BDn8e clickable-1bVtEA">
                 <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span></span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${formattedTime}</span></span></h2>
-                <div class="markup-2BOw-j messageContent-2qWWxC">${createTextLinks_(strip(content))}</div>
+                <div class="markup-2BOw-j messageContent-2qWWxC">${textParser(content)}</div>
             </div>
         `;
     }
@@ -184,18 +184,8 @@ function loadMessage(message) {
     div.scrollIntoView();
 }
 
-//https://www.labnol.org/code/20294-regex-extract-links-javascript
-function createTextLinks_(text) {
-    return (text || "").replace(
-        /([^\S]|^)(((https?\:\/\/)|(www\.))(\S+))/gi,
-            function(match, space, url) {
-                let hyperlink = url;
-                if (!hyperlink.match('^https?:\/\/')) {
-                    hyperlink = 'http://' + hyperlink;
-                }
-                return space + '<a href="' + hyperlink + '" target="_blank">' + url + '</a>';
-        }
-    );
+function textParser(text) {
+    return marked(text).replace(/<p>/g, "<br>").replace(/<\/p>/g, "").slice("<br>".length);
 };
 
 //https://stackoverflow.com/questions/6899659/remove-formatting-from-a-contenteditable-div
