@@ -460,15 +460,15 @@
 
 .lookFilled-1Gx00P.colorBrand-3pXr91 {
 	color: #fff;
-	background-color: #7289da
+	background-color: #FEBE10
 }
 
 .lookFilled-1Gx00P.colorBrand-3pXr91:hover {
-	background-color: #677bc4
+	background-color: #eeb310
 }
 
 .lookFilled-1Gx00P.colorBrand-3pXr91:active {
-	background-color: #5b6eae
+	background-color: #d6a00c
 }
 
 .lookFilled-1Gx00P.colorBrand-3pXr91 .spinnerItem-3GlVyU {
@@ -3908,7 +3908,7 @@
 
 .input-cIJ7To.focused-1mmYsC,
 .input-cIJ7To:focus {
-	border-color: #7289da;
+	border-color: #FEBE10;
 }
 
 .input-cIJ7To.error-2O5WFJ {
@@ -6223,8 +6223,8 @@ code {
 	--background-tertiary:#101015;
 	--background-accent:#4f545c;
 	--background-floating:#18191c;
-	--background-mobile-primary:#36393f;
-	--background-mobile-secondary:#2f3136;
+	--background-mobile-primary:#1a1a23;
+	--background-mobile-secondary:#17171f;
 	--background-modifier-hover:rgba(79,
 	84,
 	92,
@@ -7537,7 +7537,7 @@ img[alt] {
 }
 
 .authBox-hW6HRx a {
-	color:#7289da
+	color:#FEBE10
 }
 
 .authBox-hW6HRx a:hover {
