@@ -103,31 +103,54 @@ async function loadPrivateMessages(channel_id) {
         lastmsg = msg;
     });
 
-    // Get the last document from the previous snapshot to start 
-    // the realtime listener from
-    const { timestamp: lasttimestamp } = lastmsg.data();
+    if (lastmsg) {
+        // Get the last document from the previous snapshot to start 
+        // the realtime listener from
+        const { timestamp: lasttimestamp } = lastmsg.data();
 
-    //  Retreive realtime updates 
-    const listener = await firebase.firestore()
-    .collection('channels')
-    .doc(channel_id)
-    .collection('messages')
-    .where('channel_id', '==', channel_id)
-    .orderBy('timestamp')
-    .startAfter(lasttimestamp)
-    .onSnapshot(snapshot => {
-        if (snapshot.empty) return;
+        //  Retreive realtime updates 
+        const listener = await firebase.firestore()
+        .collection('channels')
+        .doc(channel_id)
+        .collection('messages')
+        .where('channel_id', '==', channel_id)
+        .orderBy('timestamp')
+        .startAfter(lasttimestamp)
+        .onSnapshot(snapshot => {
+            if (snapshot.empty) return;
 
-        snapshot.docChanges().forEach(change => {
-            const { type, doc: message } = change;
+            snapshot.docChanges().forEach(change => {
+                const { type, doc: message } = change;
 
-            if (type === 'added') loadMessage(message);
+                if (type === 'added') loadMessage(message);
+            });
         });
-    });
 
-    CACHED_PRIVATE_CHAT_LISTENERS[channel_id] = {
-        Unsubscribe: listener,
-    };
+        CACHED_PRIVATE_CHAT_LISTENERS[channel_id] = {
+            Unsubscribe: listener,
+        };
+    } else {
+        //  Retreive realtime updates 
+        const listener = await firebase.firestore()
+        .collection('channels')
+        .doc(channel_id)
+        .collection('messages')
+        .where('channel_id', '==', channel_id)
+        .orderBy('timestamp')
+        .onSnapshot(snapshot => {
+            if (snapshot.empty) return;
+
+            snapshot.docChanges().forEach(change => {
+                const { type, doc: message } = change;
+
+                if (type === 'added') loadMessage(message);
+            });
+        });
+
+        CACHED_PRIVATE_CHAT_LISTENERS[channel_id] = {
+            Unsubscribe: listener,
+        };
+    }
 }
 
 
