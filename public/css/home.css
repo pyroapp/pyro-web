@@ -2404,14 +2404,15 @@ section .button.flat-bordered:hover {
 }
 
 .buttonDark-1kG4vN:hover {
-	background-color: #ffd058;
+	background-color: #ffa958;
 	letter-spacing: 1px;
 }
 
 .buttonLarge-2j8B-n {
 	border-radius: 28px;
 	font-size: 20px;
-	padding: 16px 32px
+	padding: 16px 32px;
+	margin: 24px
 }
 
 .buttonSmall-2bnF7I {
