@@ -1152,7 +1152,7 @@
     });
 
     // Placeholder behavior
-    input.addEventListener('input', (e) => {
+    input.addEventListener('input', () => {
         const placeholder = div.querySelectorAll('.placeholder-37qJjk')[0];
 
         if (input.innerHTML.length > 0) {
@@ -1161,24 +1161,24 @@
             placeholder.classList.remove('hidden');
         }
 
-        let text = div.querySelectorAll('.messageField')[0];
-        let length = text.childNodes.length == 0 ? 1 : text.childNodes.length;
+        // Dynamically change height of message field with multiple lines
+        const text = div.querySelectorAll('.messageField')[0];
+        const length = text.childNodes.length == 0 ? 1 : text.childNodes.length;
 
-        let chatdiv = document.querySelectorAll(".textArea-12jD-V");
+        const chatdiv = document.querySelectorAll(".textArea-12jD-V");
     
-        if (chatdiv) {
-            if (chatdiv.length !== 0) {
-                for (let query of chatdiv) {
-                    query.style.height = (33 + (11 * length)) + "px";
-                };
-            };
+        if (!chatdiv) return;
+        if (chatdiv.length === 0) return;
+
+        for (query of chatdiv) {
+            query.style.height = (33 + (11 * length)) + "px";
         };
     });
 
     input.addEventListener('paste', (e) => {
         e.preventDefault();
 
-        let text = (e.originalEvent || e).clipboardData.getData('text/plain');
+        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
 
         document.execCommand("insertHTML", false, text);
     });
