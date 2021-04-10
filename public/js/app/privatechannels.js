@@ -125,8 +125,6 @@ async function loadPrivateChannels() {
     const channelStatus = channel.querySelectorAll('.userStatus')[0];
     const headerStatus = header.querySelectorAll('.userStatus')[0];
 
-    status = (status.offline) ? 'offline' : status.code;
-
     channelStatus.setAttribute('fill', STATUS_COLOURS[status]);
     channelStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
     headerStatus.setAttribute('fill', STATUS_COLOURS[status]);

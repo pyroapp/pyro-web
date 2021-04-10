@@ -11,35 +11,6 @@
 
 /**
  * 
- * @param {*} status 
- * @param {*} manual 
- */
-async function setStatus(status, manual) {
-    const { uid } = firebase.auth().currentUser;
-
-    // Set automatic status
-    const doc_vis = document.visibilityState;
-
-    if (!manual) {
-        if (doc_vis === 'hidden') {
-            status = 'idle';
-        } else if (doc_vis === 'visible') {
-            status = 'online';
-        }
-    }
-
-    firebase.firestore().collection('users').doc(uid).update({
-        status: {
-            code: status,
-            manual: manual,
-            offline: false,
-        },
-    });
-}
-
-
-/**
- * 
  */
 async function uploadDefaultAvatar() {
     const { uid } = firebase.auth().currentUser;

@@ -112,47 +112,47 @@ function showStatusPicker() {
                 <div class="animatorTop-2Y7x2r scale-3iLZhb didRender-33z1u8">
                     <div class="menu-3sdvDG styleFixed-sX-yHV">
                         <div class="scroller-3BxosC thin-1ybCId scrollerBase-289Jih">
-                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setStatus('online', false)">
+                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setManualStatus('online')">
                                 <div class="statusItem-33LqPf">
                                     <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
                                         <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-online)">
-                                            <div class="status-1AY8sU" style="background-color: rgb(67, 181, 129);"></div>
+                                            <div class="status-1AY8sU" style="background-color: #51DF3E;"></div>
                                         </foreignObject>
                                     </svg>
                                     <div class="status-1fhblQ">Online</div>
                                 </div>
                             </div>
                             <div role="separator" class="separator-2I32lJ"></div>
-                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setStatus('idle', true)">
+                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setManualStatus('idle')">
                                 <div class="statusItem-33LqPf">
                                     <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
                                         <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-idle)">
-                                            <div class="status-1AY8sU" style="background-color: rgb(250, 166, 26);"></div>
+                                            <div class="status-1AY8sU" style="background-color: #dd9e00;"></div>
                                         </foreignObject>
                                     </svg>
                                     <div class="status-1fhblQ">Idle</div>
                                 </div>
                             </div>
-                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setStatus('dnd', true)">
+                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setManualStatus('dnd')">
                                 <div class="statusItem-33LqPf">
                                     <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
                                         <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-dnd)">
-                                            <div class="status-1AY8sU" style="background-color: rgb(240, 71, 71);"></div>
+                                            <div class="status-1AY8sU" style="background-color: #DF3E3E;"></div>
                                         </foreignObject>
                                     </svg>
                                     <div class="status-1fhblQ">Do Not Disturb</div>
-                                    <div class="description-2L932D">You will not receive any desktop notifications.</div>
+                                    <div class="description-2L932D">You will not receive notifications.</div>
                                 </div>
                             </div>
-                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setStatus('offline', true)">
+                            <div class="item-1tOPte colorDefault-2K3EoJ" onclick="setManualStatus('offline')">
                                 <div class="statusItem-33LqPf">
                                     <svg width="10" height="10" class="mask-1qbNWk icon-1IxfJ2" viewBox="0 0 10 10">
                                         <foreignObject x="0" y="0" width="10" height="10" mask="url(#svg-mask-status-offline)"> 
-                                            <div class="status-1AY8sU" style="background-color: rgb(116, 127, 141);"></div>
+                                            <div class="status-1AY8sU" style="background-color: #666665;"></div>
                                         </foreignObject>
                                     </svg>
-                                    <div class="status-1fhblQ">Invisible</div>
-                                    <div class="description-2L932D">You will not appear online, but will have full access to all of Pyro.</div>
+                                    <div class="status-1fhblQ">Appear Offline</div>
+                                    <div class="description-2L932D">You will not appear online, but can still use Pyro.</div>
                                 </div>
                             </div>
                             <div role="separator" class="separator-2I32lJ hidden"></div>

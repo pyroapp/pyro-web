@@ -31,9 +31,9 @@ function sendPrivateMessage(channel_id) {
     CACHED_RECIPIENTS[channel_id].forEach(recipient => {
         if (uid === recipient) return; // Don't add current user
 
-        const { fcm_token, status: { code } } = CACHED_USERS[recipient];
+        const { fcm_token, mute_notifications } = CACHED_USERS[recipient];
 
-        if (code === 'dnd') return; // Don't send notification
+        if (mute_notifications) return; // Don't send notification
         if (!fcm_token) return; // User doesn't have notifications enabled
 
         recipients.push({
@@ -87,7 +87,7 @@ async function loadPrivateMessages(channel_id) {
     .collection('messages')
     .where('channel_id', '==', channel_id)
     .orderBy('timestamp', 'desc')
-    .limit(50)
+    .limit(INITIAL_MESSAGE_FETCH)
     .get();
 
     // Reverses the messages again to set them back into

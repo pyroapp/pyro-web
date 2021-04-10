@@ -26,3 +26,16 @@ async function enableNotifications() {
         });
     } catch (e) {}
 }
+
+
+/**
+ * 
+ * @param {*} mute 
+ */
+ async function toggleNotificationMute(mute) {
+    const { uid } = firebase.auth().currentUser;
+
+    await firebase.firestore().collection('users').doc(uid).update({
+        mute_notifications: mute
+    });
+}

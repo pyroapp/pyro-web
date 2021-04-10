@@ -100,11 +100,8 @@ async function signup() {
             email: email,
             flags: [],
             premium_type: null,
-            status: {
-                code: 'online',
-                manual: false,
-                offline: false,
-            },
+            status: 'online',
+            mute_notifications: false,
         }, {
             merge: true
         });
