@@ -356,7 +356,7 @@
 .glitch-1ZnYvx {
 	font-family: 'Rubik', sans-serif;
 	font-weight: 700;
-	color: rgba(246, 246, 247, .3);
+	color: var(--brand-hover);
 	font-size: 150px;
 	position: relative;
 	display: inline-block
@@ -370,12 +370,12 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: #f6f6f7
+	background:#101015;
 }
 
 .glitch-1ZnYvx:before {
 	left: 2px;
-	text-shadow: -2px 0 #e3e7f8;
+	text-shadow: -2px 0 var(--dark-not-black);
 	clip: rect(24px, 550px, 90px, 0);
 	-webkit-animation: glitch-anim-2-3Jj1Wz 4s linear infinite alternate-reverse;
 	animation: glitch-anim-2-3Jj1Wz 4s linear infinite alternate-reverse
@@ -649,7 +649,7 @@
 }
 
 .pageWrap-3Cdu2c {
-	background-color: #f6f6f7;
+	background: #101015;
 	width: 100%;
 	height: 100vh;
 	overflow: auto;
@@ -712,11 +712,11 @@
 
 .links-1CveUN,
 .links-1CveUN:visited {
-	color: #c7d0f0
+	color: var(--brand-primary);
 }
 
 .links-1CveUN:hover {
-	color: #7289da
+	color: var(--brand-hover);
 }
 
 .links-1CveUN:hover:before {
@@ -948,7 +948,7 @@ html {
 }
 
 body {
-	min-width: 1000px
+	min-width: 1000px;
 }
 
 #app-mount {
@@ -1765,7 +1765,8 @@ section .button.flat-bordered:hover {
 }
 
 :root {
-	--brand: #7289da;
+	--brand-primary: #febe10;
+	--brand-hover: #ffdc69;
 	--brand-gradient: linear-gradient(90deg, #8ea1e1, #7289da);
 	--greyple: #99aab5;
 	--dark-not-black: #2c2f33;
@@ -1781,7 +1782,7 @@ section .button.flat-bordered:hover {
 	--page-max-width: 1260px;
 	--num-grid-columns: 4;
 	--page-gutter: 24px;
-	--section-spacing: 56px
+	--section-spacing: 56px;
 }
 
 @media screen and (min-width:768px) {
@@ -2336,8 +2337,7 @@ section .button.flat-bordered:hover {
 }
 
 .buttonBrand-33cvhX {
-	background-color: #7289da;
-	background-color: var(--brand);
+	background-color: var(--brand-primary);
 	color: #fff;
 	color: var(--white)
 }
@@ -2564,7 +2564,7 @@ section .button.flat-bordered:hover {
 
 .dropdownLink-3UZw53:hover {
 	color: #7289da;
-	color: var(--brand);
+	color: var(--brand-primary);
 	text-decoration: underline
 }
 
@@ -3450,7 +3450,7 @@ section .button.flat-bordered:hover {
 	-ms-flex-negative: 0;
 	flex-shrink: 0;
 	color: #7289da;
-	color: var(--brand);
+	color: var(--brand-primary);
 	-webkit-transition: -webkit-transform .2s ease-in-out;
 	transition: -webkit-transform .2s ease-in-out;
 	transition: transform .2s ease-in-out;
@@ -8510,7 +8510,7 @@ section p a:hover {
 
 .author-3H3Goe {
 	color: #7289da;
-	color: var(--brand);
+	color: var(--brand-primary);
 	margin-top: auto;
 	text-align: end
 }
@@ -14771,7 +14771,7 @@ a:hover .tile-aRqovC {
 
 .pill-3WxLOY {
 	background-color: #7289da;
-	background-color: var(--brand);
+	background-color: var(--brand-primary);
 	border-radius: 24px;
 	padding: 0 8px;
 	margin-left: 10px;
@@ -14781,7 +14781,7 @@ a:hover .tile-aRqovC {
 
 .wave-3708iR {
 	color: #7289da;
-	color: var(--brand);
+	color: var(--brand-primary);
 	-webkit-transform: translateY(1px);
 	transform: translateY(1px)
 }
@@ -14790,7 +14790,7 @@ a:hover .tile-aRqovC {
 	padding-top: 56px;
 	padding-top: var(--section-spacing);
 	background-color: #7289da;
-	background-color: var(--brand);
+	background-color: var(--brand-primary);
 	padding-bottom: 260px;
 	position: relative;
 	overflow: hidden
@@ -15745,7 +15745,7 @@ a:hover .tile-aRqovC {
 
 .themeBrand-CtfDzy {
 	--color-inactive: #747f8d;
-	--color-active: var(--brand);
+	--color-active: var(--brand-primary);
 	--color-divider: rgba(79, 84, 92, 0.16)
 }
 
@@ -17374,7 +17374,7 @@ a:hover .tile-aRqovC {
 
 .themeBrand-1m7kv6 {
 	--color-inactive: #747f8d;
-	--color-active: var(--brand);
+	--color-active: var(--brand-primary);
 	--color-divider: rgba(79, 84, 92, 0.16)
 }
 
