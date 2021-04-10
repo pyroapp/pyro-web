@@ -6225,107 +6225,43 @@ code {
 	--background-floating:#18191c;
 	--background-mobile-primary:#1a1a23;
 	--background-mobile-secondary:#17171f;
-	--background-modifier-hover:rgba(79,
-	84,
-	92,
-	0.16);
-	--background-modifier-active:rgba(79,
-	84,
-	92,
-	0.24);
-	--background-modifier-selected:rgba(79,
-	84,
-	92,
-	0.32);
-	--background-modifier-accent:hsla(0,
-	0%,
-	100%,
-	0.06);
-	--background-mentioned:rgba(250,
-	166,
-	26,
-	0.05);
-	--background-mentioned-hover:rgba(250,
-	166,
-	26,
-	0.08);
-	--background-message-hover:rgba(4,
-	4,
-	5,
-	0.07);
-	--background-help-warning:rgba(250,
-	166,
-	26,
-	0.1);
-	--background-help-info:rgba(0,
-	176,
-	244,
-	0.1);
+	--background-modifier-hover:rgba(79, 84, 92, 0.16);
+	--background-modifier-active:rgba(79, 84, 92,0.24);
+	--background-modifier-selected:rgba(79, 84, 92, 0.32);
+	--background-modifier-accent:hsla(0, 0%, 100%, 0.06);
+	--background-mentioned:rgba(250, 166, 26, 0.05);
+	--background-mentioned-hover:rgba(250, 166, 26, 0.08);
+	--background-message-hover:rgba(4, 4, 5, 0.07);
+	--background-help-warning:rgba(250,166, 26, 0.1);
+	--background-help-info:rgba(0, 176, 244, 0.1);
 	--scrollbar-thin-thumb:#101015;
 	--scrollbar-thin-track:transparent;
 	--scrollbar-auto-thumb:#101015;
 	--scrollbar-auto-track: #23232d;
 	--scrollbar-auto-scrollbar-color-thumb:#101015;
 	--scrollbar-auto-scrollbar-color-track: #23232d;
-	--elevation-stroke:0 0 0 1px rgba(4,
-	4,
-	5,
-	0.15);
-	--elevation-low:0 1px 0 rgba(4,
-	4,
-	5,
-	0.2),
-	0 1.5px 0 rgba(6,
-	6,
-	7,
-	0.05),
-	0 2px 0 rgba(4,
-	4,
-	5,
-	0.05);
-	--elevation-medium:0 4px 4px rgba(0,
-	0,
-	0,
-	0.16);
-	--elevation-high:0 8px 16px rgba(0,
-	0,
-	0,
-	0.24);
+	--elevation-stroke:0 0 0 1px rgba(4, 4, 5, 0.15);
+	--elevation-low:0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
+	--elevation-medium:0 4px 4px rgba(0, 0, 0, 0.16);
+	--elevation-high:0 8px 16px rgba(0, 0, 0, 0.24);
 	--logo-primary:#fff;
 	--focus-primary:#00b0f4;
 	--radio-group-dot-foreground:#8ea1e1;
-	--guild-header-text-shadow:0 1px 1px rgba(0,
-	0,
-	0,
-	0.4);
+	--guild-header-text-shadow:0 1px 1px rgba(0, 0, 0, 0.4);
 	--channeltextarea-background:#101015;
 	--activity-card-background:#202225;
 	--textbox-markdown-syntax:#8e9297;
-	--deprecated-card-bg:rgba(32,
-	34,
-	37,
-	0.6);
-	--deprecated-card-editable-bg:rgba(32,
-	34,
-	37,
-	0.3);
+	--deprecated-card-bg:rgba(32, 34, 37, 0.6);
+	--deprecated-card-editable-bg:rgba(32, 34, 37, 0.3);
 	--deprecated-store-bg:#36393f;
 	--deprecated-quickswitcher-input-background:#72767d;
-	--deprecated-quickswitcher-input-placeholder:hsla(0,
-	0%,
-	100%,
-	0.3);
-	--deprecated-text-input-bg:rgba(0,
-	0,
-	0,
-	0.1);
-	--deprecated-text-input-border:rgba(0,
-	0,
-	0,
-	0.3);
+	--deprecated-quickswitcher-input-placeholder:hsla(0, 0%, 100%, 0.3);
+	--deprecated-text-input-bg:rgba(0, 0, 0, 0.1);
+	--deprecated-text-input-border:rgba(0, 0, 0, 0.3);
 	--deprecated-text-input-border-hover:#040405;
 	--deprecated-text-input-border-disabled:#202225;
-	--deprecated-text-input-prefix:#dcddde
+	--deprecated-text-input-prefix:#dcddde;
+	--brand-primary: #FEBE10;
 }
 
 .theme-light {
@@ -16075,12 +16011,13 @@ img[alt] {
 	font-size:14px;
 	font-weight:500;
 	line-height:18px;
-	cursor:pointer
+	cursor:pointer;
+	transition: ease-in-out 0.1s;
 }
 
 .item-1tOPte:hover {
-	background-color:#5c6fb1;
-	color:#fff
+	background-color: var(--brand-primary);
+	color: var(--background-floating);
 }
 
 .item-1tOPte.hideInteraction-1iHO1O {
@@ -57822,7 +57759,8 @@ a.ctaAnchor-3-8I3v:hover {
 	align-items:center;
 	border-radius:4px;
 	height:42px;
-	padding:0 8px
+	padding:0 8px;
+	transition: ease-in-out 0.1s;
 }
 
 .wrappedLayout-3DR7Pk {
