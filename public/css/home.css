@@ -1768,7 +1768,8 @@ section .button.flat-bordered:hover {
 }
 
 :root {
-	--brand: #febe10;
+	--brand-primary: #febe10;
+	--brand-hover: #ffdc69;
 	--brand-gradient: linear-gradient(90deg, #8ea1e1, #7289da);
 	--greyple: #99aab5;
 	--dark-not-black: #1a1a23;
@@ -2359,6 +2360,7 @@ section .button.flat-bordered:hover {
 }
 
 .button-195cDm:hover {
+	color: var(--dark-not-black);
 	-webkit-box-shadow: 0 8px 15px rgba(0, 0, 0, .2);
 	box-shadow: 0 8px 15px rgba(0, 0, 0, .2)
 }
@@ -2374,37 +2376,37 @@ section .button.flat-bordered:hover {
 
 .buttonBrand-33cvhX {
 	background-color: #7289da;
-	background-color: var(--brand);
+	background-color: var(--brand-primary);
 	color: #fff;
 	color: var(--white)
 }
 
 .buttonBrand-33cvhX:hover {
-	background-color: #8ea1e1
+	background-color: var(--brand-hover);
+	color: var(--dark-not-black);
 }
 
 .buttonWhite-18r1SC {
 	background-color: #fff;
-	background-color: var(--brand);
+	background-color: var(--brand-primary);
 	color: #23272a;
 	color: var(--not-quite-black)
 }
 .wavePath-haxJK1
 .buttonWhite-18r1SC:hover {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .buttonDark-1kG4vN {
-	background-color: #FEBE10;
-	background-color: var(--brand);
+	background-color: var(--brand-primary);
 	color: #fff;
 	color: var(--not-quite-black);
 	transition: all 0.4s ease;
 }
 
 .buttonDark-1kG4vN:hover {
-	background-color: #ffa958;
+	background-color: var(--brand-hover);
 	letter-spacing: 1px;
 }
 
@@ -2604,7 +2606,7 @@ section .button.flat-bordered:hover {
 
 .dropdownLink-3UZw53:hover {
 	color: #7289da;
-	color: var(--brand);
+	color: var(--brand-primary);
 	text-decoration: underline
 }
 
@@ -2822,13 +2824,13 @@ section .button.flat-bordered:hover {
 .brand-2EpRQL .colHeader-2ikURV,
 .brand-2EpRQL .tagline-1MAOjD {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .brand-2EpRQL .ctaSeparator-ARE9P3,
 .brandInverted-25Umzs.footer-2JjWU3 {
 	background-color: #7289da;
-	background-color: var(--brand)
+	background-color: var(--brand-primary)
 }
 
 .brandInverted-25Umzs .colHeader-2ikURV,
@@ -3299,7 +3301,7 @@ section .button.flat-bordered:hover {
 .step1-2UKcD3 {
 	margin-top: 48px;
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .stepText-2UjNsA {
@@ -3309,7 +3311,7 @@ section .button.flat-bordered:hover {
 .step2-2LG3rj {
 	margin-top: 32px;
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .imageContainer-2VsYUJ {
@@ -3342,7 +3344,7 @@ section .button.flat-bordered:hover {
 	width: 100%;
 	height: 1px;
 	background-color: #7289da;
-	background-color: var(--brand)
+	background-color: var(--brand-primary)
 }
 
 .divider-1yNRf1,
@@ -3490,7 +3492,7 @@ section .button.flat-bordered:hover {
 	-ms-flex-negative: 0;
 	flex-shrink: 0;
 	color: #7289da;
-	color: var(--brand);
+	color: var(--brand-primary);
 	-webkit-transition: -webkit-transform .2s ease-in-out;
 	transition: -webkit-transform .2s ease-in-out;
 	transition: transform .2s ease-in-out;
@@ -3668,7 +3670,7 @@ section .button.flat-bordered:hover {
 .container-2jAMrA,
 .wrapper-1b1-5U {
 	background-color: #7289da;
-	background-color: var(--brand)
+	background-color: var(--brand-primary)
 }
 
 .wrapper-1b1-5U {
@@ -3800,7 +3802,7 @@ section .button.flat-bordered:hover {
 
 .label-GW9Scd {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .title-2XkIaU {
@@ -8550,7 +8552,7 @@ section p a:hover {
 
 .author-3H3Goe {
 	color: #7289da;
-	color: var(--brand);
+	color: var(--brand-primary);
 	margin-top: auto;
 	text-align: end
 }
@@ -13149,7 +13151,7 @@ a:hover .tile-aRqovC {
 
 .document-3OCpS5 a {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .document-3OCpS5 a:hover {
@@ -13459,7 +13461,7 @@ a:hover .tile-aRqovC {
 
 .cardHeading-Ar637C {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .cardDescription-2ytmYx {
@@ -13518,7 +13520,7 @@ a:hover .tile-aRqovC {
 
 .header-1GSSk5 {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .button-_nyH9c,
@@ -13735,7 +13737,7 @@ a:hover .tile-aRqovC {
 
 .newsArticleLink-1pTwmh:hover {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .newsArticleDate-2t2N52 {
@@ -13799,7 +13801,7 @@ a:hover .tile-aRqovC {
 	display: inline-block;
 	line-height: 0;
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .socialLink-pt1HO8+.socialLink-pt1HO8 {
@@ -14256,7 +14258,7 @@ a:hover .tile-aRqovC {
 
 .icon-lRvU4f {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .details-1bIBBc {
@@ -14503,7 +14505,7 @@ a:hover .tile-aRqovC {
 
 .heroTitle-2NqrmA {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .heroLocation-2sG3bR {
@@ -14538,7 +14540,7 @@ a:hover .tile-aRqovC {
 .eeoc-33DVeX {
 	margin-top: 24px;
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .ctaContainer-8FAW4b {
@@ -14713,7 +14715,7 @@ a:hover .tile-aRqovC {
 
 .valueHeading-2FSFOX {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .valueText-3luHFZ {
@@ -14808,7 +14810,7 @@ a:hover .tile-aRqovC {
 
 .pill-3WxLOY {
 	background-color: #7289da;
-	background-color: var(--brand);
+	background-color: var(--brand-primary);
 	border-radius: 24px;
 	padding: 0 8px;
 	margin-left: 10px;
@@ -14818,7 +14820,7 @@ a:hover .tile-aRqovC {
 
 .wave-3708iR {
 	color: #7289da;
-	color: var(--brand);
+	color: var(--brand-primary);
 	-webkit-transform: translateY(1px);
 	transform: translateY(1px)
 }
@@ -14827,7 +14829,7 @@ a:hover .tile-aRqovC {
 	padding-top: 56px;
 	padding-top: var(--section-spacing);
 	background-color: #7289da;
-	background-color: var(--brand);
+	background-color: var(--brand-primary);
 	padding-bottom: 260px;
 	position: relative;
 	overflow: hidden
@@ -15255,7 +15257,7 @@ a:hover .tile-aRqovC {
 
 .wave-TcrHrq {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .container-1kLi6_,
@@ -15380,7 +15382,7 @@ a:hover .tile-aRqovC {
 
 .title-Nn03Wu {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .subtitle-3_q6Rp {
@@ -15616,7 +15618,7 @@ a:hover .tile-aRqovC {
 .stepTitle-3HeNDe {
 	margin-top: 8px;
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .stepSubtitle-3KzXR2 {
@@ -15782,7 +15784,7 @@ a:hover .tile-aRqovC {
 
 .themeBrand-CtfDzy {
 	--color-inactive: #747f8d;
-	--color-active: var(--brand);
+	--color-active: var(--brand-primary);
 	--color-divider: rgba(79, 84, 92, 0.16)
 }
 
@@ -16630,7 +16632,7 @@ a:hover .tile-aRqovC {
 
 .experimentTitle-2B32cI strong {
 	color: #7289da;
-	color: var(--brand)
+	color: var(--brand-primary)
 }
 
 .subtitle-y3d3rb {
@@ -17411,7 +17413,7 @@ a:hover .tile-aRqovC {
 
 .themeBrand-1m7kv6 {
 	--color-inactive: #747f8d;
-	--color-active: var(--brand);
+	--color-active: var(--brand-primary);
 	--color-divider: rgba(79, 84, 92, 0.16)
 }
 

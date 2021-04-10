@@ -460,15 +460,16 @@
 
 .lookFilled-1Gx00P.colorBrand-3pXr91 {
 	color: #fff;
-	background-color: #FEBE10
+	background-color: var(--brand-primary);
+	transition: ease 0.15s;
 }
 
 .lookFilled-1Gx00P.colorBrand-3pXr91:hover {
-	background-color: #eeb310
+	background-color: var(--brand-primary-hover);
 }
 
 .lookFilled-1Gx00P.colorBrand-3pXr91:active {
-	background-color: #d6a00c
+	background-color: var(--brand-primary-active);
 }
 
 .lookFilled-1Gx00P.colorBrand-3pXr91 .spinnerItem-3GlVyU {
@@ -476,7 +477,7 @@
 }
 
 .lookFilled-1Gx00P.colorBrand-3pXr91:disabled {
-	background-color: #7289da
+	background-color: var(--brand-primary);
 }
 
 .lookInverted-2D7oAl.colorBrand-3pXr91 {
@@ -6262,6 +6263,8 @@ code {
 	--deprecated-text-input-border-disabled:#202225;
 	--deprecated-text-input-prefix:#dcddde;
 	--brand-primary: #FEBE10;
+	--brand-primary-hover: #eeb310;
+	--brand-primary-active: #d6a00c;
 }
 
 .theme-light {
@@ -49671,7 +49674,7 @@ strong {
 
 .header-1-dBpZ {
 	font-weight:700;
-	font-size:16px;
+	font-size:18px;
 	margin:9px 0;
 	color:var(--header-primary)
 }
@@ -71142,7 +71145,7 @@ html .invoiceCancelRow-3mYhFX {
 .sidebar-2K8pFh {
 	flex-direction:column;
 	min-height:0;
-	width:360px;
+	width:320px;
 	-webkit-box-flex:0;
 	-ms-flex:0 0 auto;
 	flex:0 0 auto;
