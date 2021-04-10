@@ -1107,7 +1107,7 @@
                                         </div>
                                     </button>
                                 </div>
-                                <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x">
+                                <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x" id="messagebox">
                                     <div class="placeholder-37qJjk fontSize16Padding-3Wk7zP"></div>
                                     <div contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP messageField" spellcheck="true" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; padding-top: 12px;"></div>
                                 </div>
@@ -1138,11 +1138,21 @@
         if (!event.shiftKey && event.key === 'Enter') {
             sendPrivateMessage(channel_id);
             event.returnValue = false;
+
+            let chatdiv = document.querySelectorAll(".textArea-12jD-V");
+    
+            if (chatdiv) {
+                if (chatdiv.length !== 0) {
+                    for (let query of chatdiv) {
+                        query.style.height = "44px";
+                    };
+                };
+            };
         }
     });
 
-    // Plceholder behavior
-    input.addEventListener('input', () => {
+    // Placeholder behavior
+    input.addEventListener('input', (e) => {
         const placeholder = div.querySelectorAll('.placeholder-37qJjk')[0];
 
         if (input.innerHTML.length > 0) {
@@ -1150,6 +1160,27 @@
         } else {
             placeholder.classList.remove('hidden');
         }
+
+        let text = div.querySelectorAll('.messageField')[0];
+        let length = text.childNodes.length == 0 ? 1 : text.childNodes.length;
+
+        let chatdiv = document.querySelectorAll(".textArea-12jD-V");
+    
+        if (chatdiv) {
+            if (chatdiv.length !== 0) {
+                for (let query of chatdiv) {
+                    query.style.height = (33 + (11 * length)) + "px";
+                };
+            };
+        };
+    });
+
+    input.addEventListener('paste', (e) => {
+        e.preventDefault();
+
+        let text = (e.originalEvent || e).clipboardData.getData('text/plain');
+
+        document.execCommand("insertHTML", false, text);
     });
 }
 
