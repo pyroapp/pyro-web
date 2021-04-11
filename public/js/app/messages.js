@@ -217,5 +217,15 @@ function loadMessage(message) {
 }
 
 function textParser(text) {
-    return marked(text).replace(/<p>/g, "<br>").replace(/<\/p>/g, "").slice("<br>".length);
+    if (typeof text == "string") return strip(text);
+
+    return "This version of Pyro is not compatible with markdown."
 };
+
+// https://stackoverflow.com/questions/6899659/remove-formatting-from-a-contenteditable-div
+
+function strip(html) {
+    let tempDiv = document.createElement("DIV");
+    tempDiv.innerHTML = html;
+    return tempDiv.innerText;
+}
