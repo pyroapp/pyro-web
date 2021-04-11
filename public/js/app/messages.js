@@ -217,9 +217,7 @@ function loadMessage(message) {
 }
 
 function textParser(text) {
-    if (typeof text == "string") return strip(text);
-
-    return "This version of Pyro is not compatible with markdown."
+    return strip(text);
 };
 
 // https://stackoverflow.com/questions/6899659/remove-formatting-from-a-contenteditable-div
