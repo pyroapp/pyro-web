@@ -240,26 +240,26 @@ function hidePrivateChannelPlaceholder() {
  let lastPrivateChannelId;
 
  function loadPrivateChannelFromId(channelId) {
-     if (!channelId) channelId = getPrivateChannelFromURL();
-     if (lastPrivateChannelId === channelId) return;
- 
-     let title = 'Pyro';
-     let path = '/channels/@me/';
- 
-     const privateChannel = document.getElementById(`private-channel-${channelId}`);
- 
-     if (privateChannel) {
-         title = privateChannel.getAttribute('ptitle');
-         path = (channelId === 'friends') ? '/channels/@me/' : `/channels/@me/${channelId}/`;
-     } else {
-         channelId = 'friends';
-     }
- 
-     window.history.pushState({}, title, path);
-     selectPrivateChannel(channelId);
-     selectMainBody(channelId);
- 
-     lastPrivateChannelId = channelId;
+    if (!channelId) channelId = getPrivateChannelFromURL();
+    if (lastPrivateChannelId === channelId) return;
+
+    let title = 'Pyro';
+    let path = '/channels/@me/';
+
+    const privateChannel = document.getElementById(`private-channel-${channelId}`);
+
+    if (privateChannel) {
+        title = privateChannel.getAttribute('ptitle');
+        path = (channelId === 'friends') ? '/channels/@me/' : `/channels/@me/${channelId}/`;
+    } else {
+        channelId = 'friends';
+    }
+
+    window.history.pushState({}, title, path);
+    selectPrivateChannel(channelId);
+    selectMainBody(channelId);
+
+    lastPrivateChannelId = channelId;
  }
  
  
@@ -268,13 +268,20 @@ function hidePrivateChannelPlaceholder() {
   * @returns 
   */
  function getPrivateChannelFromURL() {
-     const path = window.location.pathname.split('/');
- 
-     path.filter((value, index) => {
-         if (!value) path.splice(index, index + 1);
-     });
- 
-     const privChannelId = path[path.length - 1];
- 
-     return isNaN(privChannelId) ? false : privChannelId;
+    const path = window.location.pathname.split('/');
+
+    path.filter((value, index) => {
+        if (!value) path.splice(index, index + 1);
+    });
+
+    const privChannelId = path[path.length - 1];
+
+    // Friends page
+    const { uid } = firebase.auth().currentUser;
+    
+    if (privChannelId === '@me') return CACHED_USERS[uid].last_open_channel;
+
+    const otherPages = ['embers'];
+
+    return (isNaN(privChannelId) && !otherPages.includes(privChannelId)) ? false : privChannelId;
  }
