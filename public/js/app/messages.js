@@ -223,6 +223,7 @@ function textParser(text) {
     let markdown = {
         bold: false,
         italicized: false,
+        underlined: false,
         codeblock: false,
         strikethrough: false,
         spoiler: false,
@@ -245,6 +246,15 @@ function textParser(text) {
             } else {
                 markdown.bold = false;
                 newtext = newtext + "</b>";
+            };
+            oldtext = oldtext.slice(2);
+        } else if (oldtext.startsWith("__") && !oldtext.startsWith("____")) {
+            if (markdown.underlined == false) {
+                markdown.underlined = true;
+                newtext = newtext + "<u>";
+            } else {
+                markdown.underlined = false;
+                newtext = newtext + "</u>";
             };
             oldtext = oldtext.slice(2);
         } else if (oldtext.startsWith("*") && !oldtext.startsWith("**")) {
@@ -291,6 +301,7 @@ function textParser(text) {
 
     if (markdown.bold == true) newtext = removeLastOfThis(newtext, "<b>", "**");
     if (markdown.italicized == true) newtext = removeLastOfThis(newtext, "<em>", "*");
+    if (markdown.underlined == true) newtext = removeLastOfThis(newtext, "<u>", "__");
     if (markdown.codeblock == true) newtext = removeLastOfThis(newtext, "<code>", "`");
     if (markdown.strikethrough == true) newtext = removeLastOfThis(newtext, "<del>", "~~");
     if (markdown.spoiler == true) newtext = removeLastOfThis(newtext, `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span aria-hidden="true" class="inlineContent-3ZjPuv">`);
