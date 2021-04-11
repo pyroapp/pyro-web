@@ -57771,12 +57771,12 @@ a.ctaAnchor-3-8I3v:hover {
 	padding:5px 8px
 }
 
-.clickable-1JJAn8:hover .layout-2DM8Md {
+.layout-2DM8Md:hover {
 	background-color:var(--background-modifier-hover);
-	cursor:pointer
+	cursor:pointer;
 }
 
-.clickable-1JJAn8:active .layout-2DM8Md {
+.layout-2DM8Md:active {
 	background-color:var(--background-modifier-active)
 }
 
