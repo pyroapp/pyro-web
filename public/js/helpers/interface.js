@@ -62,7 +62,7 @@ function showPageLoader() {
                     <source src="/vid/0bdc0497eb3a19e66f2b1e3d5741634c.webm" type="video/webm">
                 </video>
                 <div class="text-3c9Zq1">
-                    <div class="tipTitle-GL9qAt">Did you know</div>
+                    <div class="tipTitle-GL9qAt">Pyro is loading</div>
                     <div class="tip-2cgoli">${generateDidYouKnowMessage()}</div>
                     <div class="body-2Vra9D contentBase-11jeVK"></div>
                 </div>

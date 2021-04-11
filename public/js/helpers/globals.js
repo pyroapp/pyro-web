@@ -52,5 +52,21 @@ const AUTH_CODES = {
 
 // Loading overlay messages
 const DID_YOU_KNOW = [
-    'Props if you are reading this, because that means either Pyro is down or your internet just cannot load Pyro, which is impossible because Pyro was built to run on all network connections.'
+    'Deobfuscating the obfuscation!',
+    'Now with 100% less Nitro!',
+    'Go say something nice to a friend!',
+    'Pyro is cool, and you are too!',
+    'Organic, gluten-free, non-GMO code!',
+    'Spaghettifying the spaghetto!',
+    'Spark a conversation!',
+    'Lighting up a nice campfire for you!',
+    'Say hi at your local Pyro tavern - hot chocolate included!',
+    'Robo will remember that.',
+    'Hyperion says: "Damn, nice profile picture!"',
+    'Firebase says: "How many writes will you do today?"',
+    'Sargon says: "Trouble connecting? Check Pyro\'s status." (Get it? It\'s a downtime joke!)',
+    'Unpack the webpack!',
+    'Doing wizardly math stuff!',
+    'Caring for the fonts!',
+    'Lighting the way to camp!'
 ];
