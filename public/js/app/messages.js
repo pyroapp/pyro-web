@@ -287,7 +287,7 @@ function textParser(text) {
         } else if (oldtext.startsWith("||") && !oldtext.startsWith("||||")) {
             if (markdown.spoiler == false) {
                 markdown.spoiler = true;
-                newtext = newtext + `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span aria-hidden="true" class="inlineContent-3ZjPuv">`
+                newtext = newtext + `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span class="inlineContent-3ZjPuv">`
             } else {
                 markdown.spoiler = false;
                 newtext = newtext + "</span></span>";
@@ -304,7 +304,7 @@ function textParser(text) {
     if (markdown.underlined == true) newtext = removeLastOfThis(newtext, "<u>", "__");
     if (markdown.codeblock == true) newtext = removeLastOfThis(newtext, "<code>", "`");
     if (markdown.strikethrough == true) newtext = removeLastOfThis(newtext, "<del>", "~~");
-    if (markdown.spoiler == true) newtext = removeLastOfThis(newtext, `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span aria-hidden="true" class="inlineContent-3ZjPuv">`);
+    if (markdown.spoiler == true) newtext = removeLastOfThis(newtext, `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span class="inlineContent-3ZjPuv">`);
     if (markdown.quote == true) newtext = newtext + "</blockquote></div>";
 
     return twemoji.parse(createTextLinks_(newtext));
@@ -324,6 +324,12 @@ function removeLastOfThis(text, find, replace) {
         };
     };
     return removedlast;
+};
+
+document.body.onclick = function(e) {
+    if (e.target.className && e.target.className.indexOf('spoilerText-3p6IlD') != -1 && e.target.className.indexOf('hidden-HHr2R9') != -1) {
+        e.target.className = "spoilerText-3p6IlD";
+    };
 };
 
 // https://stackoverflow.com/questions/6899659/remove-formatting-from-a-contenteditable-div
