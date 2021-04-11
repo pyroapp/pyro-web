@@ -310,7 +310,7 @@ function textParser(text) {
     console.log(text)
     console.log(createTextLinks_(newtext))
 
-    return createTextLinks_(newtext);
+    return twemoji.parse(createTextLinks_(newtext));
 };
 
 function removeLastOfThis(text, find, replace) {
