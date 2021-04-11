@@ -277,10 +277,10 @@ function textParser(text) {
         } else if (oldtext.startsWith("||") && !oldtext.startsWith("||||")) {
             if (markdown.spoiler == false) {
                 markdown.spoiler = true;
-                newtext = newtext + "<spoiler class=\"spoiler\" onclick=\"openSpoiler(event);\">";
+                newtext = newtext + `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span aria-hidden="true" class="inlineContent-3ZjPuv">`
             } else {
                 markdown.spoiler = false;
-                newtext = newtext + "</spoiler>";
+                newtext = newtext + "</span></span>";
             };
             oldtext = oldtext.slice(2);
         } else {
@@ -293,7 +293,7 @@ function textParser(text) {
     if (markdown.italicized == true) newtext = removeLastOfThis(newtext, "<em>", "*");
     if (markdown.codeblock == true) newtext = removeLastOfThis(newtext, "<code>", "`");
     if (markdown.strikethrough == true) newtext = removeLastOfThis(newtext, "<del>", "~~");
-    if (markdown.spoiler == true) newtext = removeLastOfThis(newtext, "<spoiler class=\"spoiler\" onclick=\"openSpoiler(event);\">", "||");
+    if (markdown.spoiler == true) newtext = removeLastOfThis(newtext, `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span aria-hidden="true" class="inlineContent-3ZjPuv">`);
     if (markdown.quote == true) newtext = newtext + "</blockquote></div>"
 
     console.log(text)
@@ -339,11 +339,4 @@ function createTextLinks_(text) {
                 return space + '<a href="' + hyperlink + '" target="_blank">' + url + '</a>';
         }
     );
-};
-
-function openSpoiler(event) {
-    event.target.style.backgroundColor = '#2F2F2F';
-    event.target.style.color = 'white';
-    event.target.style.cursor = 'auto';
-    event.target.style.userSelect = 'auto';
 };
