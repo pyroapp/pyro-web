@@ -685,7 +685,7 @@
 .wizards-3zNz6o {
 	font-size: 25px;
 	line-height: 40px;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 	color: #72767d
 }
 
@@ -703,7 +703,7 @@
 .links-1CveUN {
 	font-size: 18px;
 	line-height: 35px;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 	text-decoration: none;
 	-webkit-transition: .1s ease-in-out;
 	transition: .1s ease-in-out;
