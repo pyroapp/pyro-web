@@ -305,10 +305,7 @@ function textParser(text) {
     if (markdown.codeblock == true) newtext = removeLastOfThis(newtext, "<code>", "`");
     if (markdown.strikethrough == true) newtext = removeLastOfThis(newtext, "<del>", "~~");
     if (markdown.spoiler == true) newtext = removeLastOfThis(newtext, `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span aria-hidden="true" class="inlineContent-3ZjPuv">`);
-    if (markdown.quote == true) newtext = newtext + "</blockquote></div>"
-
-    console.log(text)
-    console.log(createTextLinks_(newtext))
+    if (markdown.quote == true) newtext = newtext + "</blockquote></div>";
 
     return twemoji.parse(createTextLinks_(newtext));
 };
