@@ -275,6 +275,12 @@ function hidePrivateChannelPlaceholder() {
     });
 
     const privChannelId = path[path.length - 1];
+
+    // Friends page
+    const { uid } = firebase.auth().currentUser;
+    
+    if (privChannelId === '@me') return CACHED_USERS[uid].last_open_channel;
+
     const otherPages = ['embers'];
 
     return (isNaN(privChannelId) && !otherPages.includes(privChannelId)) ? false : privChannelId;

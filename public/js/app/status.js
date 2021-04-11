@@ -17,6 +17,13 @@
  */
 window.onunload = async () => {
     setStatus('offline');
+
+    // Update user with the last open channel
+    const { uid } = firebase.auth().currentUser;
+
+    await firebase.firestore().collection('users').doc(uid).update({
+        last_open_channel: lastPrivateChannelId
+    });
 }
 
 
