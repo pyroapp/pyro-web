@@ -29,25 +29,14 @@ firebase.auth().onAuthStateChanged(async user => {
             ...snapshot.data()
         };
 
-        const { username, discriminator, status } = snapshot.data();
-
-        // Set user details
-        const usernameLabel = document.getElementById('usernameLabel');
-        const discriminatorLabel = document.getElementById('discriminatorLabel');
-        const avatarImage = document.getElementById('avatarImage');
-
-        usernameLabel.innerText = username;
-        discriminatorLabel.innerText = '#' + discriminator;
-        avatarImage.setAttribute('src', getAvatar());
-
-        // Set user status
-        const userStatus = document.getElementById('userStatus');
-
-        userStatus.setAttribute('fill', STATUS_COLOURS[status]);
-        userStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
+        document.getElementById('avatarImage').setAttribute('src', getAvatar());
+        document.querySelectorAll('.panels-j1Uci_')[0].setAttribute('uid', user.uid);
+    
+        setRealtimeUserInfo(user.uid);
     });
 
     await loadPrivateChannels();
+    await loadGroupChannels();
     await setAutomaticStatus('online');
     await delay(LOADING_TIMEOUT);
     loadPrivateChannelFromId();

@@ -16,9 +16,10 @@ async function loadPrivateChannels() {
     const { uid } = firebase.auth().currentUser;
 
     await firebase.firestore().collection('channels')
-        .where('recipients', 'array-contains', uid)
-        .where('type', '==', 'DM').limit(50).onSnapshot(snapshot => {
-
+    .where('recipients', 'array-contains', uid)
+    .where('type', '==', 'DM')
+    .limit(50)
+    .onSnapshot(snapshot => {
         if (snapshot.empty) return addPrivateChannelPlaceholder();
 
         snapshot.docChanges().forEach(change => {
@@ -38,16 +39,57 @@ async function loadPrivateChannels() {
                     addPrivateChannel(channel.id, recipient);
                     addChat(channel.id, recipient);
 
+                    if (CACHED_USERS[recipient]) return; // User already exists
+
                     await firebase.firestore().collection('users').doc(recipient).onSnapshot(snapshot => {
                         CACHED_USERS[recipient] = {
                             ...snapshot.data()
                         };
 
-                        // Update username and status
-                        const { status, username } = snapshot.data();
+                        setRealtimeUserInfo(recipient);
+                    });
+                });
+            }
+        });
+    });
+}
 
-                        setPrivateChannelStatus(channel.id, status);
-                        setPrivateChannelUsername(channel.id, username);
+
+/**
+ * 
+ */
+async function loadGroupChannels() {
+    const { uid } = firebase.auth().currentUser;
+
+    await firebase.firestore().collection('channels')
+    .where('recipients', 'array-contains', uid)
+    .where('type', '==', 'GROUP_DM')
+    .limit(50)
+    .onSnapshot(snapshot => {
+        if (snapshot.empty) return;
+
+        snapshot.docChanges().forEach(change => {
+            const { type, doc: channel } = change;
+
+            if (type === 'added') {
+
+                // Get group members
+                const { recipients } = channel.data();
+            
+                CACHED_RECIPIENTS[channel.id] = recipients;
+
+                recipients.forEach(async recipient => {
+                    if (recipient === uid) return;
+
+                    // addGroupChannel(channel.id);
+                    // addGroupChat(channel.id);
+                
+                    if (CACHED_USERS[recipient]) return; // User already exists
+
+                    await firebase.firestore().collection('users').doc(recipient).onSnapshot(snapshot => {
+                        CACHED_USERS[recipient] = {
+                            ...snapshot.data()
+                        };
                     });
                 });
             }
@@ -66,6 +108,7 @@ async function loadPrivateChannels() {
     const a = document.createElement('a');
     a.classList = 'channel-2QD9_O container-2Pjhx- clickable-1JJAn8 fadeIn-efi30';
     a.id = 'private-channel-' + channel_id;
+    a.setAttribute('uid', friend_uid);
     a.setAttribute('onclick', `loadPrivateChannelFromId(${channel_id});`)
     a.innerHTML = `
         <div class="layout-2DM8Md">
@@ -79,14 +122,14 @@ async function loadPrivateChannels() {
                         <foreignObject x="0" y="0" width="32" height="32" mask="url(#1e790872-400c-4750-815a-1afdbe1cdf12)">
                             <img src="${getAvatar(friend_uid)}" class="avatar-VxgULZ">
                         </foreignObject>
-                        <rect class="userStatus" x="22" y="22" width="10" height="10" class="pointerEvents-2zdfdO" fill="#43B581" mask="url(#svg-mask-status-online)"></rect>
+                        <rect class="RT_status" x="22" y="22" width="10" height="10" class="pointerEvents-2zdfdO" fill="#43B581" mask="url(#svg-mask-status-online)"></rect>
                     </svg>
                 </div>
             </div>
             <div class="content-3QAtGj">
                 <div class="nameAndDecorators-5FJ2dg">
                     <div class="name-uJV0GL">
-                        <div class="overflow-WK9Ogt"></div>
+                        <div class="overflow-WK9Ogt RT_username"></div>
                     </div>
                 </div>
                 <div class="subText-1KtqkB">
@@ -111,42 +154,6 @@ async function loadPrivateChannels() {
     a.querySelectorAll('.closeButton-2GCmT5')[0].onclick = () => {
         closePrivateChannel(channel_id);
     }
-}
-
-
-/**
- * 
- * @param {*} uid 
- * @param {*} channelId 
- */
- function setPrivateChannelStatus(channel_id, status) {
-    const channel = document.getElementById(`private-channel-${channel_id}`);
-    const header = document.getElementById(`private-header-${channel_id}`);
-    const channelStatus = channel.querySelectorAll('.userStatus')[0];
-    const headerStatus = header.querySelectorAll('.userStatus')[0];
-
-    channelStatus.setAttribute('fill', STATUS_COLOURS[status]);
-    channelStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
-    headerStatus.setAttribute('fill', STATUS_COLOURS[status]);
-    headerStatus.setAttribute('mask', `url(#svg-mask-status-${status})`);
-}
-
-
-/**
- * 
- * @param {*} uid 
- * @param {*} channelId 
- */
-function setPrivateChannelUsername(channel_id, username) {
-    const channel = document.getElementById(`private-channel-${channel_id}`);
-    const chat = document.getElementById(channel_id);
-
-    channel.setAttribute('ptitle', `@${username}`);
-    channel.querySelectorAll('.overflow-WK9Ogt')[0].innerText = username;
-    chat.querySelectorAll('.title-29uC1r')[0].innerText = username;
-    chat.querySelectorAll('.header-3uLluP')[0].innerText = username;
-    chat.querySelectorAll('.placeholder-37qJjk')[0].innerText =`Message @${username}`;
-    chat.querySelectorAll('.description-1sDbzZ')[0].querySelectorAll('strong')[0].innerText = '@' + username;
 }
 
 

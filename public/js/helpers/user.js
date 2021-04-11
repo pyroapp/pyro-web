@@ -123,3 +123,39 @@ async function isFriend(username, discriminator) {
 
     return false;
 }
+
+
+/**
+ * 
+ * @param {*} uid 
+ */
+ function setRealtimeUserInfo(uid) {
+    const elements = document.querySelectorAll(`[uid="${uid}"]`);
+
+    elements.forEach(element => {
+        const statusEl = element.querySelectorAll('.RT_status');
+        const usernameEl = element.querySelectorAll('.RT_username');
+        const discrminiatorEl = element.querySelectorAll('.RT_discrminiator');
+
+        const { status, username, discriminator } = CACHED_USERS[uid];
+
+        statusEl.forEach(s => {
+            s.setAttribute('fill', STATUS_COLOURS[status]);
+            s.setAttribute('mask', `url(#svg-mask-status-${status})`);
+        });
+
+        usernameEl.forEach(u => {
+            u.innerText = username;
+        });
+
+        discrminiatorEl.forEach(d => {
+            d.innerText = '#' + discriminator;
+        });
+
+        // Custom
+        try {
+            element.querySelectorAll('.placeholder-37qJjk')[0].innerText = `Message @${username}`;
+            element.querySelectorAll('.introductionMessage')[0].innerText = `This is the beginning of your direct message history with @${username}`;
+        } catch (e) {};
+    });
+}

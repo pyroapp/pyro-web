@@ -249,7 +249,6 @@ function hidePrivateChannelPlaceholder() {
     const privateChannel = document.getElementById(`private-channel-${channelId}`);
 
     if (privateChannel) {
-        title = privateChannel.getAttribute('ptitle');
         path = (channelId === 'friends') ? '/channels/@me/' : `/channels/@me/${channelId}/`;
     } else {
         channelId = 'friends';
