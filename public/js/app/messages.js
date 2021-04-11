@@ -235,7 +235,7 @@ function textParser(text) {
             oldtext = oldtext.slice(oldtext.startsWith("\n> ") ? "\n> ".length : "> ".length);
             markdown.quote = true;
         } else if (oldtext.startsWith("\n") && markdown.quote == true) {
-            newtext = newtext + "</blockquote></div>\n"
+            newtext = newtext + "</blockquote></div>"
             oldtext = oldtext.slice(1);
             markdown.quote = false;
         } else if (oldtext.startsWith("**") && !oldtext.startsWith("****")) {
