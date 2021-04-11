@@ -13,7 +13,7 @@
  * 
  * @param {*} channelId 
  */
-function sendPrivateMessage(channel_id) {
+ function sendPrivateMessage(channel_id) {
     const channel = document.getElementById(channel_id);
     const input = channel.querySelectorAll('.messageField')[0];
     const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
@@ -217,5 +217,134 @@ function loadMessage(message) {
 }
 
 function textParser(text) {
-    return marked(text).replace(/<p>/g, "<br>").replace(/<\/p>/g, "").slice("<br>".length);
+    let oldtext = strip(text);
+    let newtext = "";
+
+    let markdown = {
+        bold: false,
+        italicized: false,
+        underlined: false,
+        codeblock: false,
+        strikethrough: false,
+        spoiler: false,
+        quote: false
+    };
+
+    while (oldtext.length !== 0) {
+        if (newtext == "" && oldtext.startsWith("> ") || oldtext.startsWith("\n> ")) {
+            newtext = newtext + `<div class="blockquoteContainer-U5TVEi"><div class="blockquoteDivider-2hH8H6"></div><blockquote>`;
+            oldtext = oldtext.slice(oldtext.startsWith("\n> ") ? "\n> ".length : "> ".length);
+            markdown.quote = true;
+        } else if (oldtext.startsWith("\n") && markdown.quote == true) {
+            newtext = newtext + "</blockquote></div>"
+            oldtext = oldtext.slice(1);
+            markdown.quote = false;
+        } else if (oldtext.startsWith("**") && !oldtext.startsWith("****")) {
+            if (markdown.bold == false) {
+                markdown.bold = true;
+                newtext = newtext + "<b>";
+            } else {
+                markdown.bold = false;
+                newtext = newtext + "</b>";
+            };
+            oldtext = oldtext.slice(2);
+        } else if (oldtext.startsWith("__") && !oldtext.startsWith("____")) {
+            if (markdown.underlined == false) {
+                markdown.underlined = true;
+                newtext = newtext + "<u>";
+            } else {
+                markdown.underlined = false;
+                newtext = newtext + "</u>";
+            };
+            oldtext = oldtext.slice(2);
+        } else if (oldtext.startsWith("*") && !oldtext.startsWith("**")) {
+            if (markdown.italicized == false) {
+                markdown.italicized = true;
+                newtext = newtext + "<em>";
+            } else {
+                markdown.italicized = false;
+                newtext = newtext + "</em>";
+            };
+            oldtext = oldtext.slice(1);
+        } else if (oldtext.startsWith("`") && !oldtext.startsWith("``")) {
+            if (markdown.codeblock == false) {
+                markdown.codeblock = true;
+                newtext = newtext + "<code>";
+            } else {
+                markdown.codeblock = false;
+                newtext = newtext + "</code>";
+            };
+            oldtext = oldtext.slice(1);
+        } else if (oldtext.startsWith("~~") && !oldtext.startsWith("~~~~")) {
+            if (markdown.strikethrough == false) {
+                markdown.strikethrough = true;
+                newtext = newtext + "<del>";
+            } else {
+                markdown.strikethrough = false;
+                newtext = newtext + "</del>";
+            };
+            oldtext = oldtext.slice(2);
+        } else if (oldtext.startsWith("||") && !oldtext.startsWith("||||")) {
+            if (markdown.spoiler == false) {
+                markdown.spoiler = true;
+                newtext = newtext + `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span aria-hidden="true" class="inlineContent-3ZjPuv">`
+            } else {
+                markdown.spoiler = false;
+                newtext = newtext + "</span></span>";
+            };
+            oldtext = oldtext.slice(2);
+        } else {
+            newtext = newtext + oldtext.slice(0, 1);
+            oldtext = oldtext.slice(1);
+        };
+    };
+
+    if (markdown.bold == true) newtext = removeLastOfThis(newtext, "<b>", "**");
+    if (markdown.italicized == true) newtext = removeLastOfThis(newtext, "<em>", "*");
+    if (markdown.underlined == true) newtext = removeLastOfThis(newtext, "<u>", "__");
+    if (markdown.codeblock == true) newtext = removeLastOfThis(newtext, "<code>", "`");
+    if (markdown.strikethrough == true) newtext = removeLastOfThis(newtext, "<del>", "~~");
+    if (markdown.spoiler == true) newtext = removeLastOfThis(newtext, `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span aria-hidden="true" class="inlineContent-3ZjPuv">`);
+    if (markdown.quote == true) newtext = newtext + "</blockquote></div>";
+
+    return twemoji.parse(createTextLinks_(newtext));
+};
+
+function removeLastOfThis(text, find, replace) {
+    let removelast = text;
+    let removedlast = "";
+
+    while (removelast.length !== 0) {
+        if (removelast.endsWith(find)) {
+            removedlast = removelast.slice(0, -(find.length)) + replace + removedlast;
+            removelast = "";
+        } else {
+            removedlast = removelast.slice(-1) + removedlast;
+            removelast = removelast.slice(0, -1);
+        };
+    };
+    return removedlast;
+};
+
+// https://stackoverflow.com/questions/6899659/remove-formatting-from-a-contenteditable-div
+
+function strip(html) {
+    let tempDiv = document.createElement("DIV");
+    tempDiv.innerHTML = html;
+    return tempDiv.innerText;
+};
+
+//https://www.labnol.org/code/20294-regex-extract-links-javascript
+
+function createTextLinks_(text) {
+    return (text || "").replace(
+        /([^\S]|^)(((https?\:\/\/)|(www\.))(\S+))/gi,
+            function(match, space, url) {
+                let hyperlink = url;
+                if (!hyperlink.match('^https?:\/\/')) {
+                    hyperlink = 'http://' + hyperlink;
+                }
+                return space + '<a href="' + hyperlink + '" target="_blank">' + url + '</a>';
+        }
+    );
 };
