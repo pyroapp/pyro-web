@@ -273,8 +273,6 @@ function parseEmbeds(embeds) {
         htmls.push(html);
     };
 
-    console.log(htmls)
-
     return htmls.join("\n");
 };
 
