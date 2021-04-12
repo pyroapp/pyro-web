@@ -151,7 +151,6 @@ async function addFriend(user) {
         const privateId = generateId();
 
         await firebase.firestore().collection('channels').doc(privateId).set({
-            last_message_id: null,
             type: 'DM',
             recipients: [uid, f_uid],
             users: [uid, f_uid],
