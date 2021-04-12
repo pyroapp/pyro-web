@@ -237,7 +237,7 @@ function loadMessage(message) {
         div.innerHTML = `
             <div class="contents-2mQqc9">
                 <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${formattedTime}<i class="separator-2nZzUB"></i></span>
-                <div class="markup-2BOw-j messageContent-2qWWxC">${textParser(content)}</div>${embeds ? parseEmbeds(embeds) : ""}
+                ${content ? `<div class="markup-2BOw-j messageContent-2qWWxC">${textParser(content)}</div>` : ""}${embeds ? parseEmbeds(embeds) : ""}
             </div>
         `.trim();
     } else {
@@ -245,7 +245,7 @@ function loadMessage(message) {
             <div class="contents-2mQqc9">
                 <img src="${getAvatar(author)}" class="avatar-1BDn8e clickable-1bVtEA">
                 <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span></span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${formattedTime}</span></span></h2>
-                <div class="markup-2BOw-j messageContent-2qWWxC">${textParser(content)}</div>${embeds ? parseEmbeds(embeds) : ""}
+                ${content ? `<div class="markup-2BOw-j messageContent-2qWWxC">${textParser(content)}</div>` : ""}${embeds ? parseEmbeds(embeds) : ""}
             </div>
         `;
     }
@@ -259,13 +259,21 @@ function loadMessage(message) {
 function parseEmbeds(embeds) {
     let htmls = [];
     for (let embed of embeds) {
-        let html = `<div class="container-1ov-mD"><div class="embedWrapper-lXpS3L embedFull-2tM8-- embed-IeVjo6 markup-2BOw-j" aria-hidden="false"><div class="grid-1nZz7S">`;
+        let html = `<div class="container-1ov-mD"><div class="embedWrapper-lXpS3L embedFull-2tM8-- embed-IeVjo6 markup-2BOw-j" aria-hidden="false" ${embed.color ? ` style="border-color: ${embed.color};"` : ""}><div class="grid-1nZz7S">`;
+        if (embed.title) {
+            html = html + `<div class="embedTitle-3OXDkz embedMargin-UO5XwE">${textParser(embed.title)}</div>`;
+        };
+        if (embed.author) {
+            html = html + `<div class="embedAuthor-3l5luH embedMargin-UO5XwE"><span class="embedAuthorName-3mnTWj">${textParser(embed.author)}</span></div>`;
+        };
         if (embed.description) {
             html = html + `<div class="embedDescription-1Cuq9a embedMargin-UO5XwE">${textParser(embed.description)}</div>`
         };
         html = html + `</div></div>`;
         htmls.push(html);
     };
+
+    console.log(htmls)
 
     return htmls.join("\n");
 };
