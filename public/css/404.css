@@ -35,7 +35,7 @@ body {
 	font-size: 25px;
 }
 
-.container > button {
+.container button {
 	transition: 0.4s;
 	margin-top: 40px;
 	border: 0;
@@ -46,9 +46,10 @@ body {
 	color: #1a1a23;
 	border-radius: 100vw;
 	font-weight: 500;
+	cursor: pointer;
 }
 
-.container > button:hover {
+.container button:hover {
 	transition: 0.4s;
 	letter-spacing: 1px;
 	background: #ebbe45;
