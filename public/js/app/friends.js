@@ -190,3 +190,77 @@ async function getFriends() {
 
     return uids;
 }
+
+
+/**
+ * 
+ * @returns 
+ */
+ async function getBlockedUsers() {
+    const { uid } = firebase.auth().currentUser;
+
+    const friends = await (await firebase.firestore().collection('friends').doc(uid).get()).data();
+    const uids = [];
+
+    for (friend in friends) {
+        const { type } = friends[friend];
+
+        if (type === 'BLOCKED') uids.push(friend);
+    }
+
+    uids.sort();
+
+    return uids;
+}
+
+
+/**
+ * 
+ * @param {*} friend_uid 
+ */
+function unblockFriend(friend_uid) {
+    const { uid } = firebase.auth().currentUser;
+
+    // Unblock from current relationship
+    firebase.firestore().collection('friends').doc(uid).update({
+        [friend_uid]: {
+            type: 'FRIEND',
+        }
+    }, {
+        merge: true
+    });
+
+    // Unblock from friends relationship
+    firebase.firestore().collection('friends').doc(friend_uid).update({
+        [uid]: {
+            type: 'FRIEND'
+        }
+    }, {
+        merge: true
+    });
+}
+
+
+/**
+ * 
+ * @param {*} friend_uid 
+ */
+function blockFriend(friend_uid) {
+    const { uid } = firebase.auth().currentUser;
+
+    // Unblock from current relationship
+    firebase.firestore().collection('friends').doc(uid).update({
+        [friend_uid]: {
+            type: 'BLOCKED',
+            local: true,
+        }
+    });
+
+    // Unblock from friends relationship
+    firebase.firestore().collection('friends').doc(friend_uid).update({
+        [uid]: {
+            type: 'BLOCKED',
+            local: false,
+        }
+    });
+}

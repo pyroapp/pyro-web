@@ -106,13 +106,13 @@
                                     <h1 class="header-3uLluP RT_username"></h1>
                                     <div class="size16-1P40sf description-1sDbzZ">
                                         This is the beginning of your direct message history with @<strong class="RT_username"></strong>.
-                                        <div class="container-1fnzfI hidden">
+                                        <div class="container-1fnzfI">
                                             <div class="colorHeaderSecondary-3Sp3Ft size14-e6ZScH hidden">No friends in common</div>
                                             <div class="divider-3yU4s2 hidden"></div>
-                                            <button type="button" class="action-26D6fg button-38aScr lookFilled-1Gx00P colorPrimary-3b3xI6 sizeTiny-EgeIrh grow-q77ONN">
+                                            <button type="button" class="action-26D6fg button-38aScr lookFilled-1Gx00P colorPrimary-3b3xI6 sizeTiny-EgeIrh grow-q77ONN hidden">
                                                 <div class="contents-18-Yxp">Remove Friend</div>
                                             </button>
-                                            <button type="button" class="action-26D6fg button-38aScr lookFilled-1Gx00P colorPrimary-3b3xI6 sizeTiny-EgeIrh grow-q77ONN">
+                                            <button type="button" class="action-26D6fg button-38aScr lookFilled-1Gx00P colorPrimary-3b3xI6 sizeTiny-EgeIrh grow-q77ONN block-button-rj93">
                                                 <div class="contents-18-Yxp">Block</div>
                                             </button>
                                         </div>
@@ -1110,6 +1110,18 @@
                         </svg>
                         <span class="text-1y-e8-" style="margin-top: 2px;"><strong>Firebase</strong> is typing...</span>
                     </div>
+                    <div class="wrapper-39oAo3 channelBlockedArea-fj903 hidden">
+                        <div class="content-c_0cLD">
+                            <div class="text-2yjo70">
+                                <h3 class="title-FVgbgL base-1x0h_U size16-1P40sf">You cannot send messages to blocked users.</h3>
+                            </div>
+                        </div>
+                        <div class="buttonContainer-3AU1Ij">
+                            <button type="button" class="button-1YxJv4 button-38aScr lookFilled-1Gx00P colorPrimary-3b3xI6 sizeSmall-2cSMqn grow-q77ONN unblockbutton-fj93f">
+                                <div class="contents-18-Yxp">Unblock</div>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
@@ -1171,6 +1183,10 @@
 
     div.querySelectorAll('.clickable-3rdHwn')[0].onclick = () => {
         showGroupDMModal(friend_uid);
+    }
+
+    div.querySelectorAll('.block-button-rj93')[0].onclick = () => {
+        blockFriend(friend_uid);
     }
 }
 

@@ -22,7 +22,7 @@ async function loadPrivateChannels() {
     .onSnapshot(snapshot => {
         if (snapshot.empty) return addPrivateChannelPlaceholder();
 
-        snapshot.docChanges().forEach(change => {
+        snapshot.docChanges().forEach(async change => {
             const { type, doc: channel } = change;
 
             if (type === 'added') {
@@ -49,6 +49,67 @@ async function loadPrivateChannels() {
                         setRealtimeUserInfo(recipient);
                     });
                 });
+            }
+        });
+    });
+}
+
+
+async function blockedUserHandler() {
+    const { uid } = firebase.auth().currentUser;
+    
+    firebase.firestore().collection('friends').doc(uid).onSnapshot(snapshot => {
+        const blocked_users = [];
+
+        // Get blocked users
+        for (friend_uid in snapshot.data()) {
+            const { type } = snapshot.data()[friend_uid];
+
+            if (type === 'BLOCKED') {
+                blocked_users[friend_uid] = {
+                    ...snapshot.data()[friend_uid]
+                };
+            }
+        }
+
+        // Get channels from DOM
+        const channelsDOM = document.getElementById('privateChannelsList').childNodes;
+
+        channelsDOM.forEach(channelDOM => {
+            const channel_id = channelDOM.id.split('-')[1];
+            const friend_uid = channelDOM.getAttribute('uid');
+
+            const channel = document.getElementById(channel_id);
+            const chatpanel = channel.querySelectorAll('.channelTextArea-2VhZ6z')[0];
+            const blockpanel = channel.querySelectorAll('.channelBlockedArea-fj903')[0];
+            const unblock_btn = blockpanel.querySelectorAll('.unblockbutton-fj93f')[0];
+            const block_btn = channel.querySelectorAll('.block-button-rj93')[0];
+
+            // Check if user is blocked
+            if (blocked_users[friend_uid]) {
+                chatpanel.classList.add('hidden');
+                blockpanel.classList.remove('hidden');
+
+                blockpanel.querySelectorAll('.button-1YxJv4')[0].onclick = () => {
+                    unblockFriend(friend_uid);
+                }
+
+                // Change block button to unblock
+                if (blocked_users[friend_uid].local) {
+                    block_btn.onclick = () => { unblockFriend(friend_uid) };
+                    block_btn.innerText = 'Unblock';
+                } else {
+                    unblock_btn.classList.add('hidden');
+                    block_btn.classList.add('hidden');
+                }
+            } else {
+                chatpanel.classList.remove('hidden');
+                blockpanel.classList.add('hidden');
+                block_btn.classList.remove('hidden');
+
+                // Change block button to unblock
+                block_btn.onclick = () => { blockFriend(friend_uid) };
+                block_btn.innerText = 'Block';
             }
         });
     });
