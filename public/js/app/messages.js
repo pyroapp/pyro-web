@@ -340,6 +340,9 @@ function textParser(text) {
                     newtext = newtext + "</span></span>";
                 };
                 oldtext = oldtext.slice(2);
+            } else if (oldtext.startsWith(":pyrodev:")) {
+                newtext = newtext + `<img class="emoji" draggable="false" alt=":pyrodev:" src="https://cdn.discordapp.com/emojis/829584881461493781.png?v=1">`;
+                oldtext = oldtext.slice(`:pyrodev:`.length);
             } else {
                 newtext = newtext + oldtext.slice(0, 1);
                 oldtext = oldtext.slice(1);
