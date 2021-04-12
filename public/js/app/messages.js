@@ -33,8 +33,6 @@ function parseEmojis(text) {
         }
     };
 
-    console.log(newtext);
-
     return newtext;
 };
 
