@@ -11,9 +11,19 @@
 	<div class="page">
 		<div class="container">
 			<h1>4-oh!-4</h1>
-			<p>Hippity hoppity, there was nothing found on this property!</p>
+			<p id="sentence">Well, apparently you don't have JavaScript enabled. You can return home though:</p>
 			<a href="/"><button>Go Home</button></a>
 		</div>
 	</div>
 </body>
+
+<script>
+	var sentences = [
+		"Hippity hoppity, there was nothing found on this property!",
+		"It's dangerous to go alone. Here, take this home button!",
+		"Whoops, you're lost! However, you can return to your cozy home by clicking on this button!"
+	];
+	var sentence = sentences[Math.floor(Math.random() * sentences.length)];
+	document.getElementById("sentence").innerHTML = sentence;
+</script>
 </html>
