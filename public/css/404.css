@@ -30,7 +30,7 @@ body {
 	color: #FEBE10;
 }
 
-.container > p {
+#sentence {
 	margin-top: 40px;
 	font-size: 25px;
 	overflow: hidden;
