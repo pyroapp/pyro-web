@@ -1768,8 +1768,8 @@ section .button.flat-bordered:hover {
 }
 
 :root {
-	--brand-primary: #febe10;
-	--brand-hover: #ffdc69;
+	--brand-primary: #dfa60b;
+	--brand-hover: #dbbe5c;
 	--brand-gradient: linear-gradient(90deg, #8ea1e1, #7289da);
 	--greyple: #99aab5;
 	--dark-not-black: #1a1a23;
