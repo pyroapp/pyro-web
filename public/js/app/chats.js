@@ -104,8 +104,8 @@
                                         </svg>
                                     </div>
                                     <h1 class="header-3uLluP RT_username"></h1>
-                                    <div class="size16-1P40sf description-1sDbzZ introductionMessage">
-                                        This is the beginning of your direct message history with <strong></strong>.
+                                    <div class="size16-1P40sf description-1sDbzZ">
+                                        This is the beginning of your direct message history with @<strong class="RT_username"></strong>.
                                         <div class="container-1fnzfI hidden">
                                             <div class="colorHeaderSecondary-3Sp3Ft size14-e6ZScH hidden">No friends in common</div>
                                             <div class="divider-3yU4s2 hidden"></div>
@@ -1093,8 +1093,8 @@
                                         </div>
                                     </button>
                                 </div>
-                                <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x" id="messagebox">
-                                    <div class="placeholder-37qJjk fontSize16Padding-3Wk7zP RT_username"></div>
+                                <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x">
+                                    <div class="placeholder-37qJjk fontSize16Padding-3Wk7zP">Message @<span class="RT_username"></span></div>
                                     <div contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP messageField" spellcheck="true" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; padding-top: 12px;"></div>
                                 </div>
                             </div>

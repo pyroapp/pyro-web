@@ -48476,7 +48476,8 @@ strong {
 }
 
 .friend-3KALPe .discordTag-X7dpau {
-	opacity:.5
+	opacity:.5;
+	font-size: 13px;
 }
 
 .theme-dark .friend-3KALPe {

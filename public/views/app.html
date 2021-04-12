@@ -404,7 +404,7 @@
                                                 <div class="scroller-1JbKMe thin-1ybCId scrollerBase-289Jih fade-2kXiP2" style="overflow: hidden scroll; padding-right: 0px;" onclick="hideStatusPicker()">
                                                     <div class="content-3YMskv" style="height: 528px;">
                                                         <div style="height: 8px;"></div>
-                                                        <a class="channel-2QD9_O container-2Pjhx- selected-aXhQR6" onclick="loadPrivateChannelFromId('friends')" id="private-channel-friends">
+                                                        <a class="channel-2QD9_O container-2Pjhx- selected-aXhQR6" onclick="loadChannelFromId('friends')" id="channel-friends">
                                                             <div class="layout-2DM8Md">
                                                                 <div class="avatar-3uk_u9">
                                                                     <svg class="linkButtonIcon-Mlm5d6" width="16" height="16" viewBox="0 0 24 24">
@@ -421,7 +421,7 @@
                                                                 </div>
                                                             </div>
                                                         </a>
-                                                        <a class="channel-2QD9_O container-2Pjhx-" onclick="loadPrivateChannelFromId('embers')" id="private-channel-embers">
+                                                        <a class="channel-2QD9_O container-2Pjhx-" onclick="loadChannelFromId('embers')" id="channel-embers">
                                                             <div class="layout-2DM8Md">
                                                                 <div class="avatar-3uk_u9">
                                                                     <svg class="linkButtonIcon-Mlm5d6" width="24" height="24" viewBox="0 0 24 24">
@@ -437,13 +437,12 @@
                                                         </a>
                                                         <h2 class="privateChannelsHeaderContainer-3NB1K1 container-2ax-kl">
                                                             <span class="headerText-2F0828">Direct Messages</span>
-                                                            <div class="privateChannelRecipientsInviteButtonIcon-3A3uTc iconWrapper-2OrFZ1 clickable-3rdHwn hidden">
-                                                                <svg x="0" y="0" class="privateChannelRecipientsInviteButtonIcon-3A3uTc icon-22AiRD" width="24" height="24" viewBox="0 0 18 18">
-                                                                    <polygon fill-rule="nonzero" fill="currentColor" points="15 10 10 10 10 15 8 15 8 10 3 10 3 8 8 8 8 3 10 3 10 8 15 8"></polygon>
-                                                                </svg>
-                                                            </div>
                                                         </h2>
                                                         <div id="privateChannelsList"></div>
+                                                        <h2 class="privateChannelsHeaderContainer-3NB1K1 container-2ax-kl">
+                                                            <span class="headerText-2F0828">Group Chats</span>
+                                                        </h2>
+                                                        <div id="groupChatsList"></div>
                                                     </div>
                                                 </div>
                                             </nav>
@@ -464,7 +463,7 @@
                                                         <div class="colorStandard-2KCXvj size14-e6ZScH usernameContainer-1fp4nu">
                                                             <div class="size14-e6ZScH title-eS5yk3 RT_username"></div>
                                                         </div>
-                                                        <div class="size12-3cLvbJ subtext-3CDbHg RT_discrminiator"></div>
+                                                        <div class="size12-3cLvbJ subtext-3CDbHg RT_discriminator"></div>
                                                     </div>
                                                     <div class="flex-1xMQg5 flex-1O1GKY horizontal-1ae9ci horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6" style="flex: 0 1 auto;">
                                                         <button aria-label="Mute" class="button-14-BFJ enabled-2cQ-u7 button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN hidden">
@@ -841,6 +840,7 @@
         <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-storage.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-messaging.js"></script>
 
         <!-- Additional Frameworks -->

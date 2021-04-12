@@ -10,13 +10,14 @@
 
 // Global Cache
 const CACHED_USERS = {};
+const CACHED_CHANNELS = {};
 const CACHED_RECIPIENTS = {};
 const CACHED_PRIVATE_CHAT_LISTENERS = {};
 
 // Global thresholds
 const LOADING_TIMEOUT = 1500;
 const ACTIVITY_TIMEOUT = 3000;
-const IDLE_TIMEOUT = 5000;
+const IDLE_TIMEOUT = 10000;
 const INITIAL_MESSAGE_FETCH = isDev() ? 1 : 50;
 const GROUP_DMS_USER_THRESHOLD = 4; // Not including current user
 

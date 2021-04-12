@@ -57,49 +57,6 @@ async function loadPrivateChannels() {
 
 /**
  * 
- */
-async function loadGroupChannels() {
-    const { uid } = firebase.auth().currentUser;
-
-    await firebase.firestore().collection('channels')
-    .where('recipients', 'array-contains', uid)
-    .where('type', '==', 'GROUP_DM')
-    .limit(50)
-    .onSnapshot(snapshot => {
-        if (snapshot.empty) return;
-
-        snapshot.docChanges().forEach(change => {
-            const { type, doc: channel } = change;
-
-            if (type === 'added') {
-
-                // Get group members
-                const { recipients } = channel.data();
-            
-                CACHED_RECIPIENTS[channel.id] = recipients;
-
-                recipients.forEach(async recipient => {
-                    if (recipient === uid) return;
-
-                    // addGroupChannel(channel.id);
-                    // addGroupChat(channel.id);
-                
-                    if (CACHED_USERS[recipient]) return; // User already exists
-
-                    await firebase.firestore().collection('users').doc(recipient).onSnapshot(snapshot => {
-                        CACHED_USERS[recipient] = {
-                            ...snapshot.data()
-                        };
-                    });
-                });
-            }
-        });
-    });
-}
-
-
-/**
- * 
  * @param {*} uid 
  */
  function addPrivateChannel(channel_id, friend_uid) {
@@ -107,9 +64,9 @@ async function loadGroupChannels() {
 
     const a = document.createElement('a');
     a.classList = 'channel-2QD9_O container-2Pjhx- clickable-1JJAn8 fadeIn-efi30';
-    a.id = 'private-channel-' + channel_id;
+    a.id = 'channel-' + channel_id;
     a.setAttribute('uid', friend_uid);
-    a.setAttribute('onclick', `loadPrivateChannelFromId(${channel_id});`)
+    a.setAttribute('onclick', `loadChannelFromId(${channel_id});`);
     a.innerHTML = `
         <div class="layout-2DM8Md">
             <div class="avatar-3uk_u9">
@@ -160,7 +117,7 @@ async function loadGroupChannels() {
 /**
  * 
  */
- function toggleSelectedPrivateChannel(channelId) {
+ function toggleSelectedChannel(channelId) {
     document.querySelectorAll('.channel-2QD9_O').forEach(element => {
         element.classList.remove('selected-aXhQR6');
     });
@@ -172,8 +129,8 @@ async function loadGroupChannels() {
 /**
  * 
  */
-async function selectPrivateChannel(channel_id) {
-    toggleSelectedPrivateChannel(`private-channel-${channel_id}`);
+async function selectChannel(channel_id) {
+    toggleSelectedChannel(`channel-${channel_id}`);
 
     channel_id = channel_id.toString(); // Not sure why it sometimes returns an int
     
@@ -201,15 +158,15 @@ async function closePrivateChannel(channel_id) {
     // Determine if the selected user is being removed,
     // select the first user in the list.
     const channelList = document.getElementById('privateChannelsList');
-    const channel = document.getElementById('private-channel-' + channel_id);
+    const channel = document.getElementById('channel-' + channel_id);
 
     channelList.removeChild(channel);
 
     let id = 'friends';
 
     if (channelList.childElementCount > 0) {
-        id = channelList.children[0].id.replace('private-channel-', '');
+        id = channelList.children[0].id.replace('channel-', '');
     }
 
-    loadPrivateChannelFromId(id);
+    loadChannelFromId(id);
 }

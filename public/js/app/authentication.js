@@ -17,7 +17,7 @@ window.onload = () => {
 
 
 window.onpopstate = () => {
-    loadPrivateChannelFromId(); // When user goes back
+    loadChannelFromId(); // When user goes back
 }
 
 
@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged(async user => {
     await loadGroupChannels();
     await setAutomaticStatus('online');
     await delay(LOADING_TIMEOUT);
-    loadPrivateChannelFromId();
+    loadChannelFromId();
     await delay(500);
     hidePageLoader();
     await enableNotifications();

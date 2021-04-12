@@ -237,28 +237,28 @@ function hidePrivateChannelPlaceholder() {
  * 
  * @param {*} channelId 
  */
-let lastPrivateChannelId;
+let lastChannelId;
 
-function loadPrivateChannelFromId(channelId) {
-    if (!channelId) channelId = getPrivateChannelFromURL();
-    if (lastPrivateChannelId === channelId) return;
+function loadChannelFromId(channel_id) {
+    if (!channel_id) channel_id = getChannelFromURL();
+    if (lastChannelId === channel_id) return;
 
     let title = 'Pyro';
     let path = '/channels/@me/';
 
-    const privateChannel = document.getElementById(`private-channel-${channelId}`);
+    const channel = document.getElementById(`channel-${channel_id}`);
 
-    if (privateChannel) {
-        path = (channelId === 'friends') ? '/channels/@me/' : `/channels/@me/${channelId}/`;
+    if (channel) {
+        path = (channel_id === 'friends') ? '/channels/@me/' : `/channels/@me/${channel_id}/`;
     } else {
-        channelId = 'friends';
+        channel_id = 'friends';
     }
 
     window.history.pushState({}, title, path);
-    selectPrivateChannel(channelId);
-    selectMainBody(channelId);
+    selectChannel(channel_id);
+    selectMainBody(channel_id);
 
-    lastPrivateChannelId = channelId;
+    lastChannelId = channel_id;
 }
  
  
@@ -266,21 +266,21 @@ function loadPrivateChannelFromId(channelId) {
   * 
   * @returns 
   */
-function getPrivateChannelFromURL() {
+function getChannelFromURL() {
     const path = window.location.pathname.split('/');
 
     path.filter((value, index) => {
         if (!value) path.splice(index, index + 1);
     });
 
-    const privChannelId = path[path.length - 1];
+    const channel_id = path[path.length - 1];
 
     // Friends page
     const { uid } = firebase.auth().currentUser;
 
-    if (privChannelId === '@me') return CACHED_USERS[uid].last_open_channel || '';
+    if (channel_id === '@me') return CACHED_USERS[uid].last_open_channel || '';
 
     const otherPages = ['embers'];
 
-    return (isNaN(privChannelId) && !otherPages.includes(privChannelId)) ? false : privChannelId;
+    return (isNaN(channel_id) && !otherPages.includes(channel_id)) ? false : channel_id;
 }

@@ -106,7 +106,7 @@ async function signup() {
             merge: true
         });
 
-        await uploadDefaultAvatar();
+        await uploadDefaultAvatar(uid);
 
         redirect('/channels/@me');
     } catch (error) {

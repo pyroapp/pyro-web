@@ -12,8 +12,7 @@
 /**
  * 
  */
-async function uploadDefaultAvatar() {
-    const { uid } = firebase.auth().currentUser;
+async function uploadDefaultAvatar(name) {
 
     // Generate a random colour for the profile picture
     const avatars = ['blue', 'green', 'yellow', 'red'];
@@ -24,7 +23,7 @@ async function uploadDefaultAvatar() {
     const blob = await (await fetch(path)).blob();
 
     // Upload image to Firebase Storage
-    await firebase.storage().ref(`/avatars/${uid}.gif`).put(blob);
+    await firebase.storage().ref(`/avatars/${name}.gif`).put(blob);
 }
 
 
@@ -135,7 +134,7 @@ async function isFriend(username, discriminator) {
     elements.forEach(element => {
         const statusEl = element.querySelectorAll('.RT_status');
         const usernameEl = element.querySelectorAll('.RT_username');
-        const discrminiatorEl = element.querySelectorAll('.RT_discrminiator');
+        const discrminiatorEl = element.querySelectorAll('.RT_discriminator');
 
         const { status, username, discriminator } = CACHED_USERS[uid];
 
@@ -151,11 +150,5 @@ async function isFriend(username, discriminator) {
         discrminiatorEl.forEach(d => {
             d.innerText = '#' + discriminator;
         });
-
-        // Custom
-        try {
-            element.querySelectorAll('.placeholder-37qJjk')[0].innerText = `Message @${username}`;
-            element.querySelectorAll('.introductionMessage')[0].innerText = `This is the beginning of your direct message history with @${username}`;
-        } catch (e) {};
     });
 }
