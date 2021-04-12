@@ -1161,12 +1161,12 @@
         };
     });
 
-    input.addEventListener('paste', (e) => {
+    input.addEventListener("paste", function(e) {
         e.preventDefault();
-
-        const text = (e.originalEvent || e).clipboardData.getData('text/plain');
-
-        document.execCommand("insertHTML", false, text);
+    
+        let text = (e.originalEvent || e).clipboardData.getData('text/plain');
+    
+        document.execCommand("insertHTML", false, text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"));
     });
 
     div.querySelectorAll('.clickable-3rdHwn')[0].onclick = () => {
