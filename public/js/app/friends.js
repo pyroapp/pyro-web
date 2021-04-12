@@ -169,3 +169,25 @@ async function addFriend(user) {
         }
     }
 }
+
+
+/**
+ * 
+ * @returns 
+ */
+async function getFriends() {
+    const { uid } = firebase.auth().currentUser;
+
+    const friends = await (await firebase.firestore().collection('friends').doc(uid).get()).data();
+    const uids = [];
+
+    for (friend in friends) {
+        const { type } = friends[friend];
+
+        if (type === 'FRIEND') uids.push(friend);
+    }
+
+    uids.sort();
+
+    return uids;
+}

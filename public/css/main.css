@@ -4845,7 +4845,7 @@ h6.title-3KTIjF {
 	-ms-flex: 1 1 auto;
 	flex: 1 1 auto;
 	font-size: 16px;
-	max-width: 100%
+	max-width: 24px;
 }
 
 .checkboxWrapper-SkhIWG.row-3QHy4I {
@@ -4890,9 +4890,6 @@ h6.title-3KTIjF {
 }
 
 .input-3ITkQf {
-	position: absolute;
-	top: 0;
-	left: 0;
 	opacity: 0;
 	margin: 0;
 	padding: 0;
@@ -4987,6 +4984,15 @@ h6.title-3KTIjF {
 
 .checkbox-2Yh6o3 {
 	margin-bottom: 10px
+}
+
+.checked-3_4uQ9 {
+	background-color: var(--brand-primary);
+	border-color: var(--brand-primary-active);
+}
+
+.checked-3_4uQ9 > svg {
+	display: block;
 }
 
 .checkbox-2Yh6o3:last-child {
@@ -48441,6 +48447,11 @@ strong {
 	font-weight:500
 }
 
+.friend-3KALPe:hover {
+	background-color: rgba(79, 84, 92, .3);
+    color: #fff;
+}
+
 .friend-3KALPe .avatar-vr5NCN {
 	-ms-flex-negative:0;
 	flex-shrink:0;
@@ -48460,7 +48471,8 @@ strong {
 }
 
 .friend-3KALPe .nickname-O95uts {
-	margin-right:4px
+	margin-right:4px;
+	margin-top: 2px;
 }
 
 .friend-3KALPe .discordTag-X7dpau {
@@ -48513,7 +48525,7 @@ strong {
 
 .noResults-ZTbl5V,
 .scroller-hUf6zQ {
-	max-height:190px
+	max-height: 200px;
 }
 
 .copyInput-fU5OcD {
