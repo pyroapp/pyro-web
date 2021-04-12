@@ -267,7 +267,8 @@ function textParser(text) {
         codeblock: false,
         strikethrough: false,
         spoiler: false,
-        quote: false
+        quote: false,
+        bigcodeblock: false
     };
 
     while (oldtext.length !== 0) {
@@ -311,6 +312,22 @@ function textParser(text) {
                     newtext = newtext + "</em>";
                 };
                 oldtext = oldtext.slice(1);
+            } else if (oldtext.startsWith("```") && !oldtext.startsWith("``````")) {
+                if (markdown.bigcodeblock == true) {
+                    markdown.bigcodeblock = false;
+                    newtext = newtext + `</code></pre>`;
+
+                    oldtext = oldtext.slice(3);
+                } else {
+                    markdown.bigcodeblock = true;
+                    newtext = newtext + `<pre><code class="scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9 hljs">`;
+
+                    oldtext = oldtext.slice(3);
+
+                    if (oldtext.startsWith("\n")) oldtext = oldtext.slice(1);
+                };
+
+                console.log(newtext);
             } else if (oldtext.startsWith("`") && !oldtext.startsWith("``")) {
                 if (markdown.codeblock == false) {
                     markdown.codeblock = true;
@@ -353,8 +370,9 @@ function textParser(text) {
     if (markdown.underlined == true) newtext = removeLastOfThis(newtext, "<u>", "__");
     if (markdown.codeblock == true) newtext = removeLastOfThis(newtext, "<code>", "`");
     if (markdown.strikethrough == true) newtext = removeLastOfThis(newtext, "<del>", "~~");
-    if (markdown.spoiler == true) newtext = removeLastOfThis(newtext, `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span class="inlineContent-3ZjPuv">`);
+    if (markdown.spoiler == true) newtext = removeLastOfThis(newtext, `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span class="inlineContent-3ZjPuv">`, "||");
     if (markdown.quote == true) newtext = newtext + "</blockquote></div>";
+    if (markdown.bigcodeblock == true) newtext = removeLastOfThis(newtext, `<pre><code class="scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9 hljs">`, "```");
 
     return twemoji.parse(createTextLinks_(newtext));
 };
