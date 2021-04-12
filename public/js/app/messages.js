@@ -326,8 +326,6 @@ function textParser(text) {
 
                     if (oldtext.startsWith("\n")) oldtext = oldtext.slice(1);
                 };
-
-                console.log(newtext);
             } else if (oldtext.startsWith("`") && !oldtext.startsWith("``")) {
                 if (markdown.codeblock == false) {
                     markdown.codeblock = true;
