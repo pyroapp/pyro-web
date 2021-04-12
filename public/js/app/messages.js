@@ -96,7 +96,7 @@ function findEmoji(text) {
         mentions: [],
         recipients: recipients,
         pinned: false,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
     });
 
     // Remove all child node content
@@ -210,7 +210,7 @@ async function loadPrivateMessages(channel_id) {
 let lastMessage = { author: { id: null } };
 
 function loadMessage(message) {
-    const { content, author: { id: author }, timestamp, channel_id } = message.data();
+    const { content, embeds, author: { id: author }, timestamp, channel_id } = message.data();
     const { username } = CACHED_USERS[author];
 
     const isToday = moment(timestamp).isSame(moment(), "day");
@@ -237,7 +237,7 @@ function loadMessage(message) {
         div.innerHTML = `
             <div class="contents-2mQqc9">
                 <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${formattedTime}<i class="separator-2nZzUB"></i></span>
-                <div class="markup-2BOw-j messageContent-2qWWxC">${textParser(content)}</div>
+                <div class="markup-2BOw-j messageContent-2qWWxC">${textParser(content)}</div>${embeds ? parseEmbeds(embeds) : ""}
             </div>
         `.trim();
     } else {
@@ -245,7 +245,7 @@ function loadMessage(message) {
             <div class="contents-2mQqc9">
                 <img src="${getAvatar(author)}" class="avatar-1BDn8e clickable-1bVtEA">
                 <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span></span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${formattedTime}</span></span></h2>
-                <div class="markup-2BOw-j messageContent-2qWWxC">${textParser(content)}</div>
+                <div class="markup-2BOw-j messageContent-2qWWxC">${textParser(content)}</div>${embeds ? parseEmbeds(embeds) : ""}
             </div>
         `;
     }
@@ -255,6 +255,20 @@ function loadMessage(message) {
     document.getElementById(`private-message-list-${channel_id}`).appendChild(div);
     div.scrollIntoView();
 }
+
+function parseEmbeds(embeds) {
+    let htmls = [];
+    for (let embed of embeds) {
+        let html = `<div class="container-1ov-mD"><div class="embedWrapper-lXpS3L embedFull-2tM8-- embed-IeVjo6 markup-2BOw-j" aria-hidden="false"><div class="grid-1nZz7S">`;
+        if (embed.description) {
+            html = html + `<div class="embedDescription-1Cuq9a embedMargin-UO5XwE">${textParser(embed.description)}</div>`
+        };
+        html = html + `</div></div>`;
+        htmls.push(html);
+    };
+
+    return htmls.join("\n");
+};
 
 function textParser(text) {
     let oldtext = strip(text);
