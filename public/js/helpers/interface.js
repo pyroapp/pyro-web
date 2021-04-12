@@ -278,7 +278,8 @@ function getChannelFromURL() {
     // Friends page
     const { uid } = firebase.auth().currentUser;
 
-    if (channel_id === '@me') return CACHED_USERS[uid].last_open_channel || '';
+    //TODO: FIX THIS UTTER SHIT CODE
+    // if (channel_id === '@me') return CACHED_USERS[uid].last_open_channel || '';
 
     const otherPages = ['embers'];
 
