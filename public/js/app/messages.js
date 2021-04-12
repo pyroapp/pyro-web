@@ -376,6 +376,9 @@ function textParser(text) {
             } else if (oldtext.startsWith(":pyrodev:")) {
                 newtext = newtext + `<img class="emoji" draggable="false" alt=":pyrodev:" src="https://cdn.discordapp.com/emojis/829584881461493781.png?v=1">`;
                 oldtext = oldtext.slice(`:pyrodev:`.length);
+            } else if (oldtext.startsWith(":firebase:")) {
+                newtext = newtext + `<img class="emoji" draggable="false" alt=":firebase:" src="https://cdn.discordapp.com/emojis/811084920255807518.gif?v=1">`;
+                oldtext = oldtext.slice(`:firebase:`.length);
             } else {
                 newtext = newtext + oldtext.slice(0, 1);
                 oldtext = oldtext.slice(1);
