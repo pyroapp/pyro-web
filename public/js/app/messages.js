@@ -392,9 +392,7 @@ function removeLastOfThis(text, find, replace) {
 };
 
 document.body.onclick = function(e) {
-    if (e.target.className && e.target.className.indexOf('spoilerText-3p6IlD') != -1 && e.target.className.indexOf('hidden-HHr2R9') != -1) {
-        e.target.className = "spoilerText-3p6IlD";
-    };
+    if (typeof e.target.className == "string" && e.target.className == "spoilerText-3p6IlD hidden-HHr2R9") e.target.className = "spoilerText-3p6IlD";
 };
 
 // https://stackoverflow.com/questions/6899659/remove-formatting-from-a-contenteditable-div
