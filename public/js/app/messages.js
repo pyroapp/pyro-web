@@ -13,14 +13,14 @@
  * 
  * @param {*} channelId 
  */
- function sendPrivateMessage(channel_id) {
+ function sendPrivateMessage(channel_id, image) {
     const channel = document.getElementById(channel_id);
     const input = channel.querySelectorAll('.messageField')[0];
     const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
 
     const message = input.innerHTML.trim();
 
-    if (!message) return;
+    if (!message && !image) return;
 
     const { uid } = firebase.auth().currentUser;
     const ref = firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(generateId());
@@ -43,13 +43,13 @@
     });
 
     ref.set({
-        attachments: [],
+        attachments: image ? [image] : [], //["pictures%2FTue%20Apr%2013%202021%2016%3A51%3A52%20GMT%2B0100%20(British%20Summer%20Time)-unknown.png?alt=media"]
         author: {
             id: uid,
             username: CACHED_USERS[uid].username
         },
         channel_id: channel_id,
-        content: parseEmojis(message),
+        content: message ? parseEmojis(message) : "",
         edited_timestamp: null,
         mention_everyone: false,
         mention_roles: [],
@@ -170,7 +170,7 @@ async function loadPrivateMessages(channel_id) {
 let lastMessage = { author: { id: null } };
 
 function loadMessage(message) {
-    const { content, embeds, author: { id: author }, timestamp, channel_id } = message.data();
+    const { content, embeds, author: { id: author }, timestamp, channel_id, attachments: attachments } = message.data();
     const { username } = CACHED_USERS[author];
 
     const isToday = moment(timestamp).isSame(moment(), "day");
@@ -197,7 +197,7 @@ function loadMessage(message) {
         div.innerHTML = `
             <div class="contents-2mQqc9">
                 <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${formattedTime}<i class="separator-2nZzUB"></i></span>
-                ${content ? `<div class="markup-2BOw-j messageContent-2qWWxC">${parseText(content)}</div>` : ""}${embeds ? parseEmbeds(embeds) : ""}
+                ${parseText(content, embeds, attachments || [])}
             </div>
         `.trim();
     } else {
@@ -205,7 +205,7 @@ function loadMessage(message) {
             <div class="contents-2mQqc9">
                 <img src="${getAvatar(author)}" class="avatar-1BDn8e clickable-1bVtEA">
                 <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span></span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${formattedTime}</span></span></h2>
-                ${content ? `<div class="markup-2BOw-j messageContent-2qWWxC">${parseText(content)}</div>` : ""}${embeds ? parseEmbeds(embeds) : ""}
+                ${parseText(content, embeds, attachments || [])}
             </div>
         `;
     }
