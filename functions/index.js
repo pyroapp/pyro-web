@@ -79,5 +79,5 @@ api_cdn.get('/:folder/:name', (req, res) => {
     if (!verified_folder.includes(folder_name)) return returnError('Specified folder does not exist');
     if (!file_name) return returnError(res, 'File name not specified');
 
-    return res.status(200).send(`https://firebasestorage.googleapis.com/v0/b/pyro-chat.appspot.com/o/${folder_name}%2F${file_name}.gif?alt=media`);
+    return res.status(200).sendFile(`https://firebasestorage.googleapis.com/v0/b/pyro-chat.appspot.com/o/${folder_name}%2F${file_name}.gif?alt=media`);
 });
