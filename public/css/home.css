@@ -17989,3 +17989,33 @@ a:hover .tile-aRqovC {
 		grid-row: 1
 	}
 }
+
+/* Added By Realmy */
+
+.topContainer-ae1713 {
+	padding: var(--section-spacing) 80px;
+}
+
+.developersContainer-c18056 {
+	padding: var(--section-spacing) 80px;
+	background: #101015;
+}
+
+.developer {
+	display: flex;
+	margin-bottom: 100px;
+}
+
+.developer > img {
+	width: 128px;
+	height: 128px;
+	border-radius: 100vw;
+}
+
+.developer > div {
+	margin-left: 40px;
+}
+
+.marginTop-1d8bcc {
+	margin-top: 14px;
+}
