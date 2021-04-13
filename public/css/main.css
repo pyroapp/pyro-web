@@ -62967,6 +62967,7 @@ html .invoiceCancelRow-1YYT42 {
 }
 
 .privateChannelsHeaderContainer-3NB1K1 {
+	transition: 0.1s;
 	display:-webkit-box;
 	display:-ms-flexbox;
 	display:flex;
@@ -79241,5 +79242,6 @@ html .invoiceCancelRow-3mYhFX {
 }
 
 .privateChannelsHeaderContainer-3NB1K1:hover {
+	transition: 0.1s;
 	color: var(--header-primary);
 }
