@@ -79238,3 +79238,7 @@ html .invoiceCancelRow-3mYhFX {
 	background: #24222C !important;
 	margin-top: 12px;
 }
+
+.privateChannelsHeaderContainer-3NB1K1:hover {
+	color: var(--header-primary);
+}
