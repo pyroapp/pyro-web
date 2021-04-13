@@ -19,7 +19,7 @@ const CACHED_CHANNEL_LISTENERS = {};
 const LOADING_TIMEOUT = 1500;
 const ACTIVITY_TIMEOUT = 3000;
 const IDLE_TIMEOUT = 10000;
-const INITIAL_MESSAGE_FETCH = !isDev() ? 1 : 50;
+const INITIAL_MESSAGE_FETCH = isDev() ? 1 : 50;
 const GROUP_DMS_USER_THRESHOLD = 4; // Not including current user
 
 // Global user status colours
@@ -72,5 +72,6 @@ const DID_YOU_KNOW = [
     'Doing wizardly math stuff!',
     'Caring for the fonts!',
     'Lighting the way to camp!',
-    'Be more like doko.'
+    'Be more like doko.',
+    'Pyro > Discord > Guilded'
 ];
