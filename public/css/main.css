@@ -79206,27 +79206,24 @@ html .invoiceCancelRow-3mYhFX {
 
 /* Added by Realmy */
 
-.rlmy-embers-h1 {
+.embersHeader-4eb9ae {
 	color: var(--brand-primary);
 	font-weight: 700;
 	font-size: 50px;
 }
 
-.rlmy-embers-sub {
+.embersSub-d1bc64 {
 	color: var(--header-primary);
 	font-weight: 400;
 	font-size: 22px;
 	margin-top: 24px;
 }
 
-.rlmy-txtcenter {
+.centerText-e4ce97 {
 	text-align: center;
 }
 
-.marginTop-12 {
-	margin-top: 12px;
-}
-
-.discordButton {
+.discordButton-7dc602 {
 	background: #24222C !important;
+	margin-top: 12px;
 }
