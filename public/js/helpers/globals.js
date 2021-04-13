@@ -70,5 +70,6 @@ const DID_YOU_KNOW = [
     'Unpack the webpack!',
     'Doing wizardly math stuff!',
     'Caring for the fonts!',
-    'Lighting the way to camp!'
+    'Lighting the way to camp!',
+    'Be more like doko.'
 ];
