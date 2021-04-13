@@ -70,7 +70,7 @@ const DID_YOU_KNOW = [
     'Late night gaming or planning your next dinner?',
     'Welcome back to Pyro!',
     'Preparing a warm welcome!',
-    'Make a new friend!'
+    'Make a new friend!',
     'Be more like doko.',
     'Pyro > Discord > Guilded'
 ];
