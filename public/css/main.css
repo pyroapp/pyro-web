@@ -6253,7 +6253,7 @@ code {
 	--elevation-high:0 8px 16px rgba(0, 0, 0, 0.24);
 	--logo-primary:#fff;
 	--focus-primary:#00b0f4;
-	--radio-group-dot-foreground:#8ea1e1;
+	--radio-group-dot-foreground:#febe10;
 	--guild-header-text-shadow:0 1px 1px rgba(0, 0, 0, 0.4);
 	--channeltextarea-background:#101015;
 	--activity-card-background:#202225;
@@ -10587,6 +10587,7 @@ img[alt] {
 
 .item-26Dhrx[aria-checked=true] {
 	background-color:var(--background-tertiary);
+	transition: ease-in-out 0.15s;
 	color:var(--interactive-active)
 }
 
@@ -10597,6 +10598,7 @@ img[alt] {
 .item-26Dhrx {
 	background-color:var(--background-secondary);
 	color:var(--interactive-normal);
+	transition: ease-in-out 0.15s;
 	cursor:pointer;
 	border-radius:3px;
 	display:block
@@ -11859,7 +11861,7 @@ img[alt] {
 }
 
 .iconWrapper-3LVgIo {
-	cursor:pointer
+	cursor:pointer;
 }
 
 .icon-TYbVk4 {

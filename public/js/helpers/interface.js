@@ -58,11 +58,9 @@ function showPageLoader() {
     loader.innerHTML = `
         <div class="container-16j22k fixClipping-3qAKRb" style="opacity: 1;">
             <div class="content-1-zrf2">
-                <video class="ready-36e6Vk" loop="" autoplay="" playsinline="">
-                    <source src="/vid/0bdc0497eb3a19e66f2b1e3d5741634c.webm" type="video/webm">
-                </video>
-                <div class="text-3c9Zq1">
-                    <div class="tipTitle-GL9qAt">Pyro is loading</div>
+            <img src="/vid/pyroFlames.gif" alt="Pyro Campfire GIF">
+            <div class="text-3c9Zq1">
+                <div class="tipTitle-GL9qAt"><br>Pyro is loading, give us a sec.</div>
                     <div class="tip-2cgoli">${generateDidYouKnowMessage()}</div>
                     <div class="body-2Vra9D contentBase-11jeVK"></div>
                 </div>
