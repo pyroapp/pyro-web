@@ -47506,7 +47506,8 @@ strong {
 	width:24px;
 	height:24px;
 	-webkit-app-region:no-drag;
-	color:var(--text-muted)
+	color:var(--text-muted);
+	fill:var(--text-muted)
 }
 
 .clickable-3rdHwn .icon-22AiRD {
