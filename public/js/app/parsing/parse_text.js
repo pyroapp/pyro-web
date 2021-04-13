@@ -10,19 +10,6 @@
 
 
 /**
- * https://stackoverflow.com/questions/6899659/remove-formatting-from-a-contenteditable-div
- * @param {*} html 
- * @returns 
- */
-function strip(html) {
-    const div = document.createElement("div");
-    div.innerHTML = html;
-    
-    return div.innerText;
-}
-
-
-/**
  * https://www.labnol.org/code/20294-regex-extract-links-javascript
  * @param {*} text 
  * @returns 
@@ -72,7 +59,7 @@ function removeLastOf(text, find, replace) {
  * @returns 
  */
 function parseText(text) {
-    let oldtext = strip(text);
+    let oldtext = text;
     let newtext = "";
 
     const markdown = {
