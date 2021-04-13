@@ -135,7 +135,7 @@ async function loadPrivateMessages(channel_id) {
             });
         });
 
-        CACHED_PRIVATE_CHAT_LISTENERS[channel_id] = {
+        CACHED_CHAT_LISTENERS[channel_id] = {
             Unsubscribe: listener,
         };
     } else {
@@ -156,7 +156,7 @@ async function loadPrivateMessages(channel_id) {
             });
         });
 
-        CACHED_PRIVATE_CHAT_LISTENERS[channel_id] = {
+        CACHED_CHAT_LISTENERS[channel_id] = {
             Unsubscribe: listener,
         };
     }

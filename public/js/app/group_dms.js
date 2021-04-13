@@ -321,7 +321,7 @@ function addGroupChat(channel_id) {
                 </a>
             </div>
         </section>
-        <div class="content-yTz4x3" id="private-chat-${channel_id}">
+        <div class="content-yTz4x3" id="chat-${channel_id}">
             <main class="chatContent-a9vAAp">
                 <div class="messagesWrapper-1sRNjr group-spacing-16">
                     <div class="scroller-2LSbBU auto-Ge5KZx scrollerBase-289Jih disableScrollAnchor-3V9UtP" style="overflow: hidden scroll; padding-right: 0px;">
@@ -1428,20 +1428,21 @@ function selectMainBody(id) {
  async function loadGroupChannels() {
     const { uid } = firebase.auth().currentUser;
 
-    await firebase.firestore().collection('channels')
+    firebase.firestore().collection('channels')
     .where('recipients', 'array-contains', uid)
     .where('type', '==', 'GROUP_DM')
     .limit(50)
     .onSnapshot(snapshot => {
         if (snapshot.empty) return;
 
-        snapshot.docChanges().forEach(change => {
+        snapshot.docChanges().forEach(async change => {
             const { type, doc: channel } = change;
+            const { recipients } = channel.data();
 
             if (type === 'added') {
-
-                // Get group members
-                const { recipients } = channel.data();
+                
+                // Group chat already exists in DOM
+                if (document.getElementById(`channel-${channel.id}`)) return;
             
                 CACHED_RECIPIENTS[channel.id] = recipients;
 
@@ -1449,7 +1450,7 @@ function selectMainBody(id) {
                 addGroupChat(channel.id);
 
                 // Realtime group chat name
-                firebase.firestore().collection('channels').doc(channel.id).onSnapshot(snapshot => {
+                const listener = await firebase.firestore().collection('channels').doc(channel.id).onSnapshot(snapshot => {
                     const { recipients } = snapshot.data();
                     const gc = document.getElementById(`channel-${channel.id}`);
 
@@ -1463,6 +1464,8 @@ function selectMainBody(id) {
                     setRealtimeChannelInfo(channel.id);
                 });
 
+                CACHED_CHANNEL_LISTENERS[channel.id] = listener;
+
                 recipients.forEach(recipient => {
                     if (recipient === uid) return;
                     if (CACHED_USERS[recipient]) return; // User already exists
@@ -1473,6 +1476,28 @@ function selectMainBody(id) {
                         };
                     });
                 });
+
+                return;
+            }
+
+            // Removed means that a field within the document has been changed.
+            if (type === 'removed') {
+
+                // Check channel recipients, if local user doesn't exist remove from DOM
+                const gcList = document.getElementById('groupChatsList');
+                const chatList = document.getElementById('main-body');
+
+                const gc = document.getElementById(`channel-${channel.id}`);
+                const chat = document.getElementById(channel.id);
+
+                gcList.removeChild(gc); // Remove channel
+                chatList.removeChild(chat); // Remove chat
+
+                // Detatch listener
+                CACHED_CHANNEL_LISTENERS[channel.id]();
+                delete CACHED_CHANNEL_LISTENERS[channel.id];
+
+                loadChannelFromId('friends');
             }
         });
     });
