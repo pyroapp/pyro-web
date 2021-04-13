@@ -1075,6 +1075,8 @@
                     </div>
                 </div>
                 <div class="form-2fGMdU">
+                    <input type="file" id="photo">
+                    <button class="upload-image-btn-fj903f">Upload Image</button>
                     <div class="channelTextArea-rNsIhG channelTextArea-2VhZ6z">
                         <div class="scrollableContainer-2NUZem webkit-HjD9Er">
                             <div class="inner-MADQqc sansAttachButton-td2irx">
@@ -1206,3 +1208,44 @@ function selectMainBody(id) {
 
     selectedBody.classList.remove('hidden');
 }
+
+document.body.addEventListener('click', (e) => {
+    if (e.target.className == "upload-image-btn-fj903f") {
+        e.preventDefault();
+        
+        uploadFile()
+    };
+});
+
+async function uploadFile(){
+    const ref = firebase.storage().ref()
+
+    const file = document.querySelector("#photo").files[0];
+
+    if (!file) return;
+
+    const name = new Date() + '-' + file.name
+
+    const substr = 'image'
+
+    let folder;
+
+    if (file.type.includes(substr) == true) {
+        folder = 'pictures/'
+    } else {
+        folder = 'attachments/' 
+    }
+
+    const metadata = {
+        content:file.type
+    }
+
+    const task = ref.child(folder + name).put(file,metadata)
+
+    task
+    .then(snapshot => snapshot.ref.getDownloadURL())
+    .then(url => {
+        console.log(url)
+    })
+}
+//<div class="container-1ov-mD"><a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB imageWrapper-2p5ogY imageZoom-1n-ADA clickable-3Ya1ho embedWrapper-lXpS3L" tabindex="0" href="link here" rel="noreferrer noopener" target="_blank" role="button" style="width: 400px; height: 300px;"><img alt="" src="link here" style="width: 400px; height: 300px;"></a></div>
