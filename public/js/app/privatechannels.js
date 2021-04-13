@@ -63,7 +63,7 @@ async function loadPrivateChannels() {
     const channelsList = document.getElementById('privateChannelsList');
 
     const a = document.createElement('a');
-    a.classList = 'channel-2QD9_O container-2Pjhx- clickable-1JJAn8 fadeIn-efi30';
+    a.classList = 'channel-2QD9_O container-be9036 clickable-1JJAn8 fadeIn-efi30';
     a.id = 'channel-' + channel_id;
     a.setAttribute('uid', friend_uid);
     a.setAttribute('onclick', `loadChannelFromId(${channel_id});`);

@@ -202,7 +202,7 @@ async function addGroupChannel(channel_id) {
     const channelsList = document.getElementById('groupChatsList');
 
     const a = document.createElement('a');
-    a.classList = 'channel-2QD9_O container-2Pjhx- clickable-1JJAn8 fadeIn-efi30';
+    a.classList = 'channel-2QD9_O container-be9036 clickable-1JJAn8 fadeIn-efi30';
     a.id = 'channel-' + channel_id;
     a.setAttribute('channel', channel_id);
     a.setAttribute('onclick', `loadChannelFromId(${channel_id});`);
