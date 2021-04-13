@@ -8,10 +8,6 @@
     ],
     "rewrites": [
       {
-				"source": "**", 
-				"function": "cdn"
-			},
-      {
         "source": "/",
         "destination": "/views/landing.html"
       },

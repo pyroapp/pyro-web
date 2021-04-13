@@ -35,8 +35,8 @@ firebase.auth().onAuthStateChanged(async user => {
         setRealtimeUserInfo(user.uid);
     });
 
-    await loadPrivateChannels();
-    await loadGroupChannels();
+    loadPrivateChannels();
+    loadGroupChannels();
     await blockedUserHandler();
     await setAutomaticStatus('online');
     await delay(LOADING_TIMEOUT);

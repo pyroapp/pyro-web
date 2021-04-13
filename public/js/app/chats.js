@@ -89,7 +89,7 @@
                 </a>
             </div>
         </section>
-        <div class="content-yTz4x3" id="private-chat-${channel_id}">
+        <div class="content-yTz4x3" id="chat-${channel_id}">
             <main class="chatContent-a9vAAp">
                 <div class="messagesWrapper-1sRNjr group-spacing-16">
                     <div class="scroller-2LSbBU auto-Ge5KZx scrollerBase-289Jih disableScrollAnchor-3V9UtP" style="overflow: hidden scroll; padding-right: 0px;">
