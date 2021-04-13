@@ -1578,13 +1578,13 @@
 }
 
 .theme-dark .lookFilled-1Gx00P.colorPrimary-3b3xI6 {
-	color: #f6f6f7;
-	background-color: #4f545c
+	color: #000;
+	background-color: #febe10
 }
 
 .theme-dark .lookFilled-1Gx00P.colorPrimary-3b3xI6:active,
 .theme-dark .lookFilled-1Gx00P.colorPrimary-3b3xI6:hover {
-	background-color: #72767d
+	background-color: #d4a010
 }
 
 .theme-dark .lookFilled-1Gx00P.colorPrimary-3b3xI6 .spinnerItem-3GlVyU {
