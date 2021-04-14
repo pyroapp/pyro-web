@@ -203,15 +203,8 @@ function loadMessage(message) {
             </div>
         `.trim();
     } else {
-        let customTag = '';
+        const customTag = flags.includes('DEVELOPER') ? userTag('Developer') : '';
 
-        const isStaff = flags.includes('STAFF');
-        const isDeveloper = flags.includes('DEVELOPER');
-        
-        // Select the highest flag option using waterfall
-        if (isDeveloper) customTag = userTag('Developer');
-        if (isStaff) customTag = userTag('Staff');
-        
         div.innerHTML = `
             <div class="contents-2mQqc9">
                 <img src="${getAvatar(author)}" class="avatar-1BDn8e clickable-1bVtEA">
