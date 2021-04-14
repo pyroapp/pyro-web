@@ -172,7 +172,7 @@ function loadMessage(message) {
     const isToday = moment(timestamp).isSame(moment(), "day");
     const isYesterday = moment(timestamp).isSame(moment().subtract(1, 'day'), "day");
 
-    let formattedTime = moment(timestamp).format('dd/mm/yy');
+    let formattedTime = moment(timestamp).format('DD/MM/YYY');
     let messageClass = 'groupStart-23k01U';
 
     if (isToday) formattedTime = 'Today at ' + moment(timestamp).format('hh:mm A');
