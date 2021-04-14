@@ -10,10 +10,10 @@
 
 // Global Cache
 const CACHED_USERS = {};
-const CACHED_CHANNELS = {};
+const CACHED_GROUP_CHAT_CHANNELS = {};
 const CACHED_RECIPIENTS = {};
 const CACHED_CHAT_LISTENERS = {};
-const CACHED_CHANNEL_LISTENERS = {};
+const CACHED_LISTENERS = {};
 
 // Global thresholds
 const LOADING_TIMEOUT = 1500;

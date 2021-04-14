@@ -1457,14 +1457,14 @@ function selectMainBody(id) {
                     // Channel
                     gc.querySelectorAll('.activityText-OW8WYb')[0].innerText = recipients.length.toString() + ' Members';
 
-                    CACHED_CHANNELS[channel.id] = {
+                    CACHED_GROUP_CHAT_CHANNELS[channel.id] = {
                         ...snapshot.data()
                     }
 
                     setRealtimeChannelInfo(channel.id);
                 });
 
-                CACHED_CHANNEL_LISTENERS[channel.id] = listener;
+                CACHED_LISTENERS[channel.id] = listener;
 
                 recipients.forEach(recipient => {
                     if (recipient === uid) return;
@@ -1494,8 +1494,8 @@ function selectMainBody(id) {
                 chatList.removeChild(chat); // Remove chat
 
                 // Detatch listener
-                CACHED_CHANNEL_LISTENERS[channel.id]();
-                delete CACHED_CHANNEL_LISTENERS[channel.id];
+                CACHED_LISTENERS[channel.id]();
+                delete CACHED_LISTENERS[channel.id];
 
                 loadChannelFromId('friends');
             }
@@ -1513,7 +1513,7 @@ function setRealtimeChannelInfo(channel_id) {
 
     elements.forEach(element => {
         const nameEl = element.querySelectorAll('.RT_name');
-        const { name } = CACHED_CHANNELS[channel_id];
+        const { name } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
 
         nameEl.forEach(n => {
             n.innerText = name;

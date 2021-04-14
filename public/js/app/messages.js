@@ -118,7 +118,7 @@ async function loadPrivateMessages(channel_id) {
         const { timestamp: lasttimestamp } = lastmsg.data();
 
         //  Retreive realtime updates 
-        const listener = await firebase.firestore()
+        const listener = firebase.firestore()
         .collection('channels')
         .doc(channel_id)
         .collection('messages')
@@ -135,12 +135,10 @@ async function loadPrivateMessages(channel_id) {
             });
         });
 
-        CACHED_CHAT_LISTENERS[channel_id] = {
-            Unsubscribe: listener,
-        };
+        CACHED_CHAT_LISTENERS[channel_id] = listener;
     } else {
         //  Retreive realtime updates 
-        const listener = await firebase.firestore()
+        const listener = firebase.firestore()
         .collection('channels')
         .doc(channel_id)
         .collection('messages')
@@ -156,9 +154,7 @@ async function loadPrivateMessages(channel_id) {
             });
         });
 
-        CACHED_CHAT_LISTENERS[channel_id] = {
-            Unsubscribe: listener,
-        };
+        CACHED_CHAT_LISTENERS[channel_id] = listener;
     }
 }
 
