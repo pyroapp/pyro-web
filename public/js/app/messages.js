@@ -167,7 +167,7 @@ let lastMessage = { author: { id: null } };
 
 function loadMessage(message) {
     const { content, embeds, author: { id: author }, timestamp, channel_id } = message.data();
-    const { username } = CACHED_USERS[author];
+    const { username, flags } = CACHED_USERS[author];
 
     const isToday = moment(timestamp).isSame(moment(), "day");
     const isYesterday = moment(timestamp).isSame(moment().subtract(1, 'day'), "day");
@@ -188,7 +188,7 @@ function loadMessage(message) {
     div.className = 'message-2qnXI6 cozyMessage-3V1Y8y wrapper-2a6GCs cozy-3raOZG zalgo-jN1Ica ' + messageClass;
     div.id = `private-message-${message.id}`;
     div.setAttribute('channel', channel_id);
-    
+
     if (lastMessage.author.id === author) {
         div.innerHTML = `
             <div class="contents-2mQqc9">
@@ -197,10 +197,19 @@ function loadMessage(message) {
             </div>
         `.trim();
     } else {
+        let customTag = '';
+
+        const isStaff = flags.includes('STAFF');
+        const isContributer = flags.includes('CONTRIBUTER');
+        
+        // Select the highest flag option using waterfall
+        if (isContributer) customTag = userTag('Contributer');
+        if (isStaff) customTag = userTag('Staff');
+        
         div.innerHTML = `
             <div class="contents-2mQqc9">
                 <img src="${getAvatar(author)}" class="avatar-1BDn8e clickable-1bVtEA">
-                <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span></span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${formattedTime}</span></span></h2>
+                <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span>${customTag}</span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${formattedTime}</span></span></h2>
                 ${content ? `<div class="markup-2BOw-j messageContent-2qWWxC">${parseText(content)}</div>` : ""}${embeds ? parseEmbeds(embeds) : ""}
             </div>
         `;
@@ -210,9 +219,28 @@ function loadMessage(message) {
 
     document.getElementById(`private-message-list-${channel_id}`).appendChild(div);
     div.scrollIntoView();
+
 }
 
 
-document.body.onclick = function(e) {
-    if (typeof e.target.className == "string" && e.target.className == "spoilerText-3p6IlD hidden-HHr2R9") e.target.className = "spoilerText-3p6IlD";
+/**
+ * 
+ * @param {*} content 
+ * @returns 
+ */
+function userTag(content) {
+    return `
+        <span class="botTag-3W9SuW botTagRegular-2HEhHi botTag-2WPJ74 px-10SIf7">
+            <svg class="botTagVerified-1klIIt" width="16" height="16" viewBox="0 0 16 15.2">
+                <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" fill="currentColor"></path>
+            </svg>
+            <span class="botText-1526X_">${content}</span>
+        </span>
+    `.trim();
+}
+
+document.body.onclick = e => {
+    if (e.target.className === "spoilerText-3p6IlD hidden-HHr2R9") {
+        e.target.className = "spoilerText-3p6IlD";
+    }
 };
