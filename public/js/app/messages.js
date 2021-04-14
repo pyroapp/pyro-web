@@ -206,10 +206,10 @@ function loadMessage(message) {
         let customTag = '';
 
         const isStaff = flags.includes('STAFF');
-        const isContributer = flags.includes('CONTRIBUTER');
+        const isDeveloper = flags.includes('DEVELOPER');
         
         // Select the highest flag option using waterfall
-        if (isContributer) customTag = userTag('Contributer');
+        if (isDeveloper) customTag = userTag('Developer');
         if (isStaff) customTag = userTag('Staff');
         
         div.innerHTML = `
