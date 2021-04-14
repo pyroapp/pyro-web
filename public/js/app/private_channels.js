@@ -169,11 +169,6 @@ async function blockedUserHandler() {
     `;
 
     return channelsList.appendChild(a);
-
-    // Close private channel button
-    a.querySelectorAll('.closeButton-2GCmT5')[0].onclick = () => {
-        closePrivateChannel(channel_id);
-    }
 }
 
 

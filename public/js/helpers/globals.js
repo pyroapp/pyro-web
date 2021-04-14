@@ -73,5 +73,6 @@ const DID_YOU_KNOW = [
     'Make a new friend!',
     'Be more like doko.',
     'Pyro > Discord > Guilded',
-    'It\'s time to ditch Skype and Discord'
+    'It\'s time to ditch Skype and Discord',
+    'Generating handlers...'
 ];
