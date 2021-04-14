@@ -184,9 +184,6 @@ function loadMessage(message) {
     if (isToday) formattedTime = 'Today at ' + moment(timestamp).format('hh:mm A');
     if (isYesterday) formattedTime = 'Yesterday at ' + moment(timestamp).format('hh:mm A');
 
-    console.log(lastAuthorId, author);
-    console.log(lastAuthorId === author);
-
     if (lastAuthorId === author) {
         formattedTime = moment(timestamp).format('hh:mm A');
         messageClass = '';
