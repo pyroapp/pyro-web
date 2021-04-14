@@ -41,10 +41,12 @@ function loadPrivateChannels() {
 
                     if (CACHED_USERS[recipient]) return; // User already exists
 
-                    await firebase.firestore().collection('users').doc(recipient).onSnapshot(snapshot => {
+                    const listener = firebase.firestore().collection('users').doc(recipient).onSnapshot(snapshot => {
                         CACHED_USERS[recipient] = {
                             ...snapshot.data()
                         };
+
+                        CACHED_LISTENERS[channel.id] = listener;
 
                         setRealtimeUserInfo(recipient);
                     });
@@ -167,11 +169,6 @@ async function blockedUserHandler() {
     `;
 
     return channelsList.appendChild(a);
-
-    // Close private channel button
-    a.querySelectorAll('.closeButton-2GCmT5')[0].onclick = () => {
-        closePrivateChannel(channel_id);
-    }
 }
 
 
@@ -212,7 +209,7 @@ async function selectChannel(channel_id) {
     channel_id = channel_id.toString(); // Not sure why it sometimes returns an int
 
     if (channel_id === 'friends') return; // Don't load messages for friends channel
-    if (CACHED_CHANNEL_LISTENERS[channel_id]) return; // If listener already exists
+    if (CACHED_CHAT_LISTENERS[channel_id]) return; // If listener already exists
 
     loadPrivateMessages(channel_id);
 }
@@ -230,7 +227,7 @@ async function closePrivateChannel(channel_id) {
     });
 
     // Remove from listener cache
-    delete CACHED_CHANNEL_LISTENERS[channel_id];
+    delete CACHED_LISTENERS[channel_id];
 
     // Determine if the selected user is being removed,
     // select the first user in the list.

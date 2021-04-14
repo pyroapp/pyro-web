@@ -10,10 +10,10 @@
 
 // Global Cache
 const CACHED_USERS = {};
-const CACHED_CHANNELS = {};
+const CACHED_GROUP_CHAT_CHANNELS = {};
 const CACHED_RECIPIENTS = {};
 const CACHED_CHAT_LISTENERS = {};
-const CACHED_CHANNEL_LISTENERS = {};
+const CACHED_LISTENERS = {};
 
 // Global thresholds
 const LOADING_TIMEOUT = 1500;
@@ -72,5 +72,7 @@ const DID_YOU_KNOW = [
     'Preparing a warm welcome!',
     'Make a new friend!',
     'Be more like doko.',
-    'Pyro > Discord > Guilded'
+    'Pyro > Discord > Guilded',
+    'It\'s time to ditch Skype and Discord',
+    'Generating handlers...'
 ];

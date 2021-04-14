@@ -198,7 +198,7 @@ async function createGroupChat(friends) {
  * 
  * @param {*} channel_id 
  */
-async function addGroupChannel(channel_id) {
+function addGroupChannel(channel_id) {
     const channelsList = document.getElementById('groupChatsList');
 
     const a = document.createElement('a');
@@ -233,7 +233,7 @@ async function addGroupChannel(channel_id) {
                     </div>
                 </div>
             </div>
-            <div class="children-gzQq2t hidden">
+            <div class="children-gzQq2t">
                 <div class="closeButton-2GCmT5">
                     <svg class="closeIcon-rycxaQ" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path>
@@ -243,7 +243,92 @@ async function addGroupChannel(channel_id) {
         </div>
     `;
 
-    return channelsList.appendChild(a);
+    // Leave group chat
+    a.querySelectorAll('.closeButton-2GCmT5')[0].onclick = () => {
+        showLeaveGroupChatConfirmationModal(channel_id);
+    }
+
+    channelsList.appendChild(a);
+}
+
+
+/**
+ * 
+ * @param {*} channel_id 
+ */
+function showLeaveGroupChatConfirmationModal(channel_id) {
+    const layer = document.querySelectorAll('.layerContainer-yqaFcK')[0];
+    const { name } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
+
+    layer.innerHTML = `
+        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+        <div class="layer-2KE1M9 fadeIn-efi30">
+            <div class="focusLock-Ns3yie">
+                <div class="modalRoot-1Kx4Hb root-1gCeng small-3iVZYw fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
+                    <div class="flex-1xMQg5 flex-1O1GKY horizontal-1ae9ci horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG justifyStart-2NDFzi alignCenter-1dQNNs noWrap-3jynv6 header-1TKi98 headerContainer-3N-yWX" style="flex: 0 0 auto;">
+                        <div class="header-3C6qT5" style="padding-top: 10px;">
+                            <h4 class="headerText-2uyvpY">Leave '${name}'</h4>
+                        </div>
+                    </div>
+                    <div class="content-1LAB8Z thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 8px;">
+                        <div>
+                            <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 header-1TKi98" id="1231" style="flex: 0 0 auto;">
+                                <div class="content-1LAB8Z content-mK72R6 thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 8px;">
+                                    <div class="colorStandard-2KCXvj size16-1P40sf">Are you sure you want to leave <strong>${name}</strong>? You won't be able to rejoin this group unless you are re-invited.</div>
+                                    <div style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 20px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1xMQg5 flex-1O1GKY horizontalReverse-2eTKWD horizontalReverse-3tRjY7 flex-1O1GKY directionRowReverse-m8IjIq justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 footer-2gL1pp" style="flex: 0 0 auto;">
+                        <button class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeMedium-1AC_Sl grow-q77ONN">
+                            <div class="contents-18-Yxp">Leave Group</div>
+                        </button>
+                        <button class="button-38aScr lookLink-9FtZy- cancelButton-2O3h8t sizeMedium-1AC_Sl grow-q77ONN" onclick="hideModals()">
+                            <div class="contents-18-Yxp">Cancel</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // TODO: Add button load
+    layer.querySelectorAll('.button-38aScr')[0].onclick = async () => {
+        await leaveGroupChat(channel_id);
+        hideModals();
+    }
+}
+
+
+/**
+ * 
+ * @param {*} channel_id 
+ */
+async function leaveGroupChat(channel_id) {
+    const { uid } = firebase.auth().currentUser; 
+    const { owner: temp_owner, recipients } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
+
+    // Check how many recipients are left, if there are none left
+    // delete the group chat
+    if (recipients.length - 1 <= 0) {
+        return firebase.firestore().collection('channels').doc(channel_id).delete();
+    }
+
+    // If user is the owner, assign owner to the next person in the list
+    let owner = temp_owner;
+
+    if (temp_owner === uid) {
+        recipients.slice(recipients.indexOf(uid), 1);
+        owner = recipients[0];
+    }
+
+    firebase.firestore().collection('channels').doc(channel_id).update({
+        recipients: firebase.firestore.FieldValue.arrayRemove(uid),
+        owner: owner
+    });
+
+    // TODO: Send leave message on group chat
 }
 
 
@@ -264,7 +349,7 @@ function addGroupChat(channel_id) {
                     <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M14 8.00598C14 10.211 12.206 12.006 10 12.006C7.795 12.006 6 10.211 6 8.00598C6 5.80098 7.794 4.00598 10 4.00598C12.206 4.00598 14 5.80098 14 8.00598ZM2 19.006C2 15.473 5.29 13.006 10 13.006C14.711 13.006 18 15.473 18 19.006V20.006H2V19.006Z"></path><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M14 8.00598C14 10.211 12.206 12.006 10 12.006C7.795 12.006 6 10.211 6 8.00598C6 5.80098 7.794 4.00598 10 4.00598C12.206 4.00598 14 5.80098 14 8.00598ZM2 19.006C2 15.473 5.29 13.006 10 13.006C14.711 13.006 18 15.473 18 19.006V20.006H2V19.006Z"></path><path fill="currentColor" d="M20.0001 20.006H22.0001V19.006C22.0001 16.4433 20.2697 14.4415 17.5213 13.5352C19.0621 14.9127 20.0001 16.8059 20.0001 19.006V20.006Z"></path><path fill="currentColor" d="M14.8834 11.9077C16.6657 11.5044 18.0001 9.9077 18.0001 8.00598C18.0001 5.96916 16.4693 4.28218 14.4971 4.0367C15.4322 5.09511 16.0001 6.48524 16.0001 8.00598C16.0001 9.44888 15.4889 10.7742 14.6378 11.8102C14.7203 11.8418 14.8022 11.8743 14.8834 11.9077Z"></path>
                 </svg>
                 </div>
-                <h3 role="button" class="cursorPointer-1j7DL8 title-29uC1r base-1x0h_U size16-1P40sf RT_name"></h3>
+                <h3 class="cursorPointer-1j7DL8 title-29uC1r base-1x0h_U size16-1P40sf RT_name"></h3>
                 <div class="spacer-3kEb8l"></div>
             </div>
             <div class="toolbar-1t6TWx">
@@ -1349,6 +1434,15 @@ function addGroupChat(channel_id) {
 
     document.getElementById('main-body').appendChild(div);
 
+    // Show change gc name modal
+    // const title = div.querySelectorAll('.title-29uC1r')[0];
+
+    // title.onclick = () => {
+    //     if (uid !== owner) return;
+
+    //     showGroupChatChangeNameModal(channel_id);
+    // }
+
     // Send message on enter
     const input = div.querySelectorAll('.messageField')[0];
 
@@ -1424,6 +1518,68 @@ function selectMainBody(id) {
 
 /**
  * 
+ * @param {*} channel_id 
+ */
+function showGroupChatChangeNameModal(channel_id) {
+    const layer = document.querySelectorAll('.layerContainer-yqaFcK')[0];
+    const { name } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
+
+    layer.innerHTML = `
+        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+        <div class="layer-2KE1M9 fadeIn-efi30">
+            <div class="focusLock-Ns3yie">
+                <div class="modalRoot-1Kx4Hb root-1gCeng small-3iVZYw fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
+                    <div class="flex-1xMQg5 flex-1O1GKY horizontal-1ae9ci horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG justifyStart-2NDFzi alignCenter-1dQNNs noWrap-3jynv6 header-1TKi98 headerContainer-3N-yWX" style="flex: 0 0 auto;">
+                        <div class="header-3C6qT5" style="padding-top: 10px;">
+                            <h4 class="headerText-2uyvpY">Rename '${name}'</h4>
+                        </div>
+                    </div>
+                    <div class="content-1LAB8Z thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 8px;">
+                        <div>
+                            <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 header-1TKi98" id="1231" style="flex: 0 0 auto;">
+                                <div class="content-1LAB8Z content-mK72R6 thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 8px;">
+                                    <input type="text" placeholder="New name" class="" />
+                                    <div style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 20px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1xMQg5 flex-1O1GKY horizontalReverse-2eTKWD horizontalReverse-3tRjY7 flex-1O1GKY directionRowReverse-m8IjIq justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 footer-2gL1pp" style="flex: 0 0 auto;">
+                        <button class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeMedium-1AC_Sl grow-q77ONN" disabled>
+                            <div class="contents-18-Yxp">Rename</div>
+                        </button>
+                        <button class="button-38aScr lookLink-9FtZy- cancelButton-2O3h8t sizeMedium-1AC_Sl grow-q77ONN" onclick="hideModals()">
+                            <div class="contents-18-Yxp">Cancel</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    layer.querySelectorAll('.button-38aScr')[0].onclick = () => {
+        const input = layer.querySelectorAll('.rename-field-3j093j')[0];
+
+        // if ()
+
+        changeGroupChatName(channel_id, name);
+    }
+}
+
+
+/**
+ * 
+ * @param {*} channel_id 
+ */
+async function changeGroupChatName(channel_id, name) {
+    firebase.firestore().collection('channels').doc(channel_id).update({
+        name: name
+    });
+}
+
+
+/**
+ * 
  */
  async function loadGroupChannels() {
     const { uid } = firebase.auth().currentUser;
@@ -1433,11 +1589,20 @@ function selectMainBody(id) {
     .where('type', '==', 'GROUP_DM')
     .limit(50)
     .onSnapshot(snapshot => {
-        if (snapshot.empty) return;
+        const gcHeader = document.querySelectorAll('.headerText-2F0828')[1];
+        
+        // Hide group chats header if none exist
+        if (snapshot.empty) {
+            gcHeader.classList.add('hidden');
+        } else {
+            gcHeader.classList.remove('hidden');
+        }
 
         snapshot.docChanges().forEach(async change => {
             const { type, doc: channel } = change;
             const { recipients } = channel.data();
+
+            console.log(type);
 
             if (type === 'added') {
                 
@@ -1457,14 +1622,14 @@ function selectMainBody(id) {
                     // Channel
                     gc.querySelectorAll('.activityText-OW8WYb')[0].innerText = recipients.length.toString() + ' Members';
 
-                    CACHED_CHANNELS[channel.id] = {
+                    CACHED_GROUP_CHAT_CHANNELS[channel.id] = {
                         ...snapshot.data()
                     }
 
                     setRealtimeChannelInfo(channel.id);
                 });
 
-                CACHED_CHANNEL_LISTENERS[channel.id] = listener;
+                CACHED_LISTENERS[channel.id] = listener;
 
                 recipients.forEach(recipient => {
                     if (recipient === uid) return;
@@ -1476,8 +1641,6 @@ function selectMainBody(id) {
                         };
                     });
                 });
-
-                return;
             }
 
             // Removed means that a field within the document has been changed.
@@ -1493,9 +1656,12 @@ function selectMainBody(id) {
                 gcList.removeChild(gc); // Remove channel
                 chatList.removeChild(chat); // Remove chat
 
-                // Detatch listener
-                CACHED_CHANNEL_LISTENERS[channel.id]();
-                delete CACHED_CHANNEL_LISTENERS[channel.id];
+                // Detatch listeners
+                CACHED_LISTENERS[channel.id]();
+                CACHED_CHAT_LISTENERS[channel.id]();
+
+                delete CACHED_LISTENERS[channel.id];
+                delete CACHED_CHAT_LISTENERS[channel.id]
 
                 loadChannelFromId('friends');
             }
@@ -1513,7 +1679,7 @@ function setRealtimeChannelInfo(channel_id) {
 
     elements.forEach(element => {
         const nameEl = element.querySelectorAll('.RT_name');
-        const { name } = CACHED_CHANNELS[channel_id];
+        const { name } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
 
         nameEl.forEach(n => {
             n.innerText = name;

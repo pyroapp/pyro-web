@@ -95,9 +95,10 @@ function parseText(text) {
             }
 
         } else {
-            if (newtext == "" && oldtext.startsWith("> ") || oldtext.startsWith("\n> ")) {
+            if (newtext == "" && oldtext.startsWith("&gt; ") || oldtext.startsWith("\n&gt; ")) {
+                console.log(true)
                 newtext = newtext + `<div class="blockquoteContainer-U5TVEi"><div class="blockquoteDivider-2hH8H6"></div><blockquote>`;
-                oldtext = oldtext.slice(oldtext.startsWith("\n> ") ? "\n> ".length : "> ".length);
+                oldtext = oldtext.slice(oldtext.startsWith("\n&gt; ") ? "\n&gt; ".length : "&gt; ".length);
                 markdown.quote = true;
 
             } else if (oldtext.startsWith("\n") && markdown.quote == true) {
@@ -193,6 +194,7 @@ function parseText(text) {
                 });
                 oldtext = oldtext.slice(emojiparsed.length);
 
+            /*
             } else if (oldtext.startsWith(":pyrodev:")) {
                 newtext = newtext + `<img class="emoji" draggable="false" alt=":pyrodev:" src="https://cdn.discordapp.com/emojis/829584881461493781.png?v=1" class="${onlyemojis && emojicount <= 27 ? "emoji jumboable" : "emoji"}>`;
                 oldtext = oldtext.slice(`:pyrodev:`.length);
@@ -200,6 +202,7 @@ function parseText(text) {
             } else if (oldtext.startsWith(":firebase:")) {
                 newtext = newtext + `<img class="emoji" draggable="false" alt=":firebase:" src="https://cdn.discordapp.com/emojis/811084920255807518.gif?v=1" class="${onlyemojis && emojicount <= 27 ? "emoji jumboable" : "emoji"}">`;
                 oldtext = oldtext.slice(`:firebase:`.length);
+            */
 
             } else {
                 newtext = newtext + oldtext.slice(0, 1);

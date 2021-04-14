@@ -15843,7 +15843,8 @@ img[alt] {
 	white-space:nowrap;
 	text-overflow:ellipsis;
 	overflow:hidden;
-	position:relative
+	position:relative;
+	height: 22px;
 }
 
 .arrow-gKvcEx {
@@ -16511,9 +16512,9 @@ img[alt] {
 }
 
 .px-10SIf7.botTag-2WPJ74 {
-	height:15px;
+	height:18px;
 	padding:0 4px;
-	margin-top:1px;
+	margin-top:2px;
 	border-radius:3px
 }
 

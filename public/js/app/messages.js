@@ -118,7 +118,7 @@ async function loadPrivateMessages(channel_id) {
         const { timestamp: lasttimestamp } = lastmsg.data();
 
         //  Retreive realtime updates 
-        const listener = await firebase.firestore()
+        const listener = firebase.firestore()
         .collection('channels')
         .doc(channel_id)
         .collection('messages')
@@ -135,12 +135,10 @@ async function loadPrivateMessages(channel_id) {
             });
         });
 
-        CACHED_CHAT_LISTENERS[channel_id] = {
-            Unsubscribe: listener,
-        };
+        CACHED_CHAT_LISTENERS[channel_id] = listener;
     } else {
         //  Retreive realtime updates 
-        const listener = await firebase.firestore()
+        const listener = firebase.firestore()
         .collection('channels')
         .doc(channel_id)
         .collection('messages')
@@ -156,10 +154,13 @@ async function loadPrivateMessages(channel_id) {
             });
         });
 
-        CACHED_CHAT_LISTENERS[channel_id] = {
-            Unsubscribe: listener,
-        };
+        CACHED_CHAT_LISTENERS[channel_id] = listener;
     }
+
+    // Reset last message. If this is not reset, if you go to
+    // another channel, it will keep the last message still
+    // and might show no username or profile picture
+    lastMessage = { author: { id: null } };
 }
 
 
@@ -171,18 +172,19 @@ let lastMessage = { author: { id: null } };
 
 function loadMessage(message) {
     const { content, embeds, author: { id: author }, timestamp, channel_id } = message.data();
-    const { username } = CACHED_USERS[author];
+    const { username, flags } = CACHED_USERS[author];
+    const { author: { id: lastAuthorId } } = lastMessage;
 
     const isToday = moment(timestamp).isSame(moment(), "day");
     const isYesterday = moment(timestamp).isSame(moment().subtract(1, 'day'), "day");
 
-    let formattedTime = moment(timestamp).format('dd/mm/yy');
+    let formattedTime = moment(timestamp).format('DD/MM/YYYY');
     let messageClass = 'groupStart-23k01U';
 
     if (isToday) formattedTime = 'Today at ' + moment(timestamp).format('hh:mm A');
     if (isYesterday) formattedTime = 'Yesterday at ' + moment(timestamp).format('hh:mm A');
 
-    if (lastMessage.author.id == author) {
+    if (lastAuthorId === author) {
         formattedTime = moment(timestamp).format('hh:mm A');
         messageClass = '';
     }
@@ -192,8 +194,8 @@ function loadMessage(message) {
     div.className = 'message-2qnXI6 cozyMessage-3V1Y8y wrapper-2a6GCs cozy-3raOZG zalgo-jN1Ica ' + messageClass;
     div.id = `private-message-${message.id}`;
     div.setAttribute('channel', channel_id);
-    
-    if (lastMessage.author.id === author) {
+
+    if (lastAuthorId === author) {
         div.innerHTML = `
             <div class="contents-2mQqc9">
                 <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${formattedTime}<i class="separator-2nZzUB"></i></span>
@@ -201,10 +203,12 @@ function loadMessage(message) {
             </div>
         `.trim();
     } else {
+        const customTag = flags.includes('DEVELOPER') ? userTag('Developer') : '';
+
         div.innerHTML = `
             <div class="contents-2mQqc9">
                 <img src="${getAvatar(author)}" class="avatar-1BDn8e clickable-1bVtEA">
-                <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span></span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${formattedTime}</span></span></h2>
+                <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span>${customTag}</span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${formattedTime}</span></span></h2>
                 ${content ? `<div class="markup-2BOw-j messageContent-2qWWxC">${parseText(content)}</div>` : ""}${embeds ? parseEmbeds(embeds) : ""}
             </div>
         `;
@@ -214,9 +218,28 @@ function loadMessage(message) {
 
     document.getElementById(`private-message-list-${channel_id}`).appendChild(div);
     div.scrollIntoView();
+
 }
 
 
-document.body.onclick = function(e) {
-    if (typeof e.target.className == "string" && e.target.className == "spoilerText-3p6IlD hidden-HHr2R9") e.target.className = "spoilerText-3p6IlD";
+/**
+ * 
+ * @param {*} content 
+ * @returns 
+ */
+function userTag(content) {
+    return `
+        <span class="botTag-3W9SuW botTagRegular-2HEhHi botTag-2WPJ74 px-10SIf7">
+            <svg class="botTagVerified-1klIIt" width="16" height="16" viewBox="0 0 16 15.2">
+                <path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" fill="currentColor"></path>
+            </svg>
+            <span class="botText-1526X_">${content}</span>
+        </span>
+    `.trim();
+}
+
+document.body.onclick = e => {
+    if (e.target.className === "spoilerText-3p6IlD hidden-HHr2R9") {
+        e.target.className = "spoilerText-3p6IlD";
+    }
 };
