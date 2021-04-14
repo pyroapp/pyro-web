@@ -2319,8 +2319,8 @@ section .button.flat-bordered:hover {
 
 .row-3wW-Fx {
 	width: 100%;
-	max-width: 1260px;
-	max-width: var(--page-max-width);
+	/*max-width: 1260px;*/
+	/*max-width: var(--page-max-width);*/
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	display: grid;

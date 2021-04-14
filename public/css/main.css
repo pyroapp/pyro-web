@@ -69906,7 +69906,8 @@ html .invoiceCancelRow-3mYhFX {
 	justify-content:center;
 	border-radius:4px;
 	position:relative;
-	color:var(--interactive-normal)
+	color:var(--interactive-normal);
+	fill:var(--interactive-normal)
 }
 
 .button-14-BFJ.enabled-2cQ-u7:hover {
