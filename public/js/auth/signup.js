@@ -104,7 +104,7 @@ async function signup() {
             premium_type: null,
             status: 'online',
             mute_notifications: false,
-            avatar_token = token,
+            avatar_token: token,
         });
 
         redirect('/channels/@me');
