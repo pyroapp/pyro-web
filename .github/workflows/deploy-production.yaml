@@ -1,0 +1,16 @@
+name: Production CI
+
+on:
+  push:
+    branches: production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+        uses: actions/checkout@v2
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          projectId: 'pyro-production'
+          firebaseServiceAccount: ${{ secrets.SA_PRODUCTION }}
