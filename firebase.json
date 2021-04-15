@@ -23,18 +23,6 @@
         "source": "/channels/**/**",
         "destination": "/views/app.html"
       }
-    ],
-    "redirects": [
-      {
-        "source": "/cdn/avatars/:uid/",
-        "destination": "https://firebasestorage.googleapis.com/v0/b/pyro-production.appspot.com/o/avatars%2F:uid.gif?alt=media",
-        "type": 301
-      },
-      {
-        "source": "/cdn/staging/avatars/:uid/",
-        "destination": "https://firebasestorage.googleapis.com/v0/b/pyro-staging.appspot.com/o/avatar%2F:uid.gif?alt=media",
-        "type": 301
-      }
     ]
   }
 }
