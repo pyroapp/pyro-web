@@ -13,4 +13,4 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           projectId: pyro-production
-          firebaseServiceAccount: "${{ secrets.SA_PRODUCTION }}""
+          firebaseServiceAccount: "${{ secrets.SA_PRODUCTION }}"
