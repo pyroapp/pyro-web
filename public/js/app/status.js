@@ -43,6 +43,7 @@ document.onvisibilitychange = async () => {
     const ls = window.localStorage;
 
     if (ls.getItem('manual_status')) {
+        toggleNotificationMute(ls.getItem('manual_status') === 'dnd');
         return setStatus(ls.getItem('manual_status'));
     }
 

@@ -13,8 +13,10 @@
  * 
  * @returns 
  */
-function isDev() {
-    return window.location.protocol === 'http:';
+function isStaging() {
+    const { protocol, host } = window.location;
+
+    return protocol === 'http:' && host === 'staging.pyrochat.app' || host === 'localhost:8000';
 }
 
 

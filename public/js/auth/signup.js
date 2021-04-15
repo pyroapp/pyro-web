@@ -91,6 +91,8 @@ async function signup() {
 
         const { user: { uid } } = user;
 
+        const token = await uploadDefaultAvatar(uid);
+
         await firebase.firestore().collection('users').doc(uid).set({
             username: username,
             discriminator: discriminator,
@@ -102,11 +104,8 @@ async function signup() {
             premium_type: null,
             status: 'online',
             mute_notifications: false,
-        }, {
-            merge: true
+            avatar_token: token,
         });
-
-        await uploadDefaultAvatar(uid);
 
         redirect('/channels/@me');
     } catch (error) {

@@ -1,0 +1,17 @@
+name: Staging CI
+
+on:
+  push:
+    branches: staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          projectId: pyro-staging
+          firebaseServiceAccount: "${{ secrets.SA_STAGING }}"
+          channelId: live
