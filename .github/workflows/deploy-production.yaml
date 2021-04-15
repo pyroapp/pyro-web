@@ -14,3 +14,4 @@ jobs:
         with:
           projectId: pyro-production
           firebaseServiceAccount: "${{ secrets.SA_PRODUCTION }}"
+          channelId: live
