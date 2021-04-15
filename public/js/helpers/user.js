@@ -23,11 +23,7 @@ async function uploadDefaultAvatar(name) {
     const blob = await (await fetch(path)).blob();
 
     // Upload image to Firebase Storage
-    const { ref } = await firebase.storage().ref(`/avatars/${name}.gif`).put(blob);
-    const avatar_url = await ref.getDownloadURL();
-    const token = avatar_url.split('token=')[1];
-
-    return token;
+    await firebase.storage().ref(`/avatars/${name}.gif`).put(blob);
 }
 
 
