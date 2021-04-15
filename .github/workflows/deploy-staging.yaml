@@ -12,5 +12,5 @@ jobs:
         uses: actions/checkout@v2
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          projectId: 'pyro-staging'
-          firebaseServiceAccount: ${{ secrets.SA_STAGING }}
+          projectId: pyro-staging
+          firebaseServiceAccount: "${{ secrets.SA_STAGING }}"
