@@ -75,9 +75,13 @@ async function blockedUserHandler() {
         }
 
         // Get channels from DOM
-        const channelsDOM = document.getElementById('privateChannelsList').childNodes;
+        const channelsDOM = document.getElementById('privateChannelsList').children;
 
-        channelsDOM.forEach(channelDOM => {
+        // console.log(channelsDOM);
+
+        Array.prototype.slice.call(channelsDOM).forEach(channelDOM => {
+            if (!channelDOM.id.startsWith('channel')) return;
+
             const channel_id = channelDOM.id.split('-')[1];
             const friend_uid = channelDOM.getAttribute('uid');
 

@@ -8,16 +8,30 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
+const staging_config = {
+    apiKey: "AIzaSyAp71QVJ89ELh4LWpa3uhIepnND0TXwB4k",
+    authDomain: "pyro-staging.firebaseapp.com",
+    projectId: "pyro-staging",
+    storageBucket: "pyro-staging.appspot.com",
+    messagingSenderId: "812433736328",
+    appId: "1:812433736328:web:85ddf3c267fa82bdeb553d"
+};
 
-firebase.initializeApp({
-    apiKey: "AIzaSyCw2XgIvCUbUclj4KSSFZ9rwhQAruo3jAc",
-    authDomain: "pyro-chat.firebaseapp.com",
-    projectId: "pyro-chat",
-    storageBucket: "pyro-chat.appspot.com",
-    messagingSenderId: "598431502056",
-    appId: "1:598431502056:web:aac9825304ddf9fbc2435d",
-    measurementId: "G-56W0T7F4YD"
-});
+const production_config = {
+    apiKey: "AIzaSyDJ50aBUeML6SRDaGzun1-ssLGWUobOWxs",
+    authDomain: "pyro-production.firebaseapp.com",
+    projectId: "pyro-production",
+    storageBucket: "pyro-production.appspot.com",
+    messagingSenderId: "54609768963",
+    appId: "1:54609768963:web:c2e751548bfbe965fad436",
+    measurementId: "G-V52FCNFW41"
+};
+
+const config = isStaging() ? staging_config : production_config;
+
+firebase.initializeApp(config);
+
+if (isStaging()) console.log('%cSTAGING', 'color: orange; font-size: 32px;');
 
 const analytics = firebase.analytics();
 const messaging = firebase.messaging();
