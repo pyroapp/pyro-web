@@ -2319,8 +2319,8 @@ section .button.flat-bordered:hover {
 
 .row-3wW-Fx {
 	width: 100%;
-	/*max-width: 1260px;*/
-	/*max-width: var(--page-max-width);*/
+	max-width: 1260px;
+	max-width: var(--page-max-width);
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	display: grid;
@@ -17988,34 +17988,4 @@ a:hover .tile-aRqovC {
 		grid-column: 1/span 9;
 		grid-row: 1
 	}
-}
-
-/* Added By Realmy */
-
-.topContainer-ae1713 {
-	padding: var(--section-spacing) 80px;
-}
-
-.developersContainer-c18056 {
-	padding: var(--section-spacing) 80px;
-	background: #101015;
-}
-
-.developer {
-	display: flex;
-	margin-bottom: 100px;
-}
-
-.developer > img {
-	width: 128px;
-	height: 128px;
-	border-radius: 100vw;
-}
-
-.developer > div {
-	margin-left: 40px;
-}
-
-.marginTop-1d8bcc {
-	margin-top: 14px;
 }

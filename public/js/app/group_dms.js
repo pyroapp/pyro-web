@@ -202,7 +202,7 @@ function addGroupChannel(channel_id) {
     const channelsList = document.getElementById('groupChatsList');
 
     const a = document.createElement('a');
-    a.classList = 'channel-2QD9_O container-be9036 clickable-1JJAn8 fadeIn-efi30';
+    a.classList = 'channel-2QD9_O container-2Pjhx- clickable-1JJAn8 fadeIn-efi30';
     a.id = 'channel-' + channel_id;
     a.setAttribute('channel', channel_id);
     a.setAttribute('onclick', `loadChannelFromId(${channel_id});`);
@@ -345,7 +345,9 @@ function addGroupChat(channel_id) {
         <section class="title-3qD0b- container-1r6BKw themed-ANHk51" id="private-header-${channel_id}">
             <div class="children-19S4PO">
                 <div class="iconWrapper-2OrFZ1">
-                    <div class="avatarContainer-3cVycu"></div>
+                <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M14 8.00598C14 10.211 12.206 12.006 10 12.006C7.795 12.006 6 10.211 6 8.00598C6 5.80098 7.794 4.00598 10 4.00598C12.206 4.00598 14 5.80098 14 8.00598ZM2 19.006C2 15.473 5.29 13.006 10 13.006C14.711 13.006 18 15.473 18 19.006V20.006H2V19.006Z"></path><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M14 8.00598C14 10.211 12.206 12.006 10 12.006C7.795 12.006 6 10.211 6 8.00598C6 5.80098 7.794 4.00598 10 4.00598C12.206 4.00598 14 5.80098 14 8.00598ZM2 19.006C2 15.473 5.29 13.006 10 13.006C14.711 13.006 18 15.473 18 19.006V20.006H2V19.006Z"></path><path fill="currentColor" d="M20.0001 20.006H22.0001V19.006C22.0001 16.4433 20.2697 14.4415 17.5213 13.5352C19.0621 14.9127 20.0001 16.8059 20.0001 19.006V20.006Z"></path><path fill="currentColor" d="M14.8834 11.9077C16.6657 11.5044 18.0001 9.9077 18.0001 8.00598C18.0001 5.96916 16.4693 4.28218 14.4971 4.0367C15.4322 5.09511 16.0001 6.48524 16.0001 8.00598C16.0001 9.44888 15.4889 10.7742 14.6378 11.8102C14.7203 11.8418 14.8022 11.8743 14.8834 11.9077Z"></path>
+                </svg>
                 </div>
                 <h3 class="cursorPointer-1j7DL8 title-29uC1r base-1x0h_U size16-1P40sf RT_name"></h3>
                 <div class="spacer-3kEb8l"></div>
@@ -1410,7 +1412,7 @@ function addGroupChat(channel_id) {
                                 </div>
                                 <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x">
                                     <div class="placeholder-37qJjk fontSize16Padding-3Wk7zP">Message <span class="RT_name"><span></div>
-                                    <div contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP messageField" spellcheck="true" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; padding-top: 12px; display: block;"></div>
+                                    <div contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP messageField" spellcheck="true" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; padding-top: 12px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -1493,10 +1495,7 @@ function addGroupChat(channel_id) {
         document.execCommand("insertHTML", false, text);
     });
 
-    // Auto focus the input anywhere within the chat
-    document.addEventListener('keypress', () => {
-        if (!input.activeElement) input.focus();
-    });
+    return div;
 }
 
 
@@ -1603,44 +1602,45 @@ async function changeGroupChatName(channel_id, name) {
             const { type, doc: channel } = change;
             const { recipients } = channel.data();
 
+            console.log(type);
+
             if (type === 'added') {
                 
                 // Group chat already exists in DOM
                 if (document.getElementById(`channel-${channel.id}`)) return;
+            
+                CACHED_RECIPIENTS[channel.id] = recipients;
+
+                addGroupChannel(channel.id);
+                addGroupChat(channel.id);
 
                 // Realtime group chat name
                 const listener = await firebase.firestore().collection('channels').doc(channel.id).onSnapshot(snapshot => {
                     const { recipients } = snapshot.data();
                     const gc = document.getElementById(`channel-${channel.id}`);
-                    const chat = document.getElementById(channel.id);
 
+                    // Channel
                     gc.querySelectorAll('.activityText-OW8WYb')[0].innerText = recipients.length.toString() + ' Members';
-                    chat.querySelectorAll('.avatarContainer-3cVycu')[0].innerHTML = '';
 
                     CACHED_GROUP_CHAT_CHANNELS[channel.id] = {
                         ...snapshot.data()
                     }
 
-                    loadGroupChatHeadingAvatars(channel.id);
                     setRealtimeChannelInfo(channel.id);
                 });
 
-                CACHED_RECIPIENTS[channel.id] = recipients;
                 CACHED_LISTENERS[channel.id] = listener;
 
-                recipients.forEach(async recipient => {
+                recipients.forEach(recipient => {
                     if (recipient === uid) return;
                     if (CACHED_USERS[recipient]) return; // User already exists
 
-                    await firebase.firestore().collection('users').doc(recipient).onSnapshot(snapshot => {
+                    firebase.firestore().collection('users').doc(recipient).onSnapshot(snapshot => {
                         CACHED_USERS[recipient] = {
                             ...snapshot.data()
                         };
                     });
                 });
-
-                addGroupChat(channel.id);
-                addGroupChannel(channel.id);
             }
 
             // Removed means that a field within the document has been changed.
@@ -1666,39 +1666,6 @@ async function changeGroupChatName(channel_id, name) {
                 loadChannelFromId('friends');
             }
         });
-    });
-}
-
-
-/**
- * 
- * @param {*} channel_id 
- */
-function loadGroupChatHeadingAvatars(channel_id) {
-    const chat = document.getElementById(channel_id);
-    const avatar_container = chat.querySelectorAll('.avatarContainer-3cVycu')[0];
-    
-    const { recipients } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
-    let i = 0;
-
-    recipients.forEach(recipient => {
-        if (i === recipients.length - 1) {
-            avatar_container.innerHTML += `
-                <img src="${getAvatar(recipient)}" uid=${recipient} class="avatar-3z61ij">
-            `;
-
-            return i++;
-        }
-
-        avatar_container.innerHTML += `
-            <svg width="24" height="24" class="avatarMask-2SqW1n" viewBox="0 0 24 24" uid=${recipients}>
-                <foreignObject x="0" y="0" width="24" height="24" mask="url(#svg-mask-voice-user-summary-item)">
-                    <img src="${getAvatar(recipient)}" class="avatar-3z61ij">
-                </foreignObject>
-            </svg>
-        `;
-
-        i++;
     });
 }
 

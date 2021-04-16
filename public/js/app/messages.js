@@ -181,11 +181,11 @@ function loadMessage(message) {
     let formattedTime = moment(timestamp).format('DD/MM/YYYY');
     let messageClass = 'groupStart-23k01U';
 
-    if (isToday) formattedTime = 'Today at ' + moment(timestamp).format('h:mm A');
-    if (isYesterday) formattedTime = 'Yesterday at ' + moment(timestamp).format('h:mm A');
+    if (isToday) formattedTime = 'Today at ' + moment(timestamp).format('hh:mm A');
+    if (isYesterday) formattedTime = 'Yesterday at ' + moment(timestamp).format('hh:mm A');
 
     if (lastAuthorId === author) {
-        formattedTime = moment(timestamp).format('h:mm A');
+        formattedTime = moment(timestamp).format('hh:mm A');
         messageClass = '';
     }
 

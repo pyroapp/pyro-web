@@ -85,12 +85,6 @@ app.get('/channels/:guildId/:channelId', (req, res) => {
 });
 */
 
-app.get('/devs', (req, res) => {
-    log(req);
-
-    res.status(200).sendFile(web + '/views/developers.html');
-});
-
 app.get('*', (req, res) => {
     log(req);
 

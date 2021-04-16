@@ -47518,8 +47518,7 @@ strong {
 	width:24px;
 	height:24px;
 	-webkit-app-region:no-drag;
-	color:var(--text-muted);
-	fill:var(--text-muted)
+	color:var(--text-muted)
 }
 
 .clickable-3rdHwn .icon-22AiRD {
@@ -57753,19 +57752,7 @@ a.ctaAnchor-3-8I3v:hover {
 	border-radius:4px;
 	-webkit-transition:none;
 	transition:none;
-	color:var(--channels-default);
-	fill:var(--channels-default)
-}
-
-.container-be9036 {
-	-webkit-box-sizing:border-box;
-	box-sizing:border-box;
-	display:block;
-	padding:1px 0;
-	border-radius:4px;
-	-webkit-transition:none;
-	transition:none;
-	color:var(--channels-default);
+	color:var(--channels-default)
 }
 
 .container-2Pjhx- .muted-3mU76i {
@@ -57788,8 +57775,7 @@ a.ctaAnchor-3-8I3v:hover {
 .clickable-1JJAn8.container-2Pjhx-:active,
 .highlighted-1gWxXa.container-2Pjhx-,
 .selected-aXhQR6.container-2Pjhx- {
-	color:var(--interactive-active);
-	fill:var(--interactive-active)
+	color:var(--interactive-active)
 }
 
 .layout-2DM8Md {
@@ -57838,7 +57824,7 @@ a.ctaAnchor-3-8I3v:hover {
 	flex:0 0 auto;
 	width:32px;
 	height:32px;
-	margin-right:8px
+	margin-right:12px
 }
 
 .content-3QAtGj {
@@ -62979,7 +62965,6 @@ html .invoiceCancelRow-1YYT42 {
 }
 
 .privateChannelsHeaderContainer-3NB1K1 {
-	transition: 0.1s;
 	display:-webkit-box;
 	display:-ms-flexbox;
 	display:flex;
@@ -69918,8 +69903,7 @@ html .invoiceCancelRow-3mYhFX {
 	justify-content:center;
 	border-radius:4px;
 	position:relative;
-	color:var(--interactive-normal);
-	fill:var(--interactive-normal)
+	color:var(--interactive-normal)
 }
 
 .button-14-BFJ.enabled-2cQ-u7:hover {
@@ -79228,33 +79212,4 @@ html .invoiceCancelRow-3mYhFX {
 
 .hidden {
 	display: none;
-}
-
-/* Added by Realmy */
-
-.embersHeader-4eb9ae {
-	color: var(--brand-primary);
-	font-weight: 700;
-	font-size: 50px;
-}
-
-.embersSub-d1bc64 {
-	color: var(--header-primary);
-	font-weight: 400;
-	font-size: 22px;
-	margin-top: 24px;
-}
-
-.centerText-e4ce97 {
-	text-align: center;
-}
-
-.discordButton-7dc602 {
-	background: #24222C !important;
-	margin-top: 12px;
-}
-
-.privateChannelsHeaderContainer-3NB1K1:hover {
-	transition: 0.1s;
-	color: var(--header-primary);
 }
