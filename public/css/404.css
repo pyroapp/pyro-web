@@ -374,7 +374,7 @@
 }
 
 .glitch-1ZnYvx:before {
-	left: 1px;
+	left: 2px;
 	text-shadow: 1px 0 #eb3406, 2px 0 #fbe601;
 	/* text-shadow: -2px 0 var(--dark-not-black); */
 	clip: rect(24px, 550px, 90px, 0);
@@ -383,7 +383,7 @@
 }
 
 .glitch-1ZnYvx:after {
-	left: -1px;
+	left: -2px;
 	text-shadow: 1px 0 #63c3ea, 2px 0 #2b30d1;	
 	/* text-shadow: -2px 0 rgba(114, 137, 218, .3); */
 	clip: rect(85px, 550px, 140px, 0);
