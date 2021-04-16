@@ -14,9 +14,9 @@
  * @returns 
  */
 function isStaging() {
-    const { protocol, host } = window.location;
+    const { host } = window.location;
 
-    return protocol === 'http:' && host === 'staging.pyrochat.app' || host === 'localhost:8000';
+    return host === 'staging.pyrochat.app' || host === 'localhost:8000';
 }
 
 

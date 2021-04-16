@@ -1132,10 +1132,6 @@
     // Send message on enter
     const input = div.querySelectorAll('.messageField')[0];
 
-    document.addEventListener('keypress', event => {
-        input.focus();
-    })
-
     input.addEventListener('keypress', event => {
         if (!event.shiftKey && event.key === 'Enter') {
             sendPrivateMessage(channel_id);
@@ -1151,7 +1147,7 @@
                 };
             };
         }
-    })
+    });
 
     // Placeholder behavior
     input.addEventListener('input', () => {
@@ -1175,7 +1171,7 @@
         for (query of chatdiv) {
             query.style.height = (33 + (11 * length)) + "px";
         };
-    })
+    });
 
     input.addEventListener("paste", function(e) {
         e.preventDefault();
@@ -1183,7 +1179,7 @@
         let text = (e.originalEvent || e).clipboardData.getData('text/plain');
     
         document.execCommand("insertHTML", false, text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"));
-    })
+    });
 
     div.querySelectorAll('.clickable-3rdHwn')[0].onclick = () => {
         showGroupDMModal(friend_uid);
@@ -1192,6 +1188,11 @@
     div.querySelectorAll('.block-button-rj93')[0].onclick = () => {
         blockFriend(friend_uid);
     }
+
+    // Auto focus the input anywhere within the chat
+    document.addEventListener('keypress', () => {
+        if (!input.activeElement) input.focus();
+    });
 }
 
 
