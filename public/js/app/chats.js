@@ -1188,6 +1188,11 @@
     div.querySelectorAll('.block-button-rj93')[0].onclick = () => {
         blockFriend(friend_uid);
     }
+
+    // Auto focus the input anywhere within the chat
+    document.addEventListener('keypress', () => {
+        if (!input.activeElement) input.focus();
+    });
 }
 
 
