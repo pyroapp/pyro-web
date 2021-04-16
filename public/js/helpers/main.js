@@ -16,7 +16,8 @@
 function isStaging() {
     const { host } = window.location;
 
-    return host === 'staging.pyrochat.app' || host === 'localhost:8000';
+    if (host === 'staging.pyrochat.app') return true;
+    if (host === 'localhost:8000') return true;
 }
 
 
