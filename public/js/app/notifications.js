@@ -14,7 +14,7 @@
  */
 async function enableNotifications() {
     if (isMobile()) return;
-    if (isStaging()) return; 
+    if (isStaging()) return;
 
     try {
         await messaging.requestPermission();
