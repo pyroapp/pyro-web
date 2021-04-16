@@ -18,8 +18,6 @@ function isStaging() {
 
     if (host === 'staging.pyrochat.app') return true;
     if (host === 'localhost:8000') return true;
-
-    return false;
 }
 
 
