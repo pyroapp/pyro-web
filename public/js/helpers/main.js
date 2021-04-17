@@ -156,3 +156,33 @@ function sortObjectByKey(key, order = 'asc') {
 function isMobile() {
     return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 }
+
+
+/**
+ * 
+ * @param {*} a1 
+ * @param {*} a2 
+ * @returns 
+ */
+function getArrayDifference(a1, a2) {
+    const a = [];
+    const diff = [];
+
+    for (i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+}

@@ -1427,6 +1427,12 @@ function addGroupChat(channel_id) {
                     </div>
                 </div>
             </main>
+            <div class="membersWrap-2h-GB4">
+                <div class="members-1998pB thin-1ybCId scrollerBase-289Jih fade-2kXiP2" style="overflow: hidden scroll; padding-right: 0px;">
+                    <h2 class="membersGroup-v9BXpm container-2ax-kl">Members</h2>
+                    <div id="userslist-${channel_id}"></div>
+                </div>
+            </div>
         </div>
     `;
 
@@ -1582,7 +1588,7 @@ async function changeGroupChatName(channel_id, name) {
 /**
  * 
  */
- async function loadGroupChannels() {
+async function loadGroupChannels() {
     const { uid } = firebase.auth().currentUser;
 
     firebase.firestore().collection('channels')
@@ -1604,43 +1610,66 @@ async function changeGroupChatName(channel_id, name) {
             const { recipients } = channel.data();
 
             if (type === 'added') {
-                
-                // Group chat already exists in DOM
-                if (document.getElementById(`channel-${channel.id}`)) return;
+                addGroupChat(channel.id);
+                addGroupChannel(channel.id);
+            }
 
-                // Realtime group chat name
-                const listener = await firebase.firestore().collection('channels').doc(channel.id).onSnapshot(snapshot => {
-                    const { recipients } = snapshot.data();
-                    const gc = document.getElementById(`channel-${channel.id}`);
-                    const chat = document.getElementById(channel.id);
+            if (type === 'modified') {
+                const { recipients: previousNumberOfUsers } = CACHED_GROUP_CHAT_CHANNELS[channel.id];
+                const updatedNumberOfUsers = recipients;
 
-                    gc.querySelectorAll('.activityText-OW8WYb')[0].innerText = recipients.length.toString() + ' Members';
-                    chat.querySelectorAll('.avatarContainer-3cVycu')[0].innerHTML = '';
+                // If the updated number of users is less than the previous number
+                // of users then a user has been deleted  
+                if (updatedNumberOfUsers.length < previousNumberOfUsers.length) {
+                    const difference = getArrayDifference(updatedNumberOfUsers, previousNumberOfUsers);
 
-                    CACHED_GROUP_CHAT_CHANNELS[channel.id] = {
-                        ...snapshot.data()
-                    }
+                    difference.forEach(user => {
+                        if (user === 'removed') return;
 
-                    loadGroupChatHeadingAvatars(channel.id);
-                    setRealtimeChannelInfo(channel.id);
-                });
+                        document.getElementById(`useritem-${channel_id}-${recipient}`)
+                    });
+                }
+            }
+
+            // Channel was either added or changed
+            if (type === 'added' || type === 'modified') {
+                document.getElementById(`channel-${channel.id}`).querySelectorAll('.activityText-OW8WYb')[0].innerText = recipients.length.toString() + ' Members';
+
+                CACHED_GROUP_CHAT_CHANNELS[channel.id] = {
+                    ...channel.data()
+                };
 
                 CACHED_RECIPIENTS[channel.id] = recipients;
-                CACHED_LISTENERS[channel.id] = listener;
 
-                recipients.forEach(async recipient => {
-                    if (recipient === uid) return;
-                    if (CACHED_USERS[recipient]) return; // User already exists
+                // This code is a little tricky to understand, and has a particular order
+                // so an explanation is below.
+                
+                // A channel user item is added to the user list for the channel first,
+                // This is to create the user object to which a realtime user listener
+                // can be attached.
+                
+                // If the user is already cached, it doesn't need to get their info again
+                // but will connect their realtime listener to this new user item.
 
-                    await firebase.firestore().collection('users').doc(recipient).onSnapshot(snapshot => {
+                // If the user has not been fetched yet, a cache of the user is added
+                // and a realtime listener for that user is not attached to all elements
+                // using the setRealtimeUserInfo function.
+                recipients.forEach(recipient => {
+                    addChannelUserItem(channel.id, recipient);
+
+                    if (CACHED_USERS[recipient]) return setRealtimeUserInfo(recipient);
+
+                    firebase.firestore().collection('users').doc(recipient).onSnapshot(snapshot => {
                         CACHED_USERS[recipient] = {
                             ...snapshot.data()
                         };
-                    });
+
+                        setRealtimeUserInfo(recipient);
+                    });    
                 });
 
-                addGroupChat(channel.id);
-                addGroupChannel(channel.id);
+                setRealtimeChannelInfo(channel.id);
+                loadGroupChatHeadingAvatars(channel.id);
             }
 
             // Removed means that a field within the document has been changed.
@@ -1657,11 +1686,8 @@ async function changeGroupChatName(channel_id, name) {
                 chatList.removeChild(chat); // Remove chat
 
                 // Detatch listeners
-                CACHED_LISTENERS[channel.id]();
                 CACHED_CHAT_LISTENERS[channel.id]();
-
-                delete CACHED_LISTENERS[channel.id];
-                delete CACHED_CHAT_LISTENERS[channel.id]
+                delete CACHED_CHAT_LISTENERS[channel.id];
 
                 loadChannelFromId('friends');
             }
@@ -1674,10 +1700,52 @@ async function changeGroupChatName(channel_id, name) {
  * 
  * @param {*} channel_id 
  */
+function addChannelUserItem(channel_id, recipient) {
+    const usersList = document.getElementById(`userslist-${channel_id}`);
+    const { owner } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
+
+    if (document.getElementById(`useritem-${channel_id}-${recipient}`)) return;
+
+    const ownerCrown = (owner === recipient) ? '<svg class="ownerIcon-2NH9FM icon-1A2_vz" width="24" height="24" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.6572 5.42868C13.8879 5.29002 14.1806 5.30402 14.3973 5.46468C14.6133 5.62602 14.7119 5.90068 14.6473 6.16202L13.3139 11.4954C13.2393 11.7927 12.9726 12.0007 12.6666 12.0007H3.33325C3.02725 12.0007 2.76058 11.792 2.68592 11.4954L1.35258 6.16202C1.28792 5.90068 1.38658 5.62602 1.60258 5.46468C1.81992 5.30468 2.11192 5.29068 2.34325 5.42868L5.13192 7.10202L7.44592 3.63068C7.46173 3.60697 7.48377 3.5913 7.50588 3.57559C7.5192 3.56612 7.53255 3.55663 7.54458 3.54535L6.90258 2.90268C6.77325 2.77335 6.77325 2.56068 6.90258 2.43135L7.76458 1.56935C7.89392 1.44002 8.10658 1.44002 8.23592 1.56935L9.09792 2.43135C9.22725 2.56068 9.22725 2.77335 9.09792 2.90268L8.45592 3.54535C8.46794 3.55686 8.48154 3.56651 8.49516 3.57618C8.51703 3.5917 8.53897 3.60727 8.55458 3.63068L10.8686 7.10202L13.6572 5.42868ZM2.66667 12.6673H13.3333V14.0007H2.66667V12.6673Z" fill="currentColor"></path></svg>' : '';
+    
+    const div = document.createElement('div');
+    div.classList = "member-3-YXUe container-2Pjhx- clickable-1JJAn8 fadeIn-efi30";
+    div.id = `useritem-${channel_id}-${recipient}`;
+    div.setAttribute('uid', recipient);
+    div.innerHTML = `
+        <div class="layout-2DM8Md">
+            <div class="avatar-3uk_u9">
+                <div clas="wrapper-3t9DeA" style="width: 32px; height: 32px;">
+                    <svg width="32" height="32" class="mask-1l8v16 svg-2V3M55">
+                        <foreignObject x="0" y="0" width="32" height="32" mask="url(#svg-mask-avatar-status-round-32)">
+                            <div class="avatarStack-2Dr8S9"><img src="${getAvatar(recipient)}" class="avatar-VxgULZ"></div>
+                        </foreignObject>
+                        <rect width="10" height="10" x="22" y="22" fill="#43b581" mask="url(#svg-mask-status-online)" class="pointerEvents-2zdfdO RT_status"></rect>
+                    </svg>
+                </div>
+            </div>
+            <div class="content-3QAtGj">
+                <div class="nameAndDecorators-5FJ2dg">
+                    <div class="name-uJV0GL"><span class="roleColor-rz2vM0 RT_username"></span></div>${ownerCrown}</div>
+                <div class="subText-1KtqkB"></div>
+            </div>
+        </div>
+    `;
+
+    usersList.appendChild(div);
+}
+
+
+/**
+ * 
+ * @param {*} channel_id 
+ */
 function loadGroupChatHeadingAvatars(channel_id) {
     const chat = document.getElementById(channel_id);
     const avatar_container = chat.querySelectorAll('.avatarContainer-3cVycu')[0];
     
+    avatar_container.innerHTML = ""; // Clear existing avatars
+
     const { recipients } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
     let i = 0;
 

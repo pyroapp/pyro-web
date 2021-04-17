@@ -32,12 +32,10 @@ async function uploadDefaultAvatar(name) {
  * @param {*} userId
  * @returns 
  */
-function getAvatar(userId) {
+function getAvatar(user_id) {
     const bucket = 'pyro-' + (isStaging() ? 'staging' : 'production');
     const path = `https://firebasestorage.googleapis.com/v0/b/${bucket}.appspot.com/o/avatars%2F`;
-    let { uid } = firebase.auth().currentUser;
-    
-    if (userId) uid = userId;
+    const uid = user_id || firebase.auth().currentUser.uid;
 
     return `${path}${uid}.gif?alt=media`;
 }
