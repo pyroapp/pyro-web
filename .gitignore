@@ -17,6 +17,9 @@ firebase-debug.*.log*
 # it commented so all members can deploy to the same project(s) in .firebaserc.
 # .firebaserc
 
+# Because it shouldn't be under version control
+.vscode
+
 # Runtime data
 pids
 *.pid
