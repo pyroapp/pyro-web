@@ -1623,10 +1623,14 @@ async function loadGroupChannels() {
                 if (updatedNumberOfUsers.length < previousNumberOfUsers.length) {
                     const difference = getArrayDifference(updatedNumberOfUsers, previousNumberOfUsers);
 
+                    // Remove users who have left or been removed from the group chat
                     difference.forEach(user => {
-                        if (user === 'removed') return;
+                        if (user === 'remove') return;
 
-                        document.getElementById(`useritem-${channel_id}-${recipient}`)
+                        const usersList = document.getElementById(`userslist-${channel.id}`);
+                        const userItem = document.getElementById(`useritem-${channel.id}-${user}`);
+
+                        usersList.removeChild(userItem);
                     });
                 }
             }
