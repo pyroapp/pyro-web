@@ -3,8 +3,8 @@
 //?  /helpers/globals.js
 //?  Pyro Chat
 //?
-//?  Developed by Robolab LLC
-//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
+//?  Developed by Pyro Communications LLC
+//?  Copyright (c) 2021 Pyro Communications LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
