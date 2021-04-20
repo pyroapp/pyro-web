@@ -191,6 +191,165 @@ async function getFriends() {
     return uids;
 }
 
+async function displayAllFriends() {
+    const { uid } = firebase.auth().currentUser;
+
+    const friends = await (await firebase.firestore().collection('friends').doc(uid).get()).data();
+    const friendList = document.getElementById('friendsContainer-d9s8fd');
+    
+    if (!friends) {        
+        friendList.innerHTML = 
+        `
+        <div class="emptyState-2i1-FW">
+            <div class="friendsEmpty-1K9B4k" style="opacity: 1;">
+                <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyCenter-3D2jYp alignCenter-1dQNNs noWrap-3jynv6 wrapper-r-6rrt" style="flex: 1 1 auto;">
+                    <div class="image-1GzsFd marginBottom40-2vIwTv" style="flex: 0 1 auto; width: 376px; height: 162px; background-image: url('../img/b5eb2f7d6b3f8cc9b60be4a5dcf28015.svg');"></div>
+                    <div class="flexChild-faoVW3" direction="vertical-V37hAW flex-1O1GKY directionColumn-35P_nr" style="flex: 0 1 auto;">
+                        <div class="text-GwUZgS marginTop8-1DLZ1n">Looks quiet here. Add a friend!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+    else {
+        friendList.innerHTML = 
+        `
+        <div class="onlineFriendsCounter" style="color: #99aab5; margin: 10px 20px;">ALL - ${Object.keys(friends).length}</div>
+        `
+
+        for (const friendUid in friends) {
+            const friend = CACHED_USERS[friendUid];
+            const a = document.createElement('a');
+            const statusMask = `url(#svg-mask-status-${friend.status})`;
+            const statusColour = STATUS_COLOURS[friend.status]
+            
+            if (friends[friendUid].type === 'BLOCKED') {
+                continue;
+            }
+
+            a.innerHTML = 
+            `
+            <div class="layout-2DM8Md" style="margin: 0px 20px;">
+                <div class="avatar-3uk_u9">
+                    <div class="wrapper-3t9DeA" style="width: 32px; height: 32px;">
+                        <svg width="40" height="32" viewBox="0 0 40 32" class="mask-1l8v16 svg-2V3M55">
+                            <mask id="1e790872-400c-4750-815a-1afdbe1cdf12" width="32" height="32">
+                                <circle cx="16" cy="16" r="16" fill="white"></circle>
+                                <rect color="black" x="19" y="19" width="16" height="16" rx="8" ry="8"></rect>
+                            </mask>
+                            <foreignObject x="0" y="0" width="32" height="32" mask="url(#1e790872-400c-4750-815a-1afdbe1cdf12)">
+                                <img src="${getAvatar(friendUid)}" class="avatar-VxgULZ">
+                            </foreignObject>
+                            <rect class="RT_status" x="22" y="22" width="10" height="10" class="pointerEvents-2zdfdO" fill="${statusColour}" mask=${statusMask}></rect>
+                        </svg>
+                    </div>
+                </div>
+                <div class="content-3QAtGj">
+                    <div class="nameAndDecorators-5FJ2dg">
+                        <div class="name-uJV0GL">
+                            <div class="overflow-WK9Ogt RT_username" style="color: #99aab5;"><strong>${friend.username}</strong>#${friend.discriminator}</div>
+                        </div>
+                    </div>
+                    <div class="subText-1KtqkB">
+                        <div class="activity-525YDR subtext-1RtU34 hidden">
+                            <div class="activityText-OW8WYb lastmessage"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="children-gzQq2t hidden">
+                    <div class="closeButton-2GCmT5">
+                        <svg class="closeIcon-rycxaQ" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            `;
+            friendList.appendChild(a);
+        }
+    }
+}
+
+async function displayOnlineFriends() {
+    const { uid } = firebase.auth().currentUser;
+
+    const friends = await (await firebase.firestore().collection('friends').doc(uid).get()).data();
+    const friendList = document.getElementById('friendsContainer-d9s8fd');
+    
+    if (!friends) {        
+        friendList.innerHTML = 
+        `
+        <div class="emptyState-2i1-FW">
+            <div class="friendsEmpty-1K9B4k" style="opacity: 1;">
+                <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyCenter-3D2jYp alignCenter-1dQNNs noWrap-3jynv6 wrapper-r-6rrt" style="flex: 1 1 auto;">
+                    <div class="image-1GzsFd marginBottom40-2vIwTv" style="flex: 0 1 auto; width: 376px; height: 162px; background-image: url('../img/b5eb2f7d6b3f8cc9b60be4a5dcf28015.svg');"></div>
+                    <div class="flexChild-faoVW3" direction="vertical-V37hAW flex-1O1GKY directionColumn-35P_nr" style="flex: 0 1 auto;">
+                        <div class="text-GwUZgS marginTop8-1DLZ1n">Looks quiet here. Add a friend!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+    else {
+        friendList.innerHTML = 
+        `
+        <div class="onlineFriendsCounter" style="color: #99aab5; margin: 10px 20px;">ONLINE - ${Object.keys(friends).length}</div>
+        `
+
+        for (const friendUid in friends) {
+            const friend = CACHED_USERS[friendUid];
+            const a = document.createElement('a');
+            const statusMask = `url(#svg-mask-status-${friend.status})`;
+            const statusColour = STATUS_COLOURS[friend.status]
+
+            if (friends[friendUid].type === 'BLOCKED' || friend.status === 'offline') {
+                continue;
+            }
+
+            a.innerHTML = 
+            `
+            <div class="layout-2DM8Md" style="margin: 0px 20px;">
+                <div class="avatar-3uk_u9">
+                    <div class="wrapper-3t9DeA" style="width: 32px; height: 32px;">
+                        <svg width="40" height="32" viewBox="0 0 40 32" class="mask-1l8v16 svg-2V3M55">
+                            <mask id="1e790872-400c-4750-815a-1afdbe1cdf12" width="32" height="32">
+                                <circle cx="16" cy="16" r="16" fill="white"></circle>
+                                <rect color="black" x="19" y="19" width="16" height="16" rx="8" ry="8"></rect>
+                            </mask>
+                            <foreignObject x="0" y="0" width="32" height="32" mask="url(#1e790872-400c-4750-815a-1afdbe1cdf12)">
+                                <img src="${getAvatar(friendUid)}" class="avatar-VxgULZ">
+                            </foreignObject>
+                            <rect class="RT_status" x="22" y="22" width="10" height="10" class="pointerEvents-2zdfdO" fill="${statusColour}" mask=${statusMask}></rect>
+                        </svg>
+                    </div>
+                </div>
+                <div class="content-3QAtGj">
+                    <div class="nameAndDecorators-5FJ2dg">
+                        <div class="name-uJV0GL">
+                            <div class="overflow-WK9Ogt RT_username" style="color: #99aab5;"><strong>${friend.username}</strong>#${friend.discriminator}</div>
+                        </div>
+                    </div>
+                    <div class="subText-1KtqkB">
+                        <div class="activity-525YDR subtext-1RtU34 hidden">
+                            <div class="activityText-OW8WYb lastmessage"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="children-gzQq2t hidden">
+                    <div class="closeButton-2GCmT5">
+                        <svg class="closeIcon-rycxaQ" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            `;
+            friendList.appendChild(a);
+        }
+    }
+}
 
 /**
  * 

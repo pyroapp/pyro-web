@@ -510,12 +510,12 @@
                                                         </div>
                                                         <h3 class="title-29uC1r base-1x0h_U size16-1P40sf">Friends</h3>
                                                         <div class="divider-3FBTu8"></div>
-                                                        <div class="tabBar-ZmDY9v topPill-30KHOu hidden">
-                                                            <div class="item-3HknzM item-PXvHYJ themed-OHr7kt">Online</div>
-                                                            <div class="item-3HknzM item-PXvHYJ themed-OHr7kt">All</div>
+                                                        <div class="tabBar-ZmDY9v topPill-30KHOu">
+                                                            <div class="item-3HknzM item-PXvHYJ themed-OHr7kt" onclick='displayOnlineFriends()'>Online</div>
+                                                            <div class="item-3HknzM item-PXvHYJ themed-OHr7kt" onclick='displayAllFriends()'>All</div>
                                                             <div class="item-3HknzM item-PXvHYJ themed-OHr7kt" style="display: none;">Pending</div>
                                                             <div class="item-3HknzM item-PXvHYJ themed-OHr7kt" style="display: none;">Blocked</div>
-                                                            <div class="item-3HknzM item-PXvHYJ" style="background-color: rgba(67, 181, 129, 0.2); color: rgb(67, 181, 129);">
+                                                            <div class="item-3HknzM item-PXvHYJ"  onclick='showAddFriendModal()' style="background-color: rgba(67, 181, 129, 0.2); color: rgb(67, 181, 129);">
                                                                 <span>Add Friend</span>
                                                             </div>
                                                         </div>
@@ -543,43 +543,7 @@
                                                         </a>
                                                     </div>
                                                 </section>
-                                                <div class="tabBody-3YRQ8W">
-                                                    <div class="peopleColumn-29fq28">
-                                                        <div class="sectionHeader-20RGqu">
-                                                            <div class="addInputWrapper-1BOZ3d">
-                                                                <h2 class="header-1-dBpZ">Add Friend</h2>
-                                                                <div class="description-1EvxpH" id="addFriendLabel">Have a friend? You can add them here with their Pyro tag.</div>
-                                                                <div class="wrapper-1cBijl">
-                                                                    <input class="addFriendInput-4bcerK" placeholder="Enter a Username#0000" maxlength="37" max="37" min="5" id="addFriendField">
-                                                                    <div class="addFriendHint-3Y70FX"></div>
-                                                                    <button type="submit" disabled class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeSmall-2cSMqn grow-q77ONN" id="addFriendButton">
-                                                                        <div class="contents-18-Yxp">Add Friend</div>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="emptyState-2i1-FW">
-                                                            <div class="friendsEmpty-1K9B4k" style="opacity: 1;">
-                                                                <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyCenter-3D2jYp alignCenter-1dQNNs noWrap-3jynv6 wrapper-r-6rrt" style="flex: 1 1 auto;">
-                                                                    <div class="image-1GzsFd marginBottom40-2vIwTv" style="flex: 0 1 auto; width: 376px; height: 162px; background-image: url('../img/b5eb2f7d6b3f8cc9b60be4a5dcf28015.svg');"></div>
-                                                                    <div class="flexChild-faoVW3" direction="vertical-V37hAW flex-1O1GKY directionColumn-35P_nr" style="flex: 0 1 auto;">
-                                                                        <div class="text-GwUZgS marginTop8-1DLZ1n">Looks quiet here. Add a friend!</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="nowPlayingColumn-2sl4cE hidden">
-                                                        <div class="nowPlayingScroller-2XrVUt thin-1ybCId scrollerBase-289Jih" dir="ltr" style="overflow: hidden scroll; padding-right: 8px;">
-                                                            <h3 class="header-13Cw0- base-1x0h_U size12-3cLvbJ">Active Now</h3>
-                                                            <div class="emptyCard-1RJw8n">
-                                                                <h5 class="emptyHeader-3lmLcs base-1x0h_U size16-1P40sf">It's quiet for now...</h5>
-                                                                <div class="size14-e6ZScH emptyText-2zjpZr">When a friend starts an activity—like playing a game or hanging out on voice—we’ll show it here!</div>
-                                                            </div>
-                                                            <div aria-hidden="true" style="position: absolute; pointer-events: none; min-height: 0; min-width: 1px; flex: 0 0 auto; height: 16px;"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <div id="friendsContainer-d9s8fd"></div>
                                             </div>
                                             <div id="embers" class="applicationStore-1pNvnv mainBody-f3wd0 hidden">
                                                 <section class="headerBar-1YYOfi container-1r6BKw themed-ANHk51">
