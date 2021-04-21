@@ -49847,6 +49847,7 @@ strong {
 	-webkit-box-sizing:border-box;
 	box-sizing:border-box;
 	cursor:pointer;
+	height: 60px;
 	border-top:1px solid var(--background-modifier-accent)
 }
 
@@ -49870,7 +49871,7 @@ strong {
 	display:-webkit-box;
 	display:-ms-flexbox;
 	display:flex;
-	overflow:hidden
+	overflow:hidden;
 }
 
 .avatar-3W3CeO {
@@ -49887,7 +49888,8 @@ strong {
 	-webkit-box-direction:normal;
 	-ms-flex-direction:column;
 	flex-direction:column;
-	overflow:hidden
+	overflow:hidden;
+	margin-left: 12px;
 }
 
 .subtext-24R4-w {
@@ -49975,6 +49977,10 @@ strong {
 	-ms-flex-pack:justify;
 	justify-content:space-between;
 	max-width:100%
+}
+
+.peopleListItem-2nzedh:hover .discriminator-22Okc1 {
+	visibility: visible;
 }
 
 .actions-1SQwjn,

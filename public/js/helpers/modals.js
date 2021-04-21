@@ -64,32 +64,10 @@ async function hideModals() {
     modal.innerHTML = '';
 }
 
-async function showAddFriendModal() {
-    const friendList = document.getElementById('friendsContainer-d9s8fd');
 
-    friendList.innerHTML = 
-    `
-    <div class="tabBody-3YRQ8W">
-        <div class="peopleColumn-29fq28">
-            <div class="sectionHeader-20RGqu">
-                <div class="addInputWrapper-1BOZ3d">
-                    <h2 class="header-1-dBpZ">Add Friend</h2>
-                    <div class="description-1EvxpH" id="addFriendLabel">Have a friend? You can add them here with their Pyro tag.</div>
-                    <div class="wrapper-1cBijl">
-                        <input class="addFriendInput-4bcerK" placeholder="Enter a Username#0000" maxlength="37" max="37" min="5" id="addFriendField">
-                        <div class="addFriendHint-3Y70FX"></div>
-                        <button type="submit" disabled class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeSmall-2cSMqn grow-q77ONN" id="addFriendButton">
-                            <div class="contents-18-Yxp">Add Friend</div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    `
-}
-
-
+/**
+ * 
+ */
 function showCustomStatusModal() {
     const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 

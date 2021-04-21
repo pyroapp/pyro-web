@@ -9,23 +9,62 @@
 //? ------------------------------------------------------------------------------------
 
 
-async function uploadFile(input) {
-    const file = input.files[0];
-    const form = new FormData();
+/**
+ * 
+ * @param {*} file 
+ * @returns 
+ */
+async function uploadFile(file) {
+    const { uid } = firebase.auth().currentUser;
+    const { premium_type:ember } = CACHED_USERS[uid];
+    const { name, size } = file;
 
-    const path = (window.URL || window.webkitURL).createObjectURL(file);
+    // Check file size
+    // Free Plan: 25mb
+    // Ember Plan: 100mb
+    const sizeInMB = size / 1024 / 1024;
 
-    return;
-    form.append("file", file, "/Y:/Background.jpg");
-    form.append("uid", "evannotcool");
+    if (!ember && sizeInMB >= 25) return console.log(`File too large... ${sizeInMB}`);
+    if (ember && sizeInMB >= 100) return console.log(`File too large... ${sizeInMB}`);
 
-    const options = {
-        method: 'POST',
-        body: form,
-        redirect: 'follow'
-    };
+    // Get authentication information from GCP
+    const params = new URLSearchParams();
 
-    const response = await fetch("https://pyro-cdn-kk3vd5vl7q-uc.a.run.app/upload", options);
+    params.append('file', name);
+    params.append('uid', uid);
+    params.append('ember', ember);
+   
+    try {
+        console.log(`Uploading ${name}... Size: ${sizeInMB}`);
 
-    console.log(response);
+        // Getting policy document authentication
+        const { data: { POST } } = await axios.post(API_URL, params, {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        });
+
+        const { fields, url } = POST;
+
+        // Uploading file to google cloud storage bucket
+        const form = new FormData();
+
+        form.append('acl', `${fields.acl}`);
+        form.append('key', `${fields.key}`);
+        form.append('x-goog-date', fields['x-goog-date']);
+        form.append('x-goog-credential', fields['x-goog-credential']);
+        form.append('x-goog-algorithm', fields['x-goog-algorithm']);
+        form.append('policy', fields.policy);
+        form.append('x-goog-signature', fields['x-goog-signature']);
+        form.append('file', file);
+
+
+        await axios.post(url, form, {
+            "Content-Type": "multipart/form-data"
+        });
+
+        console.log(CDN_URL + fields.key);
+
+        return CDN_URL + fields.key;
+    } catch (error) {
+        throw error;
+    }
 }

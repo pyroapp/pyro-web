@@ -12,51 +12,54 @@
 /**
  * 
  */
-function loadPrivateChannels() {
-    const { uid } = firebase.auth().currentUser;
+async function loadPrivateChannels() {
+    const loadChannels = new Promise((resolve, reject) => {
+        const { uid } = firebase.auth().currentUser;
+    
+        firebase.firestore().collection('channels')
+        .where('recipients', 'array-contains', uid)
+        .where('type', '==', 'DM')
+        .limit(50)
+        .onSnapshot(snapshot => {
+            if (snapshot.empty) return addPrivateChannelPlaceholder();
+    
+            snapshot.docChanges().forEach(async change => {
+                const { type, doc: channel } = change;
+    
+                if (type === 'added') {
+                    hidePrivateChannelPlaceholder();
+    
+                    // Get frend user
+                    const { recipients } = channel.data();
+    
+                    CACHED_RECIPIENTS[channel.id] = recipients;
+    
+                    recipients.forEach(async recipient => {
+                        if (recipient === uid || CACHED_USERS[recipient]) return;
 
-    firebase.firestore().collection('channels')
-    .where('recipients', 'array-contains', uid)
-    .where('type', '==', 'DM')
-    .limit(50)
-    .onSnapshot(snapshot => {
-        if (snapshot.empty) return addPrivateChannelPlaceholder();
+                        addPrivateChannel(channel.id, recipient);
+                        addChat(channel.id, recipient);
 
-        snapshot.docChanges().forEach(async change => {
-            const { type, doc: channel } = change;
-
-            if (type === 'added') {
-                hidePrivateChannelPlaceholder();
-
-                // Get friend user
-                const { recipients } = channel.data();
-
-                CACHED_RECIPIENTS[channel.id] = recipients;
-
-                recipients.forEach(async recipient => {
-                    if (recipient === uid) return;
-
-                    addPrivateChannel(channel.id, recipient);
-                    addChat(channel.id, recipient);
-
-                    if (CACHED_USERS[recipient]) return; // User already exists
-
-                    const listener = firebase.firestore().collection('users').doc(recipient).onSnapshot(snapshot => {
-                        CACHED_USERS[recipient] = {
-                            ...snapshot.data()
-                        };
-
-                        CACHED_LISTENERS[channel.id] = listener;
-
-                        setRealtimeUserInfo(recipient);
+                        await addUserToCache(recipient);
                     });
-                });
-            }
+    
+                    resolve();
+                }
+
+                if (type === 'removed') {
+                    console.log(channel.data());
+                }
+            });
         });
     });
+
+    await loadChannels;
 }
 
 
+/**
+ * 
+ */
 async function blockedUserHandler() {
     const { uid } = firebase.auth().currentUser;
     
