@@ -21,7 +21,10 @@ async function loadPrivateChannels() {
         .where('type', '==', 'DM')
         .limit(50)
         .onSnapshot(snapshot => {
-            if (snapshot.empty) return addPrivateChannelPlaceholder();
+            if (snapshot.empty) {
+                addPrivateChannelPlaceholder();
+                resolve();
+            }
     
             snapshot.docChanges().forEach(async change => {
                 const { type, doc: channel } = change;
