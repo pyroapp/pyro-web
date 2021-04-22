@@ -10,7 +10,7 @@
 
 
 /**
- * 
+ * Loads the users private channels (direct messages)
  */
 async function loadPrivateChannels() {
     const loadChannels = new Promise((resolve, reject) => {
@@ -18,9 +18,7 @@ async function loadPrivateChannels() {
     
         firebase.firestore().collection('channels')
         .where('recipients', 'array-contains', uid)
-        .where('type', '==', 'DM')
-        .limit(50)
-        .onSnapshot(snapshot => {
+        .where('type', '==', 'DM').limit(50).onSnapshot(snapshot => {
             if (snapshot.empty) {
                 addPrivateChannelPlaceholder();
                 resolve();
@@ -31,26 +29,33 @@ async function loadPrivateChannels() {
     
                 if (type === 'added') {
                     hidePrivateChannelPlaceholder();
-    
-                    // Get frend user
+
                     const { recipients } = channel.data();
-    
+
                     CACHED_RECIPIENTS[channel.id] = recipients;
-    
-                    recipients.forEach(async recipient => {
-                        if (recipient === uid || CACHED_USERS[recipient]) return;
 
-                        addPrivateChannel(channel.id, recipient);
-                        addChat(channel.id, recipient);
+                    // Remove current user from recipients list
+                    recipients.splice(recipients.indexOf(uid), 1);
+                    const friend_uid = recipients[0];
 
-                        await addUserToCache(recipient);
-                    });
+                    // If user is already in the cache it most likely means the 
+                    // channel was closed and is being reopened.
+                    addPrivateChannel(channel.id, friend_uid);
+                    addChat(channel.id, friend_uid);
+
+                    if (CACHED_RECIPIENTS[friend_uid]) {
+                        setRealtimeUserInfo(uid);
+                    } else {
+                        await addUserToCache(friend_uid);
+                    }
     
                     resolve();
                 }
 
                 if (type === 'removed') {
-                    console.log(channel.data());
+                    removePrivateChannel(channel.id);
+                    removeChat(channel.id);
+                    loadChannelFromId('friends');
                 }
             });
         });
@@ -61,7 +66,8 @@ async function loadPrivateChannels() {
 
 
 /**
- * 
+ * Handles any blocked users the user has. It will cover both users chat fields
+ * and will only let the user who blocked the other user to unblock.
  */
 async function blockedUserHandler() {
     const { uid } = firebase.auth().currentUser;
@@ -82,8 +88,6 @@ async function blockedUserHandler() {
 
         // Get channels from DOM
         const channelsDOM = document.getElementById('privateChannelsList').children;
-
-        // console.log(channelsDOM);
 
         Array.prototype.slice.call(channelsDOM).forEach(channelDOM => {
             if (!channelDOM.id.startsWith('channel')) return;
@@ -129,8 +133,9 @@ async function blockedUserHandler() {
 
 
 /**
- * 
- * @param {*} uid 
+ * Creates and shows a new private channel UI component
+ * @param {*} channel_id Channel ID
+ * @param {*} friend_uid Friend User ID
  */
  function addPrivateChannel(channel_id, friend_uid) {
     const channelsList = document.getElementById('privateChannelsList');
@@ -168,7 +173,7 @@ async function blockedUserHandler() {
                     </div>
                 </div>
             </div>
-            <div class="children-gzQq2t hidden">
+            <div class="children-gzQq2t">
                 <div class="closeButton-2GCmT5">
                     <svg class="closeIcon-rycxaQ" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path>
@@ -178,19 +183,38 @@ async function blockedUserHandler() {
         </div>
     `;
 
+    a.querySelectorAll('.closeButton-2GCmT5')[0].onclick = () => {
+        closePrivateChannel(channel_id);
+    }
+
     return channelsList.appendChild(a);
 }
 
 
 /**
  * 
+ * @param {*} channel_id 
  */
- function toggleSelectedChannel(channelId) {
+function removePrivateChannel(channel_id) {
+    const channelsList = document.getElementById('privateChannelsList');
+    const channel = document.getElementById(`channel-${channel_id}`);
+
+    channelsList.removeChild(channel);
+}
+
+
+/**
+ * Highlights the header for the selected channel group. Direct Messages and Group Chats.
+ * @param {*} channelId Channel ID
+ */
+ function toggleSelectedChannelHeader(channel_id) {
+    channel_id = `channel-${channel_id}`;
+
     document.querySelectorAll('.channel-2QD9_O').forEach(element => {
         element.classList.remove('selected-aXhQR6');
     });
 
-    const channel = document.getElementById(channelId);
+    const channel = document.getElementById(channel_id);
     const parent = channel.parentElement.id;
 
     const pc_list = document.querySelectorAll('.headerText-2F0828')[0];
@@ -211,46 +235,35 @@ async function blockedUserHandler() {
 
 
 /**
- * 
+ * Reopens an existing private channel
+ * @param {*} channel_id Channel ID
  */
-async function selectChannel(channel_id) {
-    toggleSelectedChannel(`channel-${channel_id}`);
+async function reopenPrivateChannel(channel_id) {
+    const { uid } = firebase.auth().currentUser;
 
-    channel_id = channel_id.toString(); // Not sure why it sometimes returns an int
+    firebase.firestore().collection('channels').doc(channel_id).update({
+        recipients: firebase.firestore.FieldValue.arrayUnion(uid)
+    });
 
-    if (channel_id === 'friends') return; // Don't load messages for friends channel
-    if (CACHED_CHAT_LISTENERS[channel_id]) return; // If listener already exists
-
-    loadPrivateMessages(channel_id);
+    // TODO: A delay is currently impemented to wait for the chat to be 
+    // TODO: and then select it because we can't determine when the
+    // TODO: private channel DOM is created.
+    // TODO: See if there is some other way to do this, we could
+    // TODO: possible use localstorage to keep some sort of flag
+    await delay(100);
+    loadChannelFromId(channel_id);
 }
 
 
 /**
- * 
- * @param {*} channel_id 
+ * Closes a private channel
+ * @param {*} channel_id Channel ID
  */
 async function closePrivateChannel(channel_id) {
     const { uid } = firebase.auth().currentUser;
 
+    // Remove from channel users
     await firebase.firestore().collection('channels').doc(channel_id).update({
         recipients: firebase.firestore.FieldValue.arrayRemove(uid)
     });
-
-    // Remove from listener cache
-    delete CACHED_LISTENERS[channel_id];
-
-    // Determine if the selected user is being removed,
-    // select the first user in the list.
-    const channelList = document.getElementById('privateChannelsList');
-    const channel = document.getElementById('channel-' + channel_id);
-
-    channelList.removeChild(channel);
-
-    let id = 'friends';
-
-    if (channelList.childElementCount > 0) {
-        id = channelList.children[0].id.replace('channel-', '');
-    }
-
-    loadChannelFromId(id);
 }

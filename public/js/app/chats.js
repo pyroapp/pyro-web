@@ -1204,6 +1204,18 @@
 
 /**
  * 
+ * @param {*} channel_id Channel ID
+ */
+function removeChat(channel_id) {
+    const mainBody = document.getElementById('main-body');
+    const chat = document.getElementById(channel_id);
+
+    mainBody.removeChild(chat);
+}
+
+
+/**
+ * 
  * @param {*} id 
  */
 function selectMainBody(id) {

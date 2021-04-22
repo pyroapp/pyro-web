@@ -162,6 +162,23 @@ async function addFriend(user) {
             merge: true
         });
 
+        // Add association between friends uid and direct message channel
+        await firebase.firestore().collection('users').doc(uid).set({
+            friends_channels: {
+                [f_uid]: channel_id
+            }
+        }, {
+            merge: true
+        });
+
+        await firebase.firestore().collection('users').doc(f_uid).set({
+            friends_channels: {
+                [uid]: channel_id
+            }
+        }, {
+            merge: true
+        });
+
         return {
             failed: false,
             message: `Success! You added <strong>${f_username}</strong> as a friend.`
@@ -277,11 +294,16 @@ function displayFriendsList() {
 
         friendsList.appendChild(div);
 
-        div.querySelectorAll('.actionButton-uPB8Fs')[0].onclick = async () => {
-            const channel_id = await getChannelIdByFriend(friend_uid);
+        div.querySelectorAll('.actionButton-uPB8Fs')[0].onclick = () => {
+            const channel_id = getChannelIdByFriend(friend_uid);
 
-            console.log(channel_id);
-            // loadChannelFromId(channel_id);
+            // Check if the channel already exists in the DOM, then select it
+            if (document.getElementById(`channel-${channel_id}`)) {
+                return loadChannelFromId(channel_id);
+            }
+
+            // Channel doesn't exist in the DOM and is therefore closed. Open the channel
+            reopenPrivateChannel(channel_id);
         }
 
         setRealtimeUserInfo(friend_uid);
@@ -291,24 +313,18 @@ function displayFriendsList() {
 
 /**
  * 
- * @param {*} friend_uid 
+ * @param {*} friend_uid Friend User ID
  */
-async function getChannelIdByFriend(friend_uid) {
+function getChannelIdByFriend(friend_uid) {
     const { uid } = firebase.auth().currentUser;
 
-    const snapshot = await firebase.firestore().collection('channels')
-    .where('users', )
-    .get();
-
-    snapshot.forEach(channel_id => {
-        console.log(channel_id.data());
-    });
+    return CACHED_USERS[uid].friends_channels[friend_uid];
 }
 
 
 /**
  * 
- * @returns 
+ * @returns List of User IDs
  */
  async function getBlockedUsers() {
     const { uid } = firebase.auth().currentUser;
@@ -330,7 +346,7 @@ async function getChannelIdByFriend(friend_uid) {
 
 /**
  * 
- * @param {*} friend_uid 
+ * @param {*} friend_uid Friend User ID
  */
 function unblockFriend(friend_uid) {
     const { uid } = firebase.auth().currentUser;
@@ -340,8 +356,6 @@ function unblockFriend(friend_uid) {
         [friend_uid]: {
             type: 'FRIEND',
         }
-    }, {
-        merge: true
     });
 
     // Unblock from friends relationship
@@ -349,15 +363,13 @@ function unblockFriend(friend_uid) {
         [uid]: {
             type: 'FRIEND'
         }
-    }, {
-        merge: true
     });
 }
 
 
 /**
  * 
- * @param {*} friend_uid 
+ * @param {*} friend_uid Friend User ID
  */
 function blockFriend(friend_uid) {
     const { uid } = firebase.auth().currentUser;

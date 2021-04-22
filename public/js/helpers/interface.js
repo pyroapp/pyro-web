@@ -253,9 +253,18 @@ function loadChannelFromId(channel_id) {
     }
 
     window.history.pushState({}, title, path);
-    selectChannel(channel_id);
-    selectMainBody(channel_id);
 
+
+    toggleSelectedChannelHeader(channel_id);
+
+    channel_id = channel_id.toString();
+
+    // Don't load messages for friends channel or if the listener already exists
+    if (channel_id !== 'friends' || !CACHED_CHAT_LISTENERS[channel_id]) {
+        loadPrivateMessages(channel_id);
+    }
+
+    selectMainBody(channel_id);
     lastChannelId = channel_id;
 }
  
