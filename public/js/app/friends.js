@@ -133,10 +133,21 @@ async function addFriend(user) {
     }
 
     try {
+        // Create private message channnel
+        const channel_id = generateId();
+
+        await firebase.firestore().collection('channels').doc(channel_id).set({
+            type: 'DM',
+            recipients: [uid, f_uid], // Keeps track of the actively open users in the DM
+            users: [uid, f_uid], // Keeps track of the users within the DM
+            created: getTime(),
+        });
+
         // Create friend database relationship
         await firebase.firestore().collection('friends').doc(uid).set({
             [f_uid]: {
-                type: 'FRIEND'
+                type: 'FRIEND',
+                channel_id: channel_id
             }
         }, {
             merge: true
@@ -144,20 +155,11 @@ async function addFriend(user) {
 
         await firebase.firestore().collection('friends').doc(f_uid).set({
             [uid]: {
-                type: 'FRIEND'
+                type: 'FRIEND',
+                channel_id: channel_id
             }
         }, {
             merge: true
-        });
-
-        // Create private message channnel
-        const privateId = generateId();
-
-        await firebase.firestore().collection('channels').doc(privateId).set({
-            type: 'DM',
-            recipients: [uid, f_uid],
-            users: [uid, f_uid],
-            created: getTime(),
         });
 
         return {
@@ -198,7 +200,7 @@ async function getFriends() {
 /**
  * 
  */
-function getFriendsRealtime() {
+function getFriendsListener() {
     const { uid } = firebase.auth().currentUser;
 
     firebase.firestore().collection('friends').doc(uid).onSnapshot(async snapshot => {
@@ -255,7 +257,7 @@ function displayFriendsList() {
                         </div>
                     </div>
                 </div>
-                <div class="actions-1SQwjn hidden">
+                <div class="actions-1SQwjn">
                     <div class="actionButton-uPB8Fs">
                         <svg class="icon-35-fSh" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path fill="currentColor" d="M4.79805 3C3.80445 3 2.99805 3.8055 2.99805 4.8V15.6C2.99805 16.5936 3.80445 17.4 4.79805 17.4H7.49805V21L11.098 17.4H19.198C20.1925 17.4 20.998 16.5936 20.998 15.6V4.8C20.998 3.8055 20.1925 3 19.198 3H4.79805Z"></path>
@@ -277,7 +279,9 @@ function displayFriendsList() {
 
         div.querySelectorAll('.actionButton-uPB8Fs')[0].onclick = async () => {
             const channel_id = await getChannelIdByFriend(friend_uid);
-            loadChannelFromId(channel_id);
+
+            console.log(channel_id);
+            // loadChannelFromId(channel_id);
         }
 
         setRealtimeUserInfo(friend_uid);
@@ -293,8 +297,8 @@ async function getChannelIdByFriend(friend_uid) {
     const { uid } = firebase.auth().currentUser;
 
     const snapshot = await firebase.firestore().collection('channels')
-    .where('recipients', 'in', [friend_uid, uid])
-    .where('type', '==', 'DM').get();
+    .where('users', )
+    .get();
 
     snapshot.forEach(channel_id => {
         console.log(channel_id.data());

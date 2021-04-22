@@ -56,12 +56,11 @@ async function uploadFile(file) {
         form.append('x-goog-signature', fields['x-goog-signature']);
         form.append('file', file);
 
-
         await axios.post(url, form, {
             "Content-Type": "multipart/form-data"
         });
 
-        console.log(CDN_URL + fields.key);
+        console.log(`File Successfully Uploaded... \n ${CDN_URL + fields.key}`);
 
         return CDN_URL + fields.key;
     } catch (error) {
