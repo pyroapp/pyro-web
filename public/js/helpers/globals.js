@@ -31,6 +31,7 @@ const STATUS_COLOURS = {
     streaming: '#563490',
 };
 
+
 // Firebase authentication error codes
 const AUTH_CODES = {
     'auth/claims-too-large': 'Claim size exceeds 1000 bytes.',

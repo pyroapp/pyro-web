@@ -44,4 +44,5 @@ firebase.auth().onAuthStateChanged(async user => {
     await delay(500);
     hidePageLoader();
     await enableNotifications();
+    typingIndicatorListener();
 });
