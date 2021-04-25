@@ -8,8 +8,8 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
-const channels = document.querySelectorAll('*id^="channel"');
-const channelID = channels.childNodes;
+const channels = document.querySelectorAll('*[id^="channel"]');
+const channelID = [];
 let index = 0;
 
 channels.forEach(channel => {
@@ -24,14 +24,18 @@ document.addEventListener('keydown', (e) => {
         loadChannelFromId(channelID[index]);
         index = index + 1;
     }
+
     if (e.ctrlKey && e.shiftKey && e.key == 'ArrowDown') {
         loadChannelFromId(channelID[index]);
+        console.log(index);
         index = index - 1;
     }
+
     if (index >= amountofchannels) {
         index = 0;
     }
-    if (index < 0) {
+
+    if (index < index - (index * 2)) {
         index = 0;
     }
 })
