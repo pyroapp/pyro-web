@@ -14,7 +14,7 @@
  * @param {*} channel_id 
  * @param {*} friend_uid 
  */
- function addChat(channel_id, friend_uid) {
+function addChat(channel_id, friend_uid) {
     const div = document.createElement('div');
     div.classList = 'chat-3bRxxu mainBody-f3wd0 hidden';
     div.id = channel_id;
@@ -1144,7 +1144,7 @@
             event.returnValue = false;
 
             let chatdiv = document.querySelectorAll(".textArea-12jD-V");
-    
+
             if (chatdiv) {
                 if (chatdiv.length !== 0) {
                     for (let query of chatdiv) {
@@ -1170,7 +1170,7 @@
         const length = text.childNodes.length == 0 ? 1 : text.childNodes.length;
 
         const chatdiv = document.querySelectorAll(".textArea-12jD-V");
-    
+
         if (!chatdiv) return;
         if (chatdiv.length === 0) return;
 
@@ -1181,9 +1181,9 @@
 
     input.addEventListener("paste", function(e) {
         e.preventDefault();
-    
+
         let text = (e.originalEvent || e).clipboardData.getData('text/plain');
-    
+
         document.execCommand("insertHTML", false, text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"));
     });
 
