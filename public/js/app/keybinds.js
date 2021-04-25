@@ -8,41 +8,56 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
-const channels = document.querySelectorAll('*[id^="channel"]');
-const channelID = [];
-let index = 0;
+function getChannels() {
+    const channels = document.querySelectorAll('*[id^="channel"]');
 
-channels.forEach(channel => {
-    channelID.push(channel.id.replace('channel-', ''));
-});
+    const channelID = [];
+
+    channels.forEach(channel => {
+        channelID.push(channel.id.replace('channel-', ''));
+    });
+
+    return channelID;
+}
+
+let index = 0;
 
 // Scrolling Channels
 document.addEventListener('keydown', (e) => {
-    const amountofchannels = channelID.length;
+    const channelID = getChannels();
 
-    if (e.ctrlKey && e.shiftKey && e.key == 'ArrowUp') {
-        loadChannelFromId(channelID[index]);
-        index = index + 1;
+    const amountOfChannels = channelID.length;
+
+    if (e.altKey && e.key == 'ArrowDown') {
+        index += 1;
     }
 
-    if (e.ctrlKey && e.shiftKey && e.key == 'ArrowDown') {
-        loadChannelFromId(channelID[index]);
-        console.log(index);
-        index = index - 1;
+    if (e.altKey && e.key == 'ArrowUp') {
+        index -= 1;
     }
 
-    if (index >= amountofchannels) {
+    if (index > amountOfChannels - 1) {
         index = 0;
     }
 
-    if (index < index - (index * 2)) {
-        index = 0;
+    if (index < 0) {
+        index = amountOfChannels - 1; 
     }
-})
+
+    loadChannelFromId(channelID[index]);
+});
 
 //
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'U') {
         console.log("Wut should I do next")
     }
-})
+});
+
+// F-keybinds
+document.addEventListener('keydown', (e) => {
+    if (e.altKey && e.key == 'F1') { // web browsers will lead to their support page with just f1. 
+        // Might be able to implement this functionality in the desktop version.
+        window.open("https://pyrochat.app/support")
+    }
+});
