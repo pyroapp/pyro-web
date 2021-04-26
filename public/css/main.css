@@ -459,7 +459,7 @@
 }
 
 .lookFilled-1Gx00P.colorBrand-3pXr91 {
-	color: #fff;
+	color: #000;
 	background-color: var(--brand-primary);
 	transition: ease 0.15s;
 }
@@ -6229,7 +6229,7 @@ code {
 	--background-secondary-alt:#101015;
 	--background-tertiary:#101015;
 	--background-accent:#4f545c;
-	--background-floating:#18191c;
+	--background-floating:#101015;
 	--background-mobile-primary:#1a1a23;
 	--background-mobile-secondary:#17171f;
 	--background-modifier-hover:rgba(79, 84, 92, 0.16);
@@ -16014,7 +16014,7 @@ img[alt] {
 }
 
 .styleFixed-sX-yHV {
-	width:220px
+	width:300px
 }
 
 .styleFlexible-wGDiIL {
@@ -47522,11 +47522,13 @@ strong {
 }
 
 .clickable-3rdHwn .icon-22AiRD {
-	color:var(--interactive-normal)
+	color:var(--interactive-normal);
+	transition: ease-in-out 0.15s;
 }
 
 .clickable-3rdHwn:hover .icon-22AiRD {
-	color:var(--interactive-hover)
+	color:var(--interactive-hover);
+	transition: ease-in-out 0.15s;
 }
 
 .selected-1GqIat .icon-22AiRD {
@@ -49792,7 +49794,8 @@ strong {
 	-webkit-box-pack:center;
 	-ms-flex-pack:center;
 	justify-content:center;
-	margin-left:10px
+	margin-left:10px;
+	transition: ease-in-out 0.15s;
 }
 
 .actionButton-uPB8Fs.highlight-Lf97TE {
@@ -49804,7 +49807,8 @@ strong {
 }
 
 .actionButton-uPB8Fs:hover {
-	color:var(--interactive-hover)
+	color:var(--interactive-hover);
+	transition: ease-in-out 0.15s;
 }
 
 .actionButton-uPB8Fs:active {
@@ -49848,7 +49852,7 @@ strong {
 	box-sizing:border-box;
 	cursor:pointer;
 	height: 60px;
-	border-top:1px solid var(--background-modifier-accent)
+	transition: ease-in-out 0.15s;
 }
 
 .peopleListItem-2nzedh.active-rhSpJJ+.peopleListItem-2nzedh,
@@ -49864,7 +49868,8 @@ strong {
 	border-radius:8px;
 	border-color:transparent;
 	margin:0 10px 0 20px;
-	padding:16px 10px
+	padding:16px 10px;
+	transition: ease-in-out 0.15s;
 }
 
 .userInfo-2zN2z8 {
@@ -57781,7 +57786,8 @@ a.ctaAnchor-3-8I3v:hover {
 .clickable-1JJAn8.container-2Pjhx-:active,
 .highlighted-1gWxXa.container-2Pjhx-,
 .selected-aXhQR6.container-2Pjhx- {
-	color:var(--interactive-active)
+	color:var(--interactive-active);
+	transition: ease-in-out 0.15s
 }
 
 .layout-2DM8Md {
@@ -69914,7 +69920,8 @@ html .invoiceCancelRow-3mYhFX {
 
 .button-14-BFJ.enabled-2cQ-u7:hover {
 	color:var(--interactive-hover);
-	background-color:var(--background-modifier-selected)
+	background-color:var(--background-modifier-selected);
+	transition: ease-in-out 0.15s
 }
 
 .button-14-BFJ.disabled-2iW-fm {
@@ -69963,7 +69970,8 @@ html .invoiceCancelRow-3mYhFX {
 }
 
 .container-3baos1 .avatar-SmRMf2:hover {
-	opacity:.8
+	opacity:.8;
+	transition: ease-in-out 0.15s
 }
 
 .container-3baos1 .redIcon-2uP7Ej {

@@ -30,7 +30,7 @@ const CDN_URL = 'https://cdn.pyrochat.app/';
 const STATUS_COLOURS = {
     online: '#51DF3E',
     idle: '#dd9e00',
-    dnd: '#DF3E3E',
+    dnd: '#FF1414',
     offline: '#666665',
     streaming: '#563490',
 };
