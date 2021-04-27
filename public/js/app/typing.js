@@ -45,9 +45,9 @@ async function checkTyping(){
     const { uid } = firebase.auth().currentUser;
 
     let usersTyping = await firebase.database().ref(`typing_indicator/${lastChannelId}`).get();
-    delete usersTyping.val()[uid];
 
     if (usersTyping.val() == null) return;
+    delete usersTyping.val()[uid];
 
     let usernames = Object.values(usersTyping.val())
 
