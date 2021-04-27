@@ -8,15 +8,6 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
-function typingIndicatorListener(){
-    document.getElementsByClassName("messageField")[0].oninput = async (e) => {
-        setFlag("TYPING");
-        let _temp = document.getElementsByClassName("messageField")[0].innerText;
-        await delay(1500);
-        if (_temp == document.getElementsByClassName("messageField")[0].innerText) setFlag("NOT_TYPING");
-    }
-}
-
 function setFlag(flag){
 
     const { uid } = firebase.auth().currentUser;
@@ -44,7 +35,9 @@ function setFlag(flag){
 async function checkTyping(){
     const { uid } = firebase.auth().currentUser;
 
-    let usersTyping = await firebase.database().ref(`typing_indicator/${lastChannelId}`).get();
+    // TODO: Make this into a listener on that endpoint.
+    // TODO: This can probably be in the same area as the input...
+    let usersTyping = await firebase.database().ref(`typing_indicator/${CURRENT_CHANNEL_ID}`).get();
 
     if (usersTyping.val() == null) return;
     delete usersTyping.val()[uid];
