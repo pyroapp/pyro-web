@@ -3,8 +3,8 @@
 //?  /app/status.js
 //?  Pyro Chat
 //?
-//?  Developed by Robolab LLC
-//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
+//?  Developed by Pyro Communications LLC
+//?  Copyright (c) 2021 Pyro Communications LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
@@ -27,6 +27,12 @@ window.onunload = async () => {
 }
 
 
+/**
+ * This event fires when the user moves away from the current tab
+ * or minimises the current window. 
+ * The delay determins how long the user must be away from the current
+ * tab to change their status to idle
+ */
 document.onvisibilitychange = async () => {
     await delay(IDLE_TIMEOUT);
     setAutomaticStatus();
@@ -34,8 +40,10 @@ document.onvisibilitychange = async () => {
 
 
 /**
- * 
- * @param {*} status 
+ * Sets the users status if its been manually set of the tab
+ * is out of focus. It will also make sure the user doesn't
+ * get notifications if their status is set to do not disturb 
+ * @param {*} override Override Status
  */
  async function setAutomaticStatus(override) {
     
@@ -47,6 +55,7 @@ document.onvisibilitychange = async () => {
         return setStatus(ls.getItem('manual_status'));
     }
 
+    // Check if the tab is in focus or not
     const visState = document.visibilityState;
     let status = 'online';
 
@@ -56,14 +65,16 @@ document.onvisibilitychange = async () => {
         if (visState === 'hidden') status = 'idle';
     }
 
+    // Update db
     toggleNotificationMute(status === 'dnd');
     setStatus(status);
 }
 
 
 /**
- * 
- * @param {*} status 
+ * This function sets the status of the user if they have manually
+ * set their status using the menu.
+ * @param {*} status Status
  */
 async function setManualStatus(status) {
     setStatus(status);
@@ -77,14 +88,15 @@ async function setManualStatus(status) {
         ls.setItem('manual_status', status);
     }
 
+    // Update db
     toggleNotificationMute(status === 'dnd');
     setStatus(status);
 }
 
 
 /**
- * 
- * @param {*} status 
+ * Sets the users status within the database
+ * @param {*} status Status
  */
 async function setStatus(status) {
     const { uid } = firebase.auth().currentUser;

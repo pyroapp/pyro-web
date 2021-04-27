@@ -1,11 +1,7 @@
 const functions = require("firebase-functions");
 const firebase = require('firebase-admin');
-const express = require('express');
-const cors = require('cors');
-const request = require('request');
 
 firebase.initializeApp();
-
 
 /**
  * 
@@ -13,19 +9,7 @@ firebase.initializeApp();
  * @returns 
  */
 function getAvatar(uid) {
-    return `https://firebasestorage.googleapis.com/v0/b/pyro-chat.appspot.com/o/avatars%2F${uid}.gif?alt=media`
-}
-
-
-/**
- * 
- * @param {*} res 
- * @param {*} error 
- */
-async function returnError(res, error) {
-    const err = error || 'Unexpected error';
-
-    res.status(200).send('ERROR: ' + err);
+    return `https://firebasestorage.googleapis.com/v0/b/pyro-production.appspot.com/o/avatars%2F${uid}.gif?alt=media`;
 }
 
 
@@ -56,31 +40,4 @@ exports.notifications = functions.firestore.document('/channels/{channelId}/mess
     });
 
     return true;
-});
-
-
-/**
- * 
- */
-const api_cdn = express();
-const main_cdn = express();
-
-main_cdn.use(cors());
-main_cdn.use('/', api_cdn);
-
-exports.cdn = functions.https.onRequest(api_cdn);
-
-api_cdn.get('/:folder/:name', (req, res) => {
-    const folder_name = req.params.folder;
-    const file_name = req.params.name;
-
-    const verified_folder = ['avatars'];
-
-    if (!folder_name) return returnError(res, 'Folder name not specified');
-    if (!verified_folder.includes(folder_name)) return returnError('Specified folder does not exist');
-    if (!file_name) return returnError(res, 'File name not specified');
-
-    const media_url = `https://firebasestorage.googleapis.com/v0/b/pyro-chat.appspot.com/o/${folder_name}%2F${file_name}.gif?alt=media`;
-
-    return request(media_url).pipe(res);
 });
