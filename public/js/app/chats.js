@@ -3,8 +3,8 @@
 //?  /app/chats.js
 //?  Pyro Chat
 //?
-//?  Developed by Robolab LLC
-//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
+//?  Developed by Pyro Communications LLC
+//?  Copyright (c) 2021 Pyro Communications LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
@@ -1199,6 +1199,18 @@
     document.addEventListener('keypress', () => {
         if (!input.activeElement) input.focus();
     });
+}
+
+
+/**
+ * 
+ * @param {*} channel_id Channel ID
+ */
+function removeChat(channel_id) {
+    const mainBody = document.getElementById('main-body');
+    const chat = document.getElementById(channel_id);
+
+    mainBody.removeChild(chat);
 }
 
 

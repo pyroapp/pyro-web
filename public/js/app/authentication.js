@@ -3,8 +3,8 @@
 //?  /app/authentication.js
 //?  Pyro Chat
 //?
-//?  Developed by Robolab LLC
-//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
+//?  Developed by Pyro Communications LLC
+//?  Copyright (c) 2021 Pyro Communications LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
@@ -35,8 +35,9 @@ firebase.auth().onAuthStateChanged(async user => {
         setRealtimeUserInfo(user.uid);
     });
 
-    loadPrivateChannels();
+    await loadPrivateChannels();
     loadGroupChannels();
+    getFriendsListener();
     await blockedUserHandler();
     await setAutomaticStatus('online');
     await delay(LOADING_TIMEOUT);

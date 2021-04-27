@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "pyro-chat"
+    "default": "pyro-production",
+    "staging", "pyro-staging"
   }
 }

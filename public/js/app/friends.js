@@ -3,8 +3,8 @@
 //?  /app/friends.js
 //?  Pyro Chat
 //?
-//?  Developed by Robolab LLC
-//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
+//?  Developed by Pyro Communications LLC
+//?  Copyright (c) 2021 Pyro Communications LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
@@ -35,6 +35,9 @@ document.getElementById('addFriendField').onkeyup = event => {
 }
 
 
+/**
+ * 
+ */
 async function addFriendHandler() {
     const input = document.getElementById('addFriendField');
     const button = document.getElementById('addFriendButton');
@@ -130,10 +133,21 @@ async function addFriend(user) {
     }
 
     try {
+        // Create private message channnel
+        const channel_id = generateId();
+
+        await firebase.firestore().collection('channels').doc(channel_id).set({
+            type: 'DM',
+            recipients: [uid, f_uid], // Keeps track of the actively open users in the DM
+            users: [uid, f_uid], // Keeps track of the users within the DM
+            created: getTime(),
+        });
+
         // Create friend database relationship
         await firebase.firestore().collection('friends').doc(uid).set({
             [f_uid]: {
-                type: 'FRIEND'
+                type: 'FRIEND',
+                channel_id: channel_id
             }
         }, {
             merge: true
@@ -141,20 +155,28 @@ async function addFriend(user) {
 
         await firebase.firestore().collection('friends').doc(f_uid).set({
             [uid]: {
-                type: 'FRIEND'
+                type: 'FRIEND',
+                channel_id: channel_id
             }
         }, {
             merge: true
         });
 
-        // Create private message channnel
-        const privateId = generateId();
+        // Add association between friends uid and direct message channel
+        await firebase.firestore().collection('users').doc(uid).set({
+            friends_channels: {
+                [f_uid]: channel_id
+            }
+        }, {
+            merge: true
+        });
 
-        await firebase.firestore().collection('channels').doc(privateId).set({
-            type: 'DM',
-            recipients: [uid, f_uid],
-            users: [uid, f_uid],
-            created: getTime(),
+        await firebase.firestore().collection('users').doc(f_uid).set({
+            friends_channels: {
+                [uid]: channel_id
+            }
+        }, {
+            merge: true
         });
 
         return {
@@ -191,169 +213,118 @@ async function getFriends() {
     return uids;
 }
 
-async function displayAllFriends() {
-    const { uid } = firebase.auth().currentUser;
-
-    const friends = await (await firebase.firestore().collection('friends').doc(uid).get()).data();
-    const friendList = document.getElementById('friendsContainer-d9s8fd');
-    
-    if (!friends) {        
-        friendList.innerHTML = 
-        `
-        <div class="emptyState-2i1-FW">
-            <div class="friendsEmpty-1K9B4k" style="opacity: 1;">
-                <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyCenter-3D2jYp alignCenter-1dQNNs noWrap-3jynv6 wrapper-r-6rrt" style="flex: 1 1 auto;">
-                    <div class="image-1GzsFd marginBottom40-2vIwTv" style="flex: 0 1 auto; width: 376px; height: 162px; background-image: url('../img/b5eb2f7d6b3f8cc9b60be4a5dcf28015.svg');"></div>
-                    <div class="flexChild-faoVW3" direction="vertical-V37hAW flex-1O1GKY directionColumn-35P_nr" style="flex: 0 1 auto;">
-                        <div class="text-GwUZgS marginTop8-1DLZ1n">Looks quiet here. Add a friend!</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `;
-    }
-    else {
-        friendList.innerHTML = 
-        `
-        <div class="onlineFriendsCounter" style="color: #99aab5; margin: 10px 20px;">ALL - ${Object.keys(friends).length}</div>
-        `
-
-        for (const friendUid in friends) {
-            const friend = CACHED_USERS[friendUid];
-            const a = document.createElement('a');
-            const statusMask = `url(#svg-mask-status-${friend.status})`;
-            const statusColour = STATUS_COLOURS[friend.status]
-            
-            if (friends[friendUid].type === 'BLOCKED') {
-                continue;
-            }
-
-            a.innerHTML = 
-            `
-            <div class="layout-2DM8Md" style="margin: 0px 20px;">
-                <div class="avatar-3uk_u9">
-                    <div class="wrapper-3t9DeA" style="width: 32px; height: 32px;">
-                        <svg width="40" height="32" viewBox="0 0 40 32" class="mask-1l8v16 svg-2V3M55">
-                            <mask id="1e790872-400c-4750-815a-1afdbe1cdf12" width="32" height="32">
-                                <circle cx="16" cy="16" r="16" fill="white"></circle>
-                                <rect color="black" x="19" y="19" width="16" height="16" rx="8" ry="8"></rect>
-                            </mask>
-                            <foreignObject x="0" y="0" width="32" height="32" mask="url(#1e790872-400c-4750-815a-1afdbe1cdf12)">
-                                <img src="${getAvatar(friendUid)}" class="avatar-VxgULZ">
-                            </foreignObject>
-                            <rect class="RT_status" x="22" y="22" width="10" height="10" class="pointerEvents-2zdfdO" fill="${statusColour}" mask=${statusMask}></rect>
-                        </svg>
-                    </div>
-                </div>
-                <div class="content-3QAtGj">
-                    <div class="nameAndDecorators-5FJ2dg">
-                        <div class="name-uJV0GL">
-                            <div class="overflow-WK9Ogt RT_username" style="color: #99aab5;"><strong>${friend.username}</strong>#${friend.discriminator}</div>
-                        </div>
-                    </div>
-                    <div class="subText-1KtqkB">
-                        <div class="activity-525YDR subtext-1RtU34 hidden">
-                            <div class="activityText-OW8WYb lastmessage"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="children-gzQq2t hidden">
-                    <div class="closeButton-2GCmT5">
-                        <svg class="closeIcon-rycxaQ" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            `;
-            friendList.appendChild(a);
-        }
-    }
-}
-
-async function displayOnlineFriends() {
-    const { uid } = firebase.auth().currentUser;
-
-    const friends = await (await firebase.firestore().collection('friends').doc(uid).get()).data();
-    const friendList = document.getElementById('friendsContainer-d9s8fd');
-    
-    if (!friends) {        
-        friendList.innerHTML = 
-        `
-        <div class="emptyState-2i1-FW">
-            <div class="friendsEmpty-1K9B4k" style="opacity: 1;">
-                <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyCenter-3D2jYp alignCenter-1dQNNs noWrap-3jynv6 wrapper-r-6rrt" style="flex: 1 1 auto;">
-                    <div class="image-1GzsFd marginBottom40-2vIwTv" style="flex: 0 1 auto; width: 376px; height: 162px; background-image: url('../img/b5eb2f7d6b3f8cc9b60be4a5dcf28015.svg');"></div>
-                    <div class="flexChild-faoVW3" direction="vertical-V37hAW flex-1O1GKY directionColumn-35P_nr" style="flex: 0 1 auto;">
-                        <div class="text-GwUZgS marginTop8-1DLZ1n">Looks quiet here. Add a friend!</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `;
-    }
-    else {
-        friendList.innerHTML = 
-        `
-        <div class="onlineFriendsCounter" style="color: #99aab5; margin: 10px 20px;">ONLINE - ${Object.keys(friends).length}</div>
-        `
-
-        for (const friendUid in friends) {
-            const friend = CACHED_USERS[friendUid];
-            const a = document.createElement('a');
-            const statusMask = `url(#svg-mask-status-${friend.status})`;
-            const statusColour = STATUS_COLOURS[friend.status]
-
-            if (friends[friendUid].type === 'BLOCKED' || friend.status === 'offline') {
-                continue;
-            }
-
-            a.innerHTML = 
-            `
-            <div class="layout-2DM8Md" style="margin: 0px 20px;">
-                <div class="avatar-3uk_u9">
-                    <div class="wrapper-3t9DeA" style="width: 32px; height: 32px;">
-                        <svg width="40" height="32" viewBox="0 0 40 32" class="mask-1l8v16 svg-2V3M55">
-                            <mask id="1e790872-400c-4750-815a-1afdbe1cdf12" width="32" height="32">
-                                <circle cx="16" cy="16" r="16" fill="white"></circle>
-                                <rect color="black" x="19" y="19" width="16" height="16" rx="8" ry="8"></rect>
-                            </mask>
-                            <foreignObject x="0" y="0" width="32" height="32" mask="url(#1e790872-400c-4750-815a-1afdbe1cdf12)">
-                                <img src="${getAvatar(friendUid)}" class="avatar-VxgULZ">
-                            </foreignObject>
-                            <rect class="RT_status" x="22" y="22" width="10" height="10" class="pointerEvents-2zdfdO" fill="${statusColour}" mask=${statusMask}></rect>
-                        </svg>
-                    </div>
-                </div>
-                <div class="content-3QAtGj">
-                    <div class="nameAndDecorators-5FJ2dg">
-                        <div class="name-uJV0GL">
-                            <div class="overflow-WK9Ogt RT_username" style="color: #99aab5;"><strong>${friend.username}</strong>#${friend.discriminator}</div>
-                        </div>
-                    </div>
-                    <div class="subText-1KtqkB">
-                        <div class="activity-525YDR subtext-1RtU34 hidden">
-                            <div class="activityText-OW8WYb lastmessage"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="children-gzQq2t hidden">
-                    <div class="closeButton-2GCmT5">
-                        <svg class="closeIcon-rycxaQ" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            `;
-            friendList.appendChild(a);
-        }
-    }
-}
 
 /**
  * 
- * @returns 
+ */
+function getFriendsListener() {
+    const { uid } = firebase.auth().currentUser;
+
+    firebase.firestore().collection('friends').doc(uid).onSnapshot(async snapshot => {
+        for (friend_uid in snapshot.data()) {
+            if (!CACHED_FRIENDS[friend_uid]) {
+                CACHED_FRIENDS.push(friend_uid);
+
+                if (!CACHED_USERS[friend_uid]) {
+                    await addUserToCache(friend_uid);
+                }
+            }
+        }
+
+        displayFriendsList();
+    });
+}
+
+
+/**
+ * 
+ * @param {*} status 
+ */
+function displayFriendsList() {
+    const friendsList = document.getElementsByClassName('friendsList-jfa091')[0];
+    const friendsListTitle = document.getElementsByClassName('title-30qZAO')[0];
+
+    friendsListTitle.innerText = `Friends — ${Object.keys(CACHED_FRIENDS).length}`;
+
+    CACHED_FRIENDS.sort();
+
+    CACHED_FRIENDS.forEach(friend_uid => {
+        if (document.getElementById(`friends-list-item-${friend_uid}`)) return;
+        
+        const div = document.createElement('div');
+        div.className = 'peopleListItem-2nzedh';
+        div.style = 'height: 62px; opacity: 1;';
+        div.id = `friends-list-item-${friend_uid}`
+        div.setAttribute('uid', friend_uid);
+        div.innerHTML = `
+            <div class="listItemContents-95HL3L">
+                <div class="userInfo-2zN2z8">
+                    <div class="avatar-SmRMf2 wrapper-3t9DeA" style="width: 32px; height: 32px;">
+                        <svg width="40" height="32" viewBox="0 0 40 32" class="mask-1l8v16 svg-2V3M55">
+                            <foreignObject x="0" y="0" width="32" height="32" mask="url(#svg-mask-avatar-status-round-32)">
+                                <img class="avatar-VxgULZ" src="${getAvatar(friend_uid)}">
+                            </foreignObject>
+                            <rect width="10" height="10" x="22" y="22" class="pointerEvents-2zdfdO RT_status" mask="url(#svg-mask-status-dnd)" fill="#DF3E3E"></rect>
+                        </svg>
+                    </div>
+                    <div class="text-37NqbO">
+                        <div class="discordTag-2_tqUA nameTag-m8r81H"><span class="username-2b1r56 username-31C1TQ RT_username"></span><span class="discriminator-22Okc1 RT_discriminator"></span></div>
+                        <div class="subtext-24R4-w">
+                            <div class="text-3MU_QQ RT_customstatus"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions-1SQwjn">
+                    <div class="actionButton-uPB8Fs">
+                        <svg class="icon-35-fSh" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill="currentColor" d="M4.79805 3C3.80445 3 2.99805 3.8055 2.99805 4.8V15.6C2.99805 16.5936 3.80445 17.4 4.79805 17.4H7.49805V21L11.098 17.4H19.198C20.1925 17.4 20.998 16.5936 20.998 15.6V4.8C20.998 3.8055 20.1925 3 19.198 3H4.79805Z"></path>
+                        </svg>
+                    </div>
+                    <div class="actionButton-uPB8Fs hidden">
+                        <svg class="icon-35-fSh" width="24" height="24" viewBox="0 0 24 24">
+                            <g fill="none" fill-rule="evenodd">
+                                <path d="M24 0v24H0V0z"></path>
+                                <path fill="currentColor" d="M12 16c1.1045695 0 2 .8954305 2 2s-.8954305 2-2 2-2-.8954305-2-2 .8954305-2 2-2zm0-6c1.1045695 0 2 .8954305 2 2s-.8954305 2-2 2-2-.8954305-2-2 .8954305-2 2-2zm0-6c1.1045695 0 2 .8954305 2 2s-.8954305 2-2 2-2-.8954305-2-2 .8954305-2 2-2z"></path>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        friendsList.appendChild(div);
+
+        div.querySelectorAll('.actionButton-uPB8Fs')[0].onclick = () => {
+            const channel_id = getChannelIdByFriend(friend_uid);
+
+            // Check if the channel already exists in the DOM, then select it
+            if (document.getElementById(`channel-${channel_id}`)) {
+                return loadChannelFromId(channel_id);
+            }
+
+            // Channel doesn't exist in the DOM and is therefore closed. Open the channel
+            reopenPrivateChannel(channel_id);
+        }
+
+        setRealtimeUserInfo(friend_uid);
+    });
+}
+
+
+/**
+ * 
+ * @param {*} friend_uid Friend User ID
+ */
+function getChannelIdByFriend(friend_uid) {
+    const { uid } = firebase.auth().currentUser;
+
+    return CACHED_USERS[uid].friends_channels[friend_uid];
+}
+
+
+/**
+ * 
+ * @returns List of User IDs
  */
  async function getBlockedUsers() {
     const { uid } = firebase.auth().currentUser;
@@ -375,7 +346,7 @@ async function displayOnlineFriends() {
 
 /**
  * 
- * @param {*} friend_uid 
+ * @param {*} friend_uid Friend User ID
  */
 function unblockFriend(friend_uid) {
     const { uid } = firebase.auth().currentUser;
@@ -385,8 +356,6 @@ function unblockFriend(friend_uid) {
         [friend_uid]: {
             type: 'FRIEND',
         }
-    }, {
-        merge: true
     });
 
     // Unblock from friends relationship
@@ -394,15 +363,13 @@ function unblockFriend(friend_uid) {
         [uid]: {
             type: 'FRIEND'
         }
-    }, {
-        merge: true
     });
 }
 
 
 /**
  * 
- * @param {*} friend_uid 
+ * @param {*} friend_uid Friend User ID
  */
 function blockFriend(friend_uid) {
     const { uid } = firebase.auth().currentUser;

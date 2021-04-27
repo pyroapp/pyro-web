@@ -3,8 +3,8 @@
 //?  /helpers/user.js
 //?  Pyro Chat
 //?
-//?  Developed by Robolab LLC
-//?  Copyright (c) 2021 Robolab LLC. All Rights Reserved
+//?  Developed by Pyro Communications LLC
+//?  Copyright (c) 2021 Pyro Communications LLC. All Rights Reserved
 //?     
 //? ------------------------------------------------------------------------------------
 
@@ -127,19 +127,51 @@ async function isFriend(username, discriminator) {
  * 
  * @param {*} uid 
  */
+const addUserToCache = (uid) => {
+    return new Promise((resolve, reject) => {
+        const listener = firebase.firestore().collection('users').doc(uid).onSnapshot(snapshot => {
+            CACHED_USERS[uid] = {
+                ...snapshot.data()
+            };
+    
+            CACHED_LISTENERS[uid] = listener;
+    
+            setRealtimeUserInfo(uid);
+            resolve();
+        });
+    });
+}
+
+
+/**
+ * 
+ * @param {*} uid 
+ */
  function setRealtimeUserInfo(uid) {
     const elements = document.querySelectorAll(`[uid="${uid}"]`);
 
     elements.forEach(element => {
         const statusEl = element.querySelectorAll('.RT_status');
+        const cusStatusEl = element.querySelectorAll('.RT_customstatus');
         const usernameEl = element.querySelectorAll('.RT_username');
         const discrminiatorEl = element.querySelectorAll('.RT_discriminator');
 
-        const { status, username, discriminator } = CACHED_USERS[uid];
+        const { status, custom_status, username, discriminator } = CACHED_USERS[uid];
+
+        const statusText = {
+            online: "Online",
+            idle: "Idle",
+            dnd: "Do Not Disturb",
+            offline: "Offline"
+        };
 
         statusEl.forEach(s => {
             s.setAttribute('fill', STATUS_COLOURS[status]);
             s.setAttribute('mask', `url(#svg-mask-status-${status})`);
+        });
+
+        cusStatusEl.forEach(u => {
+            u.innerText = custom_status || statusText[status];
         });
 
         usernameEl.forEach(u => {
