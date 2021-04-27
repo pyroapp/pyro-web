@@ -235,11 +235,9 @@ function hidePrivateChannelPlaceholder() {
  * 
  * @param {*} channelId 
  */
-let lastChannelId;
-
 function loadChannelFromId(channel_id) {
     if (!channel_id) channel_id = getChannelFromURL();
-    if (lastChannelId === channel_id) return;
+    if (CURRENT_CHANNEL_ID == channel_id) return;
 
     let title = 'Pyro';
     let path = '/channels/@me/';
@@ -254,18 +252,17 @@ function loadChannelFromId(channel_id) {
 
     window.history.pushState({}, title, path);
 
-
     toggleSelectedChannelHeader(channel_id);
 
     channel_id = channel_id.toString();
 
     // Don't load messages for friends channel or if the listener already exists
-    if (channel_id !== 'friends' || !CACHED_CHAT_LISTENERS[channel_id]) {
+    if (channel_id !== 'friends' && !CACHED_CHAT_LISTENERS[channel_id]) {
         loadPrivateMessages(channel_id);
     }
 
     selectMainBody(channel_id);
-    lastChannelId = channel_id;
+    CURRENT_CHANNEL_ID = channel_id;
 }
  
  

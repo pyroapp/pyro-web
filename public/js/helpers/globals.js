@@ -17,6 +17,7 @@ const CACHED_LISTENERS = {};
 const CACHED_FRIENDS = [];
 
 // Global thresholds
+let CURRENT_CHANNEL_ID;
 const LOADING_TIMEOUT = 1500;
 const ACTIVITY_TIMEOUT = 3000;
 const IDLE_TIMEOUT = 10000;

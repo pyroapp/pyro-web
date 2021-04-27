@@ -6,7 +6,7 @@ const app = express();
 const port = 8000;
 
 function log(req) {
-    console.log(`${chalk.green('Path')} ${req.path} ${chalk.blueBright('Address')} ${req.headers['x-forwarded-for'] || 'Unknown'}`);
+    console.log(`${chalk.green('Path')} ${req.path}`);
 }
 
 
