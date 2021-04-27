@@ -25,7 +25,7 @@ function setFlag(flag){
         
         case "TYPING":
             {
-                firebase.database().ref(`typing_indicator/${lastChannelId}`).set({
+                firebase.database().ref(`typing_indicator/${CURRENT_CHANNEL_ID}`).set({
                     [uid]: username
                 })
                 break;
@@ -33,7 +33,7 @@ function setFlag(flag){
         
         case "NOT_TYPING":
             {
-               firebase.database().ref(`typing_indicator/${lastChannelId}/${uid}`).remove()
+               firebase.database().ref(`typing_indicator/${CURRENT_CHANNEL_ID}/${uid}`).remove()
             }
 
     }
@@ -54,7 +54,7 @@ async function checkTyping(){
     if (usernames.length > 3){
         console.log("Multiple users are typing...");
         return;
-    }
+    }*/
 
     
     
