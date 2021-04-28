@@ -1203,11 +1203,10 @@
     // TODO: Make this wait 2 seconds each time, if the current text is diff than the text 2 seconds ago update as typing,
     // TODO: if not then it means the user has either stopped typing or is idling.
     input.oninput = async () => {
+        const _temp = input.innerText;
         await delay(2000);
-        setFlag("TYPING");
-        let _temp = document.getElementsByClassName("messageField")[0].innerText;
-        await delay(2000);
-        if (_temp == document.getElementsByClassName("messageField")[0].innerText) setFlag("NOT_TYPING");
+        if (_temp != input.innerText) {setFlag("TYPING"); return;}
+        setFlag("NOT_TYPING");
     }
 }
 

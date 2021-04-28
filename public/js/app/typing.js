@@ -33,25 +33,28 @@ function setFlag(flag){
 
 
 async function checkTyping(){
+
     const { uid } = firebase.auth().currentUser;
+    const username = CACHED_USERS[uid].username;
 
-    // TODO: Make this into a listener on that endpoint.
-    // TODO: This can probably be in the same area as the input...
     let usersTyping = await firebase.database().ref(`typing_indicator/${CURRENT_CHANNEL_ID}`).get();
-
+    
     if (usersTyping.val() == null) return;
-    delete usersTyping.val()[uid];
-
     let usernames = Object.values(usersTyping.val())
+   
+    usernames = usernames.filter(user => user !== username);
+    
+    if (usernames.length == 0) return;
+    
 
     if (usernames.length > 3){
-        console.log("Multiple users are typing...");
-        return;
-    }*/
+        return console.log("Multiple users are typing...");
+    }
 
+    let typingString = usernames[0];
+    if (usernames.length == 1) typingString += " is typing...";
     
-    
-    
+    console.log(typingString);
 }
 
-setInterval(checkTyping, 5000);
+setInterval(checkTyping, 1000);
