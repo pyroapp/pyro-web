@@ -160,7 +160,6 @@ async function loadPrivateMessages(channel_id) {
     // Reset last message. If this is not reset, if you go to
     // another channel, it will keep the last message still
     // and might show no username or profile picture
-    lastMessage = { author: { id: null } };
 }
 
 
@@ -168,12 +167,9 @@ async function loadPrivateMessages(channel_id) {
  * 
  * @param {*} message 
  */
-let lastMessage = { author: { id: null } };
-
 function loadMessage(message) {
     const { content, embeds, author: { id: author }, timestamp, channel_id } = message.data();
     const { username, flags } = CACHED_USERS[author];
-    const { author: { id: lastAuthorId } } = lastMessage;
 
     const isToday = moment(timestamp).isSame(moment(), "day");
     const isYesterday = moment(timestamp).isSame(moment().subtract(1, 'day'), "day");
@@ -184,7 +180,7 @@ function loadMessage(message) {
     if (isToday) formattedTime = 'Today at ' + moment(timestamp).format('h:mm A');
     if (isYesterday) formattedTime = 'Yesterday at ' + moment(timestamp).format('h:mm A');
 
-    if (lastAuthorId === author) {
+    if (LAST_MESSAGE_AUTHOR_ID[channel_id] === author) {
         formattedTime = moment(timestamp).format('h:mm A');
         messageClass = '';
     }
@@ -195,7 +191,7 @@ function loadMessage(message) {
     div.id = `private-message-${message.id}`;
     div.setAttribute('channel', channel_id);
 
-    if (lastAuthorId === author) {
+    if (LAST_MESSAGE_AUTHOR_ID[channel_id] === author) {
         div.innerHTML = `
             <div class="contents-2mQqc9">
                 <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${formattedTime}<i class="separator-2nZzUB"></i></span>
@@ -214,18 +210,17 @@ function loadMessage(message) {
         `;
     }
 
-    lastMessage = message.data();
+    LAST_MESSAGE_AUTHOR_ID[channel_id] = author;
 
     document.getElementById(`private-message-list-${channel_id}`).appendChild(div);
     div.scrollIntoView();
-
 }
 
 
 /**
- * 
- * @param {*} content 
- * @returns 
+ * Shows a verified user tag with the specified content
+ * @param {*} content Tag Content
+ * @returns HTML for tag
  */
 function userTag(content) {
     return `
@@ -238,6 +233,10 @@ function userTag(content) {
     `.trim();
 }
 
+
+/**
+ * If the user clicks on a spoiler on the page it will reveal the text beneath
+ */
 document.body.onclick = e => {
     if (e.target.className === "spoilerText-3p6IlD hidden-HHr2R9") {
         e.target.className = "spoilerText-3p6IlD";
