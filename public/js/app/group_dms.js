@@ -347,7 +347,7 @@ function addGroupChat(channel_id) {
                 <div class="iconWrapper-2OrFZ1">
                     <div class="avatarContainer-3cVycu"></div>
                 </div>
-                <h3 class="cursorPointer-1j7DL8 title-29uC1r base-1x0h_U size16-1P40sf RT_name"></h3>
+                <h3 class="title-29uC1r base-1x0h_U size16-1P40sf RT_name"></h3>
                 <div class="spacer-3kEb8l"></div>
             </div>
             <div class="toolbar-1t6TWx">
@@ -356,7 +356,7 @@ function addGroupChat(channel_id) {
                         <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M21 3H24V5H21V8H19V5H16V3H19V0H21V3ZM10 12C12.205 12 14 10.205 14 8C14 5.795 12.205 4 10 4C7.795 4 6 5.795 6 8C6 10.205 7.795 12 10 12ZM10 13C5.289 13 2 15.467 2 19V20H18V19C18 15.467 14.711 13 10 13Z"></path>
                     </svg>
                 </div>
-                <div class="search-36MZv-">
+                <div class="search-36MZv- hidden">
                     <div class="search-2oPWTC">
                         <div class="searchBar-3dMhjb">
                             <div class="DraftEditor-root">
@@ -393,6 +393,11 @@ function addGroupChat(channel_id) {
                 <div class="iconWrapper-2OrFZ1 clickable-3rdHwn hidden">
                     <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M19 3H4.99C3.88 3 3.01 3.89 3.01 5L3 19C3 20.1 3.88 21 4.99 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 15H15C15 16.66 13.65 18 12 18C10.35 18 9 16.66 9 15H4.99V5H19V15Z" fill="currentColor"></path>
+                    </svg>
+                </div>
+                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn hidden">
+                    <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M19.738 10H22V14H19.739C19.498 14.931 19.1 15.798 18.565 16.564L20 18L18 20L16.565 18.564C15.797 19.099 14.932 19.498 14 19.738V22H10V19.738C9.069 19.498 8.203 19.099 7.436 18.564L6 20L4 18L5.436 16.564C4.901 15.799 4.502 14.932 4.262 14H2V10H4.262C4.502 9.068 4.9 8.202 5.436 7.436L4 6L6 4L7.436 5.436C8.202 4.9 9.068 4.502 10 4.262V2H14V4.261C14.932 4.502 15.797 4.9 16.565 5.435L18 3.999L20 5.999L18.564 7.436C19.099 8.202 19.498 9.069 19.738 10ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"></path>
                     </svg>
                 </div>
                 <a tabindex="-1" class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" href="/support" rel="noreferrer noopener" target="_blank">
@@ -1438,15 +1443,6 @@ function addGroupChat(channel_id) {
 
     document.getElementById('main-body').appendChild(div);
 
-    // Show change gc name modal
-    // const title = div.querySelectorAll('.title-29uC1r')[0];
-
-    // title.onclick = () => {
-    //     if (uid !== owner) return;
-
-    //     showGroupChatChangeNameModal(channel_id);
-    // }
-
     // Send message on enter
     const input = div.querySelectorAll('.messageField')[0];
 
@@ -1508,6 +1504,28 @@ function addGroupChat(channel_id) {
 
 /**
  * 
+ * @param {*} channel_id 
+ */
+function showOwnerGroupChatSettings(channel_id) {
+    const { uid } = firebase.auth().currentUser;
+    const { owner } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
+    
+    const chat = document.getElementById(channel_id);
+    const button = chat.querySelectorAll('.iconWrapper-2OrFZ1')[3];
+
+    // Show or hide the settings button depending on if they are the owner
+    if (uid === owner) {
+        button.classList.remove('hidden');
+    } else {
+        button.classList.add('hidden');
+    }
+
+    button.onclick = () => showGroupChatChangeNameModal(channel_id);
+}
+
+
+/**
+ * 
  * @param {*} id 
  */
 function selectMainBody(id) {
@@ -1529,7 +1547,6 @@ function selectMainBody(id) {
  */
 function showGroupChatChangeNameModal(channel_id) {
     const layer = document.querySelectorAll('.layerContainer-yqaFcK')[0];
-    const { name } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
 
     layer.innerHTML = `
         <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
@@ -1538,22 +1555,43 @@ function showGroupChatChangeNameModal(channel_id) {
                 <div class="modalRoot-1Kx4Hb root-1gCeng small-3iVZYw fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
                     <div class="flex-1xMQg5 flex-1O1GKY horizontal-1ae9ci horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG justifyStart-2NDFzi alignCenter-1dQNNs noWrap-3jynv6 header-1TKi98 headerContainer-3N-yWX" style="flex: 0 0 auto;">
                         <div class="header-3C6qT5" style="padding-top: 10px;">
-                            <h4 class="headerText-2uyvpY">Rename '${name}'</h4>
+                            <h4 class="headerText-2uyvpY">Update Group Chat</h4>
                         </div>
                     </div>
                     <div class="content-1LAB8Z thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 8px;">
-                        <div>
-                            <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 header-1TKi98" id="1231" style="flex: 0 0 auto;">
-                                <div class="content-1LAB8Z content-mK72R6 thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 8px;">
-                                    <input type="text" placeholder="New name" class="" />
-                                    <div style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 20px;"></div>
+                        <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 header-1TKi98" id="1231" style="flex: 0 0 auto;">
+                            <div class="content-1LAB8Z content-mK72R6 thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 8px;">
+                                
+                                <div class="flex-1xMQg5 flex-1O1GKY horizontal-1ae9ci horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 marginBottom40-2vIwTv" style="flex: 1 1 auto;">
+                                    <div class="flex-1xMQg5 flex-1O1GKY horizontal-1ae9ci horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG justifyBetween-2tTqYu alignStretch-DpGPf3 noWrap-3jynv6">
+                                        <div class="flexChild-faoVW3" style="flex: 1 1 auto;">
+                                            <div class="avatarUploader-3XDtmn avatarUploader-2yeaMv">
+                                                <div class="avatarUploaderInner-3UNxY3 avatarUploaderInner-3SDRO_" style="background-image: url(${getAvatar(channel_id)});">
+                                                    <div class="avatarUploaderHint-3SN212">Change Icon</div>
+                                                    <div class="fileInput-23-d-3" tabindex="0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 0; cursor: pointer;"></div>
+                                                    <div class="avatarUploaderIndicator-2G-aIZ"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyStart-2NDFzi alignStart-H-X2h- noWrap-3jynv6">
+                                            <div class="colorStandard-2KCXvj size14-e6ZScH description-3_Ncsb formText-3fs7AJ marginBottom8-AtZOdT modeDefault-3a2Ph1" style="margin-top: auto; margin-bottom: auto;">We recommend an image of at least 512x512 for the server.</div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div class="marginBottom20-32qID7">
+                                    <h5 class="colorStandard-2KCXvj size14-e6ZScH h5-18_1nd title-3sZWYQ defaultMarginh5-2mL-bP">Server Name</h5>
+                                    <div class="inputWrapper-31_8H8">
+                                        <input class="inputDefault-_djjkz input-cIJ7To" type="text" maxlength="100">
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                     <div class="flex-1xMQg5 flex-1O1GKY horizontalReverse-2eTKWD horizontalReverse-3tRjY7 flex-1O1GKY directionRowReverse-m8IjIq justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 footer-2gL1pp" style="flex: 0 0 auto;">
                         <button class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeMedium-1AC_Sl grow-q77ONN" disabled>
-                            <div class="contents-18-Yxp">Rename</div>
+                            <div class="contents-18-Yxp">Save</div>
                         </button>
                         <button class="button-38aScr lookLink-9FtZy- cancelButton-2O3h8t sizeMedium-1AC_Sl grow-q77ONN" onclick="hideModals()">
                             <div class="contents-18-Yxp">Cancel</div>
@@ -1563,14 +1601,6 @@ function showGroupChatChangeNameModal(channel_id) {
             </div>
         </div>
     `;
-
-    layer.querySelectorAll('.button-38aScr')[0].onclick = () => {
-        const input = layer.querySelectorAll('.rename-field-3j093j')[0];
-
-        // if ()
-
-        changeGroupChatName(channel_id, name);
-    }
 }
 
 
@@ -1669,11 +1699,12 @@ function loadGroupChannels() {
                         };
 
                         setRealtimeUserInfo(recipient);
-                    });    
+                    });
                 });
 
                 setRealtimeChannelInfo(channel.id);
                 loadGroupChatHeadingAvatars(channel.id);
+                showOwnerGroupChatSettings(channel.id);
             }
 
             // Removed means that a field within the document has been changed.

@@ -156,10 +156,6 @@ async function loadPrivateMessages(channel_id) {
 
         CACHED_CHAT_LISTENERS[channel_id] = listener;
     }
-
-    // Reset last message. If this is not reset, if you go to
-    // another channel, it will keep the last message still
-    // and might show no username or profile picture
 }
 
 
