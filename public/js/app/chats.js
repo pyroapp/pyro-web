@@ -1106,7 +1106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="typing-2GQL18 base-gE7OpD hidden" styl="font-size: 14px;">
+                    <div class="typing-2GQL18 base-gE7OpD" styl="font-size: 14px;">
                         <svg width="24.5" height="7" class="ellipsis-19qdx6 dots-3Bkt3k themed-IQiCm3" style="margin-top: 1px;">
                             <g style="opacity: 1;">
                                 <circle cx="3.5" cy="3.5" r="3.5" fill="currentColor" style="opacity: 1;"></circle>
@@ -1114,7 +1114,7 @@
                                 <circle cx="21" cy="3.5" r="3.5" fill="currentColor" style="opacity: 1;"></circle>
                             </g>
                         </svg>
-                        <span class="text-1y-e8-" style="margin-top: 2px;"><strong>Firebase</strong> is typing...</span>
+                        <span id="typing-indicator" class="text-1y-e8-" style="margin-top: 2px;"></span>
                     </div>
                     <div class="wrapper-39oAo3 channelBlockedArea-fj903 hidden">
                         <div class="content-c_0cLD">

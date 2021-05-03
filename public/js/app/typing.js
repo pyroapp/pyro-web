@@ -44,13 +44,20 @@ async function checkTyping(){
 
     if (users == null) return;
 
-    const usernames = Object.values(users);
+    let usernames = Object.values(users);
+    usernames = usernames.filter(user => user !== username);
 
-    for (i = 0; i < usernames.length; i++){
-        if (usernames[i] !== username){
-            console.log(usernames[i]);
-        }
+    let typingString = usernames[0];
+
+
+    for (i = 1; i < usernames.length; i++){
+        typingString += ", ";
+        typingString += usernames[i];
     }
+
+    typingString += " is typing...";
+
+    document.getElementById("typing-indicator").innerHTML = `<strong> ${typingString} </strong>`;
 }
 
 setInterval(checkTyping, 1000);
