@@ -16,7 +16,7 @@ function setFlag(flag){
         
         case "TYPING":
             {
-                firebase.database().ref(`typing_indicator/${CURRENT_CHANNEL_ID}`).set({
+                firebase.database().ref(`typing_indicator/${CURRENT_CHANNEL_ID}`).update({
                     [uid]: username
                 })
                 break;
@@ -37,24 +37,20 @@ async function checkTyping(){
     const { uid } = firebase.auth().currentUser;
     const username = CACHED_USERS[uid].username;
 
-    let usersTyping = await firebase.database().ref(`typing_indicator/${CURRENT_CHANNEL_ID}`).get();
+    if (CURRENT_CHANNEL_ID == undefined) return;
     
-    if (usersTyping.val() == null) return;
-    let usernames = Object.values(usersTyping.val())
-   
-    usernames = usernames.filter(user => user !== username);
-    
-    if (usernames.length == 0) return;
-    
+    const req = await firebase.database().ref(`typing_indicator/${CURRENT_CHANNEL_ID}`).get();
+    const users = req.val();
 
-    if (usernames.length > 3){
-        return console.log("Multiple users are typing...");
+    if (users == null) return;
+
+    const usernames = Object.values(users);
+
+    for (i = 0; i < usernames.length; i++){
+        if (usernames[i] !== username){
+            console.log(usernames[i]);
+        }
     }
-
-    let typingString = usernames[0];
-    if (usernames.length == 1) typingString += " is typing...";
-    
-    console.log(typingString);
 }
 
 setInterval(checkTyping, 1000);
