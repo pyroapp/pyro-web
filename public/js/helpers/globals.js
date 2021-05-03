@@ -21,6 +21,7 @@ let CURRENT_CHANNEL_ID;
 const LAST_MESSAGE_AUTHOR_ID = [];
 
 // Global thresholds
+const TYPING_INDICATOR_THRESHOLD = 2000;
 const LOADING_TIMEOUT = 1500;
 const ACTIVITY_TIMEOUT = 3000;
 const IDLE_TIMEOUT = 10000;
@@ -38,6 +39,7 @@ const STATUS_COLOURS = {
     offline: '#666665',
     streaming: '#563490',
 };
+
 
 // Firebase authentication error codes
 const AUTH_CODES = {
