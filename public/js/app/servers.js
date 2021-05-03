@@ -8,12 +8,12 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
-async function server_create_menu() {
+window.onload = async function server_create_menu() {
     // Get the modal
     var modal = document.getElementById("myModal");
 
     // Get the button that opens the modal
-    var btn = document.getElementById("clickable-3rdHwM");
+    var btn = document.getElementById(".clickable-3rdHwM");
 
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
