@@ -1202,7 +1202,6 @@
         if (!input.activeElement) input.focus();
     });
 
-
     // Typing indicator behavior
     input.oninput = async () => {
         const temp = input.innerText;

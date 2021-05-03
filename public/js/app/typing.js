@@ -62,7 +62,7 @@ function createTypingIndicatorListener(channel_id) {
             }
             
             indicator.classList.remove('hidden');
-            usersIndicator.innerHTML = typingUsers.join(', ') + ` ${users.length > 1 ? 'are' : 'is'} typing...`;
+            usersIndicator.innerHTML = typingUsers.length > 4 ? 'Multiple people ' :  typingUsers.join(', ') + ` ${users.length > 1 ? 'are' : 'is'} typing...`;
         }
     });
 }

@@ -1499,6 +1499,19 @@ function addGroupChat(channel_id) {
     document.addEventListener('keypress', () => {
         if (!input.activeElement) input.focus();
     });
+
+    // Typing indicator behavior
+    input.oninput = async () => {
+        const temp = input.innerText;
+
+        await delay(TYPING_INDICATOR_THRESHOLD);
+        
+        if (!input.innerHTML) return isUserTyping(channel_id, false);
+        isUserTyping(channel_id, temp != input.innerText);
+    }
+
+    // Create typing indicator listener
+    createTypingIndicatorListener(channel_id);
 }
 
 
