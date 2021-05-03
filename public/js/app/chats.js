@@ -1106,7 +1106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="typing-2GQL18 base-gE7OpD" styl="font-size: 14px;">
+                    <div class="typing-2GQL18 base-gE7OpD hidden" styl="font-size: 12px;">
                         <svg width="24.5" height="7" class="ellipsis-19qdx6 dots-3Bkt3k themed-IQiCm3" style="margin-top: 1px;">
                             <g style="opacity: 1;">
                                 <circle cx="3.5" cy="3.5" r="3.5" fill="currentColor" style="opacity: 1;"></circle>
@@ -1114,7 +1114,7 @@
                                 <circle cx="21" cy="3.5" r="3.5" fill="currentColor" style="opacity: 1;"></circle>
                             </g>
                         </svg>
-                        <span id="typing-indicator" class="text-1y-e8-" style="margin-top: 2px;"></span>
+                        <span class="text-1y-e8-" style="margin-top: 2px;"></span>
                     </div>
                     <div class="wrapper-39oAo3 channelBlockedArea-fj903 hidden">
                         <div class="content-c_0cLD">
@@ -1140,7 +1140,9 @@
 
     input.addEventListener('keypress', event => {
         if (!event.shiftKey && event.key === 'Enter') {
+            isUserTyping(channel_id, false);
             sendPrivateMessage(channel_id);
+
             event.returnValue = false;
 
             let chatdiv = document.querySelectorAll(".textArea-12jD-V");
@@ -1199,15 +1201,20 @@
     document.addEventListener('keypress', () => {
         if (!input.activeElement) input.focus();
     });
-    
-    // TODO: Make this wait 2 seconds each time, if the current text is diff than the text 2 seconds ago update as typing,
-    // TODO: if not then it means the user has either stopped typing or is idling.
+
+
+    // Typing indicator behavior
     input.oninput = async () => {
-        const _temp = input.innerText;
-        await delay(2000);
-        if (_temp != input.innerText) {setFlag("TYPING"); return;}
-        setFlag("NOT_TYPING");
+        const temp = input.innerText;
+
+        await delay(TYPING_INDICATOR_THRESHOLD);
+        
+        if (!input.innerHTML) return isUserTyping(channel_id, false);
+        isUserTyping(channel_id, temp != input.innerText);
     }
+
+    // Create typing indicator listener
+    createTypingIndicatorListener(channel_id);
 }
 
 
