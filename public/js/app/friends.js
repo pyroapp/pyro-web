@@ -222,7 +222,7 @@ function getFriendsListener() {
 
     firebase.firestore().collection('friends').doc(uid).onSnapshot(async snapshot => {
         for (friend_uid in snapshot.data()) {
-            if (CACHED_FRIENDS[friend_uid]) continue;
+            if (CACHED_FRIENDS.includes(friend_uid)) continue;
 
             CACHED_FRIENDS.push(friend_uid);
 
