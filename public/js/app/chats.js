@@ -47,7 +47,7 @@
                         <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M21 3H24V5H21V8H19V5H16V3H19V0H21V3ZM10 12C12.205 12 14 10.205 14 8C14 5.795 12.205 4 10 4C7.795 4 6 5.795 6 8C6 10.205 7.795 12 10 12ZM10 13C5.289 13 2 15.467 2 19V20H18V19C18 15.467 14.711 13 10 13Z"></path>
                     </svg>
                 </div>
-                <div class="search-36MZv-">
+                <div class="search-36MZv- hidden">
                     <div class="search-2oPWTC">
                         <div class="searchBar-3dMhjb">
                             <div class="DraftEditor-root">
@@ -1106,7 +1106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="typing-2GQL18 base-gE7OpD hidden" styl="font-size: 14px;">
+                    <div class="typing-2GQL18 base-gE7OpD hidden" styl="font-size: 12px;">
                         <svg width="24.5" height="7" class="ellipsis-19qdx6 dots-3Bkt3k themed-IQiCm3" style="margin-top: 1px;">
                             <g style="opacity: 1;">
                                 <circle cx="3.5" cy="3.5" r="3.5" fill="currentColor" style="opacity: 1;"></circle>
@@ -1114,7 +1114,7 @@
                                 <circle cx="21" cy="3.5" r="3.5" fill="currentColor" style="opacity: 1;"></circle>
                             </g>
                         </svg>
-                        <span class="text-1y-e8-" style="margin-top: 2px;"><strong>Firebase</strong> is typing...</span>
+                        <span class="text-1y-e8-" style="margin-top: 2px;"></span>
                     </div>
                     <div class="wrapper-39oAo3 channelBlockedArea-fj903 hidden">
                         <div class="content-c_0cLD">
@@ -1140,7 +1140,9 @@
 
     input.addEventListener('keypress', event => {
         if (!event.shiftKey && event.key === 'Enter') {
+            isUserTyping(channel_id, false);
             sendPrivateMessage(channel_id);
+
             event.returnValue = false;
 
             let chatdiv = document.querySelectorAll(".textArea-12jD-V");
@@ -1199,6 +1201,19 @@
     document.addEventListener('keypress', () => {
         if (!input.activeElement) input.focus();
     });
+
+    // Typing indicator behavior
+    input.oninput = async () => {
+        const temp = input.innerText;
+
+        await delay(TYPING_INDICATOR_THRESHOLD);
+        
+        if (!input.innerHTML) return isUserTyping(channel_id, false);
+        isUserTyping(channel_id, temp != input.innerText);
+    }
+
+    // Create typing indicator listener
+    createTypingIndicatorListener(channel_id);
 }
 
 

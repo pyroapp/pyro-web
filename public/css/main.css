@@ -57149,7 +57149,9 @@ a.ctaAnchor-3-8I3v:hover {
 	white-space:nowrap;
 	text-overflow:ellipsis;
 	overflow:hidden;
-	margin-left:4px
+	margin-left:4px;
+	font-weight: normal;
+	font-size: 13px;
 }
 
 .base-gE7OpD .ellipsis-19qdx6 {
