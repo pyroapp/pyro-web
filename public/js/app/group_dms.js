@@ -1575,7 +1575,7 @@ function showGroupChatChangeNameModal(channel_id) {
                         <div class="flex-1xMQg5 flex-1O1GKY vertical-V37hAW flex-1O1GKY directionColumn-35P_nr justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 header-1TKi98" id="1231" style="flex: 0 0 auto;">
                             <div class="content-1LAB8Z content-mK72R6 thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 8px;">
                                 
-                                <div class="flex-1xMQg5 flex-1O1GKY horizontal-1ae9ci horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 marginBottom40-2vIwTv" style="flex: 1 1 auto;">
+                                <!-- <div class="flex-1xMQg5 flex-1O1GKY horizontal-1ae9ci horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 marginBottom40-2vIwTv" style="flex: 1 1 auto;">
                                     <div class="flex-1xMQg5 flex-1O1GKY horizontal-1ae9ci horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG justifyBetween-2tTqYu alignStretch-DpGPf3 noWrap-3jynv6">
                                         <div class="flexChild-faoVW3" style="flex: 1 1 auto;">
                                             <div class="avatarUploader-3XDtmn avatarUploader-2yeaMv">
@@ -1590,10 +1590,10 @@ function showGroupChatChangeNameModal(channel_id) {
                                             <div class="colorStandard-2KCXvj size14-e6ZScH description-3_Ncsb formText-3fs7AJ marginBottom8-AtZOdT modeDefault-3a2Ph1" style="margin-top: auto; margin-bottom: auto;">We recommend an image of at least 512x512 for the server.</div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="marginBottom20-32qID7">
-                                    <h5 class="colorStandard-2KCXvj size14-e6ZScH h5-18_1nd title-3sZWYQ defaultMarginh5-2mL-bP">Server Name</h5>
+                                    <h5 class="colorStandard-2KCXvj size14-e6ZScH h5-18_1nd title-3sZWYQ defaultMarginh5-2mL-bP">Group Chat Name</h5>
                                     <div class="inputWrapper-31_8H8">
                                         <input class="inputDefault-_djjkz input-cIJ7To" type="text" maxlength="100">
                                     </div>
@@ -1614,6 +1614,35 @@ function showGroupChatChangeNameModal(channel_id) {
             </div>
         </div>
     `;
+
+    const nameField = layer.querySelector('.input-cIJ7To');
+    const saveBtn = layer.querySelectorAll('.button-38aScr')[0];
+
+    // Enable and disable button depending on text input
+    nameField.oninput = () => {
+        if (nameField.value.length > 5) {
+            enableButton(saveBtn);
+        } else {
+            disableButton(saveBtn);
+        }
+    }
+
+    // Update group chat name
+    nameField.onkeydown = async event => {
+        if (event.key === 'Enter' && nameField.value.length > 5) {
+            updateName();
+        }
+    }
+
+    saveBtn.onclick = () => {
+        updateName();
+    }
+
+    const updateName = () => {
+        disableButton(saveBtn);
+        changeGroupChatName(channel_id, nameField.value);
+        hideModals();
+    }
 }
 
 

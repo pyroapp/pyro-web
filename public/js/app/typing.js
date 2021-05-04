@@ -44,13 +44,9 @@ function createTypingIndicatorListener(channel_id) {
 
         // No users typing
         if (!users) {
-            console.log(users);
-
             indicator.classList.add('hidden');
             usersIndicator.innerHTML = '';
         } else {
-            console.log('testing', users);
-
             const typingUsers = [];
 
             for (user_id in users) {
