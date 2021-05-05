@@ -188,7 +188,7 @@
 
 @-webkit-keyframes spinner-spinning-circle-rotate-1-ejtM {
 	to {
-		-webkit-transform: rotate(1turn);/
+		-webkit-transform: rotate(1turn);
 		transform: rotate(1turn)
 	}
 
@@ -47522,11 +47522,13 @@ strong {
 }
 
 .clickable-3rdHwn .icon-22AiRD {
-	color:var(--interactive-normal)
+	color:var(--interactive-normal);
+	transition: ease-in-out 0.15s
 }
 
 .clickable-3rdHwn:hover .icon-22AiRD {
-	color:var(--interactive-hover)
+	color:var(--interactive-hover);
+	transition: ease-in-out 0.15s
 }
 
 .selected-1GqIat .icon-22AiRD {
@@ -48493,7 +48495,8 @@ strong {
 }
 
 .theme-dark .friend-3KALPe {
-	color:#b9bbbe
+	color:#b9bbbe;
+	transition: ease-in-out 0.15s
 }
 
 .theme-dark .friendSelected-1sa4bG {
@@ -55524,11 +55527,13 @@ a.ctaAnchor-3-8I3v:hover {
 	transform-origin:50% 50%;
 	width:24px;
 	height:24px;
-	fill:var(--interactive-normal)
+	fill:var(--interactive-normal);
+	transition: ease-in-out 0.15s
 }
 
 .attachButton-2WznTc:hover .attachButtonPlus-jWVFah {
-	fill:var(--interactive-hover)
+	fill:var(--interactive-hover);
+	transition: ease-in-out 0.15s
 }
 
 .attachButtonPlay-3iJ0mf {
@@ -69911,12 +69916,14 @@ html .invoiceCancelRow-3mYhFX {
 	justify-content:center;
 	border-radius:4px;
 	position:relative;
-	color:var(--interactive-normal)
+	color:var(--interactive-normal);
+	transition: ease-in-out 0.15s;
 }
 
 .button-14-BFJ.enabled-2cQ-u7:hover {
 	color:var(--interactive-hover);
-	background-color:var(--background-modifier-selected)
+	background-color:var(--background-modifier-selected);
+	transition: ease-in-out 0.15s;
 }
 
 .button-14-BFJ.disabled-2iW-fm {
