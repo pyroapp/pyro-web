@@ -67,3 +67,34 @@ async function uploadFile(file) {
         throw error;
     }
 }
+
+
+/**
+ * 
+ * @param {*} files 
+ */
+async function sendAttachmentHandler(channel_id, files) {
+    
+    // Check to make sure we aren't uploading too many files
+    if (files.length > 3) return showBasicModal(
+        'Too many files',
+        'You can only upload a maximum of three files at once',
+        'Okay',
+        'hideModals()'
+    );
+    
+    // Iterate through each file to send each file as a seprate message
+    for (i = 0; i < files.length; i++) {
+        const { name, size, type } = files[i];
+        const url = await uploadFile(files[i]);
+
+        const fileObject = {
+            name: name,
+            size: size,
+            type: type,
+            url: url,
+        };
+
+        sendPrivateMessage(channel_id, fileObject);
+    }
+}
