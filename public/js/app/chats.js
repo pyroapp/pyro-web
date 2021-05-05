@@ -1088,7 +1088,7 @@
                                     <input type="file" id="attachment-${channel_id}" class="hidden" multiple />
                                     <label for="attachment-${channel_id}" class="attachButton-2WznTc attachButton-2dnuIu button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN" style="cursor: pointer">
                                         <div class="contents-18-Yxp attachButtonInner-PQjIyk">
-                                            <img src="/img/unknown.png" height="24" width="24" />
+                                        <svg width="24" height="24" viewBox="0 0 24 24"><path class="attachButtonPlus-jWVFah" fill="currentColor" d="M12 2.00098C6.486 2.00098 2 6.48698 2 12.001C2 17.515 6.486 22.001 12 22.001C17.514 22.001 22 17.515 22 12.001C22 6.48698 17.514 2.00098 12 2.00098ZM17 13.001H13V17.001H11V13.001H7V11.001H11V7.00098H13V11.001H17V13.001Z"></path></svg>
                                         </div>
                                     </label>
                                 </div>
