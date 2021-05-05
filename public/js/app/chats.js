@@ -1084,20 +1084,13 @@
                     <div class="channelTextArea-rNsIhG channelTextArea-2VhZ6z">
                         <div class="scrollableContainer-2NUZem webkit-HjD9Er">
                             <div class="inner-MADQqc sansAttachButton-td2irx">
-                                <div class="uploadInput-1XtQef hidden">
-                                    <div class="file-input" tabindex="-1" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; opacity: 0; cursor: pointer;"></div>
-                                </div>
-                                <div class="attachWrapper-2TRKBi hidden">
-                                    <button class="attachButton-2WznTc attachButton-2dnuIu button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN">
+                                <div class="attachWrapper-2TRKBi">
+                                    <input type="file" id="attachment-${channel_id}" class="hidden" multiple />
+                                    <label for="attachment-${channel_id}" class="attachButton-2WznTc attachButton-2dnuIu button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN" style="cursor: pointer">
                                         <div class="contents-18-Yxp attachButtonInner-PQjIyk">
-                                            <svg width="24" height="24" viewBox="0 0 24 24">
-                                                <g fill="none" fill-rule="evenodd">
-                                                    <path class="attachButtonPlus-jWVFah" fill="currentColor" fill-rule="nonzero" d="M22.031 12.665c-.923-.4338-1.9384-.665-2.9778-.665-.695 0-1.3663.1013-2 .29V11h-4V7h-2v4h-4v2h4v4h1.29c-.1887.6337-.29 1.305-.29 2 0 1.0394.2312 2.055.665 2.978-.2207.0146-.4424.022-.665.022-2.6522 0-5.1957-1.0536-7.071-2.929C3.1067 17.1958 2.053 14.6523 2.053 12c0-5.5228 4.4772-10 10-10 2.6522 0 5.1957 1.0536 7.071 2.929 1.8754 1.8753 2.929 4.4188 2.929 7.071 0 .2225-.0074.4443-.022.665zM15.4457 13c-.9793.59-1.8023 1.413-2.3924 2.3924V13h2.3924z"></path>
-                                                    <path class="attachButtonPlay-3iJ0mf" fill="currentColor" d="M19.0532 14c1.326 0 2.598.5268 3.5355 1.4645.9377.9376 1.4645 2.2094 1.4645 3.5355 0 1.326-.5268 2.598-1.4645 3.5355C21.651 23.4732 20.3793 24 19.0532 24c-1.326 0-2.5978-.5268-3.5355-1.4645C14.58 21.598 14.0532 20.326 14.0532 19c0-2.7614 2.2386-5 5-5zm-1 7l3-2-3-2v4z"></path>
-                                                </g>
-                                            </svg>
+                                            <img src="/img/unknown.png" height="24" width="24" />
                                         </div>
-                                    </button>
+                                    </label>
                                 </div>
                                 <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x">
                                     <div class="placeholder-37qJjk fontSize16Padding-3Wk7zP">Message @<span class="RT_username"></span></div>
@@ -1135,9 +1128,15 @@
 
     document.getElementById('main-body').appendChild(div);
 
-    // Send message on enter
     const input = div.querySelectorAll('.messageField')[0];
+    const file = document.getElementById(`attachment-${channel_id}`);
 
+    // Send attachment
+    file.onchange = event => {        
+        sendAttachmentHandler(channel_id, event.target.files);
+    }
+
+    // Send message on enter
     input.addEventListener('keypress', event => {
         if (!event.shiftKey && event.key === 'Enter') {
             isUserTyping(channel_id, false);
