@@ -188,7 +188,7 @@
 
 @-webkit-keyframes spinner-spinning-circle-rotate-1-ejtM {
 	to {
-		-webkit-transform: rotate(1turn);
+		-webkit-transform: rotate(1turn);/
 		transform: rotate(1turn)
 	}
 
@@ -23623,13 +23623,6 @@ html .progress-GjyFoQ {
 	transition:filter .1s ease;
 	transition:filter .1s ease,
 	-webkit-filter .1s ease
-}
-
-.messageAttachment-1aDidq:hover > img {
-	transform: scale(1.25); 
-	transition: ease-in-out 1.25s;
-	border-radius: 4px;
-	max-width: 50%;
 }
 
 .ephemeralMessage-1fEWtQ {

@@ -1156,6 +1156,17 @@
         }
     });
 
+    input.onpaste = event => {
+        const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+
+        for (i in items) {
+            if (items[i].kind === 'file') return sendAttachmentHandler(
+                channel_id,
+                [items[i].getAsFile()]
+            );
+        }
+    };
+
     // Placeholder behavior
     input.addEventListener('input', () => {
         const placeholder = div.querySelectorAll('.placeholder-37qJjk')[0];
