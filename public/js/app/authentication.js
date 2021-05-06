@@ -21,6 +21,15 @@ window.onpopstate = () => {
 }
 
 
+// Copy users full username and tag to clipboard
+document.querySelector('.canCopy-2VBT7N').onclick = () => {
+    const { uid } = firebase.auth().currentUser;
+    const { username, discriminator } = CACHED_USERS[uid];
+
+    copyToClipboard(`${username}#${discriminator}`);
+}
+
+
 firebase.auth().onAuthStateChanged(async user => {
     if (!user) return redirect('/login');
 
