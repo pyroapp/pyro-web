@@ -2918,8 +2918,8 @@
 
 .theme-dark .footer-2gL1pp {
 	background-color: #17171f;
-	-webkit-box-shadow: inset 0 1px 0 rgba(47, 49, 54, .6);
-	box-shadow: inset 0 1px 0 rgba(47, 49, 54, .6)
+	/* -webkit-box-shadow: inset 0 1px 0 rgba(47, 49, 54, .6);
+	box-shadow: inset 0 1px 0 rgba(47, 49, 54, .6) */
 }
 
 .theme-light .separator-2-RRj_ {
@@ -47401,7 +47401,8 @@ strong {
 }
 
 .container-1r6BKw.themed-ANHk51 {
-	background:var(--background-primary)
+	background:var(--background-secondary);
+	filter: drop-shadow(0px 3px 15px #101015)
 }
 
 .container-1r6BKw.transparent-2ZlE3R {
@@ -57376,7 +57377,7 @@ a.ctaAnchor-3-8I3v:hover {
 }
 
 .content-yTz4x3:before {
-	content:"";
+	/* content:"";
 	position:absolute;
 	display:block;
 	top:-1px;
@@ -57386,7 +57387,7 @@ a.ctaAnchor-3-8I3v:hover {
 	-webkit-box-shadow:var(--elevation-low);
 	box-shadow:var(--elevation-low);
 	z-index:1;
-	pointer-events:none
+	pointer-events:none */
 }
 
 .channelTextArea-rNsIhG {
