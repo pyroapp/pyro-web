@@ -57391,7 +57391,8 @@ a.ctaAnchor-3-8I3v:hover {
 
 .channelTextArea-rNsIhG {
 	margin-bottom:24px;
-	background-color:var(--background-primary)
+	background-color:var(--background-primary);
+	filter: drop-shadow(0px -3px 10px #101015)
 }
 
 .titleWrapper-1l0xT9 {
