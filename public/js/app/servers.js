@@ -9,16 +9,13 @@
 //? ------------------------------------------------------------------------------------
 
 window.onload = async function server_create_menu() {
-    // Get the modal
-    var modal = document.getElementById("myModal");
-
     // Get the button that opens the modal
-    var btn = document.querySelector(".clickable-3rdHwM");
+    let btn = document.querySelector(".clickable-3rdHwM");
 
-    var btn2 = document.getElementById("serverjoin");
+    let btn2 = document.getElementById("servercreatebutton");
 
     // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    let span = document.getElementsByClassName("close")[0];
 
     // When the user clicks on the button, open the modal
     btn.onclick = function() {
@@ -30,21 +27,9 @@ window.onload = async function server_create_menu() {
         createServer()
         //modal.style.display = "block";
     }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
 }
 
-function serverCreateModal(heading, message, buttonText, buttonEvent) {
+function serverCreateModal() {
     const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
     modal.innerHTML = `
@@ -115,8 +100,8 @@ function serverCreateModal(heading, message, buttonText, buttonEvent) {
                                     style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 0px;">
                                 </div>
                                 <br>
-                                <center><button type="button" class="footerButton-ayFTfX button-38aScr lookFilled-1Gx00P colorGrey-2DXtkV sizeMedium-1AC_Sl grow-q77ONN">
-                                <div class="contents-18-Yxp">Create a Server</div>
+                                <center><button type="button" id="servercreatebutton class="footerButton-ayFTfX button-38aScr lookFilled-1Gx00P colorGrey-2DXtkV sizeMedium-1AC_Sl grow-q77ONN">
+                                <div class="contents-18-Yxp"">Create a Server</div>
                             </button>
                             </div>
                             <div id="serverjoin" class="flex-1xMQg5 flex-1O1GKY horizontalReverse-2eTKWD horizontalReverse-3tRjY7 flex-1O1GKY directionRowReverse-m8IjIq justifyStart-2NDFzi alignStretch-DpGPf3 noWrap-3jynv6 footer-2gL1pp footer-1NnaNd"
