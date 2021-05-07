@@ -203,47 +203,66 @@ function loadMessagesInList(messages) {
                 <div class="buttonContainer-DHceWr"></div>
             `.trim();
         }
-        
 
-        document.getElementById(`private-message-list-${channel_id}`).appendChild(div);
-        div.scrollIntoView();
+        const messageList = document.getElementById(`private-message-list-${channel_id}`);
 
-        const { uid } = firebase.auth().currentUser;
+        messageList.appendChild(div);
+        scrollToBottom(channel_id);
 
-        // Show message editing on hover
-        div.onmouseenter = () => {
-            if (div.getAttribute('author_uid') !== uid) return;
+        // Show message editing buttons on hover
+        div.onmouseenter = () => showMessageEditingButtons(channel_id, message.id, div);
 
-            div.querySelector('.buttonContainer-DHceWr').innerHTML = `
-                <div class="buttons-cl5qTG container-3npvBV">
-                    <div class="wrapper-2aW0bm">
-                        <div class="button-1ZiXG9 hidden" id="edit-message">
-                            <svg class="icon-LYJorE" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M19.2929 9.8299L19.9409 9.18278C21.353 7.77064 21.353 5.47197 19.9409 4.05892C18.5287 2.64678 16.2292 2.64678 14.817 4.05892L14.1699 4.70694L19.2929 9.8299ZM12.8962 5.97688L5.18469 13.6906L10.3085 18.813L18.0201 11.0992L12.8962 5.97688ZM4.11851 20.9704L8.75906 19.8112L4.18692 15.239L3.02678 19.8796C2.95028 20.1856 3.04028 20.5105 3.26349 20.7337C3.48669 20.9569 3.8116 21.046 4.11851 20.9704Z" fill="currentColor"></path>
-                            </svg>
-                        </div>
-                        <div class="button-1ZiXG9" id="delete-message">
-                            <svg class="icon-LYJorE" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M15 3.999V2H9V3.999H3V5.999H21V3.999H15Z"></path>
-                                <path fill="currentColor" d="M5 6.99902V18.999C5 20.101 5.897 20.999 7 20.999H17C18.103 20.999 19 20.101 19 18.999V6.99902H5ZM11 17H9V11H11V17ZM15 17H13V11H15V17Z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            `.trim();
-
-            document.getElementById('delete-message').onclick = () => {
-                deleteMessage(channel_id, message.id);
-            }
-        }
-
-        div.onmouseleave = () => {
-            div.querySelector('.buttonContainer-DHceWr').innerHTML = '';
-        }
+        // Remove the message editing buttons
+        div.onmouseleave = () => div.querySelector('.buttonContainer-DHceWr').innerHTML = '';
 
         LAST_MESSAGE_AUTHOR_ID[channel_id] = author_uid;
         LAST_MESSAGE_TIMESTAMP[channel_id] = timestamp;
     }); 
+}
+
+
+/**
+ * 
+ * @param {*} channel_id 
+ */
+function scrollToBottom(channel_id) {
+    const messageList = document.getElementById(`private-message-list-${channel_id}`).lastChild;
+    
+    messageList.scrollIntoView();
+}
+
+
+/**
+ * 
+ * @param {*} channel_id 
+ * @param {*} message_id 
+ * @param {*} messageEl 
+ * @returns 
+ */
+function showMessageEditingButtons(channel_id, message_id, messageEl) {
+    const { uid } = firebase.auth().currentUser;
+
+    if (messageEl.getAttribute('author_uid') !== uid) return;
+
+    messageEl.querySelector('.buttonContainer-DHceWr').innerHTML = `
+        <div class="buttons-cl5qTG container-3npvBV">
+            <div class="wrapper-2aW0bm">
+                <div class="button-1ZiXG9 hidden" id="edit-message">
+                    <svg class="icon-LYJorE" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.2929 9.8299L19.9409 9.18278C21.353 7.77064 21.353 5.47197 19.9409 4.05892C18.5287 2.64678 16.2292 2.64678 14.817 4.05892L14.1699 4.70694L19.2929 9.8299ZM12.8962 5.97688L5.18469 13.6906L10.3085 18.813L18.0201 11.0992L12.8962 5.97688ZM4.11851 20.9704L8.75906 19.8112L4.18692 15.239L3.02678 19.8796C2.95028 20.1856 3.04028 20.5105 3.26349 20.7337C3.48669 20.9569 3.8116 21.046 4.11851 20.9704Z" fill="currentColor"></path>
+                    </svg>
+                </div>
+                <div class="button-1ZiXG9" id="delete-message">
+                    <svg class="icon-LYJorE" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M15 3.999V2H9V3.999H3V5.999H21V3.999H15Z"></path>
+                        <path fill="currentColor" d="M5 6.99902V18.999C5 20.101 5.897 20.999 7 20.999H17C18.103 20.999 19 20.101 19 18.999V6.99902H5ZM11 17H9V11H11V17ZM15 17H13V11H15V17Z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    `.trim();
+
+    document.getElementById('delete-message').onclick = () => deleteMessage(channel_id, message_id);
 }
 
 
