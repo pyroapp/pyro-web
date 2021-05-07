@@ -8,33 +8,14 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
-window.onload = async function server_create_menu() {
-    // Get the button that opens the modal
-    let btn = document.querySelector(".clickable-3rdHwM");
-
-    let btn2 = document.getElementById("servercreatebutton");
-
-    // Get the <span> element that closes the modal
-    let span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on the button, open the modal
-    btn.onclick = function() {
-        serverCreateModal("test title", "test", "test3", "hideModals()")
-        //modal.style.display = "block";
-    }
-
-    btn2.onclick = function() {
-        createServer()
-        //modal.style.display = "block";
-    }
-}
-
 function serverCreateModal() {
+    const { uid } = firebase.auth().currentUser;
+    const { username } = CACHED_USERS[uid];
+
     const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
     modal.innerHTML = `
-    <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d"
-    style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+    <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
 <div class="layer-2KE1M9">
     <div class="theme-dark">
         <div class="focusLock-Ns3yie" role="dialog" aria-labelledby="uid_52086" tabindex="-1" aria-modal="true">
@@ -92,7 +73,7 @@ function serverCreateModal() {
                                             class="colorStandard-2KCXvj size14-e6ZScH h5-18_1nd title-3sZWYQ defaultMarginh5-2mL-bP">
                                             Server Name</h5>
                                         <div class="inputWrapper-31_8H8"><input class="inputDefault-_djjkz input-cIJ7To"
-                                                <input id="servernameinput" type="text" maxlength="100" name="" placeholder="" value="[redacted]'s server">
+                                                <input id="servernameinput" type="text" maxlength="100" name="" placeholder="" value="${username.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;")}'s server">
                                         </div>
                                     </div>
                                 </form>
@@ -100,7 +81,7 @@ function serverCreateModal() {
                                     style="position: absolute; pointer-events: none; min-height: 0px; min-width: 1px; flex: 0 0 auto; height: 0px;">
                                 </div>
                                 <br>
-                                <center><button type="button" id="servercreatebutton class="footerButton-ayFTfX button-38aScr lookFilled-1Gx00P colorGrey-2DXtkV sizeMedium-1AC_Sl grow-q77ONN">
+                                <center><button type="button" id="servercreatebutton" class=".clickable-3rdHwASDH footerButton-ayFTfX button-38aScr lookFilled-1Gx00P colorGrey-2DXtkV sizeMedium-1AC_Sl grow-q77ONN">
                                 <div class="contents-18-Yxp"">Create a Server</div>
                             </button>
                             </div>
@@ -148,7 +129,27 @@ function serverCreateModal() {
     */
 }
 
+// When the user clicks on the button, open the modal (part of server_create_menu)
+document.body.onclick = async function(obj) {
+    console.log(obj.target.className);
+    console.log(typeof obj.target.className)
+
+    if (typeof obj.target.className == "string") {
+        if (obj.target.className !== obj.target.className.replace(/clickable-3rdHwM/g, "")) return serverCreateModal(); // There's a better way I forgot how.
+        if (obj.target.className !== obj.target.className.replace(/clickable-3rdHwASDH/g, "")) return createServer();
+        return;
+    }; // if if if if if - Two
+
+    if (typeof obj.target.className == "object") {
+        if (obj.target.className.baseVal == "circleIcon-LvPL6c") return serverCreateModal();
+        return;
+    };
+
+
+};
+
 async function createServer() {
+    console.log("Button clicked")
     const server_id = generateId();
     const { uid } = firebase.auth().currentUser;
 
