@@ -38,7 +38,7 @@ async function uploadFile(file) {
         console.log(`Uploading ${name}... Size: ${sizeInMB}`);
 
         // Getting policy document authentication
-        const { data: { POST } } = await axios.post(API_URL, params, {
+        const { data: { POST } } = await axios.post(CDN_AUTH_URL, params, {
             'Content-Type': 'application/x-www-form-urlencoded'
         });
 
