@@ -8,7 +8,8 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
-// Global Cache
+
+// Global cache
 const CACHED_USERS = {};
 const CACHED_GROUP_CHAT_CHANNELS = {};
 const CACHED_RECIPIENTS = {};
@@ -16,20 +17,26 @@ const CACHED_CHAT_LISTENERS = {};
 const CACHED_LISTENERS = {};
 const CACHED_FRIENDS = [];
 
+
 // Global states
 let CURRENT_CHANNEL_ID;
 const LAST_MESSAGE_AUTHOR_ID = [];
+
 
 // Global thresholds
 const TYPING_INDICATOR_THRESHOLD = 2000;
 const LOADING_TIMEOUT = 1500;
 const ACTIVITY_TIMEOUT = 3000;
 const IDLE_TIMEOUT = 10000;
-const INITIAL_MESSAGE_FETCH = window.location.host === 'localhost:8000' ? 1 : 50;
+const INITIAL_MESSAGE_FETCH = window.location.host !== 'localhost:8000' ? 1 : 50;
 const GROUP_DMS_USER_THRESHOLD = 14; // Not including current user
 
-const OG_URL = 'https://pyro-opengraph-kk3vd5vl7q-uc.a.run.app/';
+
+// API endpoints
+const OG_URL = 'https://og.pyrochat.app/';
 const CDN_URL = 'https://cdn.pyrochat.app/';
+const CDN_AUTH_URL = 'https://fileauth.pyrochat.app/';
+
 
 // Global user status colours
 const STATUS_COLOURS = {
@@ -62,6 +69,7 @@ const AUTH_CODES = {
     'auth/wrong-password': 'Invalid password.',
     'auth/too-many-requests': 'Slow down! You are being rate limited.'
 };
+
 
 // Loading overlay messages
 const DID_YOU_KNOW = [

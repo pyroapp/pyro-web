@@ -213,7 +213,7 @@
 	}
 
 	to {
-		stroke-dasharray: 130, 200;
+		stroke-dasharray: 130, 200;c
 		stroke-dashoffset: -124
 	}
 
@@ -15693,12 +15693,15 @@ img[alt] {
 	margin-left:.3em;
 	font-size:0.625rem;
 	cursor:pointer;
-	line-height:1;
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	-ms-user-select:none;
 	user-select:none;
 	color:var(--text-muted)
+}
+
+.messageAttachment-1aDidq {
+	margin-top: 4px;
 }
 
 .mention {
@@ -23252,7 +23255,7 @@ html .progress-GjyFoQ {
 	align-items:center;
 	-webkit-box-pack:center;
 	-ms-flex-pack:center;
-	justify-content:center
+	justify-content:center;
 }
 
 .embedVideoImageComponent-34z3di {
@@ -28191,6 +28194,10 @@ html .progress-GjyFoQ {
 	transition: ease-in-out 0.15s;
 }
 
+.message-2qnXI6 .timestampInline-yHQ6fX {
+	margin-left: 0;
+}
+ 
 .message-2qnXI6:hover {
 	background-color:var(--background-message-hover);
 }
