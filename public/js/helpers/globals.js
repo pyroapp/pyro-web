@@ -21,6 +21,7 @@ const CACHED_FRIENDS = [];
 // Global states
 let CURRENT_CHANNEL_ID;
 const LAST_MESSAGE_AUTHOR_ID = [];
+const LAST_MESSAGE_TIMESTAMP = [];
 
 
 // Global thresholds

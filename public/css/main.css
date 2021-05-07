@@ -6221,7 +6221,7 @@ code {
 	--text-link:#00b0f4;
 	--channels-default:#858D95;
 	--interactive-normal:#b9bbbe;
-	--interactive-hover:#dcddde;
+	--interactive-hover:#f2f2f2;
 	--interactive-active:#fff;
 	--interactive-muted:#4f545c;
 	--background-primary:#1a1a23;
@@ -15706,7 +15706,7 @@ img[alt] {
 
 .messageContent-2qWWxC img:not(.emoji):not(.icon-1kp3fr) {
 	border-radius: 4px;
-	width: 100%;
+	cursor: pointer;
 	max-width: 350px !important;
 }
 
@@ -28238,11 +28238,6 @@ html .progress-GjyFoQ {
 
 .quotedChatMessage-3HzRaD {
 	cursor:pointer
-}
-
-.buttons-cl5qTG {
-	opacity:0;
-	pointer-events:none
 }
 
 .message-2qnXI6.selected-2P5D_Z .buttons-cl5qTG,
@@ -56124,8 +56119,8 @@ a.ctaAnchor-3-8I3v:hover {
 }
 
 .button-1ZiXG9:hover {
-	color:var(--interactive-hover);
-	background-color:var(--background-modifier-hover)
+	color:var(--interactive-hover) !important;
+	background-color:var(--background-modifier-hover) !important;
 }
 
 .button-1ZiXG9:active {

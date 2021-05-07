@@ -23,7 +23,7 @@ function generateAttachmentEmbed(attachment) {
 
     // If attachment is an image
     if (type.split('/')[0] === 'image') {
-        return `<div class="messageAttachment-1aDidq" onclick="imageModal('${url}')"><img class="photo-fj39qn" alt="${name}" src="${url}" /></div>`;
+        return `<div class="messageAttachment-1aDidq"><img onclick="imageModal('${url}')" class="photo-fj39qn" alt="${name}" src="${url}" /></div>`;
 
     } else if (type.split('/')[0] === 'video') {
         return `<div class="messageAttachment-1aDidq"><video style="max-width: 300px; border-radius: 4px;" controls><source src="${url}" type="${type}" /></video></div>`
