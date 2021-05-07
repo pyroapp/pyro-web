@@ -2600,7 +2600,7 @@
 
 .backdrop-1wrmKB {
 	z-index: 1000;
-	opacity: 0
+	opacity: 0;
 }
 
 .backdrop-1wrmKB,
@@ -15702,6 +15702,12 @@ img[alt] {
 
 .messageAttachment-1aDidq {
 	margin-top: 4px;
+}
+
+.messageContent-2qWWxC img:not(.emoji):not(.icon-1kp3fr) {
+	border-radius: 4px;
+	width: 100%;
+	max-width: 350px !important;
 }
 
 .mention {
