@@ -213,7 +213,7 @@
 	}
 
 	to {
-		stroke-dasharray: 130, 200;
+		stroke-dasharray: 130, 200;c
 		stroke-dashoffset: -124
 	}
 
@@ -459,7 +459,7 @@
 }
 
 .lookFilled-1Gx00P.colorBrand-3pXr91 {
-	color: #000;
+	color: #fff;
 	background-color: var(--brand-primary);
 	transition: ease 0.15s;
 }
@@ -2600,7 +2600,7 @@
 
 .backdrop-1wrmKB {
 	z-index: 1000;
-	opacity: 0
+	opacity: 0;
 }
 
 .backdrop-1wrmKB,
@@ -6221,7 +6221,7 @@ code {
 	--text-link:#00b0f4;
 	--channels-default:#858D95;
 	--interactive-normal:#b9bbbe;
-	--interactive-hover:#dcddde;
+	--interactive-hover:#f2f2f2;
 	--interactive-active:#fff;
 	--interactive-muted:#4f545c;
 	--background-primary:#1a1a23;
@@ -6229,7 +6229,7 @@ code {
 	--background-secondary-alt:#101015;
 	--background-tertiary:#101015;
 	--background-accent:#4f545c;
-	--background-floating:#101015;
+	--background-floating:#18191c;
 	--background-mobile-primary:#1a1a23;
 	--background-mobile-secondary:#17171f;
 	--background-modifier-hover:rgba(79, 84, 92, 0.16);
@@ -15693,12 +15693,21 @@ img[alt] {
 	margin-left:.3em;
 	font-size:0.625rem;
 	cursor:pointer;
-	line-height:1;
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	-ms-user-select:none;
 	user-select:none;
 	color:var(--text-muted)
+}
+
+.messageAttachment-1aDidq {
+	margin-top: 4px;
+}
+
+.messageContent-2qWWxC img:not(.emoji):not(.icon-1kp3fr) {
+	border-radius: 4px;
+	cursor: pointer;
+	max-width: 350px !important;
 }
 
 .mention {
@@ -16014,7 +16023,7 @@ img[alt] {
 }
 
 .styleFixed-sX-yHV {
-	width:300px
+	width:220px
 }
 
 .styleFlexible-wGDiIL {
@@ -23252,7 +23261,7 @@ html .progress-GjyFoQ {
 	align-items:center;
 	-webkit-box-pack:center;
 	-ms-flex-pack:center;
-	justify-content:center
+	justify-content:center;
 }
 
 .embedVideoImageComponent-34z3di {
@@ -28191,6 +28200,10 @@ html .progress-GjyFoQ {
 	transition: ease-in-out 0.15s;
 }
 
+.message-2qnXI6 .timestampInline-yHQ6fX {
+	margin-left: 0;
+}
+ 
 .message-2qnXI6:hover {
 	background-color:var(--background-message-hover);
 }
@@ -28225,11 +28238,6 @@ html .progress-GjyFoQ {
 
 .quotedChatMessage-3HzRaD {
 	cursor:pointer
-}
-
-.buttons-cl5qTG {
-	opacity:0;
-	pointer-events:none
 }
 
 .message-2qnXI6.selected-2P5D_Z .buttons-cl5qTG,
@@ -47523,12 +47531,12 @@ strong {
 
 .clickable-3rdHwn .icon-22AiRD {
 	color:var(--interactive-normal);
-	transition: ease-in-out 0.15s;
+	transition: ease-in-out 0.15s
 }
 
 .clickable-3rdHwn:hover .icon-22AiRD {
 	color:var(--interactive-hover);
-	transition: ease-in-out 0.15s;
+	transition: ease-in-out 0.15s
 }
 
 .selected-1GqIat .icon-22AiRD {
@@ -48495,7 +48503,8 @@ strong {
 }
 
 .theme-dark .friend-3KALPe {
-	color:#b9bbbe
+	color:#b9bbbe;
+	transition: ease-in-out 0.15s
 }
 
 .theme-dark .friendSelected-1sa4bG {
@@ -49794,8 +49803,7 @@ strong {
 	-webkit-box-pack:center;
 	-ms-flex-pack:center;
 	justify-content:center;
-	margin-left:10px;
-	transition: ease-in-out 0.15s;
+	margin-left:10px
 }
 
 .actionButton-uPB8Fs.highlight-Lf97TE {
@@ -49807,8 +49815,7 @@ strong {
 }
 
 .actionButton-uPB8Fs:hover {
-	color:var(--interactive-hover);
-	transition: ease-in-out 0.15s;
+	color:var(--interactive-hover)
 }
 
 .actionButton-uPB8Fs:active {
@@ -49852,7 +49859,7 @@ strong {
 	box-sizing:border-box;
 	cursor:pointer;
 	height: 60px;
-	transition: ease-in-out 0.15s;
+	border-top:1px solid var(--background-modifier-accent)
 }
 
 .peopleListItem-2nzedh.active-rhSpJJ+.peopleListItem-2nzedh,
@@ -49868,8 +49875,7 @@ strong {
 	border-radius:8px;
 	border-color:transparent;
 	margin:0 10px 0 20px;
-	padding:16px 10px;
-	transition: ease-in-out 0.15s;
+	padding:16px 10px
 }
 
 .userInfo-2zN2z8 {
@@ -55529,11 +55535,13 @@ a.ctaAnchor-3-8I3v:hover {
 	transform-origin:50% 50%;
 	width:24px;
 	height:24px;
-	fill:var(--interactive-normal)
+	fill:var(--interactive-normal);
+	transition: ease-in-out 0.15s
 }
 
 .attachButton-2WznTc:hover .attachButtonPlus-jWVFah {
-	fill:var(--interactive-hover)
+	fill:var(--interactive-hover);
+	transition: ease-in-out 0.15s
 }
 
 .attachButtonPlay-3iJ0mf {
@@ -56111,8 +56119,8 @@ a.ctaAnchor-3-8I3v:hover {
 }
 
 .button-1ZiXG9:hover {
-	color:var(--interactive-hover);
-	background-color:var(--background-modifier-hover)
+	color:var(--interactive-hover) !important;
+	background-color:var(--background-modifier-hover) !important;
 }
 
 .button-1ZiXG9:active {
@@ -57149,7 +57157,9 @@ a.ctaAnchor-3-8I3v:hover {
 	white-space:nowrap;
 	text-overflow:ellipsis;
 	overflow:hidden;
-	margin-left:4px
+	margin-left:4px;
+	font-weight: normal;
+	font-size: 13px;
 }
 
 .base-gE7OpD .ellipsis-19qdx6 {
@@ -57786,8 +57796,7 @@ a.ctaAnchor-3-8I3v:hover {
 .clickable-1JJAn8.container-2Pjhx-:active,
 .highlighted-1gWxXa.container-2Pjhx-,
 .selected-aXhQR6.container-2Pjhx- {
-	color:var(--interactive-active);
-	transition: ease-in-out 0.15s
+	color:var(--interactive-active)
 }
 
 .layout-2DM8Md {
@@ -69915,13 +69924,14 @@ html .invoiceCancelRow-3mYhFX {
 	justify-content:center;
 	border-radius:4px;
 	position:relative;
-	color:var(--interactive-normal)
+	color:var(--interactive-normal);
+	transition: ease-in-out 0.15s;
 }
 
 .button-14-BFJ.enabled-2cQ-u7:hover {
 	color:var(--interactive-hover);
 	background-color:var(--background-modifier-selected);
-	transition: ease-in-out 0.15s
+	transition: ease-in-out 0.15s;
 }
 
 .button-14-BFJ.disabled-2iW-fm {
@@ -69970,8 +69980,7 @@ html .invoiceCancelRow-3mYhFX {
 }
 
 .container-3baos1 .avatar-SmRMf2:hover {
-	opacity:.8;
-	transition: ease-in-out 0.15s
+	opacity:.8
 }
 
 .container-3baos1 .redIcon-2uP7Ej {
@@ -79227,41 +79236,3 @@ html .invoiceCancelRow-3mYhFX {
 .hidden {
 	display: none;
 }
-
-/* The Modal (background) */
-.modal2 {
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0,0,0); /* Fallback color */
-	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content/Box */
-  .modal-content2 {
-	background-color: #fefefe;
-	margin: 15% auto; /* 15% from the top and centered */
-	padding: 20px;
-	border: 1px solid #888;
-	width: 80%; /* Could be more or less, depending on screen size */
-  }
-  
-  /* The Close Button */
-  .close {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-  }

@@ -117,3 +117,26 @@ function showCustomStatusModal() {
         </div>
     `;
 }
+
+
+/**
+ * 
+ * @param {*} image_url 
+ */
+function imageModal(image_url) {
+    const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
+
+    modal.innerHTML = `
+        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+        <div class="layer-2KE1M9">
+            <div class="focusLock-Ns3yie">
+                <div class="modal-qgFCbT root-1gCeng fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
+                    <div class="wrapper-2K4Z3k">
+                        <img src="${image_url}" style="width: auto; height: 100%; max-width: 1000px; max-height: 500px;">
+                    </div>
+                    <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB downloadLink-1ywL9o" href="${image_url}" target="_blank">Open original</a>
+                </div>
+            </div>
+        </div>
+    `;
+}

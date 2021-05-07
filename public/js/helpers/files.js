@@ -38,7 +38,7 @@ async function uploadFile(file) {
         console.log(`Uploading ${name}... Size: ${sizeInMB}`);
 
         // Getting policy document authentication
-        const { data: { POST } } = await axios.post(API_URL, params, {
+        const { data: { POST } } = await axios.post(CDN_AUTH_URL, params, {
             'Content-Type': 'application/x-www-form-urlencoded'
         });
 
@@ -65,5 +65,36 @@ async function uploadFile(file) {
         return CDN_URL + fields.key;
     } catch (error) {
         throw error;
+    }
+}
+
+
+/**
+ * 
+ * @param {*} files 
+ */
+async function sendAttachmentHandler(channel_id, files) {
+    
+    // Check to make sure we aren't uploading too many files
+    if (files.length > 3) return showBasicModal(
+        'Too many files',
+        'You can only upload a maximum of three files at once',
+        'Okay',
+        'hideModals()'
+    );
+    
+    // Iterate through each file to send each file as a seprate message
+    for (i = 0; i < files.length; i++) {
+        const { name, size, type } = files[i];
+        const url = await uploadFile(files[i]);
+
+        const fileObject = {
+            name: name,
+            size: size,
+            type: type,
+            url: url,
+        };
+
+        sendPrivateMessage(channel_id, fileObject);
     }
 }

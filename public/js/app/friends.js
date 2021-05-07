@@ -222,12 +222,12 @@ function getFriendsListener() {
 
     firebase.firestore().collection('friends').doc(uid).onSnapshot(async snapshot => {
         for (friend_uid in snapshot.data()) {
-            if (!CACHED_FRIENDS[friend_uid]) {
-                CACHED_FRIENDS.push(friend_uid);
+            if (CACHED_FRIENDS.includes(friend_uid)) continue;
 
-                if (!CACHED_USERS[friend_uid]) {
-                    await addUserToCache(friend_uid);
-                }
+            CACHED_FRIENDS.push(friend_uid);
+
+            if (!CACHED_USERS[friend_uid]) {
+                await addUserToCache(friend_uid);
             }
         }
 
@@ -276,9 +276,10 @@ function displayFriendsList() {
                 </div>
                 <div class="actions-1SQwjn">
                     <div class="actionButton-uPB8Fs">
-                        <svg class="icon-35-fSh" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <!-- <svg class="icon-35-fSh" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path fill="currentColor" d="M4.79805 3C3.80445 3 2.99805 3.8055 2.99805 4.8V15.6C2.99805 16.5936 3.80445 17.4 4.79805 17.4H7.49805V21L11.098 17.4H19.198C20.1925 17.4 20.998 16.5936 20.998 15.6V4.8C20.998 3.8055 20.1925 3 19.198 3H4.79805Z"></path>
-                        </svg>
+                        </svg> -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-35-fSh" width="192" height="192" fill="none" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path fill="currentColor" d="M216.002,48.00293h-176a16.02085,16.02085,0,0,0-16,16V222.82324a15.8614,15.8614,0,0,0,9.25,14.50781,16.11258,16.11258,0,0,0,6.79688,1.51563,15.86968,15.86968,0,0,0,10.25-3.77344l31.75-26.69531,133.95312-.375a16.02084,16.02084,0,0,0,16-16v-128A16.02084,16.02084,0,0,0,216.002,48.00293Z"></path></svg>
                     </div>
                     <div class="actionButton-uPB8Fs hidden">
                         <svg class="icon-35-fSh" width="24" height="24" viewBox="0 0 24 24">

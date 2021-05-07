@@ -58,7 +58,7 @@ function showPageLoader() {
     loader.innerHTML = `
         <div class="container-16j22k fixClipping-3qAKRb" style="opacity: 1;">
             <div class="content-1-zrf2">
-            <img src="/vid/pyroFlames.gif" alt="Pyro Campfire GIF">
+            <img src="/img/pyroFlames.gif" alt="Pyro Campfire GIF">
             <div class="text-3c9Zq1">
                 <div class="tipTitle-GL9qAt"><br>Pyro is loading, give us a sec.</div>
                     <div class="tip-2cgoli">${generateDidYouKnowMessage()}</div>
