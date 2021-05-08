@@ -108,15 +108,11 @@ function serverCreateModal() {
 }
 
 async function createServer() {
-    console.log("Button clicked")
+    console.log("Adding server to the Pyro database")
     const server_id = generateId();
     const { uid } = firebase.auth().currentUser;
 
     const servername = document.getElementById("servernameinput").value;
-
-    console.log('create server');
-
-    return;
 
     // Create channel
     await firebase.firestore().collection('servers').doc(server_id).set({
@@ -125,4 +121,10 @@ async function createServer() {
         type: 'SERVER',
         created: getTime(),
     });
+    console.log("Server added")
+    hideModals()
+}
+
+async function loadServers() {
+
 }
