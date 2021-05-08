@@ -29,7 +29,7 @@ const TYPING_INDICATOR_THRESHOLD = 2000;
 const LOADING_TIMEOUT = 1500;
 const ACTIVITY_TIMEOUT = 3000;
 const IDLE_TIMEOUT = 10000;
-const INITIAL_MESSAGE_FETCH = window.location.host !== 'localhost:8000' ? 1 : 50;
+const INITIAL_MESSAGE_FETCH = 50;
 const GROUP_DMS_USER_THRESHOLD = 14; // Not including current user
 
 
