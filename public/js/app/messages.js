@@ -163,7 +163,10 @@ function deleteMessageFromList(message, channel_id) {
         // Get the next message in the list if it exists.
         const messageIndex = messages.indexOf(messageItem);
 
-        if (messages.length < messageIndex) return; // No more messages in list
+        // No more messages in list
+        if (messages.length < messageIndex) {
+            return messageList.removeChild(messageItem);
+        }
 
         const nextMessage = messages[messageIndex + 1];
         const message_id = nextMessage.id.split('-')[1];
@@ -176,6 +179,7 @@ function deleteMessageFromList(message, channel_id) {
         const customTag = flags.includes('DEVELOPER') ? userTag('Developer') : '';
 
         nextMessageContents.innerHTML = `
+            <div class="groupStartSeparator-kq2kfn"></div>
             <img src="${getAvatar(author_uid)}" class="avatar-1BDn8e clickable-1bVtEA">
             <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span>${customTag}</span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${long}</span></span></h2>
             <div class="markup-2BOw-j messageContent-2qWWxC">${messageContent}</div>
@@ -225,6 +229,7 @@ function loadMessagesInList(messages) {
             div.className = 'message-2qnXI6 cozyMessage-3V1Y8y wrapper-2a6GCs cozy-3raOZG zalgo-jN1Ica groupStart-23k01U';
 
             div.innerHTML = `
+                <div class="groupStartSeparator-kq2kfn"></div>
                 <div class="contents-2mQqc9">
                     <img src="${getAvatar(author_uid)}" class="avatar-1BDn8e clickable-1bVtEA">
                     <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span>${customTag}</span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${long}</span></span></h2>

@@ -15077,7 +15077,7 @@ img[alt] {
 }
 
 .cozy-3raOZG.wrapper-2a6GCs {
-	padding-left:72px
+	padding-left: 72px;
 }
 
 .repliedMessage-VokQwo {
@@ -28197,7 +28197,6 @@ html .progress-GjyFoQ {
 
 .message-2qnXI6 {
 	padding-right:48px!important;
-	transition: ease-in-out 0.15s;
 }
 
 .message-2qnXI6 .timestampInline-yHQ6fX {
@@ -28346,12 +28345,25 @@ html .progress-GjyFoQ {
 	margin-bottom:1rem
 }
 
+.messagesList-3j93jr .groupStart-23k01U:first-child {
+	border-top: none;
+	margin-top: 0;
+}
+
 .groupStart-23k01U {
 	min-height: 47px;
 }
 
+.groupStartSeparator-kq2kfn {
+	position: absolute;
+	top: -14px;
+	left: 14px;
+	right: 14px;
+	border-top: 1px solid var(--deprecated-text-input-border-disabled);
+}
+
 .group-spacing-16 .groupStart-23k01U {
-	margin-top:1.0625rem
+	margin-top: 26px;
 }
 
 .group-spacing-16 .divider-3_HH5L {
@@ -55257,7 +55269,7 @@ a.ctaAnchor-3-8I3v:hover {
 	border-bottom:1px solid;
 	border-color:var(--background-modifier-accent);
 	padding-bottom:16px;
-	margin:16px
+	margin:16px;
 }
 
 .header-3uLluP {

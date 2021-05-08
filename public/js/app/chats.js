@@ -39,7 +39,7 @@
                         <div class="scrollerContent-WzeG7R content-3YMskv">
                             <div class="scrollerInner-2YIMLh">
                                 ${chatContent}
-                                <div id="messages-${channel_id}"></div>
+                                <div id="messages-${channel_id}" class="messagesList-3j93jr"></div>
                                 <div class="scrollerSpacer-avRLaA"></div>
                             </div>
                         </div>
