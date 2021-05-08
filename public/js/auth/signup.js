@@ -61,6 +61,10 @@ document.getElementById('signupButton').addEventListener('click', () => {
  * 
  */
 async function signup() {
+    alert('REGISTRATION IS NOT OPEN TO THE PUBLIC AT THIS POINT IN TIME. PLEASE CHECK BACK LATER');
+
+    return;
+
     const button = document.getElementById('signupButton');
     const values = validateInputs([
         'email', 'username', 'password'

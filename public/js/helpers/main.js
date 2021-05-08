@@ -102,7 +102,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
  */
 function generateId() {
     const epoch = Date.now().toString();
-    const random = generateRandom(0, 5).toString();
+    const random = generateRandom(0, 8).toString();
 
     return `${epoch}${random}`;
 }

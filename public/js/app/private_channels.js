@@ -40,8 +40,8 @@ async function loadPrivateChannels() {
 
                     // If user is already in the cache it most likely means the 
                     // channel was closed and is being reopened.
+                    addChat({ type: 'PRIVATE', channel_id: channel.id, friend_uid: friend_uid });
                     addPrivateChannel(channel.id, friend_uid);
-                    addChat(channel.id, friend_uid);
 
                     if (CACHED_RECIPIENTS[friend_uid]) {
                         setRealtimeUserInfo(uid);
@@ -90,12 +90,11 @@ async function blockedUserHandler() {
         const channelsDOM = document.getElementById('privateChannelsList').children;
 
         Array.prototype.slice.call(channelsDOM).forEach(channelDOM => {
-            if (!channelDOM.id.startsWith('channel')) return;
-
             const channel_id = channelDOM.id.split('-')[1];
             const friend_uid = channelDOM.getAttribute('uid');
 
             const channel = document.getElementById(channel_id);
+
             const chatpanel = channel.querySelectorAll('.channelTextArea-2VhZ6z')[0];
             const blockpanel = channel.querySelectorAll('.channelBlockedArea-fj903')[0];
             const unblock_btn = blockpanel.querySelectorAll('.unblockbutton-fj93f')[0];

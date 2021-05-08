@@ -95,6 +95,8 @@ async function sendAttachmentHandler(channel_id, files) {
             url: url,
         };
 
-        sendPrivateMessage(channel_id, fileObject);
+        const input = document.getElementById(channel_id).querySelector('.messageField');
+
+        sendMessage(input, channel_id, fileObject);
     }
 }
