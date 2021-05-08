@@ -38,11 +38,13 @@ function generateRecipientsList(channel_id) {
 
 /**
  * 
- * @param {*} channelId 
+ * @param {*} input 
+ * @param {*} channel_id 
+ * @param {*} file 
+ * @returns 
  */
- function sendPrivateMessage(channel_id, file) {
+function sendMessage(input, channel_id, file) {
     const channel = document.getElementById(channel_id);
-    const input = channel.querySelectorAll('.messageField')[0];
     const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
 
     let message = input.innerHTML.trim();
@@ -136,7 +138,7 @@ async function loadPrivateMessages(channel_id) {
  * @param {*} message 
  */
 function editMessageInList(message) {
-    const messageItem = document.getElementById(`private-message-${message.id}`);
+    const messageItem = document.getElementById(`message-${message.id}`);
     const messageContent = messageItem.querySelector('.messageContent-2qWWxC');
 
     const { content } = message.data();
@@ -151,8 +153,8 @@ function editMessageInList(message) {
  * @param {*} message 
  */
 function deleteMessageFromList(message, channel_id) {
-    const messageList = document.getElementById(`private-message-list-${channel_id}`);
-    const messageItem = document.getElementById(`private-message-${message.id}`);
+    const messageList = document.getElementById(`messages-${channel_id}`);
+    const messageItem = document.getElementById(`message-${message.id}`);
 
     messageList.removeChild(messageItem);
 }
@@ -177,7 +179,7 @@ function loadMessagesInList(messages) {
         const isEdited = edited_timestamp ? `<span class="timestamp-3ZCmNB timestampInline-yHQ6fX"><span class="edited-3sfAzf">(edited)</span></span>` : '';
 
         const div = document.createElement('div');
-        div.id = `private-message-${message.id}`;
+        div.id = `message-${message.id}`;
         div.setAttribute('channel', channel_id);
         div.setAttribute('author_uid', author_uid);
 
@@ -204,7 +206,7 @@ function loadMessagesInList(messages) {
             `.trim();
         }
 
-        const messageList = document.getElementById(`private-message-list-${channel_id}`);
+        const messageList = document.getElementById(`messages-${channel_id}`);
 
         messageList.appendChild(div);
         scrollToBottom(channel_id);
@@ -226,7 +228,7 @@ function loadMessagesInList(messages) {
  * @param {*} channel_id 
  */
 function scrollToBottom(channel_id) {
-    const messageList = document.getElementById(`private-message-list-${channel_id}`).lastChild;
+    const messageList = document.getElementById(`messages-${channel_id}`).lastChild;
     
     messageList.scrollIntoView();
 }
@@ -247,7 +249,7 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
     messageEl.querySelector('.buttonContainer-DHceWr').innerHTML = `
         <div class="buttons-cl5qTG container-3npvBV">
             <div class="wrapper-2aW0bm">
-                <div class="button-1ZiXG9 hidden" id="edit-message">
+                <div class="button-1ZiXG9" id="edit-message">
                     <svg class="icon-LYJorE" width="24" height="24" viewBox="0 0 24 24">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M19.2929 9.8299L19.9409 9.18278C21.353 7.77064 21.353 5.47197 19.9409 4.05892C18.5287 2.64678 16.2292 2.64678 14.817 4.05892L14.1699 4.70694L19.2929 9.8299ZM12.8962 5.97688L5.18469 13.6906L10.3085 18.813L18.0201 11.0992L12.8962 5.97688ZM4.11851 20.9704L8.75906 19.8112L4.18692 15.239L3.02678 19.8796C2.95028 20.1856 3.04028 20.5105 3.26349 20.7337C3.48669 20.9569 3.8116 21.046 4.11851 20.9704Z" fill="currentColor"></path>
                     </svg>
@@ -262,7 +264,25 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
         </div>
     `.trim();
 
+    document.getElementById('edit-message').onclick = () => showEditMessageUI(channel_id, message_id);
     document.getElementById('delete-message').onclick = () => deleteMessage(channel_id, message_id);
+}
+
+
+/**
+ * 
+ * @param {*} channel_id 
+ * @param {*} message_id 
+ */
+function showEditMessageUI(channel_id, message_id) {
+    console.log(channel_id, message_id);
+
+    // <div>
+    //     <div class="channelTextArea-3bF57p channelTextArea-2VhZ6z">
+    //         <div class="scrollableContainer-2NUZem webkit-HjD9Er">
+    //             <div class="inner-MADQqc">
+    //                 <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x" style="height: 43px;">
+    //                     <div contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP textAreaWithoutAttachmentButton-qiaiTB" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; -webkit-user-modify: read-write-plaintext-only;"><div data-slate-object="block" data-key="135" style="position: relative;"><span data-slate-object="text" data-key="136"><span data-slate-leaf="true" data-offset-key="136:0"><span data-slate-string="true">plz help<br></span></span></span></div></div></div><div class="buttons-3JBrkn"><div class="buttonContainer-28fw2U"><button tabindex="0" aria-label="Select emoji" type="button" class="emojiButtonNormal-TdumYh emojiButton-3uL3Aw emojiButton-pET4wH button-318s1X button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN"><div class="contents-18-Yxp"><div class="sprite-2iCowe" style="background-position: -88px -22px; background-size: 242px 110px; transform: scale(1); filter: grayscale(100%);"></div></div></button></div></div></div></div></div><div class="operations-36ENbA">escape to <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" role="button" tabindex="0">cancel</a> • enter to <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" role="button" tabindex="0">save</a></div></div>
 }
 
 
