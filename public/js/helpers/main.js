@@ -231,3 +231,18 @@ function copyToClipboard(text) {
         }
     }
 }
+
+
+/**
+ * 
+ */
+function generateCode() {
+    const result = [];
+    const char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (i = 0; i < 8; i++) {
+        result.push(char.charAt(Math.floor(Math.random() * char.length)));
+    }
+
+   return result.join('');
+}

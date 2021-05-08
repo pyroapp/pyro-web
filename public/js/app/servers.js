@@ -107,24 +107,100 @@ function serverCreateModal() {
     modal.querySelector('.clickable-3rdHwASDH').onclick = () => createServer();
 }
 
+
+/**
+ * 
+ */
 async function createServer() {
-    console.log("Adding server to the Pyro database")
-    const server_id = generateId();
     const { uid } = firebase.auth().currentUser;
 
-    const servername = document.getElementById("servernameinput").value;
+    const id = generateId();
+    const name = document.getElementById("servernameinput").value;
 
-    // Create channel
-    await firebase.firestore().collection('servers').doc(server_id).set({
-        owner: uid,
-        name: servername,
-        type: 'SERVER',
-        created: getTime(),
+    await uploadDefaultAvatar(id);
+
+    await firebase.firestore().collection('servers').doc(id).set({
+        name: name,
+        description: '',
+        features: ['ANIMATED_ICON', 'VERIFIED', 'VANITY_URL', 'DISCOVERABLE', 'INVITE_SPLASH', 'BANNER'],
+        emojis: [],
+        owner_uid: uid,
+        region: 'east-us',
+        roles: [],
+        vanity_url_code: generateCode(),
+        users: [uid]
     });
-    console.log("Server added")
-    hideModals()
+    
+    hideModals();
 }
 
-async function loadServers() {
 
+/**
+ * 
+ */
+async function loadServers() {
+    const loadChannels = new Promise((resolve, reject) => {
+        const { uid } = firebase.auth().currentUser;
+
+        let serversdiv = document.querySelector('[aria-label="Servers"]');
+
+        firebase.firestore().collection('servers').where('users', 'array-contains', uid).limit(50).onSnapshot(snapshot => {
+            if (snapshot.empty) resolve();
+
+            snapshot.docChanges().forEach(async change => {
+                const { type, doc: server } = change;
+
+                if (type === 'added') {
+                    let serverinfo = server.data();
+
+                    console.log(JSON.stringify(serverinfo));
+                
+                    let matches = serverinfo.name.match(/\b(\w)/g);
+                    let acronym = matches.join('');
+
+                    let font = 22 - (2 * acronym.length);
+                    font = font < 10 ? 10 : font;
+
+                    serversdiv.innerHTML = serversdiv.innerHTML + `<div style="margin-left: 12px; margin-bottom: 8px;">
+                    <div class="blobContainer-pmnxKB" draggable="true">
+                        <div class="wrapper-25eVIn"><svg width="48" height="48"
+                                viewBox="0 0 48 48" class="svg-1X37T1"
+                                overflow="visible">
+                                <defs>
+                                    <path
+                                        d="M48 24C48 37.2548 37.2548 48 24 48C10.7452 48 0 37.2548 0 24C0 10.7452 10.7452 0 24 0C37.2548 0 48 10.7452 48 24Z"
+                                        id="a2f30702-ca80-4427-bfe2-ad5e28f24492-blob_mask">
+                                    </path>
+                                </defs>
+                                <mask id="a2f30702-ca80-4427-bfe2-ad5e28f24492"
+                                    fill="black" x="0" y="0" width="48" height="48">
+                                    <use href="#a2f30702-ca80-4427-bfe2-ad5e28f24492-blob_mask"
+                                        fill="white"></use>
+                                </mask>
+                                <foreignObject
+                                    mask="url(#a2f30702-ca80-4427-bfe2-ad5e28f24492)"
+                                    x="0" y="0" width="48" height="48">
+                                    <div class="wrapper-1BJsBx" role="treeitem"
+                                        data-list-item-id="guildsnav___827283538390417428"
+                                        tabindex="-1"
+                                        href="/channels/[server id]/[channel id]"
+                                        aria-label="${serverinfo.name.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;")}"
+                                        style="font-size: ${font}px;">
+                                        <div class="childWrapper-anI2G9 acronym-2mOFsV"
+                                            aria-hidden="true">${acronym.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;")}</div>
+                                    </div>
+                                </foreignObject>
+                            </svg>
+                        </div>
+                    </div>
+                </div>`;
+                    
+                };
+
+                resolve();
+            });
+        });
+    });
+
+    await loadChannels;
 }

@@ -47,6 +47,7 @@ firebase.auth().onAuthStateChanged(async user => {
     await loadPrivateChannels();
     loadGroupChannels();
     getFriendsListener();
+    await loadServers();
     await blockedUserHandler();
     await setAutomaticStatus('online');
     await delay(LOADING_TIMEOUT);
