@@ -155,6 +155,34 @@ function editMessageInList(message) {
 function deleteMessageFromList(message, channel_id) {
     const messageList = document.getElementById(`messages-${channel_id}`);
     const messageItem = document.getElementById(`message-${message.id}`);
+    const messages = Array.prototype.slice.call(messageList.children);
+
+    // If the message is the start of a group
+    if (messageItem.classList.contains('groupStart-23k01U')) {
+
+        // Get the next message in the list if it exists.
+        const messageIndex = messages.indexOf(messageItem);
+
+        if (messages.length < messageIndex) return; // No more messages in list
+
+        const nextMessage = messages[messageIndex + 1];
+        const message_id = nextMessage.id.split('-')[1];
+        const nextMessageContents = nextMessage.querySelector('.contents-2mQqc9');
+        const messageContent = nextMessageContents.querySelector('.messageContent-2qWWxC').innerHTML;
+
+        const { author: { id:author_uid }, time: { long } } = CACHED_MESSAGES[message_id];
+        const { username, flags } = CACHED_USERS[author_uid];
+
+        const customTag = flags.includes('DEVELOPER') ? userTag('Developer') : '';
+
+        nextMessageContents.innerHTML = `
+            <img src="${getAvatar(author_uid)}" class="avatar-1BDn8e clickable-1bVtEA">
+            <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span>${customTag}</span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${long}</span></span></h2>
+            <div class="markup-2BOw-j messageContent-2qWWxC">${messageContent}</div>
+        `.trim();
+
+        nextMessage.classList.add('groupStart-23k01U');
+    }
 
     messageList.removeChild(messageItem);
 }
@@ -219,6 +247,13 @@ function loadMessagesInList(messages) {
 
         LAST_MESSAGE_AUTHOR_ID[channel_id] = author_uid;
         LAST_MESSAGE_TIMESTAMP[channel_id] = timestamp;
+        CACHED_MESSAGES[message.id] = {
+            ...message.data(),
+            time: {
+                long: long,
+                short: short
+            }
+        }
     }); 
 }
 

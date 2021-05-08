@@ -16,6 +16,7 @@ const CACHED_RECIPIENTS = {};
 const CACHED_CHAT_LISTENERS = {};
 const CACHED_LISTENERS = {};
 const CACHED_FRIENDS = [];
+const CACHED_MESSAGES = {};
 
 
 // Global states
