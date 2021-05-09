@@ -341,7 +341,7 @@ function showOwnerGroupChatSettings(channel_id) {
     const { owner } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
 
     const chat = document.getElementById(channel_id);
-    const button = chat.querySelectorAll('.iconWrapper-2OrFZ1')[0];
+    const button = chat.querySelector('.groupChatSettings-j0932f');
 
     // Show or hide the settings button depending on if they are the owner
     if (uid === owner) {
@@ -521,6 +521,8 @@ function loadGroupChannels() {
 
                         usersList.removeChild(userItem);
                     });
+
+                    showOwnerGroupChatSettings(channel.id);
                 }
             }
 
