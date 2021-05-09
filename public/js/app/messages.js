@@ -161,14 +161,13 @@ function deleteMessageFromList(message, channel_id) {
     if (messageItem.classList.contains('groupStart-23k01U')) {
 
         // Get the next message in the list if it exists.
-        const messageIndex = messages.indexOf(messageItem);
+        const nextMessage = messages.indexOf(messageItem + 1);
 
-        // No more messages in list
-        if (messages.length < messageIndex) {
+        // No more messages in list or there are no more messages after the current one
+        if (messages.length === 1 || nextMessage === -1) {
             return messageList.removeChild(messageItem);
         }
-
-        const nextMessage = messages[messageIndex + 1];
+        
         const message_id = nextMessage.id.split('-')[1];
         const nextMessageContents = nextMessage.querySelector('.contents-2mQqc9');
         const messageContent = nextMessageContents.querySelector('.messageContent-2qWWxC').innerHTML;
