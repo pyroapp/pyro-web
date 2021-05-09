@@ -21,7 +21,6 @@ const CACHED_MESSAGES = {};
 
 // Global states
 let CURRENT_CHANNEL_ID;
-const LAST_MESSAGE_AUTHOR_ID = [];
 const LAST_MESSAGE_TIMESTAMP = [];
 
 

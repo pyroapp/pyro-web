@@ -151,6 +151,7 @@ function editMessageInList(message) {
 /**
  * 
  * @param {*} message 
+ * @param {*} channel_id 
  */
 function deleteMessageFromList(message, channel_id) {
     const messageList = document.getElementById(`messages-${channel_id}`);
@@ -161,10 +162,10 @@ function deleteMessageFromList(message, channel_id) {
     if (messageItem.classList.contains('groupStart-23k01U')) {
 
         // Get the next message in the list if it exists.
-        const nextMessage = messages.indexOf(messageItem + 1);
+        const nextMessage = messages[messages.indexOf(messageItem) + 1];
 
         // No more messages in list or there are no more messages after the current one
-        if (messages.length === 1 || nextMessage === -1) {
+        if (messages.length === 1 || !nextMessage) {
             return messageList.removeChild(messageItem);
         }
         
@@ -214,17 +215,9 @@ function loadMessagesInList(messages) {
         div.setAttribute('channel', channel_id);
         div.setAttribute('author_uid', author_uid);
 
-        if (LAST_MESSAGE_AUTHOR_ID[channel_id] === author_uid) {
-            div.className = 'message-2qnXI6 cozyMessage-3V1Y8y wrapper-2a6GCs cozy-3raOZG zalgo-jN1Ica';
+        const messageList = document.getElementById(`messages-${channel_id}`);
 
-            div.innerHTML = `
-                <div class="contents-2mQqc9">
-                    <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${short}<i class="separator-2nZzUB"></i></span>
-                    <div class="markup-2BOw-j messageContent-2qWWxC">${content}${isEdited}${attachmentEmbed}</div>
-                </div>
-                <div class="buttonContainer-DHceWr"></div>
-            `.trim();
-        } else {
+        if (!messageList.lastChild || messageList.lastChild.getAttribute('author_uid') !== author_uid) {
             div.className = 'message-2qnXI6 cozyMessage-3V1Y8y wrapper-2a6GCs cozy-3raOZG zalgo-jN1Ica groupStart-23k01U';
 
             div.innerHTML = `
@@ -236,9 +229,17 @@ function loadMessagesInList(messages) {
                 </div>
                 <div class="buttonContainer-DHceWr"></div>
             `.trim();
-        }
+        } else {
+            div.className = 'message-2qnXI6 cozyMessage-3V1Y8y wrapper-2a6GCs cozy-3raOZG zalgo-jN1Ica';
 
-        const messageList = document.getElementById(`messages-${channel_id}`);
+            div.innerHTML = `
+                <div class="contents-2mQqc9">
+                    <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${short}<i class="separator-2nZzUB"></i></span>
+                    <div class="markup-2BOw-j messageContent-2qWWxC">${content}${isEdited}${attachmentEmbed}</div>
+                </div>
+                <div class="buttonContainer-DHceWr"></div>
+            `.trim();
+        }
 
         messageList.appendChild(div);
         scrollToBottom(channel_id);
@@ -249,7 +250,6 @@ function loadMessagesInList(messages) {
         // Remove the message editing buttons
         div.onmouseleave = () => div.querySelector('.buttonContainer-DHceWr').innerHTML = '';
 
-        LAST_MESSAGE_AUTHOR_ID[channel_id] = author_uid;
         LAST_MESSAGE_TIMESTAMP[channel_id] = timestamp;
         CACHED_MESSAGES[message.id] = {
             ...message.data(),
@@ -315,6 +315,14 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
  */
 function showEditMessageUI(channel_id, message_id) {
     console.log(channel_id, message_id);
+
+    // Get the contents of the message
+    const message = document.getElementById(`message-${message_id}`);
+    const content = message.querySelector('.messageContent-2qWWxC');
+    const attachment = message.querySelector('.messageAttachment-1aDidq');
+
+    // Remove message attachment container
+
 
     // <div>
     //     <div class="channelTextArea-3bF57p channelTextArea-2VhZ6z">
