@@ -15700,11 +15700,12 @@ img[alt] {
 	color:var(--text-muted)
 }
 
-.messageAttachment-1aDidq {
-	margin-top: 4px;
+.editMessage-d93fk9 {
+	margin-top: 10px;
+	margin-bottom: 6px;
 }
 
-.messageContent-2qWWxC img:not(.emoji):not(.icon-1kp3fr) {
+.container-1ov-mD img:not(.emoji):not(.icon-1kp3fr) {
 	border-radius: 4px;
 	cursor: pointer;
 	max-width: 350px !important;
@@ -56208,7 +56209,7 @@ a.ctaAnchor-3-8I3v:hover {
 }
 
 .operations-36ENbA>a {
-	color:#7289da;
+	color:var(--brand-primary);
 	-webkit-transition:.05s;
 	transition:.05s;
 	text-decoration:none;

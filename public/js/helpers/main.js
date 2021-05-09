@@ -231,3 +231,23 @@ function copyToClipboard(text) {
         }
     }
 }
+
+
+/**
+ * 
+ * @param {*} element 
+ */
+ function setCaretToEnd(element) {
+    if (!element.innerHTML) return element.focus();
+
+    element.focus();
+    const selection = document.getSelection();
+
+    element = element.firstChild;
+
+    if (selection.rangeCount) {
+        ['Start', 'End'].forEach(pos =>
+            selection.getRangeAt(0)["set" + pos](element, element.length)
+        );
+    }
+}

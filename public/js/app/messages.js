@@ -99,12 +99,15 @@ async function loadPrivateMessages(channel_id) {
             // message from the listener and add it again. Probably because it has a limit
             // of 50 and it is making sure the list always has 50 messages...
             if (type === 'added') messages.push(message);
-            if (type === 'modified') editMessageInList(message);
             if (type === 'removed') deleteMessageFromList(message, channel_id);
+            if (type === 'modified') {
+                editMessageInList(message);
+                CACHED_MESSAGES[message.id] = message.data();
+            }
         });
 
         messages.reverse();
-        loadMessagesInList(messages);
+        loadMessagesInList(channel_id, messages);
     });
 
     CACHED_CHAT_LISTENERS[channel_id] = listener;
@@ -144,7 +147,7 @@ function editMessageInList(message) {
     const { content } = message.data();
 
     // We don't have to check if the message_edited timestamp has changed because editing 
-    messageContent.innerHTML = `${content}<span class="timestamp-3ZCmNB timestampInline-yHQ6fX"><span class="edited-3sfAzf">(edited)</span></span>`;
+    messageContent.innerHTML = `${content}<span class="edited-3sfAzf">(edited)</span>`;
 }
 
 
@@ -196,9 +199,9 @@ function deleteMessageFromList(message, channel_id) {
  * 
  * @param {*} messages 
  */
-function loadMessagesInList(messages) {
+function loadMessagesInList(channel_id, messages) {
     messages.forEach(message => {
-        let { author: { id: author_uid }, timestamp, channel_id, attachment, content, edited_timestamp } = message.data();
+        let { author: { id: author_uid }, timestamp, attachment, content, edited_timestamp } = message.data();
 
         // If the timestamp of the message being loaded is before the timestamp of the previous message
         if (LAST_MESSAGE_TIMESTAMP[channel_id] > timestamp) return;
@@ -225,7 +228,8 @@ function loadMessagesInList(messages) {
                 <div class="contents-2mQqc9">
                     <img src="${getAvatar(author_uid)}" class="avatar-1BDn8e clickable-1bVtEA">
                     <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span>${customTag}</span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${long}</span></span></h2>
-                    <div class="markup-2BOw-j messageContent-2qWWxC">${content}${isEdited}${attachmentEmbed}</div>
+                    <div class="markup-2BOw-j messageContent-2qWWxC">${content}${isEdited}</div>
+                    <div class="container-1ov-mD">${attachmentEmbed}</div>
                 </div>
                 <div class="buttonContainer-DHceWr"></div>
             `.trim();
@@ -235,14 +239,14 @@ function loadMessagesInList(messages) {
             div.innerHTML = `
                 <div class="contents-2mQqc9">
                     <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${short}<i class="separator-2nZzUB"></i></span>
-                    <div class="markup-2BOw-j messageContent-2qWWxC">${content}${isEdited}${attachmentEmbed}</div>
+                    <div class="markup-2BOw-j messageContent-2qWWxC">${content}${isEdited}</div>
+                    <div class="container-1ov-mD">${attachmentEmbed}</div>
                 </div>
                 <div class="buttonContainer-DHceWr"></div>
             `.trim();
         }
 
         messageList.appendChild(div);
-        scrollToBottom(channel_id);
 
         // Show message editing buttons on hover
         div.onmouseenter = () => showMessageEditingButtons(channel_id, message.id, div);
@@ -258,7 +262,9 @@ function loadMessagesInList(messages) {
                 short: short
             }
         }
-    }); 
+    });
+
+    scrollToBottom(channel_id);
 }
 
 
@@ -303,7 +309,7 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
         </div>
     `.trim();
 
-    document.getElementById('edit-message').onclick = () => showEditMessageUI(channel_id, message_id);
+    document.getElementById('edit-message').onclick = () => editMessage(channel_id, message_id);
     document.getElementById('delete-message').onclick = () => deleteMessage(channel_id, message_id);
 }
 
@@ -313,23 +319,130 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
  * @param {*} channel_id 
  * @param {*} message_id 
  */
-function showEditMessageUI(channel_id, message_id) {
-    console.log(channel_id, message_id);
+function editMessage(channel_id, message_id) {
 
     // Get the contents of the message
     const message = document.getElementById(`message-${message_id}`);
     const content = message.querySelector('.messageContent-2qWWxC');
-    const attachment = message.querySelector('.messageAttachment-1aDidq');
 
-    // Remove message attachment container
+    // If the message was already edited, remove the (edited) subscript text
+    const editedSubscript = message.querySelector('.edited-3sfAzf');
 
+    if (editedSubscript) console.log(content.contains(editedSubscript));
 
-    // <div>
-    //     <div class="channelTextArea-3bF57p channelTextArea-2VhZ6z">
-    //         <div class="scrollableContainer-2NUZem webkit-HjD9Er">
-    //             <div class="inner-MADQqc">
-    //                 <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x" style="height: 43px;">
-    //                     <div contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP textAreaWithoutAttachmentButton-qiaiTB" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; -webkit-user-modify: read-write-plaintext-only;"><div data-slate-object="block" data-key="135" style="position: relative;"><span data-slate-object="text" data-key="136"><span data-slate-leaf="true" data-offset-key="136:0"><span data-slate-string="true">plz help<br></span></span></span></div></div></div><div class="buttons-3JBrkn"><div class="buttonContainer-28fw2U"><button tabindex="0" aria-label="Select emoji" type="button" class="emojiButtonNormal-TdumYh emojiButton-3uL3Aw emojiButton-pET4wH button-318s1X button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN"><div class="contents-18-Yxp"><div class="sprite-2iCowe" style="background-position: -88px -22px; background-size: 242px 110px; transform: scale(1); filter: grayscale(100%);"></div></div></button></div></div></div></div></div><div class="operations-36ENbA">escape to <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" role="button" tabindex="0">cancel</a> • enter to <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" role="button" tabindex="0">save</a></div></div>
+    const tempMessage = content.innerHTML;
+
+    // Change the UI
+    content.innerHTML = `
+        <div class="editMessage-d93fk9">
+            <div class="scrollableContainer-2NUZem webkit-HjD9Er ">
+                <div class="inner-MADQqc sansAttachButton-td2irx">
+                    <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x">
+                        <div contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP" spellcheck="true" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; padding-top: 12px;">${content.innerHTML}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="operations-36ENbA">escape to <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB cancelEdit-j091dg">cancel</a> • enter to <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB saveEdit-kfk90t">save</a></div>
+        </div>
+    `.trim();
+
+    content.classList = '';
+
+    // Add input event listeners
+    const input = content.querySelector('.slateTextArea-1Mkdgw');
+    const cancel = content.querySelector('.cancelEdit-j091dg');
+    const save = content.querySelector('.saveEdit-kfk90t');
+
+    setCaretToEnd(input);
+
+    // Send message on enter
+    input.onkeypress = event => {
+        if (!event.shiftKey && event.key === 'Enter') {
+            event.returnValue = false;
+
+            saveEdit();
+
+            const chatdiv = document.querySelectorAll(".textArea-12jD-V");
+    
+            if (chatdiv) {
+                if (chatdiv.length !== 0) {
+                    for (query of chatdiv) {
+                        query.style.height = "44px";
+                    };
+                };
+            };
+        }
+    }
+
+    // Save edited message
+    const saveEdit = () => {
+        const newMessage = input.innerHTML;
+
+        // Message has not changed
+        if (newMessage === tempMessage) return stopEdit();
+
+        // Message has changed
+        updateMessage(channel_id, message_id, newMessage);
+
+        stopEdit();
+    }
+
+    save.onclick = () => saveEdit();
+
+    // Cancel message editing
+    const stopEdit = () => {
+        content.classList = 'markup-2BOw-j messageContent-2qWWxC';
+        content.innerHTML = input.innerHTML;
+    }
+
+    input.onkeyup = event => {
+        if (event.key !== 'Escape') return;
+        
+        stopEdit();
+    }
+
+    cancel.onclick = () => stopEdit();
+
+    // Dynamic input height
+    input.oninput = () => {
+
+        // Dynamically change height of message field with multiple lines
+        const length = input.childNodes.length == 0 ? 1 : input.childNodes.length;
+
+        const chatdiv = document.querySelectorAll(".textArea-12jD-V");
+    
+        if (!chatdiv) return;
+        if (chatdiv.length === 0) return;
+
+        for (query of chatdiv) {
+            query.style.height = (33 + (11 * length)) + "px";
+        };
+    };
+
+    // Sanitise pasting
+    // TODO: Figure out how to merge this
+    input.addEventListener("paste", event => {
+        event.preventDefault();
+    
+        const text = (event.originalEvent || event).clipboardData.getData('text/plain');
+    
+        document.execCommand(
+            "insertHTML",
+            false,
+            text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;")
+        );
+    });
+
+    input.onpaste = event => {
+        const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+
+        for (i in items) {
+            if (items[i].kind === 'file') return sendAttachmentHandler(
+                channel_id,
+                [items[i].getAsFile()]
+            );
+        }
+    }
 }
 
 
@@ -338,9 +451,10 @@ function showEditMessageUI(channel_id, message_id) {
  * @param {*} message_id 
  * @param {*} newcontent 
  */
-function editMessage(channel_id, message_id, newcontent) {
+function updateMessage(channel_id, message_id, newcontent) {
     firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(message_id).update({
-        content: newcontent
+        content: newcontent,
+        edited_timestamp: getTime()
     });
 }
 
