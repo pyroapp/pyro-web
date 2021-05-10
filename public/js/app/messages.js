@@ -211,7 +211,7 @@ function loadMessagesInList(channel_id, messages) {
 
         const customTag = flags.includes('DEVELOPER') ? userTag('Developer') : '';
         const attachmentEmbed = attachment ? generateAttachmentEmbed(attachment) : '';
-        const isEdited = edited_timestamp ? `<span class="timestamp-3ZCmNB timestampInline-yHQ6fX"><span class="edited-3sfAzf">(edited)</span></span>` : '';
+        const isEdited = edited_timestamp ? `<span class="edited-3sfAzf">(edited)</span>` : '';
 
         const div = document.createElement('div');
         div.id = `message-${message.id}`;
@@ -319,53 +319,24 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
  * @param {*} channel_id 
  * @param {*} message_id 
  */
+let tempMessage;
+
 function editMessage(channel_id, message_id) {
+
+    // If another message is already being edited
+    if (document.querySelector('.editingMessageContainer-fj023r')) return;
 
     // Get the contents of the message
     const message = document.getElementById(`message-${message_id}`);
     const content = message.querySelector('.messageContent-2qWWxC');
 
-    // Stop editing
-    if (IS_EDITING) {
-        content.classList = 'markup-2BOw-j messageContent-2qWWxC';
-        content.innerHTML = content.innerHTML;
-        IS_EDITING = false;
-    }
-
-    const tempMessage = content.innerHTML;
-
-    // Check if the user is already editing, if they are, stop editing
-    if (IS_EDITING) return stopEdit();
-
-    IS_EDITING = true;
-
-    // Change the UI
-    content.innerHTML = `
-        <div class="editMessage-d93fk9">
-            <div class="scrollableContainer-2NUZem webkit-HjD9Er">
-                <div class="inner-MADQqc sansAttachButton-td2irx">
-                    <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x">
-                        <div contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP" spellcheck="true" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; padding-top: 12px;">${content.innerHTML}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="operations-36ENbA">escape to <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB cancelEdit-j091dg">cancel</a> • enter to <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB saveEdit-kfk90t">save</a></div>
-        </div>
-    `.trim();
-
-    content.classList = '';
-
-    // Add input event listeners
-    const input = content.querySelector('.slateTextArea-1Mkdgw');
-    const cancel = content.querySelector('.cancelEdit-j091dg');
-    const save = content.querySelector('.saveEdit-kfk90t');
-
-    setCaretToEnd(input);
-
     // Cancel message editing
     const stopEdit = () => {
-        content.classList = 'markup-2BOw-j messageContent-2qWWxC';
-        content.innerHTML = tempMessage;
+        const editContainer = message.querySelector('.editingMessageContainer-fj023r');
+
+        editContainer.classList = 'markup-2BOw-j messageContent-2qWWxC';
+        editContainer.innerHTML = tempMessage;
+
         IS_EDITING = false;
     }
 
@@ -381,6 +352,39 @@ function editMessage(channel_id, message_id) {
 
         stopEdit();
     }
+
+    // Check if the user is already editing, if they are, stop editing
+    if (IS_EDITING) return stopEdit();
+
+    IS_EDITING = true;
+
+    tempMessage = content.innerHTML;
+
+    // Remove edited tag from input
+    const messageContent = tempMessage.replace('<span class="edited-3sfAzf">(edited)</span>', '');
+
+    // Change the UI
+    content.innerHTML = `
+        <div class="editMessage-d93fk9">
+            <div class="scrollableContainer-2NUZem webkit-HjD9Er">
+                <div class="inner-MADQqc sansAttachButton-td2irx">
+                    <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x">
+                        <div contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP" spellcheck="true" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; padding-top: 12px;">${messageContent}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="operations-36ENbA">escape to <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB cancelEdit-j091dg">cancel</a> • enter to <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB saveEdit-kfk90t">save</a></div>
+        </div>
+    `.trim();
+
+    content.classList = 'editingMessageContainer-fj023r';
+
+    // Add input event listeners
+    const input = content.querySelector('.slateTextArea-1Mkdgw');
+    const cancel = content.querySelector('.cancelEdit-j091dg');
+    const save = content.querySelector('.saveEdit-kfk90t');
+
+    setCaretToEnd(input);
 
     // Send message on enter
     input.onkeypress = event => {
