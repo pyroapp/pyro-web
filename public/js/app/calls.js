@@ -11,24 +11,34 @@
 
 let peer = new Peer();
 
-
     
 peer.on('open', id => {
-    console.log('Peer created')
-    console.log('id : ' + id)
-})
+    console.log('Peer ID: ', id);
+});
+
 peer.on('error', error => {
-    console.log(error)
-})
-peer.on('call', connection => {
-    console.log('someone is calling')
-})
-peer.on('connection', data => {
-    console.log('connection established')
-})
+    console.error(error.message);
+});
+
+peer.on('call', () => {
+    showBasicModal(
+        'User is calling',
+        'Someone is calling you!',
+        'Okay',
+        'hideModals()'
+    );
+    console.log('user calls')
+});
+
+peer.on('connection', () => {
+    console.log('Connection Established');
+});
+
 peer.on('close', () => {
-    console.log('peer destoryed')
-})
+    console.log('Peer Destroyed');
+});
+
+
 
 
 
@@ -110,54 +120,39 @@ async function answerCall() {
                 console.log('Data Received: ', data);
             });
         }, error => {
-            console.log('Failed to get local stream.', error.message);
+            console.error('Failed to get local stream.', error.message);
         });
     });
 }
 
 
+/**
+ * 
+ */
 async function hangUp() {
     peer.destroy();
 
+    document.getElementById('rtc-stream').srcObject = null;
 
-}
+    peer = new Peer(generatePeerConfig());
 
-
-async function hangUp() {
-    peer.destroy()
-    document.getElementById('rtc-stream').srcObject = null
-    peer = new Peer({
-        config: {
-            'iceServers': [{
-                    urls: 'stun:stun.l.google.com:19302'
-                },
-                {
-                    urls: 'turn:numb.viagenie.ca',
-                    credential: 'muazkh',
-                    username: 'webrtc@live.com'
-                }
-            ]
-        }
-    })
     peer.on('open', id => {
-        console.log('Peer created')
-        console.log('id : ' + id)
-    })
+        console.log('Peer ID: ', id);
+    });
+
     peer.on('error', error => {
-        console.log(error)
-    })
-    peer.on('call', connection => {
-        console.log('someone is calling')
-    })
-    peer.on('connection', data => {
-        console.log('connection established')
-    })
+        console.error(error.message);
+    });
+
+    peer.on('call', () => {
+        console.log('Someone is Calling');
+    });
+
+    peer.on('connection', () => {
+        console.log('Connection Established');
+    });
+
     peer.on('close', () => {
-        console.log('peer destoryed')
-    })
-}
-async function convertId(id) {
-    const user = await firebase.firestore().collection('users').doc(id).get()
-    console.log(user.data().rtc)
-    return user.data().rtc
+        console.log('Peer Destroyed');
+    });
 }

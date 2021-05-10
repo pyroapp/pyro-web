@@ -9,11 +9,12 @@
 //? ------------------------------------------------------------------------------------
 
 // Themes
-const DEFAULT_THEME = 'light';
-
+const DEFAULT_THEME = 'dark';
 
 // Global cache
 const CACHED_USERS = {};
+
+// Global cache
 const CACHED_GROUP_CHAT_CHANNELS = {};
 const CACHED_RECIPIENTS = {};
 const CACHED_CHAT_LISTENERS = {};
