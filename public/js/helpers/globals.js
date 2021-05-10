@@ -37,25 +37,6 @@ const INITIAL_MESSAGE_FETCH = 50;
 const GROUP_DMS_USER_THRESHOLD = 14; // Not including current user
 
 
-// WebRTC Configuration
-const STUN_SERVER = {
-    urls: 'stun:stun.l.google.com:19302'
-};
-
-const TURN_SERVER = {
-    urls: 'turn:numb.viagenie.ca',
-    credential: 'muazkh',
-    username: 'webrtc@live.com'
-};
-
-const MEDIA_CONFIG = {
-    video: false,
-    audio: true
-};
-
-const PEER_DEBUG_LEVEL = 3;
-
-
 // API endpoints
 const OG_URL = 'https://og.pyrochat.app/';
 const CDN_URL = 'https://cdn.pyrochat.app/';
