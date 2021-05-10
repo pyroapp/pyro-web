@@ -1,6 +1,6 @@
 //? ------------------------------------------------------------------------------------
 //?
-//?  /app/messages.js
+//?  /app/messages/edit.js
 //?  Pyro Chat
 //?
 //?  Developed by Pyro Communications LLC
@@ -11,136 +11,9 @@
 
 /**
  * 
- * @param {*} channel_id 
- * @returns 
- */
-function generateRecipientsList(channel_id) {
-    const { uid } = firebase.auth().currentUser;
-    const recipients = [];
-
-    CACHED_RECIPIENTS[channel_id].forEach(recipient => {
-        if (uid === recipient) return; // Don't add current user
-
-        const { fcm_token, mute_notifications } = CACHED_USERS[recipient];
-
-        if (mute_notifications) return; // Don't send notification
-        if (!fcm_token) return; // User doesn't have notifications enabled
-
-        recipients.push({
-            id: recipient,
-            token: fcm_token,
-        });
-    });
-
-    return recipients;
-}
-
-
-/**
- * 
- * @param {*} input 
- * @param {*} channel_id 
- * @param {*} file 
- * @returns 
- */
-function sendMessage(input, channel_id, file) {
-    const channel = document.getElementById(channel_id);
-    const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
-
-    let message = input.innerHTML.trim();
-
-    if (!message && !file) return;
-
-    const { uid } = firebase.auth().currentUser;
-    const recipients = generateRecipientsList(channel_id);
-
-    // Parse message content
-    message = parseEmojis(message);
-    message = parseText(message);
-
-    firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(generateId()).set({
-        attachment: file || null,
-        author: {
-            id: uid,
-            username: CACHED_USERS[uid].username
-        },
-        channel_id: channel_id,
-        content: message,
-        edited_timestamp: null,
-        mention_everyone: false,
-        mention_roles: [],
-        mentions: [],
-        recipients: recipients,
-        pinned: false,
-        timestamp: new Date().toISOString()
-    });
-
-    // Remove all child node content
-    while (input.childNodes.length > 0) {
-        input.firstChild.remove();
-    }
-
-    placeholder.classList.remove('hidden');
-}
-
-
-/**
- * 
- * @param {*} channel_id 
- */
-async function loadPrivateMessages(channel_id) {
-    const listener = firebase.firestore().collection('channels').doc(channel_id).collection('messages').where('channel_id', '==', channel_id).orderBy('timestamp', 'desc').limit(INITIAL_MESSAGE_FETCH).onSnapshot(snapshot => {
-        const messages = [];
-
-        snapshot.docChanges().forEach(async change => {
-            const { type, doc: message } = change;
- 
-            // Not entirely sure why but if you delete messages it will add the first
-            // message from the listener and add it again. Probably because it has a limit
-            // of 50 and it is making sure the list always has 50 messages...
-            if (type === 'added') messages.push(message);
-            if (type === 'removed') deleteMessageFromList(message, channel_id);
-            if (type === 'modified') {
-                editMessageInList(message);
-                CACHED_MESSAGES[message.id] = message.data();
-            }
-        });
-
-        messages.reverse();
-        loadMessagesInList(channel_id, messages);
-    });
-
-    CACHED_CHAT_LISTENERS[channel_id] = listener;
-}
-
-
-/**
- * 
- * @param {*} timestamp 
- * @returns 
- */
- function formatMessageTime(timestamp) {
-    const isToday = moment(timestamp).isSame(moment(), "day");
-    const isYesterday = moment(timestamp).isSame(moment().subtract(1, 'day'), "day");
-
-    let long = moment(timestamp).format('MM/DD/YYYY');
-    const short = moment(timestamp).format('h:mm A');
-
-    if (isToday) long = moment(timestamp).format('h:mm A');
-    if (isYesterday) long = 'Yesterday at ' + moment(timestamp).format('h:mm A');
-
-    return {
-        long: long,
-        short: short
-    };
-}
-
-
-/**
- * 
  * @param {*} message 
  */
-function editMessageInList(message) {
+ function editMessageInList(message) {
     const messageItem = document.getElementById(`message-${message.id}`);
     const messageContent = messageItem.querySelector('.messageContent-2qWWxC');
 
@@ -195,88 +68,10 @@ function deleteMessageFromList(message, channel_id) {
 }
 
 
-/**
- * 
- * @param {*} messages 
- */
-function loadMessagesInList(channel_id, messages) {
-    messages.forEach(message => {
-        let { author: { id: author_uid }, timestamp, attachment, content, edited_timestamp } = message.data();
-
-        // If the timestamp of the message being loaded is before the timestamp of the previous message
-        if (LAST_MESSAGE_TIMESTAMP[channel_id] > timestamp) return;
-
-        const { username, flags } = CACHED_USERS[author_uid];
-        const { long, short } = formatMessageTime(timestamp);
-
-        const customTag = flags.includes('DEVELOPER') ? userTag('Developer') : '';
-        const attachmentEmbed = attachment ? generateAttachmentEmbed(attachment) : '';
-        const isEdited = edited_timestamp ? `<span class="edited-3sfAzf">(edited)</span>` : '';
-
-        const div = document.createElement('div');
-        div.id = `message-${message.id}`;
-        div.setAttribute('channel', channel_id);
-        div.setAttribute('author_uid', author_uid);
-
-        const messageList = document.getElementById(`messages-${channel_id}`);
-
-        if (!messageList.lastChild || messageList.lastChild.getAttribute('author_uid') !== author_uid) {
-            div.className = 'message-2qnXI6 cozyMessage-3V1Y8y wrapper-2a6GCs cozy-3raOZG zalgo-jN1Ica groupStart-23k01U';
-
-            div.innerHTML = `
-                <div class="groupStartSeparator-kq2kfn"></div>
-                <div class="contents-2mQqc9">
-                    <img src="${getAvatar(author_uid)}" class="avatar-1BDn8e clickable-1bVtEA">
-                    <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span>${customTag}</span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${long}</span></span></h2>
-                    <div class="markup-2BOw-j messageContent-2qWWxC">${content}${isEdited}</div>
-                    <div class="container-1ov-mD">${attachmentEmbed}</div>
-                </div>
-                <div class="buttonContainer-DHceWr"></div>
-            `.trim();
-        } else {
-            div.className = 'message-2qnXI6 cozyMessage-3V1Y8y wrapper-2a6GCs cozy-3raOZG zalgo-jN1Ica';
-
-            div.innerHTML = `
-                <div class="contents-2mQqc9">
-                    <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${short}<i class="separator-2nZzUB"></i></span>
-                    <div class="markup-2BOw-j messageContent-2qWWxC">${content}${isEdited}</div>
-                    <div class="container-1ov-mD">${attachmentEmbed}</div>
-                </div>
-                <div class="buttonContainer-DHceWr"></div>
-            `.trim();
-        }
-
-        messageList.appendChild(div);
-
-        // Show message editing buttons on hover
-        div.onmouseenter = () => showMessageEditingButtons(channel_id, message.id, div);
-
-        // Remove the message editing buttons
-        div.onmouseleave = () => div.querySelector('.buttonContainer-DHceWr').innerHTML = '';
-
-        LAST_MESSAGE_TIMESTAMP[channel_id] = timestamp;
-        CACHED_MESSAGES[message.id] = {
-            ...message.data(),
-            time: {
-                long: long,
-                short: short
-            }
-        }
-    });
-
-    scrollToBottom(channel_id);
-}
 
 
-/**
- * 
- * @param {*} channel_id 
- */
-function scrollToBottom(channel_id) {
-    const messageList = document.getElementById(`messages-${channel_id}`).lastChild;
-    
-    messageList.scrollIntoView();
-}
+
+
 
 
 /**
@@ -451,46 +246,3 @@ function editMessage(channel_id, message_id) {
         }
     }
 }
-
-
-/**
- * 
- * @param {*} message_id 
- * @param {*} newcontent 
- */
-function updateMessage(channel_id, message_id, newcontent) {
-    firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(message_id).update({
-        content: newcontent,
-        edited_timestamp: getTime()
-    });
-}
-
-
-/**
- * 
- * @param {*} channel_id 
- * @param {*} message_id 
- */
-function deleteMessage(channel_id, message_id) {
-    firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(message_id).delete();
-}
-
-
-/**
- * Shows a verified user tag with the specified content
- * @param {*} content Tag Content
- * @returns HTML for tag
- */
-function userTag(content) {
-    return `<span class="botTag-3W9SuW botTagRegular-2HEhHi botTag-2WPJ74 px-10SIf7"><svg class="botTagVerified-1klIIt" width="16" height="16" viewBox="0 0 16 15.2"><path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" fill="currentColor"></path></svg><span class="botText-1526X_">${content}</span></span>`;
-}
-
-
-/**
- * If the user clicks on a spoiler on the page it will reveal the text beneath
- */
-document.body.onclick = e => {
-    if (e.target.className === "spoilerText-3p6IlD hidden-HHr2R9") {
-        e.target.className = "spoilerText-3p6IlD";
-    }
-};
