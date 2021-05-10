@@ -55,6 +55,8 @@
  */
  function scrollToBottom(channel_id) {
     const messageList = document.getElementById(`messages-${channel_id}`).lastChild;
+
+    if (!messageList) return; // No messages
     
     messageList.scrollIntoView();
 }
