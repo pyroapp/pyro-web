@@ -320,23 +320,29 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
  * @param {*} message_id 
  */
 function editMessage(channel_id, message_id) {
-    IS_EDITING = true;
 
     // Get the contents of the message
     const message = document.getElementById(`message-${message_id}`);
     const content = message.querySelector('.messageContent-2qWWxC');
 
-    // If the message was already edited, remove the (edited) subscript text
-    const editedSubscript = message.querySelector('.edited-3sfAzf');
-
-    if (editedSubscript) console.log(content.contains(editedSubscript));
+    // Stop editing
+    if (IS_EDITING) {
+        content.classList = 'markup-2BOw-j messageContent-2qWWxC';
+        content.innerHTML = content.innerHTML;
+        IS_EDITING = false;
+    }
 
     const tempMessage = content.innerHTML;
+
+    // Check if the user is already editing, if they are, stop editing
+    if (IS_EDITING) return stopEdit();
+
+    IS_EDITING = true;
 
     // Change the UI
     content.innerHTML = `
         <div class="editMessage-d93fk9">
-            <div class="scrollableContainer-2NUZem webkit-HjD9Er ">
+            <div class="scrollableContainer-2NUZem webkit-HjD9Er">
                 <div class="inner-MADQqc sansAttachButton-td2irx">
                     <div class="textArea-12jD-V textAreaSlate-1ZzRVj slateContainer-3Qkn2x">
                         <div contenteditable="true" class="markup-2BOw-j slateTextArea-1Mkdgw fontSize16Padding-3Wk7zP" spellcheck="true" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word; padding-top: 12px;">${content.innerHTML}</div>
@@ -356,23 +362,11 @@ function editMessage(channel_id, message_id) {
 
     setCaretToEnd(input);
 
-    // Send message on enter
-    input.onkeypress = event => {
-        if (!event.shiftKey && event.key === 'Enter') {
-            event.returnValue = false;
-
-            saveEdit();
-
-            const chatdiv = document.querySelectorAll(".textArea-12jD-V");
-    
-            if (chatdiv) {
-                if (chatdiv.length !== 0) {
-                    for (query of chatdiv) {
-                        query.style.height = "44px";
-                    };
-                };
-            };
-        }
+    // Cancel message editing
+    const stopEdit = () => {
+        content.classList = 'markup-2BOw-j messageContent-2qWWxC';
+        content.innerHTML = tempMessage;
+        IS_EDITING = false;
     }
 
     // Save edited message
@@ -388,22 +382,29 @@ function editMessage(channel_id, message_id) {
         stopEdit();
     }
 
-    save.onclick = () => saveEdit();
+    // Send message on enter
+    input.onkeypress = event => {
+        if (!event.shiftKey && event.key === 'Enter') {
+            event.returnValue = false;
 
-    // Cancel message editing
-    const stopEdit = () => {
-        content.classList = 'markup-2BOw-j messageContent-2qWWxC';
-        content.innerHTML = tempMessage;
-        IS_EDITING = false;
+            saveEdit();
+
+            // Change height of input dynamically
+            const chatdiv = document.querySelectorAll(".textArea-12jD-V");
+    
+            if (chatdiv) {
+                if (chatdiv.length !== 0) {
+                    for (query of chatdiv) {
+                        query.style.height = "44px";
+                    }
+                }
+            }
+        }
     }
 
-    input.onkeyup = event => {
-        if (event.key !== 'Escape') return;
-        
-        stopEdit();
-    }
-
+    input.onkeyup = event => { if (event.key === 'Escape') return stopEdit() }
     cancel.onclick = () => stopEdit();
+    save.onclick = () => saveEdit();
 
     // Dynamic input height
     input.oninput = () => {
@@ -418,7 +419,7 @@ function editMessage(channel_id, message_id) {
 
         for (query of chatdiv) {
             query.style.height = (33 + (11 * length)) + "px";
-        };
+        }
     };
 
     // Sanitise pasting
