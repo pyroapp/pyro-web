@@ -8,6 +8,9 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
+// Themes
+const DEFAULT_THEME = 'dark';
+
 
 // Global cache
 const CACHED_USERS = {};
@@ -16,11 +19,12 @@ const CACHED_RECIPIENTS = {};
 const CACHED_CHAT_LISTENERS = {};
 const CACHED_LISTENERS = {};
 const CACHED_FRIENDS = [];
+const CACHED_MESSAGES = {};
 
 
 // Global states
 let CURRENT_CHANNEL_ID;
-const LAST_MESSAGE_AUTHOR_ID = [];
+let IS_EDITING = false;
 const LAST_MESSAGE_TIMESTAMP = [];
 
 

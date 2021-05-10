@@ -13,6 +13,8 @@ window.onload = () => {
     const didyouknow = document.getElementById('didYouKnowLabel');
 
     didyouknow.innerText = generateDidYouKnowMessage();
+
+    setTheme();
 }
 
 

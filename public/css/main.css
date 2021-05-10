@@ -6273,6 +6273,66 @@ code {
 	--brand-primary-active: #d6a00c;
 }
 
+.theme-dim {
+	--header-primary:#fff;
+	--header-secondary:#b9bbbe;
+	--text-normal:#E2E2E2;
+	--text-muted:#858D95;
+	--text-link:#00b0f4;
+	--channels-default:#858D95;
+	--interactive-normal:#b9bbbe;
+	--interactive-hover:#f2f2f2;
+	--interactive-active:#fff;
+	--interactive-muted:#4f545c;
+	--background-primary:#212733;
+	--background-secondary:#171b24;
+	--background-secondary-alt:#171b24;
+	--background-tertiary:#0f1218;
+	--background-accent:#4f545c;
+	--background-floating:#18191c;
+	--background-mobile-primary:#1a1a23;
+	--background-mobile-secondary:#17171f;
+	--background-modifier-hover:rgba(79, 84, 92, 0.16);
+	--background-modifier-active:rgba(79, 84, 92,0.24);
+	--background-modifier-selected:rgba(79, 84, 92, 0.32);
+	--background-modifier-accent:hsla(0, 0%, 100%, 0.06);
+	--background-mentioned:rgba(250, 166, 26, 0.05);
+	--background-mentioned-hover:rgba(250, 166, 26, 0.08);
+	--background-message-hover:rgba(4, 4, 5, 0.07);
+	--background-help-warning:rgba(250,166, 26, 0.1);
+	--background-help-info:rgba(0, 176, 244, 0.1);
+	--scrollbar-thin-thumb:#0f1218;
+	--scrollbar-thin-track:transparent;
+	--scrollbar-auto-thumb:#0f1218;
+	--scrollbar-auto-track: #212733;
+	--scrollbar-auto-scrollbar-color-thumb:#0f1218;
+	--scrollbar-auto-scrollbar-color-track: #212733;
+	--elevation-stroke:0 0 0 1px rgba(4, 4, 5, 0.15);
+	--elevation-low:0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
+	--elevation-medium:0 4px 4px rgba(0, 0, 0, 0.16);
+	--elevation-high:0 8px 16px rgba(0, 0, 0, 0.24);
+	--logo-primary:#fff;
+	--focus-primary:#00b0f4;
+	--radio-group-dot-foreground:#febe10;
+	--guild-header-text-shadow:0 1px 1px rgba(0, 0, 0, 0.4);
+	--channeltextarea-background:#313a4d;
+	--activity-card-background:#202225;
+	--textbox-markdown-syntax:#8e9297;
+	--deprecated-card-bg:rgba(32, 34, 37, 0.6);
+	--deprecated-card-editable-bg:rgba(32, 34, 37, 0.3);
+	--deprecated-store-bg:#36393f;
+	--deprecated-quickswitcher-input-background:#72767d;
+	--deprecated-quickswitcher-input-placeholder:hsla(0, 0%, 100%, 0.3);
+	--deprecated-text-input-bg:rgba(0, 0, 0, 0.1);
+	--deprecated-text-input-border:rgba(0, 0, 0, 0.3);
+	--deprecated-text-input-border-hover:#040405;
+	--deprecated-text-input-border-disabled:#202225;
+	--deprecated-text-input-prefix:#dcddde;
+	--brand-primary: #FEBE10;
+	--brand-primary-hover: #eeb310;
+	--brand-primary-active: #d6a00c;
+}
+
 .theme-light {
 	--header-primary:#060607;
 	--header-secondary:#4f5660;
@@ -15077,7 +15137,7 @@ img[alt] {
 }
 
 .cozy-3raOZG.wrapper-2a6GCs {
-	padding-left:72px
+	padding-left: 72px;
 }
 
 .repliedMessage-VokQwo {
@@ -15700,11 +15760,12 @@ img[alt] {
 	color:var(--text-muted)
 }
 
-.messageAttachment-1aDidq {
-	margin-top: 4px;
+.editMessage-d93fk9 {
+	margin-top: 10px;
+	margin-bottom: 6px;
 }
 
-.messageContent-2qWWxC img:not(.emoji):not(.icon-1kp3fr) {
+.container-1ov-mD img:not(.emoji):not(.icon-1kp3fr) {
 	border-radius: 4px;
 	cursor: pointer;
 	max-width: 350px !important;
@@ -28196,8 +28257,8 @@ html .progress-GjyFoQ {
 }
 
 .message-2qnXI6 {
+	transition: all 0.1s ease; /* LITERALLY ONLY FOR HYPERIONS EYES SO HE DOESN'T HAVE A SEIZURE */ 
 	padding-right:48px!important;
-	transition: ease-in-out 0.15s;
 }
 
 .message-2qnXI6 .timestampInline-yHQ6fX {
@@ -28346,8 +28407,25 @@ html .progress-GjyFoQ {
 	margin-bottom:1rem
 }
 
+.messagesList-3j93jr .groupStart-23k01U:first-child {
+	border-top: none;
+	margin-top: 0;
+}
+
+.groupStart-23k01U {
+	min-height: 47px;
+}
+
+.groupStartSeparator-kq2kfn {
+	position: absolute;
+	top: -14px;
+	left: 14px;
+	right: 14px;
+	border-top: 1px solid var(--deprecated-text-input-border-disabled);
+}
+
 .group-spacing-16 .groupStart-23k01U {
-	margin-top:1.0625rem
+	margin-top: 26px;
 }
 
 .group-spacing-16 .divider-3_HH5L {
@@ -55257,7 +55335,7 @@ a.ctaAnchor-3-8I3v:hover {
 	border-bottom:1px solid;
 	border-color:var(--background-modifier-accent);
 	padding-bottom:16px;
-	margin:16px
+	margin:16px;
 }
 
 .header-3uLluP {
@@ -56195,7 +56273,7 @@ a.ctaAnchor-3-8I3v:hover {
 }
 
 .operations-36ENbA>a {
-	color:#7289da;
+	color:var(--brand-primary);
 	-webkit-transition:.05s;
 	transition:.05s;
 	text-decoration:none;
