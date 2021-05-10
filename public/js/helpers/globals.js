@@ -8,6 +8,9 @@
 //?     
 //? ------------------------------------------------------------------------------------
 
+// Themes
+const DEFAULT_THEME = 'light';
+
 
 // Global cache
 const CACHED_USERS = {};
@@ -21,6 +24,7 @@ const CACHED_MESSAGES = {};
 
 // Global states
 let CURRENT_CHANNEL_ID;
+let IS_EDITING = false;
 const LAST_MESSAGE_TIMESTAMP = [];
 
 

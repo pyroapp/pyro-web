@@ -373,8 +373,17 @@ function handleChatEvents(div, payload) {
     
 
     // Auto focus the input anywhere within the chat
-    document.addEventListener('keypress', () => { 
-        // if (!input.activeElement) input.focus(); // TODO: This interferes with the editing input 
+    document.addEventListener('keypress', () => {
+        
+        // If the user is editing a message, focus on that input rather than the main one
+        if (IS_EDITING) {
+            const editingInput = div.querySelector('.slateTextArea-1Mkdgw');
+
+            editingInput.focus();
+            setCaretToEnd(editingInput);
+        } else {
+            if (!input.activeElement) input.focus();
+        }
     });
 
 

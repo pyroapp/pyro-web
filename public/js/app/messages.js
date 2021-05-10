@@ -320,6 +320,7 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
  * @param {*} message_id 
  */
 function editMessage(channel_id, message_id) {
+    IS_EDITING = true;
 
     // Get the contents of the message
     const message = document.getElementById(`message-${message_id}`);
@@ -392,7 +393,8 @@ function editMessage(channel_id, message_id) {
     // Cancel message editing
     const stopEdit = () => {
         content.classList = 'markup-2BOw-j messageContent-2qWWxC';
-        content.innerHTML = input.innerHTML;
+        content.innerHTML = tempMessage;
+        IS_EDITING = false;
     }
 
     input.onkeyup = event => {
