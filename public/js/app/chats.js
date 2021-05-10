@@ -33,6 +33,90 @@
     div.innerHTML = `
         <section class="title-3qD0b- container-1r6BKw themed-ANHk51">${header}</section>
         <div class="content-yTz4x3" id="channel-${channel_id}">
+        <section class="title-3qD0b- container-1r6BKw themed-ANHk51" id="private-header-${channel_id}">
+            <div class="children-19S4PO">
+                <div class="iconWrapper-2OrFZ1">
+                    <svg width="40" height="32" viewBox="0 0 40 40" class="icon-22AiRD">
+                        <mask id="1e790872-400c-4750-815a-1afdbe1cdf12" width="40" height="40">
+                            <circle cx="16" cy="16" r="16" fill="white"></circle>
+                            <rect color="black" x="19" y="19" width="16" height="16" rx="8" ry="8"></rect>
+                        </mask>
+                        <foreignObject x="0" y="0" width="40" height="40" mask="url(#svg-mask-avatar-default)">
+                            <img src="${getAvatar(friend_uid)}" class="avatar-VxgULZ">
+                        </foreignObject>
+                    </svg>
+                </div>
+                <h3 role="button" class="cursorPointer-1j7DL8 title-29uC1r base-1x0h_U size16-1P40sf RT_username"></h3>
+                <div class="status-1XNdyw disableFlex-2QuzIB">
+                    <svg width="10" height="15" viewBox="0 0 10 10" class="mask-1qbNWk">
+                        <rect x="0" y="0" width="10" height="10" class="RT_status"></rect>
+                    </svg>
+                </div>
+                <div class="spacer-3kEb8l"></div>
+            </div>
+            <div class="toolbar-1t6TWx">
+                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn">
+                    <svg x="0" y="0" class="icon-22AiRD" aria-hidden="false" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M11 5V3C16.515 3 21 7.486 21 13H19C19 8.589 15.411 5 11 5ZM17 13H15C15 10.795 13.206 9 11 9V7C14.309 7 17 9.691 17 13ZM11 11V13H13C13 11.896 12.105 11 11 11ZM14 16H18C18.553 16 19 16.447 19 17V21C19 21.553 18.553 22 18 22H13C6.925 22 2 17.075 2 11V6C2 5.447 2.448 5 3 5H7C7.553 5 8 5.447 8 6V10C8 10.553 7.553 11 7 11H6C6.063 14.938 9 18 13 18V17C13 16.447 13.447 16 14 16Z"></path>
+                    </svg>
+                </div>
+                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn">
+                    <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M21 3H24V5H21V8H19V5H16V3H19V0H21V3ZM10 12C12.205 12 14 10.205 14 8C14 5.795 12.205 4 10 4C7.795 4 6 5.795 6 8C6 10.205 7.795 12 10 12ZM10 13C5.289 13 2 15.467 2 19V20H18V19C18 15.467 14.711 13 10 13Z"></path>
+                    </svg>
+                </div>
+                <div class="hidden">
+                    <video id="rtc-stream" autoplay playsinline nocontrols></video>
+                </div>
+                <div class="search-36MZv- hidden">
+                    <div class="search-2oPWTC">
+                        <div class="searchBar-3dMhjb">
+                            <div class="DraftEditor-root">
+                                <div class="public-DraftEditorPlaceholder-root">
+                                    <div class="public-DraftEditorPlaceholder-inner" style="white-space: pre-wrap;">Search</div>
+                                </div>
+                                <div class="DraftEditor-editorContainer">
+                                    <div aria-describedby="placeholder-bjp4e" class="notranslate public-DraftEditor-content" contenteditable="true" role="textbox" spellcheck="false" style="outline: none; user-select: text; white-space: pre-wrap; overflow-wrap: break-word;">
+                                        <div data-contents="true">
+                                            <div data-block="true" data-editor="bjp4e" data-offset-key="19m55-0-0">
+                                                <div data-offset-key="19m55-0-0" class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr">
+                                                    <span data-offset-key="19m55-0-0">
+                                                        <br data-text="true">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon-38sknP iconLayout-1WxHy4 small-1lPjda">
+                                <div class="iconContainer-O4O2CN">
+                                    <svg class="icon-3cZ1F_ visible-3V0mGj" width="24" height="24" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="M21.707 20.293L16.314 14.9C17.403 13.504 18 11.799 18 10C18 7.863 17.167 5.854 15.656 4.344C14.146 2.832 12.137 2 10 2C7.863 2 5.854 2.832 4.344 4.344C2.833 5.854 2 7.863 2 10C2 12.137 2.833 14.146 4.344 15.656C5.854 17.168 7.863 18 10 18C11.799 18 13.504 17.404 14.9 16.314L20.293 21.706L21.707 20.293ZM10 16C8.397 16 6.891 15.376 5.758 14.243C4.624 13.11 4 11.603 4 10C4 8.398 4.624 6.891 5.758 5.758C6.891 4.624 8.397 4 10 4C11.603 4 13.109 4.624 14.242 5.758C15.376 6.891 16 8.398 16 10C16 11.603 15.376 13.11 14.242 14.243C13.109 15.376 11.603 16 10 16Z"></path>
+                                    </svg>
+                                    <svg class="icon-3cZ1F_" width="24" height="24" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="iconWrapper-2OrFZ1 clickable-3rdHwn hidden">
+                    <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 3H4.99C3.88 3 3.01 3.89 3.01 5L3 19C3 20.1 3.88 21 4.99 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 15H15C15 16.66 13.65 18 12 18C10.35 18 9 16.66 9 15H4.99V5H19V15Z" fill="currentColor"></path>
+                    </svg>
+                </div>
+                <a tabindex="-1" class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB" href="/support" rel="noreferrer noopener" target="_blank">
+                    <div class="iconWrapper-2OrFZ1 clickable-3rdHwn" role="button">
+                        <svg x="0" y="0" class="icon-22AiRD" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M12 2C6.486 2 2 6.487 2 12C2 17.515 6.486 22 12 22C17.514 22 22 17.515 22 12C22 6.487 17.514 2 12 2ZM12 18.25C11.31 18.25 10.75 17.691 10.75 17C10.75 16.31 11.31 15.75 12 15.75C12.69 15.75 13.25 16.31 13.25 17C13.25 17.691 12.69 18.25 12 18.25ZM13 13.875V15H11V12H12C13.104 12 14 11.103 14 10C14 8.896 13.104 8 12 8C10.896 8 10 8.896 10 10H8C8 7.795 9.795 6 12 6C14.205 6 16 7.795 16 10C16 11.861 14.723 13.429 13 13.875Z"></path>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+        </section>
+        <div class="content-yTz4x3" id="chat-${channel_id}">
             <main class="chatContent-a9vAAp">
                 <div class="messagesWrapper-1sRNjr group-spacing-16">
                     <div class="scroller-2LSbBU auto-Ge5KZx scrollerBase-289Jih disableScrollAnchor-3V9UtP" style="overflow: hidden scroll; padding-right: 0px;">
