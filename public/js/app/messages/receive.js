@@ -45,7 +45,7 @@
  */
  function loadMessagesInList(channel_id, messages) {
     messages.forEach(message => {
-        let { author: { id: author_uid }, timestamp, attachment, content, edited_timestamp } = message.data();
+        let { author: { id: author_uid }, timestamp, attachment, content, edited_timestamp, embed_html } = message.data();
 
         // If the timestamp of the message being loaded is before the timestamp of the previous message
         if (LAST_MESSAGE_TIMESTAMP[channel_id] > timestamp) return;
@@ -73,7 +73,7 @@
                     <img src="${getAvatar(author_uid)}" class="avatar-1BDn8e clickable-1bVtEA">
                     <h2 class="header-23xsNx"><span class="headerText-3Uvj1Y"><span class="username-1A8OIy clickable-1bVtEA">${username}</span>${customTag}</span><span class="timestamp-3ZCmNB"><span><i class="separator-2nZzUB"> — </i>${long}</span></span></h2>
                     <div class="markup-2BOw-j messageContent-2qWWxC">${content}${isEdited}</div>
-                    <div class="container-1ov-mD">${attachmentEmbed}</div>
+                    <div class="container-1ov-mD">${attachmentEmbed}${embed_html ? embed_html : ''}</div>
                 </div>
                 <div class="buttonContainer-DHceWr"></div>
             `.trim();
@@ -84,7 +84,7 @@
                 <div class="contents-2mQqc9">
                     <span class="latin24CompactTimeStamp-2V7XIQ timestamp-3ZCmNB timestampVisibleOnHover-2bQeI4 alt-1uNpEt"><i class="separator-2nZzUB"></i>${short}<i class="separator-2nZzUB"></i></span>
                     <div class="markup-2BOw-j messageContent-2qWWxC">${content}${isEdited}</div>
-                    <div class="container-1ov-mD">${attachmentEmbed}</div>
+                    <div class="container-1ov-mD">${attachmentEmbed}${embed_html ? embed_html : ''}</div>
                 </div>
                 <div class="buttonContainer-DHceWr"></div>
             `.trim();

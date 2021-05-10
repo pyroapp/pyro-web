@@ -47,31 +47,35 @@
  * @param {*} file 
  * @returns 
  */
-function sendMessage(input, channel_id, file) {
-    const channel = document.getElementById(channel_id);
-    const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
-
+async function sendMessage(input, channel_id, attachment) {
     let message = input.innerHTML.trim();
-    let type = 0;
+    let embed_html;
 
-    if (!message && !file) return;
+    if (!message && !attachment) return;
 
     const { uid } = firebase.auth().currentUser;
     const recipients = generateRecipientsList(channel_id);
+
+    // Extract links and generate opengraph data
+    const links = extractLinks(message);
+    
+    // Generate message embeds
+    if (links) embed_html = await generateLinkEmbed(links[0]);
+
+    if (attachment) embed_html += generateAttachmentEmbed(attachment);
 
     // Parse message content
     message = parseEmojis(message);
     message = parseText(message);
 
-    if (file) type = 1;
-
     firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(generateId()).set({
-        attachment: file || null,
+        attachment: attachment || null,
         author: {
             id: uid,
             username: CACHED_USERS[uid].username
         },
         channel_id: channel_id,
+        embed_html: embed_html || null,
         content: message,
         edited_timestamp: null,
         mention_everyone: false,
@@ -79,7 +83,6 @@ function sendMessage(input, channel_id, file) {
         mentions: [],
         recipients: recipients,
         pinned: false,
-        type: 0,
         timestamp: new Date().toISOString()
     });
 

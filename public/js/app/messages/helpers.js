@@ -14,14 +14,14 @@
  * @param {*} string 
  * @returns 
  */
- function extractLinks(string) {
+function extractLinks(string) {
     const expression = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
     const matches = string.match(expression);
     const links = [];
 
-    for(match in matches) {
-        links.push(matches[match]);
-    }
+    matches.forEach(match => {
+        links.push(match);
+    });
 
     return links;
 }
@@ -32,7 +32,7 @@
  * @param {*} timestamp 
  * @returns 
  */
- function formatMessageTime(timestamp) {
+function formatMessageTime(timestamp) {
     const isToday = moment(timestamp).isSame(moment(), "day");
     const isYesterday = moment(timestamp).isSame(moment().subtract(1, 'day'), "day");
 
@@ -53,7 +53,7 @@
  * 
  * @param {*} channel_id 
  */
- function scrollToBottom(channel_id) {
+function scrollToBottom(channel_id) {
     const messageList = document.getElementById(`messages-${channel_id}`).lastChild;
 
     if (!messageList) return; // No messages
@@ -67,7 +67,7 @@
  * @param {*} message_id 
  * @param {*} newcontent 
  */
- function updateMessage(channel_id, message_id, newcontent) {
+function updateMessage(channel_id, message_id, newcontent) {
     firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(message_id).update({
         content: newcontent,
         edited_timestamp: getTime()
@@ -80,7 +80,7 @@
  * @param {*} channel_id 
  * @param {*} message_id 
  */
- function deleteMessage(channel_id, message_id) {
+function deleteMessage(channel_id, message_id) {
     firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(message_id).delete();
 }
 

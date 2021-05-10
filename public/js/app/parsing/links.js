@@ -1,6 +1,6 @@
 //? ------------------------------------------------------------------------------------
 //?
-//?  /app/parsing/youtube.js
+//?  /app/parsing/links.js
 //?  Pyro Chat
 //?
 //?  Developed by Pyro Communications LLC
@@ -11,42 +11,56 @@
 
 /**
  * 
- * @param {*} text 
+ * @param {*} message 
  * @returns 
  */
-function extractYoutubeId(text) {
-    let id = '';
-        
-    text = text.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-
-    if(text[2] !== undefined) {
-        id = text[2].split(/[^0-9a-z_\-]/i);
-        id = id[0];
-    } else {
-        id = text;
+async function generateLinkEmbed(link) {
+    if (isYoutubeLink(link)) {
+        return embeds.push(await generateYoutubeEmbed(link));
     }
 
-    if (typeof id !== 'string') return false;
+    return await generateOpenGraphEmbed(link);
+}
 
-    return id;
+
+/**
+ * 
+ * @param {*} link 
+ * @returns 
+ */
+function isYoutubeLink(link) {
+    const match = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+
+    return link.match(match);
+}
+
+
+/**
+ * 
+ * @param {*} link 
+ * @returns 
+ */
+async function generateOpenGraphEmbed(link) {
+    const { data: { data: { url, site_title, site_name, site_description, image: { url: image_url, image_height, image_width } } } } = await axios(OG_URL + `?url=${link}`);
+
+    return `
+        <div class="embedWrapper-lXpS3L embedFull-2tM8-- embed-IeVjo6 markup-2BOw-j" style="border-color: rgb(30, 35, 39); max-width: 432px;">
+            <div class="grid-1nZz7S">
+                <div class="embedProvider-3k5pfl embedMargin-UO5XwE"><span>${site_name}</span></div>
+                <div class="embedTitle-3OXDkz embedMargin-UO5XwE"><a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB embedTitleLink-1Zla9e embedLink-1G1K1D embedTitle-3OXDkz" href="${url}" target="_blank">${site_title}</a></div>
+                <div class="embedDescription-1Cuq9a embedMargin-UO5XwE">${site_description}/div>
+                <a class="anchor-3Z-8Bb anchorUnderlineOnHover-2ESHQB imageWrapper-2p5ogY imageZoom-1n-ADA clickable-3Ya1ho embedWrapper-lXpS3L embedMedia-1guQoW embedImage-2W1cML" href="${image_url}" style="width: ${image_width}px; height: ${image_height}px;"></a>
+            </div>
+        </div>
+    `.trim();
 }
 
 
 /**
  * 
  */
-async function generateYoutubeEmbed(video_id) {
-    const {
-        data: {
-            data: {
-                url:video_url,
-                title: video_title,
-                image: {
-                    url:image_url
-                }
-            }
-        }
-    } = await axios(OG_URL + `?url=https://youtube.com/watch?v=${video_id}`);
+async function generateYoutubeEmbed(link) {
+    const { data: { data: { url:video_url, title: video_title, image: { url:image_url } } } } = await axios(OG_URL + `?url=${link}`);
 
     return `
         <div class="container-1ov-mD">
