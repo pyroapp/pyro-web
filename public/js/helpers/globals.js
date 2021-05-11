@@ -25,6 +25,7 @@ const CACHED_MESSAGES = {};
 // Global states
 let CURRENT_CHANNEL_ID;
 let IS_EDITING = false;
+let IS_REPLYING = null;
 const LAST_MESSAGE_TIMESTAMP = [];
 
 

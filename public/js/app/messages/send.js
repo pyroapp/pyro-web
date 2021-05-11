@@ -47,10 +47,10 @@
  * @param {*} file 
  * @returns 
  */
-function sendMessage(input, channel_id, file) {
+function sendMessage(input, channel_id, attachment) {
     let message = input.innerHTML.trim();
 
-    if (!message && !file) return;
+    if (!message && !attachment) return;
 
     const { uid } = firebase.auth().currentUser;
     const recipients = generateRecipientsList(channel_id);
@@ -60,11 +60,12 @@ function sendMessage(input, channel_id, file) {
     message = parseText(message);
 
     firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(generateId()).set({
-        attachment: file || null,
+        attachment: attachment || null,
         author: {
             id: uid,
             username: CACHED_USERS[uid].username
         },
+        reply_message: IS_REPLYING,
         channel_id: channel_id,
         content: message,
         edited_timestamp: null,
@@ -78,4 +79,5 @@ function sendMessage(input, channel_id, file) {
     });
 
     resetMessageInput(channel_id, input);
+    if (IS_REPLYING) cancelReply(channel_id);
 }
