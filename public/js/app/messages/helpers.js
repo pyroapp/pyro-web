@@ -76,16 +76,6 @@
 
 
 /**
- * 
- * @param {*} channel_id 
- * @param {*} message_id 
- */
- function deleteMessage(channel_id, message_id) {
-    firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(message_id).delete();
-}
-
-
-/**
  * Shows a verified user tag with the specified content
  * @param {*} content Tag Content
  * @returns HTML for tag
@@ -103,3 +93,20 @@ document.body.onclick = e => {
         e.target.className = "spoilerText-3p6IlD";
     }
 };
+
+
+/**
+ * 
+ * @param {*} input 
+ */
+ function resetMessageInput(channel_id, input) {
+    const channel = document.getElementById(channel_id);
+    const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
+
+    // Remove all child node content
+    while (input.childNodes.length > 0) {
+        input.firstChild.remove();
+    }
+
+    placeholder.classList.remove('hidden');
+}

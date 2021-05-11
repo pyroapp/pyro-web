@@ -48,11 +48,7 @@
  * @returns 
  */
 function sendMessage(input, channel_id, file) {
-    const channel = document.getElementById(channel_id);
-    const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
-
     let message = input.innerHTML.trim();
-    let type = 0;
 
     if (!message && !file) return;
 
@@ -62,8 +58,6 @@ function sendMessage(input, channel_id, file) {
     // Parse message content
     message = parseEmojis(message);
     message = parseText(message);
-
-    if (file) type = 1;
 
     firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(generateId()).set({
         attachment: file || null,
@@ -84,22 +78,4 @@ function sendMessage(input, channel_id, file) {
     });
 
     resetMessageInput(channel_id, input);
-}
-
-
-
-/**
- * 
- * @param {*} input 
- */
-function resetMessageInput(channel_id, input) {
-    const channel = document.getElementById(channel_id);
-    const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
-
-    // Remove all child node content
-    while (input.childNodes.length > 0) {
-        input.firstChild.remove();
-    }
-
-    placeholder.classList.remove('hidden');
 }
