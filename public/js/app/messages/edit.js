@@ -135,6 +135,8 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
  */
 function replyMessage(channel_id, message_id) {
     
+    if (IS_REPLYING) return; // Already replying to message
+
     // Show reply UI for input
     const chat = document.getElementById(channel_id);
     const container = chat.querySelector('.scrollableContainer-2NUZem');
