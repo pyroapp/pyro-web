@@ -320,6 +320,32 @@ function handleChatEvents(div, payload) {
 
     input.onkeyup = event => {
         if (event.key === 'Escape') return cancelReply(channel_id);
+    
+        // Edit the last message send by the current user
+        if (event.key === 'ArrowUp') {
+            const messages = CACHED_MESSAGES[channel_id];
+            const keys = Object.keys(messages);
+            const { uid } = firebase.auth().currentUser;
+
+            let index = 1;
+            let last_message_id;
+
+            while (!last_message_id) {
+                const temp = keys[keys.length - index];
+
+                // Message was sent by the current user
+                console.log(messages[temp]);
+                if (!messages[temp]) return index++;
+
+                if (messages[temp].author.id === uid) {
+                    last_message_id = temp;
+                }
+
+                index++;
+            }
+
+            editMessage(channel_id, last_message_id);
+        }
     }
 
     input.onpaste = event => {

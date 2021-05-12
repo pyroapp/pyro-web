@@ -23,21 +23,25 @@
             // Not entirely sure why but if you delete messages it will add the first
             // message from the listener and add it again. Probably because it has a limit
             // of 50 and it is making sure the list always has 50 messages...
-            if (type === 'added') messages.push(message);
+            if (type === 'added') {
+                messages.push(message);
+            }
+
             if (type === 'removed') deleteMessageFromList(message, channel_id);
+            
             if (type === 'modified') {
                 editMessageInList(message);
 
                 const { timestamp } = message.data();
                 const { long, short } = formatMessageTime(timestamp);
 
-                CACHED_MESSAGES[message.id] = {
+                CACHED_MESSAGES[channel_id][message.id] = {
                     ...message.data(),
                     time: {
                         long: long,
                         short: short
                     }
-                }
+                };
             }
         });
 
@@ -45,6 +49,7 @@
         loadMessagesInList(channel_id, messages);
     });
 
+    CACHED_MESSAGES[channel_id] = [];
     CACHED_CHAT_LISTENERS[channel_id] = listener;
 }
 
@@ -128,13 +133,14 @@ function loadMessagesInList(channel_id, messages) {
         div.onmouseleave = () => div.querySelector('.buttonContainer-DHceWr').innerHTML = '';
 
         LAST_MESSAGE_TIMESTAMP[channel_id] = timestamp;
-        CACHED_MESSAGES[message.id] = {
+
+        CACHED_MESSAGES[channel_id][message.id] = {
             ...message.data(),
             time: {
                 long: long,
                 short: short
             }
-        }
+        };
     });
 
     scrollToBottom(channel_id);
