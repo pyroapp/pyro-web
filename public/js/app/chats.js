@@ -320,6 +320,14 @@ function handleChatEvents(div, payload) {
 
     input.onkeyup = event => {
         if (event.key === 'Escape') return cancelReply(channel_id);
+    
+        // Edit the last message send by the current user
+        if (event.key === 'ArrowUp') {
+            const { uid } = firebase.auth().currentUser;
+            const last_message_id= getLastMessageByAuthor(channel_id, uid);
+            
+            editMessage(channel_id, last_message_id);
+        }
     }
 
     input.onpaste = event => {
@@ -424,4 +432,34 @@ function selectMainBody(id) {
     });
 
     document.getElementById(id).classList.remove('hidden');
+}
+
+
+/**
+ * 
+ * @param {*} channel_id 
+ * @param {*} uid 
+ * @returns 
+ */
+function getLastMessageByAuthor(channel_id, uid) {
+    const messages = CACHED_MESSAGES[channel_id];
+    const keys = Object.keys(messages);
+
+    let index = 1;
+    let last_message_id;
+
+    while (!last_message_id) {
+        const temp = keys[keys.length - index];
+
+        // Message was sent by the current user
+        if (!messages[temp]) return index++;
+
+        if (messages[temp].author.id === uid) {
+            last_message_id = temp;
+        }
+
+        index++;
+    }
+
+    return last_message_id;
 }

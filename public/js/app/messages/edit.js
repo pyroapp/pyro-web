@@ -49,7 +49,7 @@ function deleteMessageFromList(message, channel_id) {
         const nextMessageContents = nextMessage.querySelector('.contents-2mQqc9');
         const messageContent = nextMessageContents.querySelector('.messageContent-2qWWxC').innerHTML;
 
-        const { author: { id:author_uid }, time: { long } } = CACHED_MESSAGES[message_id];
+        const { author: { id:author_uid }, time: { long } } = CACHED_MESSAGES[channel_id][message_id];
         const { username, flags } = CACHED_USERS[author_uid];
 
         const customTag = flags.includes('DEVELOPER') ? userTag('Developer') : '';
@@ -134,16 +134,17 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
  * @param {*} message_id 
  */
 function replyMessage(channel_id, message_id) {
-    
+    if (IS_REPLYING) return; // Already replying to message
+
     // Show reply UI for input
     const chat = document.getElementById(channel_id);
     const container = chat.querySelector('.scrollableContainer-2NUZem');
     const input = chat.querySelector('.messageField');
 
-    const { author: { username } } = CACHED_MESSAGES[message_id];
+    const { author: { username } } = CACHED_MESSAGES[channel_id][message_id];
 
     input.focus(); // Let user immediately start typing    
-    IS_REPLYING = CACHED_MESSAGES[message_id];
+    IS_REPLYING = CACHED_MESSAGES[channel_id][message_id];
 
     container.insertAdjacentHTML(
         'beforebegin',
@@ -202,6 +203,9 @@ function editMessage(channel_id, message_id) {
 
     // Get the contents of the message
     const message = document.getElementById(`message-${message_id}`);
+
+    if (!message) return; // Message does not exist, most likely was deleted in current session
+
     const content = message.querySelector('.messageContent-2qWWxC');
 
     // Cancel message editing
@@ -210,6 +214,9 @@ function editMessage(channel_id, message_id) {
 
         editContainer.classList = 'markup-2BOw-j messageContent-2qWWxC';
         editContainer.innerHTML = tempMessage;
+
+        // Give focus back to the main input
+        document.getElementById(channel_id).querySelector('.messageField').focus();
 
         IS_EDITING = false;
     }

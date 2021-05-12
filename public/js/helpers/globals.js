@@ -9,7 +9,7 @@
 //? ------------------------------------------------------------------------------------
 
 // Themes
-const DEFAULT_THEME = 'dark';
+const DEFAULT_THEME = 'dim';
 
 
 // Global cache
