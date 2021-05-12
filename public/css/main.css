@@ -15227,7 +15227,8 @@ img[alt] {
 	-moz-user-select:none;
 	-ms-user-select:none;
 	user-select:none;
-	margin-right:.3rem
+	margin-right:.3rem;
+	margin-top: 1px;
 }
 
 .threadMessageAccessoryAvatar-2XWCxw {

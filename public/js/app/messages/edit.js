@@ -253,6 +253,9 @@ function editMessage(channel_id, message_id) {
 
     content.classList = 'editingMessageContainer-fj023r';
 
+    // Scroll input into focus so the user can see it properly
+    message.querySelector('.editingMessageContainer-fj023r').scrollIntoView();
+
     // Add input event listeners
     const input = content.querySelector('.slateTextArea-1Mkdgw');
     const cancel = content.querySelector('.cancelEdit-j091dg');
