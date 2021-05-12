@@ -77,7 +77,7 @@ function deleteMessageFromList(message, channel_id) {
  */
 function showMessageEditingButtons(channel_id, message_id, messageEl) {
     const { uid } = firebase.auth().currentUser;
-    let isReply, isEdit, isDelete;
+    let isReply, isEdit;
 
     const _reply = `
         <div class="button-1ZiXG9" id="reply-message">
@@ -95,19 +95,17 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
         </div>
     `.trim();
 
-    const _delete = `
-        <div class="button-1ZiXG9" id="delete-message">
-            <svg class="icon-LYJorE" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M15 3.999V2H9V3.999H3V5.999H21V3.999H15Z"></path>
-                <path fill="currentColor" d="M5 6.99902V18.999C5 20.101 5.897 20.999 7 20.999H17C18.103 20.999 19 20.101 19 18.999V6.99902H5ZM11 17H9V11H11V17ZM15 17H13V11H15V17Z"></path>
+    const _more = `
+        <div class="button-1ZiXG9" id="more-message">
+            <svg class="icon-3Gkjwa" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M7 12.001C7 10.8964 6.10457 10.001 5 10.001C3.89543 10.001 3 10.8964 3 12.001C3 13.1055 3.89543 14.001 5 14.001C6.10457 14.001 7 13.1055 7 12.001ZM14 12.001C14 10.8964 13.1046 10.001 12 10.001C10.8954 10.001 10 10.8964 10 12.001C10 13.1055 10.8954 14.001 12 14.001C13.1046 14.001 14 13.1055 14 12.001ZM19 10.001C20.1046 10.001 21 10.8964 21 12.001C21 13.1055 20.1046 14.001 19 14.001C17.8954 14.001 17 13.1055 17 12.001C17 10.8964 17.8954 10.001 19 10.001Z"></path>
             </svg>
         </div>
-    `.trim();
+    `;
 
+    // Message was sent by the current user
     if (messageEl.getAttribute('author_uid') === uid) {
-        isReply = true;
         isEdit = true;
-        isDelete = true;
     } else {
         isReply = true;
     }
@@ -117,14 +115,93 @@ function showMessageEditingButtons(channel_id, message_id, messageEl) {
             <div class="wrapper-2aW0bm">
                 ${isReply ? _reply : ''}
                 ${isEdit ? _edit : ''}
-                ${isDelete ? _delete : ''}
+                ${_more}
             </div>
         </div>
     `.trim(); 
 
     if (isReply) document.getElementById('reply-message').onclick = () => replyMessage(channel_id, message_id);
     if (isEdit) document.getElementById('edit-message').onclick = () => editMessage(channel_id, message_id);
-    if (isDelete) document.getElementById('delete-message').onclick = () => deleteMessage(channel_id, message_id);
+    
+    document.getElementById('more-message').onclick = event => showMessageContextMenu(channel_id, message_id, event, 210);
+}
+
+
+/**
+ * 
+ * @param {*} channel_id 
+ * @param {*} message_id 
+ * @param {*} event 
+ */
+function showMessageContextMenu(channel_id, message_id, event, offset) {
+    const layer = document.querySelector('.layerContainer-yqaFcK');
+    const { x, y } = event;
+
+    event.preventDefault(); // Stop normal context menu
+
+    const messageEl = document.getElementById(`message-${message_id}`);
+
+    const { uid } = firebase.auth().currentUser;
+    const isAuthor = messageEl.getAttribute('author_uid') === uid;
+
+    const _edit = `
+        <div class="item-1tOPte labelContainer-1BLJti colorDefault-2K3EoJ" id="edit-message-context">
+            <div class="label-22pbtT">Edit Message</div>
+        </div>
+    `;
+
+    const _pin = `
+        <div class="item-1tOPte labelContainer-1BLJti colorDefault-2K3EoJ" id="pin-message-context">
+            <div class="label-22pbtT">Pin Message</div>
+        </div>
+    `;
+
+    const _reply = `
+        <div class="item-1tOPte labelContainer-1BLJti colorDefault-2K3EoJ" id="reply-message-context">
+            <div class="label-22pbtT">Reply</div>
+        </div>
+    `;
+
+    const _delete = `
+        <div class="item-1tOPte labelContainer-1BLJti colorDanger-2qLCe1 colorDefault-2K3EoJ" id="delete-message-context">
+            <div class="label-22pbtT">Delete Message</div>
+        </div>
+    `;
+
+    layer.innerHTML = `
+        <div class="layer-v9HyYc" style="position: absolute; top: ${y}px; left: ${x - (offset || 0)}px;">
+            <div class="menu-3sdvDG styleFlexible-wGDiIL">
+                <div class="scroller-3BxosC thin-1ybCId scrollerBase-289Jih" style="overflow: hidden scroll; padding-right: 0px;">
+                    <div>
+                        ${isAuthor ? _edit : ''}
+                        <!-- ${_pin} -->
+                        ${_reply}
+                        ${isAuthor ? _delete : ''}  
+                    </div>
+                    <div role="separator" class="separator-2I32lJ"></div>
+                    <div>
+                        <div class="item-1tOPte labelContainer-1BLJti colorDefault-2K3EoJ" id="copy-id-message-context">
+                            <div class="label-22pbtT">Copy ID</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `.trim();
+
+    if (isAuthor) document.getElementById('edit-message-context').onclick = () => editMessage(channel_id, message_id);
+    if (isAuthor) document.getElementById('delete-message-context').onclick = () => deleteMessage(channel_id, message_id);
+
+    document.getElementById('reply-message-context').onclick = () => replyMessage(channel_id, message_id);
+    document.getElementById('copy-id-message-context').onclick = () => copyToClipboard(message_id);
+}
+
+
+// Close context menu if clicked outside of
+document.onclick = event => {
+    const isMoreButton = event.target.closest('#more-message');
+
+    if (!isMoreButton) hideModals(0);
 }
 
 
@@ -175,7 +252,8 @@ function cancelReply(channel_id) {
     const replyContainer = textArea.querySelector('.container-2fRDfG');
 
     IS_REPLYING = null;
-    textArea.removeChild(replyContainer);
+
+    if (replyContainer) textArea.removeChild(replyContainer);
 }
 
 

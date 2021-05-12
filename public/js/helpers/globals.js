@@ -9,7 +9,7 @@
 //? ------------------------------------------------------------------------------------
 
 // Themes
-const DEFAULT_THEME = 'dim';
+const DEFAULT_THEME = 'dark';
 
 
 // Global cache
@@ -68,7 +68,6 @@ const AUTH_CODES = {
     'auth/invalid-creation-time': 'Invalid creation time.',
     'auth/invalid-credential': 'Invalid authentication credentials.',
     'auth/email-already-in-use': 'Email already exists.',
-
     'auth/user-not-found': 'User does not exist.',
     'auth/invalid-email': 'Invalid email address.',
     'auth/invalid-display-name': 'Invalid username.',
@@ -80,23 +79,14 @@ const AUTH_CODES = {
 // Loading overlay messages
 const DID_YOU_KNOW = [
     'Deobfuscating the obfuscation!',
-    'Now with 100% less Nitro!',
-    'Organic, gluten-free, non-GMO code!',
     'Spaghettifying the spaghetto!',
     'Spark a conversation!',
     'Lighting up a nice campfire for you!',
-    'Say hi at your local Pyro tavern - hot chocolate included!',
     'Unpack the webpack!',
     'Doing wizardly math stuff!',
-    'Caring for the fonts!',
     'Lighting the way to camp!',
-    'Made you a cup of hot chocolate!',
-    'Late night gaming or planning your next dinner?',
     'Welcome back to Pyro!',
     'Preparing a warm welcome!',
     'Make a new friend!',
-    'Be more like doko.',
-    'Pyro > Discord > Guilded',
-    'It\'s time to ditch Skype and Discord',
     'Generating handlers...'
 ];

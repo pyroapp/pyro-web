@@ -47,8 +47,10 @@
 
 /**
  * 
+ * @param {*} timeout 
+ * @returns 
  */
-async function hideModals() {
+async function hideModals(timeout) {
     const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
     if (!modal.childNodes.length) return;
@@ -56,10 +58,10 @@ async function hideModals() {
     const container = document.querySelectorAll('.fadeIn-efi30')[0];
     const background = document.querySelectorAll('.fadeIn-dk023d')[0];
 
-    container.classList.add('fadeOut-efi30');
-    background.classList.add('fadeOut-dk023d');
+    if (container) container.classList.add('fadeOut-efi30');
+    if (background) background.classList.add('fadeOut-dk023d');
     
-    await delay(80);
+    await delay(timeout || 80);
 
     modal.innerHTML = '';
 }
