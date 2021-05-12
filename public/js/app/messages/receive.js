@@ -27,7 +27,17 @@
             if (type === 'removed') deleteMessageFromList(message, channel_id);
             if (type === 'modified') {
                 editMessageInList(message);
-                CACHED_MESSAGES[message.id] = message.data();
+
+                const { timestamp } = message.data();
+                const { long, short } = formatMessageTime(timestamp);
+
+                CACHED_MESSAGES[message.id] = {
+                    ...message.data(),
+                    time: {
+                        long: long,
+                        short: short
+                    }
+                }
             }
         });
 
