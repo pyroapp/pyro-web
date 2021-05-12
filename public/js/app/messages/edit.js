@@ -203,6 +203,9 @@ function editMessage(channel_id, message_id) {
 
     // Get the contents of the message
     const message = document.getElementById(`message-${message_id}`);
+
+    if (!message) return; // Message does not exist, most likely was deleted in current session
+
     const content = message.querySelector('.messageContent-2qWWxC');
 
     // Cancel message editing

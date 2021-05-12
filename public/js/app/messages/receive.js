@@ -27,8 +27,12 @@
                 messages.push(message);
             }
 
-            if (type === 'removed') deleteMessageFromList(message, channel_id);
-            
+            if (type === 'removed') {
+                deleteMessageFromList(message, channel_id);
+
+                CACHED_MESSAGES[channel_id][message.id] = null;
+            }
+
             if (type === 'modified') {
                 editMessageInList(message);
 
