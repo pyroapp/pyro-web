@@ -281,12 +281,10 @@ function handleChatEvents(div, payload) {
     const input = div.querySelectorAll('.messageField')[0];
     const file = document.getElementById(`attachment-${channel_id}`);
 
-    
     // Send attachment
     file.onchange = event => {        
         sendAttachmentHandler(channel_id, event.target.files);
     }
-
 
     if (type === 'PRIVATE') {
         const { friend_uid } = payload;
@@ -299,7 +297,6 @@ function handleChatEvents(div, payload) {
             showGroupDMModal(friend_uid);
         }
     }
-
 
     // Send message on enter
     input.addEventListener('keypress', event => {
@@ -321,6 +318,9 @@ function handleChatEvents(div, payload) {
         }
     });
 
+    input.onkeyup = event => {
+        if (event.key === 'Escape') return cancelReply(channel_id);
+    }
 
     input.onpaste = event => {
         const items = (event.clipboardData || event.originalEvent.clipboardData).items;
@@ -357,7 +357,6 @@ function handleChatEvents(div, payload) {
         };
     });
 
-
     // Sanitise pasting
     input.addEventListener("paste", event => {
         event.preventDefault();
@@ -370,7 +369,6 @@ function handleChatEvents(div, payload) {
             text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;")
         );
     });
-    
 
     // Auto focus the input anywhere within the chat
     document.addEventListener('keypress', () => {
@@ -385,7 +383,6 @@ function handleChatEvents(div, payload) {
             if (!input.activeElement) input.focus();
         }
     });
-
 
     // Typing indicator behavior
     input.oninput = async () => {

@@ -55,6 +55,8 @@
  */
  function scrollToBottom(channel_id) {
     const messageList = document.getElementById(`messages-${channel_id}`).lastChild;
+
+    if (!messageList) return; // No messages
     
     messageList.scrollIntoView();
 }
@@ -70,16 +72,6 @@
         content: newcontent,
         edited_timestamp: getTime()
     });
-}
-
-
-/**
- * 
- * @param {*} channel_id 
- * @param {*} message_id 
- */
- function deleteMessage(channel_id, message_id) {
-    firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(message_id).delete();
 }
 
 
@@ -101,3 +93,20 @@ document.body.onclick = e => {
         e.target.className = "spoilerText-3p6IlD";
     }
 };
+
+
+/**
+ * 
+ * @param {*} input 
+ */
+ function resetMessageInput(channel_id, input) {
+    const channel = document.getElementById(channel_id);
+    const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
+
+    // Remove all child node content
+    while (input.childNodes.length > 0) {
+        input.firstChild.remove();
+    }
+
+    placeholder.classList.remove('hidden');
+}

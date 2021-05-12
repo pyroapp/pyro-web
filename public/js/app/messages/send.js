@@ -47,14 +47,10 @@
  * @param {*} file 
  * @returns 
  */
-function sendMessage(input, channel_id, file) {
-    const channel = document.getElementById(channel_id);
-    const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
-
+function sendMessage(input, channel_id, attachment) {
     let message = input.innerHTML.trim();
-    let type = 0;
 
-    if (!message && !file) return;
+    if (!message && !attachment) return;
 
     const { uid } = firebase.auth().currentUser;
     const recipients = generateRecipientsList(channel_id);
@@ -63,14 +59,13 @@ function sendMessage(input, channel_id, file) {
     message = parseEmojis(message);
     message = parseText(message);
 
-    if (file) type = 1;
-
     firebase.firestore().collection('channels').doc(channel_id).collection('messages').doc(generateId()).set({
-        attachment: file || null,
+        attachment: attachment || null,
         author: {
             id: uid,
             username: CACHED_USERS[uid].username
         },
+        reply_message: IS_REPLYING,
         channel_id: channel_id,
         content: message,
         edited_timestamp: null,
@@ -84,22 +79,5 @@ function sendMessage(input, channel_id, file) {
     });
 
     resetMessageInput(channel_id, input);
-}
-
-
-
-/**
- * 
- * @param {*} input 
- */
-function resetMessageInput(channel_id, input) {
-    const channel = document.getElementById(channel_id);
-    const placeholder = channel.querySelectorAll('.placeholder-37qJjk')[0];
-
-    // Remove all child node content
-    while (input.childNodes.length > 0) {
-        input.firstChild.remove();
-    }
-
-    placeholder.classList.remove('hidden');
+    if (IS_REPLYING) cancelReply(channel_id);
 }
