@@ -386,7 +386,6 @@ function handleChatEvents(div, payload) {
             const editingInput = div.querySelector('.slateTextArea-1Mkdgw');
 
             editingInput.focus();
-            setCaretToEnd(editingInput);
         } else {
             if (!input.activeElement) input.focus();
         }
