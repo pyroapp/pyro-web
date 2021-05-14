@@ -197,14 +197,6 @@ function showMessageContextMenu(channel_id, message_id, event, offset) {
 }
 
 
-// Close context menu if clicked outside of
-document.onclick = event => {
-    const isMoreButton = event.target.closest('#more-message');
-
-    if (!isMoreButton) hideModals(0);
-}
-
-
 /**
  * 
  * @param {*} channel_id 
