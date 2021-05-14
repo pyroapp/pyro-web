@@ -135,6 +135,7 @@ function loadMessagesInList(channel_id, messages) {
 
         div.onmouseenter = () => showMessageEditingButtons(channel_id, message.id, div);
         div.onmouseleave = () => div.querySelector('.buttonContainer-DHceWr').innerHTML = '';
+        div.oncontextmenu = event => showMessageContextMenu(channel_id, message.id, event);
 
         LAST_MESSAGE_TIMESTAMP[channel_id] = timestamp;
 

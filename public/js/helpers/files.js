@@ -88,11 +88,26 @@ async function sendAttachmentHandler(channel_id, files) {
         const { name, size, type } = files[i];
         const url = await uploadFile(files[i]);
 
+        let height, width;
+
+        // Get image dimentions
+        if (type.split('/')[0] === 'image') {
+            const fileAsURL = window.URL.createObjectURL(files[i]);
+            const { height:img_height, width:img_width } = await getImageDimentions(fileAsURL); 
+        
+            height = img_height;
+            width = img_width;    
+        }
+
         const fileObject = {
             name: name,
             size: size,
             type: type,
             url: url,
+            dimentions: {
+                height: height,
+                width: width
+            }
         };
 
         const input = document.getElementById(channel_id).querySelector('.messageField');
@@ -100,3 +115,22 @@ async function sendAttachmentHandler(channel_id, files) {
         sendMessage(input, channel_id, fileObject);
     }
 }
+
+
+/**
+ * 
+ * @param {*} dataURL 
+ * @returns 
+ */
+const getImageDimentions = dataURL => new Promise(resolve => {
+    const img = new Image();
+
+    img.onload = () => {
+      resolve({
+        height: img.height,
+        width: img.width
+      });
+    }
+
+    img.src = dataURL;
+});

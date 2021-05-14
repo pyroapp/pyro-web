@@ -16,7 +16,7 @@ async function showGroupDMModal(friend_uid) {
     const layer = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
     layer.innerHTML = `
-        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);"></div>
         <div class="layer-2KE1M9 fadeIn-efi30">
             <div class="focusLock-Ns3yie">
                 <div class="modalRoot-1Kx4Hb root-1gCeng small-3iVZYw fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
@@ -261,7 +261,7 @@ function showLeaveGroupChatConfirmationModal(channel_id) {
     const { name } = CACHED_GROUP_CHAT_CHANNELS[channel_id];
 
     layer.innerHTML = `
-        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);"></div>
         <div class="layer-2KE1M9 fadeIn-efi30">
             <div class="focusLock-Ns3yie">
                 <div class="modalRoot-1Kx4Hb root-1gCeng small-3iVZYw fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
@@ -379,7 +379,7 @@ function showGroupChatChangeNameModal(channel_id) {
     const layer = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
     layer.innerHTML = `
-        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);"></div>
         <div class="layer-2KE1M9 fadeIn-efi30">
             <div class="focusLock-Ns3yie">
                 <div class="modalRoot-1Kx4Hb root-1gCeng small-3iVZYw fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">

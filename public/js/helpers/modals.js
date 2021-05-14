@@ -9,6 +9,16 @@
 //? ------------------------------------------------------------------------------------
 
 
+// Close context menu if clicked outside of
+document.onclick = event => {
+    const isMoreButton = event.target.closest('#more-message');
+    const groupChatButton = event.target.closest('.groupChatSettings-j0932f');
+    const modal = event.target.closest('.layer-2KE1M9');
+
+    if (!isMoreButton && !groupChatButton && !modal) hideModals(0);
+}
+
+
 /**
  * 
  * @param {*} heading 
@@ -20,7 +30,7 @@
     const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
     modal.innerHTML = `
-        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);"></div>
         <div class="layer-2KE1M9 fadeIn-efi30">
             <div class="focusLock-Ns3yie">
                 <div class="container-14fypd root-1gCeng small-3iVZYw fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
@@ -47,8 +57,10 @@
 
 /**
  * 
+ * @param {*} timeout 
+ * @returns 
  */
-async function hideModals() {
+async function hideModals(timeout) {
     const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
     if (!modal.childNodes.length) return;
@@ -56,10 +68,10 @@ async function hideModals() {
     const container = document.querySelectorAll('.fadeIn-efi30')[0];
     const background = document.querySelectorAll('.fadeIn-dk023d')[0];
 
-    container.classList.add('fadeOut-efi30');
-    background.classList.add('fadeOut-dk023d');
+    if (container) container.classList.add('fadeOut-efi30');
+    if (background) background.classList.add('fadeOut-dk023d');
     
-    await delay(80);
+    await delay(timeout || 80);
 
     modal.innerHTML = '';
 }
@@ -74,7 +86,7 @@ function showCustomStatusModal() {
     const { displayName } = firebase.auth().currentUser;
 
     modal.innerHTML = `
-        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);"></div>
         <div class="layer-2KE1M9 fadeIn-efi30">
             <div class="focusLock-Ns3yie">
                 <div class="modalRoot-1Kx4Hb root-1gCeng small-3iVZYw fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
@@ -127,7 +139,7 @@ function imageModal(image_url) {
     const modal = document.querySelectorAll('.layerContainer-yqaFcK')[0];
 
     modal.innerHTML = `
-        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="hideModals()"></div>
+        <div class="backdropWithLayer-3_uhz4 fadeIn-dk023d" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);"></div>
         <div class="layer-2KE1M9">
             <div class="focusLock-Ns3yie">
                 <div class="modal-qgFCbT root-1gCeng fullscreenOnMobile-1bD22y" style="opacity: 1; transform: scale(1);">
