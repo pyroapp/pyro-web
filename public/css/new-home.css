@@ -1,0 +1,137 @@
+a,
+abbr,
+acronym,
+address,
+applet,
+big,
+blockquote,
+body,
+button,
+caption,
+cite,
+code,
+dd,
+del,
+dfn,
+div,
+dl,
+dt,
+em,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+iframe,
+img,
+input,
+ins,
+kbd,
+label,
+legend,
+li,
+object,
+ol,
+p,
+pre,
+q,
+s,
+samp,
+small,
+span,
+strike,
+strong,
+sub,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr,
+tt,
+ul,
+var {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-family: inherit;
+	font-size: 100%;
+	vertical-align: baseline
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+	vertical-align: middle
+}
+
+caption,
+td,
+th {
+	text-align: left;
+	font-weight: 400;
+	vertical-align: middle
+}
+
+ol,
+ul {
+	list-style: none
+}
+
+a img {
+	border: none
+}
+
+button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color: transparent
+}
+
+html {
+    height: 100%
+}
+
+body {
+	background: #1a1a23;
+	color: #E2E2E2
+}
+
+body {
+	text-rendering: optimizeLegibility;
+	font-family: 'Rubik', Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	line-height: 1.15
+}
+
+/* Font Weights */
+
+.weightLight {
+	font-weight: 300
+}
+
+.weightNormal {
+	font-weight: 400
+}
+
+.weightMedium {
+	font-weight: 500
+}
+
+.weightSemiBold {
+	font-weight: 600
+}
+
+.weightBold {
+	font-weight: 700
+}

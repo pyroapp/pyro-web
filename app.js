@@ -24,6 +24,12 @@ app.get('/', (req, res) => {
     res.status(200).sendFile(web + '/views/landing.html');
 });
 
+app.get('/new', (req, res) => {
+    log(req);
+    
+    res.status(200).sendFile(web + '/views/new-landing.html');
+});
+
 app.get('/login', (req, res) => {
     log(req);
 
