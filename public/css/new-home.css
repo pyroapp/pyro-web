@@ -186,3 +186,20 @@ body {
 .link:hover {
 	text-decoration: underline
 }
+
+/* CTA Section */
+
+.ctaContainer {
+    padding-top: 72px;
+    background-color: #101015;
+    position: relative;
+    height: calc(40vh - 72px);
+    max-height: 828px;
+    min-height: 568px;
+    border-bottom: none;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
