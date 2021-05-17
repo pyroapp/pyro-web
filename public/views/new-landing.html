@@ -1,40 +1,74 @@
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
 
-        <meta name="description" content="Ignite your community. Pyro is a free, powerful, and modular text and voice communication service">
+<head>
+    <meta charset="utf-8">
 
-        <!-- Facebook Meta Tags -->
-        <meta property="og:url" content="https://pyrochat.app">
-        <meta property="og:type" content="website">
-        <meta property="og:title" content="Pyro | Ignite Your Community">
-        <meta property="og:description" content="Ignite your community. Pyro is a free, powerful, and modular text and voice communication service">
-        <meta property="og:image" content="/img/ogimage.png">
+    <meta name="description"
+        content="Ignite your community. Pyro is a free, powerful, and modular text and voice communication service">
 
-        <!-- Twitter Meta Tags -->
-        <meta name="twitter:card" content="summary_large_image">
-        <meta property="twitter:domain" content="pyrochat.app">
-        <meta property="twitter:url" content="https://pyrochat.app">
-        <meta name="twitter:title" content="Pyro | Ignite Your Community">
-        <meta name="twitter:description" content="Ignite your community. Pyro is a free, powerful, and modular text and voice communication service">
-        <meta name="twitter:image" content="/img/ogimage.png">
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://pyrochat.app">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Pyro | Ignite Your Community">
+    <meta property="og:description"
+        content="Ignite your community. Pyro is a free, powerful, and modular text and voice communication service">
+    <meta property="og:image" content="/img/ogimage.png">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="pyrochat.app">
+    <meta property="twitter:url" content="https://pyrochat.app">
+    <meta name="twitter:title" content="Pyro | Ignite Your Community">
+    <meta name="twitter:description"
+        content="Ignite your community. Pyro is a free, powerful, and modular text and voice communication service">
+    <meta name="twitter:image" content="/img/ogimage.png">
 
-        <link rel="icon" href="/img/favicon.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="/css/new-home.css">
+    <link rel="icon" href="/img/favicon.png" type="image/png">
 
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-		<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/new-home.css">
 
-        <title>Pyro | Ignite Your Community</title>
-    </head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <body>
-        <div id="landingMount">
-            <section class="ctaContainer">
+    <title>Pyro | Ignite Your Community</title>
+</head>
 
-            </section>
-        </div>
-    </body>
+<body>
+    <div id="landingMount">
+        <section class="ctaContainer">
+            <div class="heroBackground">
+                <div class="heroImageContainer">
+
+                </div>
+            </div>
+            <div class="ctaContent">
+                <button class="buttonBase buttonPadding buttonRound buttonTall buttonSecondary">
+                    <div class="buttonContent">Learn More</div>
+                </button>
+                <button class="buttonBase buttonPadding buttonBrand buttonRound buttonTall" id="loginButtonDesktop" href="/login">
+                    <div class="buttonContent">Open Pyro</div>
+                </button>
+            </div>
+        </section>
+    </div>
+    <!-- Firebase Core SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+
+    <!-- Firebase Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-messaging.js"></script>
+
+    <!-- Main Helper -->
+    <script src="/js/helpers/main.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script src="/js/firebase/config.js"></script>
+
+    <!-- Landing -->
+    <script src="/js/home/auth.js"></script>
+</body>
+
+</html>
