@@ -124,6 +124,11 @@ body {
 	line-height: 1.15
 }
 
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
 /* Button Style */
 
 .buttonBase {
@@ -332,16 +337,35 @@ body {
 
 /* Landing Section */
 
-.landingContainer {
+/* .landingContainer {
     width: 100%;
     background-color: #1a1a23;
     position: relative;
-    height: calc(40vh - 72px);
-    max-height: 828px;
-    min-height: 568px;
+    height: 100%;
     border-bottom: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+} */
+
+/* Parallax */
+
+.parallaxbitch {
+    display: block;
+    position: absolute;
+}
+
+.megaparallaxbitch {
+    display: block;
+    position: absolute;
+}
+
+#parallaxContainer {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
