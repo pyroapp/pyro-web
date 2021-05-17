@@ -2,6 +2,12 @@
     height: 100%
 }
 
+/* Global */
+
+.hidden {
+    display: none !important;
+}
+
 a,
 abbr,
 acronym,
