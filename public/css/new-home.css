@@ -248,6 +248,9 @@ body {
 	line-height: 120%
 }
 
+.textBrand {
+    color: #FEBE10
+}
 /* Link Style */
 
 .link {
@@ -264,7 +267,7 @@ body {
     width: 100%;
     background-color: #101015;
     position: relative;
-    height: calc(40vh - 72px);
+    height: 40vh;
     max-height: 828px;
     min-height: 568px;
     border-bottom: none;
@@ -292,6 +295,28 @@ body {
 }
 
 /* Hero Section */
+.heroBody {
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.heroText {
+    padding-bottom: 8px;
+    display: flex;
+}
 
 .heroBackground {
     padding-bottom: 0;
@@ -303,4 +328,20 @@ body {
     left: 0;
     height: 100%;
     width: 100%;
+}
+
+/* Landing Section */
+
+.landingContainer {
+    width: 100%;
+    background-color: #1a1a23;
+    position: relative;
+    height: calc(40vh - 72px);
+    max-height: 828px;
+    min-height: 568px;
+    border-bottom: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
