@@ -79301,7 +79301,8 @@ html .invoiceCancelRow-3mYhFX {
 }
 
 .codeTable {
-	border-collapse: collapse
+	border-collapse: collapse;
+	color: var(--header-secondary);
 }
 
 .codeTable tr {
