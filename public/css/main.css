@@ -79299,3 +79299,24 @@ html .invoiceCancelRow-3mYhFX {
 .hidden {
 	display: none;
 }
+
+.codeTable {
+	border-collapse: collapse
+}
+
+.codeTable tr {
+	height: 19px;
+    width: 100%;
+}
+
+.codeTable td:first-child {
+    border-right: 1px solid var(--background-modifier-accent);
+    padding-left: 5px;
+    padding-right: 8px;
+    user-select: none;
+}
+
+.codeTable td:last-child {
+    padding-left: 8px;
+    word-break: break-all;
+}
