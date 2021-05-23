@@ -47464,7 +47464,7 @@ strong {
 
 .container-1r6BKw.themed-ANHk51 {
 	background:var(--background-secondary);
-	filter: drop-shadow(0px 3px 15px #101015)
+	filter: drop-shadow(0px 3px 15px #1a1a23)
 }
 
 .container-1r6BKw.transparent-2ZlE3R {
@@ -57456,7 +57456,7 @@ a.ctaAnchor-3-8I3v:hover {
 .channelTextArea-rNsIhG {
 	margin-bottom:24px;
 	background-color:var(--background-primary);
-	filter: drop-shadow(0px -3px 10px #101015)
+	filter: drop-shadow(0px -3px 10px #1A1A23)
 }
 
 .titleWrapper-1l0xT9 {
@@ -70027,7 +70027,8 @@ html .invoiceCancelRow-3mYhFX {
 	-ms-flex-align:center;
 	align-items:center;
 	padding:0 8px;
-	margin-bottom:1px
+	margin-bottom:1px;
+	margin-left: 8px
 }
 
 .container-3baos1,
