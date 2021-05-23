@@ -3872,7 +3872,7 @@
 	border-radius: 3px;
 	color: var(--text-normal);
 	background-color: var(--deprecated-text-input-bg);
-	border: 1px solid var(--deprecated-text-input-border);
+	border: 2px solid var(--deprecated-text-input-border);
 	-webkit-transition: border-color .2s ease-in-out;
 	transition: border-color .2s ease-in-out
 }
@@ -28233,14 +28233,14 @@ html .progress-GjyFoQ {
 }
 
 .message-2qnXI6 {
-	transition: all 0.1s ease; /* LITERALLY ONLY FOR HYPERIONS EYES SO HE DOESN'T HAVE A SEIZURE */ 
+	transition: all 0.1s ease; /* LITERALLY ONLY FOR HYPERIONS EYES SO HE DOESN'T HAVE A SEIZURE */
 	padding-right:48px!important;
 }
 
 .message-2qnXI6 .timestampInline-yHQ6fX {
 	margin-left: 0;
 }
- 
+
 .message-2qnXI6:hover {
 	background-color:var(--background-message-hover);
 }
