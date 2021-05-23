@@ -98,7 +98,6 @@ function parseText(text) {
 
         } else {
             if (newtext == "" && oldtext.startsWith("&gt; ") || oldtext.startsWith("\n&gt; ")) {
-                console.log(true)
                 newtext += `<div class="blockquoteContainer-U5TVEi"><div class="blockquoteDivider-2hH8H6"></div><blockquote>`;
                 oldtext = oldtext.slice(oldtext.startsWith("\n&gt; ") ? "\n&gt; ".length : "&gt; ".length);
                 markdown.quote = true;
