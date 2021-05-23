@@ -23,13 +23,13 @@
 
         if (oldtext.startsWith("\\") && emoji) {
             oldtext = oldtext.slice(1);
-            newtext = newtext + oldtext.slice(0, 1);
+            newtext += oldtext.slice(0, 1);
             oldtext = oldtext.slice(1);
         } else if (emoji) {
-            newtext = newtext + emoji.emoji;
+            newtext += emoji.emoji;
             oldtext = oldtext.slice(emoji.text.length);
         } else {
-            newtext = newtext + oldtext.slice(0, 1);
+            newtext += oldtext.slice(0, 1);
             oldtext = oldtext.slice(1);
         }
     };

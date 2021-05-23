@@ -33,7 +33,7 @@ function parseEmbeds(embeds) {
             html += `<div class="embedDescription-1Cuq9a embedMargin-UO5XwE">${parseText(embed.description)}</div>`
         }
 
-        html = html + '</div></div>';
+        html += '</div></div>';
 
         htmls.push(html);
     };
