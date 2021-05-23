@@ -73,6 +73,8 @@ function parseText(text) {
         bigcodeblock: false
     };
 
+    let bigcodeblock_num;
+
     // https://stackoverflow.com/questions/56504602/check-if-string-contains-only-emojis-javascript/56504667 
     
     let onlyemojis = /^(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff]|[\u0023-\u0039]\ufe0f?\u20e3|\u3299|\u3297|\u303d|\u3030|\u24c2|\ud83c[\udd70-\udd71]|\ud83c[\udd7e-\udd7f]|\ud83c\udd8e|\ud83c[\udd91-\udd9a]|\ud83c[\udde6-\uddff]|[\ud83c[\ude01-\ude02]|\ud83c\ude1a|\ud83c\ude2f|[\ud83c[\ude32-\ude3a]|[\ud83c[\ude50-\ude51]|\u203c|\u2049|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|\u00a9|\u00ae|\u2122|\u2139|\ud83c\udc04|[\u2600-\u26FF]|\u2b05|\u2b06|\u2b07|\u2b1b|\u2b1c|\u2b50|\u2b55|\u231a|\u231b|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\ud83c\udccf|\u2934|\u2935|[\u2190-\u21ff])+$/.test(oldtext.replace(/ /g, ""));
@@ -142,16 +144,18 @@ function parseText(text) {
             } else if (oldtext.startsWith("```") && !oldtext.startsWith("``````")) {
                 if (markdown.bigcodeblock == true) {
                     markdown.bigcodeblock = false;
-                    newtext += `</code></pre>`;
+                    newtext += `</td></tr></table></code></pre>`;
 
                     oldtext = oldtext.slice(3);
                 } else {
                     markdown.bigcodeblock = true;
-                    newtext += `<pre><code class="scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9 hljs">`;
+                    newtext += `<pre><code class="scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9 hljs"><table class="codeTable"><tr><td>1</td><td>`;
 
                     oldtext = oldtext.slice(3);
 
                     if (oldtext.startsWith("\n")) oldtext = oldtext.slice(1);
+
+                    bigcodeblock_num = 1;
                 }
 
             } else if (oldtext.startsWith("`") && !oldtext.startsWith("``")) {
@@ -194,6 +198,16 @@ function parseText(text) {
                 });
                 oldtext = oldtext.slice(emojiparsed.length);
 
+            } else if (oldtext.startsWith("\n") && markdown.bigcodeblock == true) {
+
+                if (!oldtext.startsWith("\n```")) {
+                    bigcodeblock_num++;
+
+                    newtext += `</td></tr><tr><td>${bigcodeblock_num}</td><td>`;
+                };
+
+                oldtext = oldtext.slice(1);
+
             /*
             } else if (oldtext.startsWith(":pyrodev:")) {
                 newtext += `<img class="emoji" draggable="false" alt=":pyrodev:" src="https://cdn.discordapp.com/emojis/829584881461493781.png?v=1" class="${onlyemojis && emojicount <= 27 ? "emoji jumboable" : "emoji"}>`;
@@ -219,7 +233,7 @@ function parseText(text) {
     if (markdown.strikethrough) newtext = removeLastOf(newtext, "<del>", "~~");
     if (markdown.spoiler) newtext = removeLastOf(newtext, `<span class="spoilerText-3p6IlD hidden-HHr2R9" aria-expanded="false" tabindex="0" role="button" aria-label="Spoiler"><span class="inlineContent-3ZjPuv">`, "||");
     if (markdown.quote) newtext = newtext + "</blockquote></div>";
-    if (markdown.bigcodeblock) newtext = removeLastOf(newtext, `<pre><code class="scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9 hljs">`, "```");
+    if (markdown.bigcodeblock) newtext = removeLastOf(newtext, `<pre><code class="scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9 hljs"><table class="codeTable"><tr><td>1</td><td>`, "```");
 
     return createTextLinks(newtext);
 };
