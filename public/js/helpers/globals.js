@@ -88,5 +88,6 @@ const DID_YOU_KNOW = [
     'Welcome back to Pyro!',
     'Preparing a warm welcome!',
     'Make a new friend!',
-    'Generating handlers...'
+    'Generating handlers...',
+    'Be more like doko.'
 ];
