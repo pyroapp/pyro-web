@@ -5,12 +5,12 @@
 //?
 //?  Developed by Pyro Communications LLC
 //?  Copyright (c) 2021 Pyro Communications LLC. All Rights Reserved
-//?     
+//?
 //? ------------------------------------------------------------------------------------
 
 
 /**
- *  
+ *
  */
 document.getElementById('signupButton').addEventListener('click', () => {
     signup();
@@ -18,7 +18,7 @@ document.getElementById('signupButton').addEventListener('click', () => {
 
 
 /**
- *  
+ *
  */
  document.getElementById('emailField').addEventListener('keyup', event => {
     if (event.key === 'Enter') signup();
@@ -26,7 +26,7 @@ document.getElementById('signupButton').addEventListener('click', () => {
 
 
 /**
- *  
+ *
  */
  document.getElementById('usernameField').addEventListener('keyup', event => {
     if (event.key === 'Enter') signup();
@@ -34,7 +34,7 @@ document.getElementById('signupButton').addEventListener('click', () => {
 
 
 /**
- *  
+ *
  */
  document.getElementById('passwordField').addEventListener('keyup', event => {
     if (event.key === 'Enter') signup();
@@ -42,12 +42,12 @@ document.getElementById('signupButton').addEventListener('click', () => {
 
 
 /**
- * 
+ *
  */
  function loadYearsBorn() {
     const dropdown = document.getElementById('bornDropdown');
     const endDate = getYear() - AGE_LIMIT;
-    
+
 
     for (year = DOB_START_YEAR; year < endDate; year++) {
         dropdown.innerHTML += `
@@ -58,19 +58,19 @@ document.getElementById('signupButton').addEventListener('click', () => {
 
 
 /**
- * 
+ *
  */
 async function signup() {
     const bkey = new URLSearchParams(window.location.search).get('beta-key');
 
     // Test if the beta key exists
-    if (!bkey) return alert('Beta key not found!');
+    if (!bkey) return showLabelError('keyLabel', `Beta key invalid or does not exist`);
 
     const doesKeyExist = await (
         await firebase.firestore().collection('beta_keys').doc(bkey).get()
     ).data();
 
-    if (!doesKeyExist) return alert('Beta key not found!');
+    if (!doesKeyExist) return showLabelError('keyLabel', `Beta key invalid or does not exist`);
 
     const button = document.getElementById('signupButton');
     const values = validateInputs([
@@ -95,7 +95,7 @@ async function signup() {
 
         return;
     }
-    
+
     try {
         const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
         const discriminator = await generateDiscriminator();
