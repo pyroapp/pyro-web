@@ -61,7 +61,7 @@ document.getElementById('signupButton').addEventListener('click', () => {
  *
  */
 async function signup() {
-    const bkey = new URLSearchParams(window.location.search).get('beta-key');
+    const bkey = new URLSearchParams(window.location.search).get('key');
 
     // Test if the beta key exists
     if (!bkey) return showLabelError('keyLabel', `Beta key invalid or does not exist`);
