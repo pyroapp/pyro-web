@@ -61,9 +61,16 @@ document.getElementById('signupButton').addEventListener('click', () => {
  * 
  */
 async function signup() {
-    alert('REGISTRATION IS NOT OPEN TO THE PUBLIC AT THIS POINT IN TIME. PLEASE CHECK BACK LATER');
+    const bkey = new URLSearchParams(window.location.search).get('beta-key');
 
-    return;
+    // Test if the beta key exists
+    if (!bkey) return alert('Beta key not found!');
+
+    const doesKeyExist = await (
+        await firebase.firestore().collection('beta_keys').doc(bkey).get()
+    ).data();
+
+    if (!doesKeyExist) return alert('Beta key not found!');
 
     const button = document.getElementById('signupButton');
     const values = validateInputs([
@@ -96,6 +103,7 @@ async function signup() {
         const { user: { uid } } = user;
 
         await uploadDefaultAvatar(uid);
+        await firebase.firestore().collection('beta_keys').doc(bkey).delete();
 
         await firebase.firestore().collection('users').doc(uid).set({
             username: username,
