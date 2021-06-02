@@ -5,13 +5,13 @@
 //?
 //?  Developed by Pyro Communications LLC
 //?  Copyright (c) 2021 Pyro Communications LLC. All Rights Reserved
-//?     
+//?
 //? ------------------------------------------------------------------------------------
 
 
 /**
- * 
- * @returns 
+ *
+ * @returns
  */
 function isStaging() {
     const { host } = window.location;
@@ -24,8 +24,8 @@ function isStaging() {
 
 
 /**
- * 
- * @param {*} path 
+ *
+ * @param {*} path
  */
 function redirect(path) {
     window.location.href = path;
@@ -33,8 +33,8 @@ function redirect(path) {
 
 
 /**
- * 
- * @returns 
+ *
+ * @returns
  */
 function getTime() {
     return Date.now();
@@ -42,8 +42,8 @@ function getTime() {
 
 
 /**
- * 
- * @returns 
+ *
+ * @returns
  */
 function getYear() {
     return new Date().getFullYear();
@@ -51,10 +51,10 @@ function getYear() {
 
 
 /**
- * 
- * @param {*} min 
- * @param {*} max 
- * @returns 
+ *
+ * @param {*} min
+ * @param {*} max
+ * @returns
  */
 function generateRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -62,21 +62,21 @@ function generateRandom(min, max) {
 
 
 /**
- * 
- * @param {*} email 
- * @returns 
+ *
+ * @param {*} email
+ * @returns
  */
  function validateEmail(email) {
     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    
+
     return pattern.test(String(email).toLowerCase());
 }
 
 
 /**
- * 
- * @param {*} num 
- * @param {*} len 
+ *
+ * @param {*} num
+ * @param {*} len
  */
 function pad(num, len) {
     let pad = '';
@@ -90,15 +90,15 @@ function pad(num, len) {
 
 
 /**
- * 
- * @param {*} ms 
- * @returns 
+ *
+ * @param {*} ms
+ * @returns
  */
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 
 /**
- * @returns 
+ * @returns
  */
 function generateId() {
     const epoch = Date.now().toString();
@@ -108,18 +108,18 @@ function generateId() {
 }
 
 /**
- * 
- * @param {*} key 
- * @param {*} order 
- * @returns 
+ *
+ * @param {*} key
+ * @param {*} order
+ * @returns
  */
 function sortObjectByKey(key, order = 'asc') {
     return function innerSort(a, b) {
       if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) return 0;
-  
+
       const varA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key];
       const varB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key];
-  
+
       let comparison = 0;
 
       if (varA > varB) {
@@ -134,8 +134,8 @@ function sortObjectByKey(key, order = 'asc') {
 
 
 /**
- * 
- * @returns 
+ *
+ * @returns
  */
  Array.prototype.remove = function() {
     var what, a = arguments, L = a.length, ax;
@@ -150,8 +150,8 @@ function sortObjectByKey(key, order = 'asc') {
 
 
 /**
- * 
- * @returns 
+ *
+ * @returns
  */
 function isMobile() {
     return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -159,10 +159,10 @@ function isMobile() {
 
 
 /**
- * 
- * @param {*} a1 
- * @param {*} a2 
- * @returns 
+ *
+ * @param {*} a1
+ * @param {*} a2
+ * @returns
  */
 function getArrayDifference(a1, a2) {
     const a = [];
@@ -188,25 +188,25 @@ function getArrayDifference(a1, a2) {
 }
 
 /**
- * 
- * @param {*} bytes 
- * @returns 
+ *
+ * @param {*} bytes
+ * @returns
  */
 function bytesToSize(bytes) {
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    
+
     if (bytes == 0) return '0.00 Bytes';
 
     const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
- 
+
     return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 
 
 /**
  * https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
- * 
- * @param {*} text 
+ *
+ * @param {*} text
  */
 function copyToClipboard(text) {
     if (window.clipboardData && window.clipboardData.setData) {
@@ -215,7 +215,7 @@ function copyToClipboard(text) {
         return window.clipboardData.setData("Text", text);
     } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
         const textarea = document.createElement("textarea");
-        
+
         textarea.textContent = text;
         textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
         document.body.appendChild(textarea);
@@ -234,8 +234,8 @@ function copyToClipboard(text) {
 
 
 /**
- * 
- * @param {*} element 
+ *
+ * @param {*} element
  */
  function setCaretToEnd(element) {
     if (!element.innerHTML) return element.focus();

@@ -5,7 +5,7 @@
 //?
 //?  Developed by Pyro Communications LLC
 //?  Copyright (c) 2021 Pyro Communications LLC. All Rights Reserved
-//?     
+//?
 //? ------------------------------------------------------------------------------------
 
 
@@ -36,7 +36,7 @@ document.getElementById('addFriendField').onkeyup = event => {
 
 
 /**
- * 
+ *
  */
 async function addFriendHandler() {
     const input = document.getElementById('addFriendField');
@@ -44,7 +44,7 @@ async function addFriendHandler() {
     const label = document.getElementById('addFriendLabel');
 
     const split = input.value.split('#');
-    
+
     showButtonLoader(button);
     disableButton(button);
 
@@ -62,7 +62,7 @@ async function addFriendHandler() {
 
     } else {
         const user = await getUser(split[0], split[1]);
-        
+
         // Back to default
         label.innerText = 'You can add a friend with their Pyro Tag. It\'s cAsE sEnSitIvE!';
 
@@ -90,16 +90,16 @@ async function addFriendHandler() {
             input.value = '';
         }
     }
-    
+
     enableButton(button);
     hideButtonLoader(button);
 }
 
 
 /**
- * 
- * @param {*} user 
- * @returns 
+ *
+ * @param {*} user
+ * @returns
  */
 async function addFriend(user) {
     const { uid } = firebase.auth().currentUser;
@@ -193,8 +193,8 @@ async function addFriend(user) {
 
 
 /**
- * 
- * @returns 
+ *
+ * @returns
  */
 async function getFriends() {
     const { uid } = firebase.auth().currentUser;
@@ -215,7 +215,7 @@ async function getFriends() {
 
 
 /**
- * 
+ *
  */
 function getFriendsListener() {
     const { uid } = firebase.auth().currentUser;
@@ -237,8 +237,8 @@ function getFriendsListener() {
 
 
 /**
- * 
- * @param {*} status 
+ *
+ * @param {*} status
  */
 function displayFriendsList() {
     const friendsList = document.getElementsByClassName('friendsList-jfa091')[0];
@@ -250,7 +250,7 @@ function displayFriendsList() {
 
     CACHED_FRIENDS.forEach(friend_uid => {
         if (document.getElementById(`friends-list-item-${friend_uid}`)) return;
-        
+
         const div = document.createElement('div');
         div.className = 'peopleListItem-2nzedh';
         div.style = 'height: 62px; opacity: 1;';
@@ -313,7 +313,7 @@ function displayFriendsList() {
 
 
 /**
- * 
+ *
  * @param {*} friend_uid Friend User ID
  */
 function getChannelIdByFriend(friend_uid) {
@@ -324,7 +324,7 @@ function getChannelIdByFriend(friend_uid) {
 
 
 /**
- * 
+ *
  * @returns List of User IDs
  */
  async function getBlockedUsers() {
@@ -346,7 +346,7 @@ function getChannelIdByFriend(friend_uid) {
 
 
 /**
- * 
+ *
  * @param {*} friend_uid Friend User ID
  */
 function unblockFriend(friend_uid) {
@@ -369,7 +369,7 @@ function unblockFriend(friend_uid) {
 
 
 /**
- * 
+ *
  * @param {*} friend_uid Friend User ID
  */
 function blockFriend(friend_uid) {
