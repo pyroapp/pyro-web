@@ -5,12 +5,12 @@
 //?
 //?  Developed by Pyro Communications LLC
 //?  Copyright (c) 2021 Pyro Communications LLC. All Rights Reserved
-//?     
+//?
 //? ------------------------------------------------------------------------------------
 
 
 /**
- *  
+ *
  */
 document.getElementById('signupButton').addEventListener('click', () => {
     signup();
@@ -18,7 +18,7 @@ document.getElementById('signupButton').addEventListener('click', () => {
 
 
 /**
- *  
+ *
  */
  document.getElementById('emailField').addEventListener('keyup', event => {
     if (event.key === 'Enter') signup();
@@ -26,7 +26,7 @@ document.getElementById('signupButton').addEventListener('click', () => {
 
 
 /**
- *  
+ *
  */
  document.getElementById('usernameField').addEventListener('keyup', event => {
     if (event.key === 'Enter') signup();
@@ -34,20 +34,26 @@ document.getElementById('signupButton').addEventListener('click', () => {
 
 
 /**
- *  
+ *
  */
  document.getElementById('passwordField').addEventListener('keyup', event => {
     if (event.key === 'Enter') signup();
 });
 
+/**
+ *
+ */
+ document.getElementById('keyField').addEventListener('keyup', event => {
+    if (event.key === 'Enter') signup();
+});
 
 /**
- * 
+ *
  */
  function loadYearsBorn() {
     const dropdown = document.getElementById('bornDropdown');
     const endDate = getYear() - AGE_LIMIT;
-    
+
 
     for (year = DOB_START_YEAR; year < endDate; year++) {
         dropdown.innerHTML += `
@@ -55,34 +61,58 @@ document.getElementById('signupButton').addEventListener('click', () => {
         `;
     }
 }
-
-
 /**
- * 
+ *
  */
 async function signup() {
-    const bkey = new URLSearchParams(window.location.search).get('beta-key');
+    // NOTICE: FILLING THE BETA KEY FROM PARAM MEANS THAT WE CAN BE VICTIM OF XSS AND OTHER VULNERABILITIES.
+    // ALTHOUGH THE MINIMUM AND MAXIMUM IS 20 CHARS, IT IS POSSIBLE
+    // THIS SHOULDN'T BE AN ISSUE THOUGH
 
-    // Test if the beta key exists
-    if (!bkey) return alert('Beta key not found!');
+    // const bkey = new URLSearchParams(window.location.search).get('beta-key')
+    // const bkeyFromField = new URLSearchParams(window.location.search).get('beta-key')
+    // // Test if the beta key is given in params
+    // if (!bkey) {
+    //     showLabelError('keyLabel', `Key cannot be empty.`);
+    //     showInputError('keyLabel');
+    // }
+    // if not, show error to user
+    // const doesKeyExist = await (
+    //     await firebase.firestore().collection('beta_keys').doc(bkey).get()
+    // ).data();
 
-    const doesKeyExist = await (
-        await firebase.firestore().collection('beta_keys').doc(bkey).get()
-    ).data();
+    // if (!doesKeyExist) {
+    //     showLabelError('keyLabel', `Key is invalid.`);
+    //     showInputError('keyLabel');
+    // }
 
-    if (!doesKeyExist) return alert('Beta key not found!');
-
-    const button = document.getElementById('signupButton');
+    const button = document.getElementById('signupButton'); //like the other fields, this will make sure that the key follows the minimum and maximum length requirement
     const values = validateInputs([
-        'email', 'username', 'password'
+        'email', 'username', 'password', 'key'
     ]);
 
+    const bkey = new URLSearchParams(window.location.search).get('beta-key') // get the key from param
+    const bkeyFromField = values.key // get the key from the field
+    // Test if the beta key is given in params
+    if (!bkeyFromField) {
+        showLabelError('keyLabel', `Key cannot be empty.`);
+        showInputError('keyLabel');
+    }
+    //dont use this. the logic WAS working but broke. invalid keys are allowed
+    const doesKeyExist = await (
+        await firebase.firestore().collection('beta_keys').doc(bkeyFromField).get()
+    ).data();
+
+    if (!doesKeyExist) {
+        showLabelError('keyLabel', `Key is invalid.`);
+        showInputError('keyLabel');
+    }
     if (!values) return;
 
     showButtonLoader(button);
     disableButton(button);
 
-    const { email, username, password } = values;
+    const { email, username, password, key } = values;
 
     let invalid = validateUsername(username);
 
@@ -95,7 +125,7 @@ async function signup() {
 
         return;
     }
-    
+
     try {
         const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
         const discriminator = await generateDiscriminator();
@@ -103,7 +133,7 @@ async function signup() {
         const { user: { uid } } = user;
 
         await uploadDefaultAvatar(uid);
-        await firebase.firestore().collection('beta_keys').doc(bkey).delete();
+        await firebase.firestore().collection('beta_keys').doc(bkeyFromField).delete();
 
         await firebase.firestore().collection('users').doc(uid).set({
             username: username,
