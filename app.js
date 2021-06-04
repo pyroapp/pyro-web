@@ -21,7 +21,7 @@ app.use('/', express.static(web));
 app.get('/', (req, res) => {
     log(req);
 
-    res.status(200).sendFile(web + '/views/login.html');
+    res.status(200).sendFile(web + '/views/landing.html');
 });
 
 app.get('/login', (req, res) => {
