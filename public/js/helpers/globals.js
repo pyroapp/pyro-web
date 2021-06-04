@@ -40,7 +40,7 @@ const GROUP_DMS_USER_THRESHOLD = 14; // Not including current user
 
 // API endpoints
 const OG_URL = 'https://og.pyrochat.app/';
-const CDN_URL = 'https://storage.googleapis.com/pyro-uploads';
+const CDN_URL = 'https://storage.googleapis.com/pyro-uploads/';
 const CDN_AUTH_URL = 'https://fileauth.pyrochat.app/';
 
 
